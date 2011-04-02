@@ -1,0 +1,67 @@
+<html> 
+ 
+<head> 
+<title>001 | Hello Cube | J3D</title> 
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
+
+<script type="text/javascript" src="../build/glMatrix.js"></script>
+
+<script type="text/javascript" src="../src/J3D.js"></script>
+<script type="text/javascript" src="../src/math/Color.js"></script>
+<script type="text/javascript" src="../src/math/Matrix43.js"></script>
+<script type="text/javascript" src="../src/math/Matrix44.js"></script>
+<script type="text/javascript" src="../src/math/Vector3.js"></script>
+<script type="text/javascript" src="../src/engine/Engine.js"></script>
+<script type="text/javascript" src="../src/engine/Camera.js"></script>
+<script type="text/javascript" src="../src/engine/Light.js"></script>
+<script type="text/javascript" src="../src/engine/Mesh.js"></script>
+<script type="text/javascript" src="../src/engine/Scene.js"></script>
+<script type="text/javascript" src="../src/engine/ShaderAtlas.js"></script>
+<script type="text/javascript" src="../src/engine/ShaderInclude.js"></script>
+<script type="text/javascript" src="../src/engine/Texture.js"></script>
+<script type="text/javascript" src="../src/engine/Transform.js"></script>
+<script type="text/javascript" src="../src/renderers/Normal2Color.js"></script>
+<script type="text/javascript" src="../src/util/Time.js"></script>
+
+<script type="text/javascript" src="models/cube.js"></script> 
+
+<link rel="stylesheet" href="common.css"/>
+
+<script>
+
+	function init() {
+		engine = new J3D.Engine();
+		
+		t = new J3D.Transform();
+		t.position = new v3(0, 0, 0);
+		t.renderer = new J3D.Normal2Color();
+		t.mesh = new J3D.Mesh(Cube);
+		
+		camera = J3D.Camera.create(45, 1, 1000);
+		camera.transform.position.z = 4;
+		engine.camera = camera;
+
+		engine.scene.add(camera.transform);
+		engine.scene.add(t);
+
+		draw();
+	}
+	
+	function draw() {
+		requestAnimationFrame(draw);
+
+		t.rotation.x += Math.PI * Time.deltaTime / 6000;
+		t.rotation.y += Math.PI/2 * Time.deltaTime / 6000;
+
+		engine.render();
+	}
+	
+</script>
+
+</head> 
+
+<body onload="init();">
+</body> 
+
+</html> 

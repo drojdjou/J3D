@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+
+<!--
+
+### HI
+Matrix naming convention
+Remove ShaderSource - return shader code from Renderer instead
+Add Matrix class
+Fog
+
+### NEXT HI
+Documentation
+
+### OTHER
+Transparent shader
+Reflective shader
+Skybox / Cubemap
+External load
+Rays / Collisions
+Lightmaps
+Post effects
+
+### OPT
+Optimize buffers
+
+-->
+		
+<html>
+    <head>
+        <meta name="generator" content="HTML Tidy, see www.w3.org">
+
+        <title>J3D | Lightweight WebGL engine</title>
+        <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+		
+        <link type="text/css" rel="stylesheet" href="style.css">
+		
+		<link type="text/css" rel="stylesheet" href="hiliter/shCore.css"/>
+		<link type="text/css" rel="stylesheet" href="hiliter/shThemeDefault.css"/>
+		<script language="javascript" src="hiliter/shCore.js"></script>
+		<script language="javascript" src="hiliter/shBrushJScript.js"></script>
+		<script language="javascript" src="hiliter/shBrushXml.js"></script>
+		<script language="javascript">
+			SyntaxHighlighter.defaults['toolbar'] = false;
+		</script>
+    </head>
+
+    <body>
+    	<div id="title">J3D</div>
+        <div id="content">
+        	
+            <a name="gettingStarted"></a><h2>What is that?</h2>
+			
+			<p><b>J3D</b> is a lightweight open-source WebGL engine written in Javascript with an extremly simple API.</p>
+			
+			<a name="gettingStarted"></a><h2>Getting started</h2>
+			
+			<p>This quick tutorial will introduce some basic concepts in J3D and show how to create a simple scene.
+			No prior webgl experience is required, but a working knowledge of HTML and some Javascript experience 
+			may be useful.</p>
+			
+			<p>Start by grabbing the latest version of the engine and copy the j3d.js file to your working folfer. 
+			When done, create a simple HTML document and include the script:</p>
+			
+			<pre class="brush: xml; class-name: 'syntaxExtras'">
+			&lt;html&gt 
+			&lt;head&gt 
+			&lt;meta http-equiv="content-type" 
+				  content="text/html; charset=ISO-8859-1"&gt 
+			&lt;script type="text/javascript" src="j3d.js"/&gt
+			&lt;script type="text/javascript"&gt
+				function init(){
+					// The rest of the code will go here
+				}
+			&lt;/script&gt
+			&lt;/head&gt 
+			&lt;body onload="init();"&gt
+			&lt;/body&gt 
+			&lt;/html&gt</pre>
+			
+			Now, we can start creating a simple 3d scene. Inside the init function, start by initializing the engine.
+			This create a canvas element that spans over the whole page and initialize the webgl.
+
+			<pre class="brush: js; first-line: 1">engine = new J3D.Engine();</pre>
+			
+			<p>Now let's create our 3D first object. Since it's a beginners tutorial, we will make a cube. In J3D, all objects in the 3D space, 
+			no matter what they are, are represented by an entity called Transform. A transform is a point in space that
+			has a position, a rotation and scale.</p>
+			
+			<pre class="brush: js; first-line: 2">
+			t = new J3D.Transform();
+			t.position = new v3(0, 0, 0);</pre>
+			
+			<p>The following lines define a new transform and set it's position to the center of the coordinate system. 
+			The position is defined by a 3 dimensional vector. Since vectors are used very often in 3d programing, the name
+			for the vector type is short - simply <b>v3</b>. The vector defines the position along x, y, and z axis respectively.</p>
+			
+			<p>Traditionaly in 3d systems, the x axis goes from right to left. The y axis goes from bottom to top, 
+			and the z axis - from the front "into" the screen. This is quite different that 2d coordinates, where the 0,0 point is in 
+			the top-left corner. Because of the an object set at 0,0,0 cordinates will appear in the middle of the screen.</p>
+			
+			<p>As metionned above, a transform is just a point that has a position in space. It doesn't represent anything visually itself.
+			To make a cube we will need to more elements. First one is a 3d model. In J3D a 3d model is called a Mesh.</p>
+			
+			<pre class="brush: js; first-line: 4">
+			t.mesh = new J3D.Mesh(Cube);</pre>
+			
+			<p>By assigning a new object of type J3D.Mesh to the mesh property of the transform we attach it to the transform. 
+			A mesh defines the shape of a 3d object, which in 3d terms is often called geometry.</p>
+			
+			<p>J3D uses a simple JSON format to store geomtry definitions. It is locarted in the second file we included in the
+			HTML code above. Take a look at it, it's basically a list of coordinates (for now don't worry what they mean). 
+			What;s important is that when you pass that object to the constructor function of J3D.Mesh it will interpret it and 
+			create initialize model in the engine.</p>
+			
+			<p>By now we have a shape of an object, and a position in space where we want it to be. The next thing we need is to declare what
+			our 3d object will look like. In 3d terms this is often refered to as material. In J3D we use a slightly different term and call it
+			renderer.</p>
+			
+			<pre class="brush: js; first-line: 4">
+			t.renderer = new J3D.Normal2Color();</pre>
+			
+			<p>Normal2Color is a very simple renderer. It takes the direction in which sides of a model are facing and renders it as a color, 
+			giving the object a nice pastel tint. It is not terribly useful in real life scenarios, but it allows to quickly preview an object 
+			and is great for debugging.</p>
+			
+			¤	
+
+            <a name="changleLog"></a><h2>Change log</h2>
+			
+			<p><b>1.0</b><br>
+			Transforms and scene hierarchy<br>
+			Direct, point and ambient lights<br>
+			Phong shader<br>
+			JSON 3d mesh format<br>
+			</p>
+        </div>
+	<script type="text/javascript">
+     SyntaxHighlighter.all()
+</script>
+    </body>
+</html>
+

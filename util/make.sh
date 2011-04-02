@@ -1,0 +1,21 @@
+java \
+-jar compiler.jar \
+--js_output_file ../build/j3d.js \
+--js ../src/J3D.js \
+--js ../src/math/Vector3.js \
+--js ../src/math/Color.js \
+--js ../src/math/Matrix44.js \
+--js ../src/engine/Engine.js \
+--js ../src/engine/Scene.js \
+--js ../src/engine/Mesh.js \
+--js ../src/engine/Light.js \
+--js ../src/engine/Camera.js \
+--js ../src/engine/Texture.js \
+--js ../src/engine/Transform.js \
+--js ../src/engine/ShaderAtlas.js \
+--js ../src/engine/ShaderInclude.js \
+--js ../src/renderers/Normal2Color.js \
+--js ../src/renderers/Phong.js \
+--js ../src/renderers/PhongFast.js \
+--js ../src/util/Time.js \
+--warning_level QUIET

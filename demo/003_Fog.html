@@ -1,0 +1,119 @@
+<html> 
+ 
+<head> 
+<title>003 | Fog | J3D</title> 
+
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
+
+<script type="text/javascript" src="../build/glMatrix.js"></script>
+
+<script type="text/javascript" src="../src/J3D.js"></script>
+<script type="text/javascript" src="../src/math/Color.js"></script>
+<script type="text/javascript" src="../src/math/Matrix43.js"></script>
+<script type="text/javascript" src="../src/math/Matrix44.js"></script>
+<script type="text/javascript" src="../src/math/Vector3.js"></script>
+<script type="text/javascript" src="../src/engine/Engine.js"></script>
+<script type="text/javascript" src="../src/engine/Camera.js"></script>
+<script type="text/javascript" src="../src/engine/Light.js"></script>
+<script type="text/javascript" src="../src/engine/Mesh.js"></script>
+<script type="text/javascript" src="../src/engine/Scene.js"></script>
+<script type="text/javascript" src="../src/engine/ShaderAtlas.js"></script>
+<script type="text/javascript" src="../src/engine/ShaderInclude.js"></script>
+<script type="text/javascript" src="../src/engine/Texture.js"></script>
+<script type="text/javascript" src="../src/engine/Transform.js"></script>
+<script type="text/javascript" src="../src/renderers/Normal2Color.js"></script>
+<script type="text/javascript" src="../src/renderers/Phong.js"></script>
+<script type="text/javascript" src="../src/util/Time.js"></script>
+
+<script type="text/javascript" src="models/monkey.js"></script> 
+
+<link rel="stylesheet" href="common.css"/>
+
+<script>
+	var engine, scene;
+	var mos = [];
+	var theta = 0;
+
+	function init() {
+		engine = new J3D.Engine();
+		//engine.gl.clearColor(1.0, 1.0, 1.0, 1.0);
+
+		camera = J3D.Camera.create(45, 0.01, 10000);
+		camera.transform.position.z = 4;
+		engine.camera = camera;
+
+		scene = engine.scene;
+		scene.ambient = new Color(.1, .1, .1, 1);
+		
+		light1 = new J3D.Transform();
+		light1.light = new J3D.Light(J3D.DIRECT);
+		light1.light.color = new Color(1, 1, 1, 1);
+		light1.light.direction = new v3(0, -1, 1).norm();
+		
+		scene.add(light1);
+		scene.add(camera.transform);
+		
+		buildScene();
+
+		draw();
+	}
+	
+	function buildScene(){
+		n2c = new J3D.Normal2Color();
+		
+		ph = new J3D.Phong();
+		ph.color = new Color(1, 1, 1, 1);
+
+		moMesh = new J3D.Mesh(Monkey);
+
+		/*for (var i = 0; i < 20; i++) {
+			mo = new J3D.Transform();
+			mo.position.z = i * -3;
+			mo.position.x = 1 - i;
+			mo.mesh = moMesh;
+			mo.scale = v3.ONE().mul(.66);
+			mo.renderer = n2c;
+			mo.rotSpeed = Math.random() * 0.01;
+			scene.add(mo);
+			mos.push(mo);
+		}*/
+		
+		mo = new J3D.Transform();
+		mo.mesh = moMesh;
+		mo.renderer = ph;
+		mo.position.z = -5;
+		mo.scale.x = mo.scale.y = mo.scale.z = 2;
+		scene.add(mo);
+		
+		ma = new J3D.Transform();
+		ma.mesh = moMesh;
+		ma.renderer = n2c;
+		scene.add(ma);
+		
+	}
+	
+	function draw() {
+		requestAnimationFrame(draw);
+		
+		/*for(var i = 0; i < mos.length; i++){
+			mos[i].rotation.y += mos[i].rotSpeed;
+		}*/
+		
+		//camera.transform.position.z = 12 + Math.sin(theta) * 8;
+		ma.rotation.y = theta;
+		theta += 0.006;
+		
+		engine.render();
+	}
+	
+</script>
+
+</head> 
+
+<body onload="init();">
+	<div id="options">
+	</div>
+</body> 
+
+</html> 
