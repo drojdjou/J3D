@@ -3,21 +3,15 @@ using System.Collections.Generic;
 
 public class MeshExportData
 {
-	private GameObject g;
 	private Mesh m;
 
-	public MeshExportData (GameObject g)
+	public MeshExportData (Transform t)
 	{
-		this.g = g;
-		this.m = g.GetComponent<MeshFilter> ().sharedMesh;
+		this.m = t.gameObject.GetComponent<MeshFilter> ().sharedMesh;
 	}
 
 	public string Name {
-		get { return NamesUtil.Clean (g.name); }
-	}
-
-	public string FileName {
-		get { return NamesUtil.CleanLc (g.name) + ".js"; }
+		get { return NamesUtil.CleanLc (m.name); }
 	}
 
 	public string[] Vertices {

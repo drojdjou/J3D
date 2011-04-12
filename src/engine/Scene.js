@@ -18,5 +18,5 @@ J3D.Scene = function(){
 	}
 
 	// Scene setup
-	this.ambient = Color.black;
+	this.ambient = J3D.Color.black;
 }

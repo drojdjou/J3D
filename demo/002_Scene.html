@@ -1,0 +1,126 @@
+<html> 
+ 
+<head> 
+<title>002 | Scene | J3D</title> 
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
+
+<!--
+<script type="text/javascript" src="../lib/glMatrix.js"></script>
+<script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
+<script type="text/javascript" src="../src/J3D.js"></script>
+<script type="text/javascript" src="../src/util/Color.js"></script>
+<script type="text/javascript" src="../src/math/Vector3.js"></script>
+<script type="text/javascript" src="../src/math/Matrix44.js"></script>
+<script type="text/javascript" src="../src/engine/Engine.js"></script>
+<script type="text/javascript" src="../src/engine/Camera.js"></script>
+<script type="text/javascript" src="../src/engine/Light.js"></script>
+<script type="text/javascript" src="../src/engine/Mesh.js"></script>
+<script type="text/javascript" src="../src/engine/Scene.js"></script>
+<script type="text/javascript" src="../src/engine/Loader.js"></script>
+<script type="text/javascript" src="../src/engine/ShaderAtlas.js"></script>
+<script type="text/javascript" src="../src/engine/ShaderInclude.js"></script>
+<script type="text/javascript" src="../src/engine/Texture.js"></script>
+<script type="text/javascript" src="../src/engine/Transform.js"></script>
+<script type="text/javascript" src="../src/renderers/Phong.js"></script>
+<script type="text/javascript" src="../src/renderers/Gouraud.js"></script>
+<script type="text/javascript" src="../src/util/Time.js"></script>
+-->
+
+<script type="text/javascript" src="../build/j3d.js"></script>
+
+
+
+<script type="text/javascript" src="models/text.js"></script>
+<script type="text/javascript" src="models/textScene.js"></script>
+
+<link rel="stylesheet" href="common.css"/>
+
+<script>
+	var speed = 0.05;
+	var mx, my = 0;
+	
+	function init() {
+		engine = new J3D.Engine();
+		
+		camera = new J3D.Camera(45);
+		camera.transform.position.z = -3;
+		camera.transform.rotation.y = Math.PI;
+		engine.camera = camera;
+
+		sun = new J3D.Transform();
+		sun.isStatic = true;
+		sun.light = new J3D.Light(J3D.DIRECT);
+		sun.light.color = new J3D.Color(.7,.7,.7, 1);
+		sun.light.direction = new v3(-1, 0, 0).norm();
+		
+		sun2 = new J3D.Transform();
+		sun2.isStatic = true;
+		sun2.light = new J3D.Light(J3D.DIRECT);
+		sun2.light.color = new J3D.Color(.7,.7,.7, 1);
+		sun2.light.direction = new v3(1, 0, 0).norm();
+		
+		pt1 = new J3D.Transform();
+		pt1.light = new J3D.Light(J3D.POINT);
+		pt1.light.color = new J3D.Color(1, .9, .7, 1);
+		pt1.position.z = -3;
+		
+		scene = engine.scene;
+		scene.ambient = new J3D.Color(.25, .25, .25, 1);
+		
+		scene.add(camera.transform);
+		scene.add(sun);
+		scene.add(sun2);
+		scene.add(pt1);
+		
+		J3D.Loader.parseJSONScene(J3DScene, J3DMeshes, scene);
+
+		document.onmousemove = onMouseMove;
+		draw();
+	}
+	
+	function onMouseMove(e) {
+		mx = ( e.clientX / window.innerWidth  ) * 2 - 1;
+		my = ( e.clientY / window.innerHeight ) * 2 - 1;
+		
+		speed += mx/1000;
+	}
+	
+	function draw() {
+		requestAnimationFrame(draw);
+		
+		if(!mx) mx = 0;
+		if(!my) my = 0;
+		
+		var sx = mx * J3D.Time.deltaTime / 1000;
+		var sy = my * J3D.Time.deltaTime / 1000;
+		
+		J3DScene.transforms.root.rotation.y += sx;
+		
+		J3DScene.transforms.ring1.rotation.y += sx;
+		J3DScene.transforms.ring2.rotation.y -= sx * 0.1;
+		J3DScene.transforms.ring3.rotation.y -= sx * 0.12;
+		J3DScene.transforms.ring4.rotation.y -= sx * 0.14;
+		J3DScene.transforms.ring5.rotation.y -= sx * 0.16;
+		J3DScene.transforms.ring6.rotation.y -= sx * 0.18;
+		J3DScene.transforms.ring7.rotation.y -= sx * 0.2;
+		
+		J3DScene.transforms.ring1.rotation.x += sy;
+		J3DScene.transforms.ring2.rotation.x -= sy * 0.1;
+		J3DScene.transforms.ring3.rotation.x -= sy * 0.12;
+		J3DScene.transforms.ring4.rotation.x -= sy * 0.14;
+		J3DScene.transforms.ring5.rotation.x -= sy * 0.16;
+		J3DScene.transforms.ring6.rotation.x -= sy * 0.18;
+		J3DScene.transforms.ring7.rotation.x -= sy * 0.2;
+		
+		engine.render();
+	}
+		
+</script>
+
+</head> 
+
+<body onload="init();">
+</body> 
+
+</html> 

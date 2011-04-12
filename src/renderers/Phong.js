@@ -4,7 +4,7 @@ J3D.Phong = function() {
 	this.shaderName = phongShaderName;
 	
 	// Parameters for Phong shader
-	this.color = Color.white;
+	this.color = J3D.Color.white;
 	this.colorTexture;
 	this.specularIntensity = 0;
 	this.shininess = 32;

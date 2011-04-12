@@ -1,16 +1,15 @@
 body {
-	font-family: Monospace;
+	font-family: Georgia, serif;
 	background-color: #ffffff;
 	margin: 0px;
 	overflow: hidden;
 }
 
-#options {
+#options, #content {
 	position: absolute;
 	top: 10px; left: 10px; width: 800px;
 	color: #dddddd;
 	padding: 5px;
-	font-family: Monospace;
 	font-size: 13px;
 	text-align: left;
 	z-index:100;

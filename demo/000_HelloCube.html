@@ -1,17 +1,17 @@
 <html> 
  
 <head> 
-<title>001 | Hello Cube | J3D</title> 
+<title>000 | Hello Cube | J3D</title> 
 
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
 
-<script type="text/javascript" src="../build/glMatrix.js"></script>
-
+<!--
+<script type="text/javascript" src="../lib/glMatrix.js"></script>
+<script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
 <script type="text/javascript" src="../src/J3D.js"></script>
-<script type="text/javascript" src="../src/math/Color.js"></script>
-<script type="text/javascript" src="../src/math/Matrix43.js"></script>
-<script type="text/javascript" src="../src/math/Matrix44.js"></script>
+<script type="text/javascript" src="../src/util/Color.js"></script>
 <script type="text/javascript" src="../src/math/Vector3.js"></script>
+<script type="text/javascript" src="../src/math/Matrix44.js"></script>
 <script type="text/javascript" src="../src/engine/Engine.js"></script>
 <script type="text/javascript" src="../src/engine/Camera.js"></script>
 <script type="text/javascript" src="../src/engine/Light.js"></script>
@@ -23,37 +23,66 @@
 <script type="text/javascript" src="../src/engine/Transform.js"></script>
 <script type="text/javascript" src="../src/renderers/Normal2Color.js"></script>
 <script type="text/javascript" src="../src/util/Time.js"></script>
+-->
 
+<!-- Include the engine code, or all the engine files separately (above) -->
+<script type="text/javascript" src="../build/j3d.js"></script>
+
+<!-- This file contains the cube model, exported from Unity3d -->
 <script type="text/javascript" src="models/cube.js"></script> 
 
 <link rel="stylesheet" href="common.css"/>
 
 <script>
 
+	var engine, t;
+	
 	function init() {
+		// Always start by creating an instance of the engine
 		engine = new J3D.Engine();
 		
+		// Transfomrs are basic building blocks
+		// they define points in space with a position, rotation and scale
 		t = new J3D.Transform();
 		t.position = new v3(0, 0, 0);
-		t.renderer = new J3D.Normal2Color();
-		t.mesh = new J3D.Mesh(Cube);
+		// Watch out! All rotations are in radians
+		t.rotation = new v3(.8, .8, .8); 
 		
-		camera = J3D.Camera.create(45, 1, 1000);
+		// A transform has no visual representation until we add two things to it:
+		// - a mesh to define the shape of the object
+		t.mesh = new J3D.Mesh(Cube);
+		// Checkout cube.ja above to see how the JSON format use by J3D looks
+		
+		// - a renderer to define the way it looks 
+		t.renderer = new J3D.Normal2Color();
+		// This is the simplest renderer, it simply maps the color of the face to the direction of its normal, useful for debugging
+		
+		// Next, create a camera
+		var camera = new J3D.Camera(45);
+		// and move it a bit along the z axis so it's outside the cube, looking at it
 		camera.transform.position.z = 4;
+		// Tell the engine to use this camera as point of view when rendering
 		engine.camera = camera;
 
+		// Add the camera transform to the scene hierarchy 
+		// then the camera can be moved around same as any other transform
 		engine.scene.add(camera.transform);
+		// Finally the cube to the scene
 		engine.scene.add(t);
 
 		draw();
 	}
 	
 	function draw() {
+		// Use requestAnimationFrame to call draw() repeatedly
 		requestAnimationFrame(draw);
 
-		t.rotation.x += Math.PI * Time.deltaTime / 6000;
-		t.rotation.y += Math.PI/2 * Time.deltaTime / 6000;
+		// Time.deltaTime = time since last frame was rendere in seconds
+		// Use this to make frame rate independent animation
+		t.rotation.x += Math.PI * J3D.Time.deltaTime / 6000;
+		t.rotation.y += Math.PI/2 * J3D.Time.deltaTime / 6000;
 
+		// Render the scene, yay!
 		engine.render();
 	}
 	

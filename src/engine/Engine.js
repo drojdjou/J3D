@@ -37,7 +37,7 @@ J3D.Engine = function() {
 
 J3D.Engine.prototype.render = function() {
 	
-	Time.tick();
+	J3D.Time.tick();
 
 	gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -67,8 +67,8 @@ J3D.Engine.prototype.render = function() {
 		t.updateViewAndNormal(this.camera.inverseMat);
 		
 		gl.useProgram(s);
-		t.renderer.setup(t.mesh, s, this._lights, this.scene.ambient);
 		t.mesh.bindBuffers();
+		t.renderer.setup(t.mesh, s, this._lights, this.scene.ambient);
 		
 		gl.uniformMatrix4fv(s.projMat, false, this.camera.projectionMat.toArray() );
 		gl.uniformMatrix4fv(s.mvMat, false, t.viewMatrix);
@@ -77,7 +77,7 @@ J3D.Engine.prototype.render = function() {
 		if(t.enabled) t.mesh.draw();
 	}
 
-	// 4. Sort & render transparent meshes
+	// 4. Sort & render transparent meshes (coming soon!)
 	
 	gl.enable(gl.DEPTH_TEST);
 	gl.disable(gl.BLEND);

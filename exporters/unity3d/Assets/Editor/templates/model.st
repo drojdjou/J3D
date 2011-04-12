@@ -3,28 +3,15 @@
  *
  */
  
+$prefix$ = {
 $meshes:{ 
-
-// vertices: $it.NumVertices$
-// faces: $it.NumFaces$
-var $it.Name$ = {
-	vertices: [$it.Vertices; separator=","$],	 
-	normals: [$it.Normals; separator=","$],
-	colors: [],
-	uv1: [$it.UV1; separator=","$],
-	tris: [$it.Triangles; separator=","$]
-}
-
+	$it.Name$: {
+		// $it.NumVertices$ / $it.NumFaces$ 
+		vertices: [$it.Vertices; separator=","$],	 
+		normals: [$it.Normals; separator=","$],
+		colors: [],
+		uv1: [$it.UV1; separator=","$],
+		tris: [$it.Triangles; separator=","$]
+	},
 }$
-
-
-
-
-
-
-
-
-
-
-
-
+};

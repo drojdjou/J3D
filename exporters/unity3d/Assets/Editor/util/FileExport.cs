@@ -10,6 +10,7 @@ using UnityEngine;
 public class FileExport
 {
 	public static string templatePath = Application.dataPath + "/Editor/templates/";
+	public static string lastExportPath = "";
 	
 	public static StringTemplate LoadTemplate (string name)
 	{
@@ -17,10 +18,10 @@ public class FileExport
 		return templateGroup.GetInstanceOf (name);
 	}
 
-	public static void SaveContentsAsFile (string content, string fileName, string path)
+	public static void SaveContentsAsFile (string content, string path)
 	{
 		Byte[] info = new UTF8Encoding (true).GetBytes (content);
-		FileStream fs = File.Create (path + fileName);
+		FileStream fs = File.Create (path);
 		fs.Write (info, 0, info.Length);
 		fs.Close ();
 	}

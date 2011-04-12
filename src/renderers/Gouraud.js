@@ -1,16 +1,16 @@
-phongfastShaderName = "PhongFast"
+gouraudShaderName = "Gouraud"
 
-J3D.PhongFast = function() {
-	this.shaderName = phongfastShaderName;
+J3D.Gouraud = function() {
+	this.shaderName = gouraudShaderName;
 	
 	// Parameters for Phong shader
-	this.color = Color.white;
+	this.color = J3D.Color.white;
 	this.colorTexture;
 	this.specularIntensity = 0;
 	this.shininess = 32;
 }
 
-J3D.PhongFast.prototype.setupLocations = function(shader) {
+J3D.Gouraud.prototype.setupLocations = function(shader) {
 	shader.vertAttr = gl.getAttribLocation(shader, "aVertexPosition");
 	gl.enableVertexAttribArray(shader.vertAttr);
 	
@@ -44,7 +44,7 @@ J3D.PhongFast.prototype.setupLocations = function(shader) {
 	shader.uHasColorSampler = gl.getUniformLocation(shader, "uHasColorSampler");
 }
 
-J3D.PhongFast.prototype.setup = function(mesh, shader, lights, ambient){	
+J3D.Gouraud.prototype.setup = function(mesh, shader, lights, ambient){	
 	gl.bindBuffer(gl.ARRAY_BUFFER, mesh.vertBuf);
 	gl.vertexAttribPointer(shader.vertAttr, mesh.vertSize, gl.FLOAT, false, 0, 0);
 	
@@ -98,9 +98,9 @@ J3D.PhongFast.prototype.setup = function(mesh, shader, lights, ambient){
 
 // ############## Shader source
 
-J3D.ShaderSource[phongfastShaderName] = {
+J3D.ShaderSource[gouraudShaderName] = {
 
-name: phongfastShaderName,
+name: gouraudShaderName,
 
 vert: J3D.ShaderInclude.concat([
 

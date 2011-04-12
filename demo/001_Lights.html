@@ -1,13 +1,35 @@
 <html> 
  
 <head> 
-<title>002 | Phong</title> 
+<title>001 | Lights | J3D</title> 
 
 
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
 
-<script type="text/javascript" src="../build/glMatrix.js"></script>
+<!--
+<script type="text/javascript" src="../lib/glMatrix.js"></script>
+<script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
+<script type="text/javascript" src="../src/J3D.js"></script>
+<script type="text/javascript" src="../src/util/Color.js"></script>
+<script type="text/javascript" src="../src/math/Vector3.js"></script>
+<script type="text/javascript" src="../src/math/Matrix44.js"></script>
+<script type="text/javascript" src="../src/engine/Engine.js"></script>
+<script type="text/javascript" src="../src/engine/Camera.js"></script>
+<script type="text/javascript" src="../src/engine/Light.js"></script>
+<script type="text/javascript" src="../src/engine/Mesh.js"></script>
+<script type="text/javascript" src="../src/engine/Scene.js"></script>
+<script type="text/javascript" src="../src/engine/ShaderAtlas.js"></script>
+<script type="text/javascript" src="../src/engine/ShaderInclude.js"></script>
+<script type="text/javascript" src="../src/engine/Texture.js"></script>
+<script type="text/javascript" src="../src/engine/Transform.js"></script>
+<script type="text/javascript" src="../src/renderers/Phong.js"></script>
+<script type="text/javascript" src="../src/renderers/Gouraud.js"></script>
+<script type="text/javascript" src="../src/util/Time.js"></script>
+-->
+
+
 <script type="text/javascript" src="../build/j3d.js"></script>
+
 
 <script type="text/javascript" src="models/crate.js"></script> 
 <script type="text/javascript" src="models/handles.js"></script> 
@@ -29,7 +51,7 @@
 		
 		// Setup camera
 
-		camera = J3D.Camera.create(45, 0.1, 1000);
+		camera = new J3D.Camera(45);
 		camera.transform.position.z = 4;
 		engine.camera = camera;
 		
@@ -37,22 +59,22 @@
 		
 		light1 = new J3D.Transform();
 		light1.light = new J3D.Light(J3D.DIRECT);
-		light1.light.color = new Color(.33, .33, 0, 1);
+		light1.light.color = new J3D.Color(.33, .33, 0, 1);
 		light1.light.direction = new v3(0, -1, 0).norm();
 		
 		light2 = new J3D.Transform();
 		light2.light = new J3D.Light(J3D.POINT);
-		light2.light.color = new Color(redLightMax, 0, 0, 1);
+		light2.light.color = new J3D.Color(redLightMax, 0, 0, 1);
 		light2.position = new v3(-10, 0, 0);
 		
 		light3 = new J3D.Transform();
 		light3.light = new J3D.Light(J3D.POINT);
-		light3.light.color = new Color(0, 0, .66, 1);
+		light3.light.color = new J3D.Color(0, 0, .66, 1);
 		
 		// Get scene and setup ambient light color
 		
 		scene = engine.scene;
-		scene.ambient = Color.black;
+		scene.ambient = J3D.Color.black;
 		
 		// Add lights and camera
 		
@@ -75,17 +97,17 @@
 		ctMat.shininess = 32;
 		ctMat.colorTexture = new J3D.Texture("models/textures/containerbake512.jpg");
 		
-		crMat = new J3D.PhongFast();
+		crMat = new J3D.Gouraud();
 		crMat.colorTexture = new J3D.Texture("models/textures/crate256.jpg");
 		
-		haMat = new J3D.PhongFast();
+		haMat = new J3D.Gouraud();
 		haMat.specularIntensity = 1;
-		haMat.color = new Color(1,1,1,1);
+		haMat.color = new J3D.Color(1,1,1,1);
 		haMat.colorTexture = new J3D.Texture("models/textures/metalbase.jpg");
 		
-		moMat = new J3D.PhongFast();
+		moMat = new J3D.Gouraud();
 		moMat.specularIntensity = 1;
-		moMat.color = new Color(.9,.9,.9,1);
+		moMat.color = new J3D.Color(.9,.9,.9,1);
 		
 		// Setup transforms and meshes (from JSON files above)
 
@@ -126,19 +148,19 @@
 		light3.enabled = document.getElementById("blue").checked;
 		
 		if (document.getElementById("ambient").checked) {
-			scene.ambient = new Color(.2, .2, .2, 1);
+			scene.ambient = new J3D.Color(.2, .2, .2, 1);
 		} else {
-			scene.ambient = Color.black;
+			scene.ambient = J3D.Color.black;
 		}
 		
 		if (document.getElementById("anim").checked) {
-			ct.rotation.x += Time.deltaTime / 7000;
-			ct.rotation.y -= Time.deltaTime / 3000;
+			ct.rotation.x += J3D.Time.deltaTime / 7000;
+			ct.rotation.y -= J3D.Time.deltaTime / 3000;
 			
-			cr.rotation.x -= Time.deltaTime / 7000;
-			cr.rotation.z += Time.deltaTime / 3000;
+			cr.rotation.x -= J3D.Time.deltaTime / 7000;
+			cr.rotation.z += J3D.Time.deltaTime / 3000;
 			
-			mo.rotation.y -= Time.deltaTime / 7000;
+			mo.rotation.y -= J3D.Time.deltaTime / 7000;
 		}
 		
 		light2.light.color.r = redLightMax * (Math.sin(theta) + 1) / 2;

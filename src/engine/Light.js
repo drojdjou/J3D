@@ -1,7 +1,7 @@
 J3D.Light = function(t){
 	this.type = t || J3D.NONE;
 	this.direction = v3.ZERO();
-	this.color = Color.white;
+	this.color = J3D.Color.white;
 }
 
 J3D.NONE = parseInt(0); // For shader internal use

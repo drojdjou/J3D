@@ -1,21 +1,17 @@
 J3D.Camera = function(fov, aspect, near, far){
 	
+	var n = near || 1;
+	var f = far || 1000;
+	var a = aspect || gl.viewportWidth / gl.viewportHeight;
+	
 	this.projectionMat = new m44();
-	this.projectionMat.perspective(fov, aspect, near, far);
+	this.projectionMat.perspective(fov, a, n, f);
 	
 	this.inverseMat = mat4.create();
 	
-	this.transform;
+	this.transform = new J3D.Transform();
 }
 
 J3D.Camera.prototype.updateInverse = function(){
 	mat4.inverse(this.transform.globalMatrix, this.inverseMat);
-}
-
-J3D.Camera.create = function(fov, near, far){
-	var t = new J3D.Transform();
-	var c = new J3D.Camera(fov, gl.viewportWidth / gl.viewportHeight, near, far);
-	t.camera = c;
-	c.transform = t;
-	return c;
 }
