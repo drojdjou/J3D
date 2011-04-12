@@ -1,1 +1,17 @@
-J3D - Ligthweight 3D engine for WebGL
+What is J3D?
+
++ Javascript 3D engine for WebGL
++ Unity3d to WebGL object/scene exporter
+
+Demos:
+
+Hello Cube
+http://www.everyday3d.com/j3d/demo/000_HelloCube.html
+
+Lights
+http://www.everyday3d.com/j3d/demo/001_Lights.html
+
+Scene exported from Unity3d
+http://www.everyday3d.com/j3d/demo/002_Scene.html
+
+More coming soon...
