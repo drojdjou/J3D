@@ -8,11 +8,6 @@ using UnityEditor;
 using Antlr.StringTemplate;
 using Antlr.StringTemplate.Language;
 
-/**
- * 	1. Go through
- * 
- * 
- */
 public class J3DExport : ScriptableWizard
 {
 	public string prefix = "J3D";
