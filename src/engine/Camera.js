@@ -4,6 +4,8 @@ J3D.Camera = function(fov, aspect, near, far){
 	var f = far || 1000;
 	var a = aspect || gl.viewportWidth / gl.viewportHeight;
 	
+	//console.log(fov + " : " + n + " : " + f + " : " + a);
+	
 	this.projectionMat = new m44();
 	this.projectionMat.perspective(fov, a, n, f);
 	

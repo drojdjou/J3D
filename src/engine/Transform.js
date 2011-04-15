@@ -60,10 +60,13 @@ J3D.Transform.prototype.updateWorld = function(parent){
 	if(this._lockedMatrix) return;
 	
 	mat4.identity(this.matrix);
+	
 	mat4.translate(this.matrix, [this.position.x, this.position.y, this.position.z]);
+	
 	mat4.rotateZ(this.matrix, this.rotation.z);
-	mat4.rotateY(this.matrix, this.rotation.y);
 	mat4.rotateX(this.matrix, this.rotation.x);
+	mat4.rotateY(this.matrix, this.rotation.y);
+	
 	mat4.scale(this.matrix, [this.scale.x, this.scale.y, this.scale.z]);
 
 	if(parent != null) mat4.multiply(parent.globalMatrix, this.matrix, this.globalMatrix);

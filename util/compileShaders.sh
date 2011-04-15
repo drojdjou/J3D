@@ -1,0 +1,1 @@
+java -jar shaders/glslc.jar ../src/engine/ShaderSource.js ../src/shaders/

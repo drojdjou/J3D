@@ -17,6 +17,8 @@ public class J3DExport : ScriptableWizard
 	private List<TransformExportData> tex;
 	private Hashtable mex;
 	private Hashtable mtx;
+	private List<LightExportData> lgx;
+	private List<CameraExportData> cmx;
 
 	void OnWizardUpdate ()
 	{
@@ -30,6 +32,8 @@ public class J3DExport : ScriptableWizard
 		tex = new List<TransformExportData> ();
 		mex = new Hashtable ();
 		mtx = new Hashtable ();
+		lgx = new List<LightExportData> ();
+		cmx = new List<CameraExportData> ();
 		
 		for (var i = 0; i < transforms.Length; i++) {
 			RecurseTransform (transforms[i]);
@@ -44,12 +48,15 @@ public class J3DExport : ScriptableWizard
 		FileExport.SaveContentsAsFile (mt.ToString (), meshesPath);
 		
 		StringTemplate st = FileExport.LoadTemplate ("scene");
+		st.SetAttribute ("ambient", RenderSettings.ambientLight);
 		st.SetAttribute ("prefix", prefix + "Scene");
 		st.SetAttribute ("meshPrefix", prefix + "Meshes");
 		st.SetAttribute ("transforms", tex);
 		st.SetAttribute ("root", tex[0]);
 		st.SetAttribute ("meshes", mex.Values);
 		st.SetAttribute ("materials", mtx.Values);
+		st.SetAttribute ("lights", lgx);
+		st.SetAttribute ("cameras", cmx);
 		FileExport.SaveContentsAsFile (st.ToString (), scenePath);
 		
 		FileExport.lastExportPath = meshesPath;
@@ -57,9 +64,12 @@ public class J3DExport : ScriptableWizard
 	
 	void RecurseTransform (Transform t)
 	{
+		if (!t.gameObject.active)
+			return;
+		
 		tex.Add (new TransformExportData (t));
 		
-		if(t.renderer != null) {
+		if (t.renderer != null) {
 			MeshExportData me = new MeshExportData (t);
 			if (!mex.ContainsKey (me.Name))
 				mex.Add (me.Name, me);
@@ -67,6 +77,16 @@ public class J3DExport : ScriptableWizard
 			MaterialExportData mt = new MaterialExportData (t);
 			if (!mtx.ContainsKey (mt.Name))
 				mtx.Add (mt.Name, mt);
+		}
+		
+		if (t.light != null) {
+			LightExportData ld = new LightExportData (t);
+			lgx.Add (ld);
+		}
+		
+		if (t.camera != null) {
+			CameraExportData cd = new CameraExportData (t);
+			cmx.Add (cd);
 		}
 		
 		for (var i = 0; i < t.childCount; i++) {

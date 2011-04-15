@@ -1,5 +1,5 @@
 java \
--jar compiler.jar \
+-jar make/compiler.jar \
 --js_output_file ../build/j3dt.js \
 --js ../src/J3D.js \
 --js ../src/math/Vector3.js \
@@ -22,7 +22,7 @@ java \
 --js ../lib/requestAnimationFrame.js \
 --warning_level QUIET
 
-cat ./info.txt ../lib/glMatrix.js ../build/j3dt.js > ../build/j3d.js
+cat ./make/info.txt ../lib/glMatrix.js ../build/j3dt.js > ../build/j3d.js
 
 rm -Rf ../build/j3dt.js
 
