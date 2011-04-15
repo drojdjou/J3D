@@ -88,8 +88,8 @@ cameras: {
 transforms: {
 	
 	camera: {
-		position: [ -1.982018,1.132042,0.3971098 ],
-		rotation: [ 0.4806843,-2.745592,-0.1909618 ],
+		position: [ 0,0,-0.5 ],
+		rotation: [ 0,3.141592,0 ],
 		camera: "camera",
 	},
 	
