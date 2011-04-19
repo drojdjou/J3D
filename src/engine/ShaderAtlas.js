@@ -19,7 +19,9 @@ J3D.ShaderAtlas.prototype.compileShaderSource = function(name, src, type){
 	this.programs[name] = shader;
 }
 
-J3D.ShaderAtlas.prototype.linkShader = function(renderer, name){
+J3D.ShaderAtlas.prototype.linkShader = function(renderer){
+	var name = renderer.name;
+	
 	var vertName = name + "Vert";
 	var fragName = name + "Frag";
 	
@@ -43,16 +45,13 @@ J3D.ShaderAtlas.prototype.linkShader = function(renderer, name){
 }
 
 J3D.ShaderAtlas.prototype.getShader = function (renderer) {
-	var n = renderer.shaderName;
-	
-	if(!this.shaders[n]){
-		var source = J3D.ShaderSource[n];
-		this.compileShaderSource(n + "Vert", source.vert, gl.VERTEX_SHADER);
-		this.compileShaderSource(n + "Frag", source.frag, gl.FRAGMENT_SHADER);
-		this.linkShader(renderer, n);
+	if(!this.shaders[renderer.name]) {
+		this.compileShaderSource(renderer.name + "Vert", renderer.vertSource(), gl.VERTEX_SHADER);
+		this.compileShaderSource(renderer.name + "Frag", renderer.fragSource(), gl.FRAGMENT_SHADER);
+		this.linkShader(renderer);
 	}
 	
-	return this.shaders[n];
+	return this.shaders[renderer.name];
 }
 
 

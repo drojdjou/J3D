@@ -1,13 +1,18 @@
-gouraudShaderName = "Gouraud"
-
 J3D.Gouraud = function() {
-	this.shaderName = gouraudShaderName;
-	
+	this.name = "Gouraud";
 	// Parameters for Phong shader
 	this.color = J3D.Color.white;
 	this.colorTexture;
 	this.specularIntensity = 0;
 	this.shininess = 32;
+}
+
+J3D.Gouraud.prototype.vertSource = function() {
+	return J3D.ShaderSource.CommonInclude + J3D.ShaderSource.GouraudVertex;
+}
+
+J3D.Gouraud.prototype.fragSource = function() {
+	return J3D.ShaderSource.CommonInclude + J3D.ShaderSource.GouraudFragment;
 }
 
 J3D.Gouraud.prototype.setupLocations = function(shader) {
@@ -84,9 +89,6 @@ J3D.Gouraud.prototype.setup = function(mesh, shader, lights, ambient){
 			gl.uniform3fv(shader.uLight[i].direction, lights[i].light.direction.xyz());
 			gl.uniform3fv(shader.uLight[i].color, lights[i].light.color.rgb());
 			gl.uniform3fv(shader.uLight[i].position, lights[i].worldPosition.xyz());
-			
-			//console.log(lights[i].light.globalPosition.xyz());
-			
 		} else {
 			gl.uniform1i(shader.uLight[i].type, J3D.NONE);
 		}
@@ -95,63 +97,3 @@ J3D.Gouraud.prototype.setup = function(mesh, shader, lights, ambient){
 	gl.uniform1f(shader.uSpecularIntensity, this.specularIntensity);
 	gl.uniform1f(shader.uShininess, this.shininess);
 }
-
-// ############## Shader source
-
-J3D.ShaderSource[gouraudShaderName] = {
-
-name: gouraudShaderName,
-
-vert: J3D.ShaderInclude.concat([
-
-    "attribute vec3 aVertexPosition;",
-    "attribute vec3 aVertexNormal;",
-	"attribute vec2 aTextureCoord;",
- 
-    "uniform mat4 uMVMatrix;",
-    "uniform mat4 projMat;",
-    "uniform mat3 uNMatrix;",
- 
-    "uniform vec3 uAmbientColor;",
-	
-    "uniform lightSource uLight[4];",
-	
-	"uniform float uSpecularIntensity;",
-	"uniform float uShininess;",
-	
-	"varying vec3 vLight;",
-	"varying vec2 vTextureCoord;",
-
-    "void main(void) {",
-	"	 vec4 p = uMVMatrix * vec4(aVertexPosition, 1.0);",
-    "    gl_Position = projMat * p;",
-	
- 	"	 vTextureCoord = aTextureCoord;",
-	
-    "    vec3 n = normalize( uNMatrix * aVertexNormal );",
-	"    vLight = uAmbientColor;",
-	
-	"    vLight += computeLight(p, n, uSpecularIntensity, uShininess, uLight[0]);",
-	"    vLight += computeLight(p, n, uSpecularIntensity, uShininess, uLight[1]);",
-	"    vLight += computeLight(p, n, uSpecularIntensity, uShininess, uLight[2]);",
-	"    vLight += computeLight(p, n, uSpecularIntensity, uShininess, uLight[3]);",
-    "}"
-]).join("\n"),
-
-frag: J3D.ShaderInclude.concat([
-    "uniform vec4 uColor;",
-	"uniform sampler2D uColorSampler;",
-	"uniform bool uHasColorSampler;",
-
-	"varying vec3 vLight;",
-	"varying vec2 vTextureCoord;",
-
-    "void main(void) {",
-	"	vec4 tc = uColor.rgba;",
-	"	if(uHasColorSampler) tc *= texture2D(uColorSampler, vTextureCoord);",
-	"	gl_FragColor = vec4(tc.rgb * vLight, uColor.a);",
-    "}"
-
-]).join("\n")
-
-};

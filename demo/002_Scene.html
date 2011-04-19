@@ -5,6 +5,7 @@
 
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
 
+<!--
 <script type="text/javascript" src="../lib/glMatrix.js"></script>
 <script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
 <script type="text/javascript" src="../src/J3D.js"></script>
@@ -18,15 +19,15 @@
 <script type="text/javascript" src="../src/engine/Scene.js"></script>
 <script type="text/javascript" src="../src/engine/Loader.js"></script>
 <script type="text/javascript" src="../src/engine/ShaderAtlas.js"></script>
-<script type="text/javascript" src="../src/engine/ShaderInclude.js"></script>
 <script type="text/javascript" src="../src/engine/Texture.js"></script>
 <script type="text/javascript" src="../src/engine/Transform.js"></script>
+<script type="text/javascript" src="../src/renderers/ShaderSource.js"></script>
 <script type="text/javascript" src="../src/renderers/Phong.js"></script>
 <script type="text/javascript" src="../src/renderers/Gouraud.js"></script>
 <script type="text/javascript" src="../src/util/Time.js"></script>
+-->
 
-
-<!--script type="text/javascript" src="../build/j3d.js"></script-->
+<script type="text/javascript" src="../build/j3d.js"></script>
 
 
 
@@ -36,12 +37,13 @@
 <link rel="stylesheet" href="common.css"/>
 
 <script>
-	var speed = 0.05;
 	var mx, my = 0;
 	
 	function init() {
 		engine = new J3D.Engine();
+		// J3DScene, J3DMeshes = JSON objects included above (text.js, textScene.js)
 		J3D.Loader.parseJSONScene(J3DScene, J3DMeshes, engine);	
+		
 		document.onmousemove = onMouseMove;
 		draw();
 	}
@@ -49,8 +51,6 @@
 	function onMouseMove(e) {
 		mx = ( e.clientX / window.innerWidth  ) * 2 - 1;
 		my = ( e.clientY / window.innerHeight ) * 2 - 1;
-		
-		speed += mx/1000;
 	}
 	
 	function draw() {
@@ -62,23 +62,25 @@
 		var sx = mx * J3D.Time.deltaTime / 1000;
 		var sy = my * J3D.Time.deltaTime / 1000;
 		
-		J3DScene.transforms.root.rotation.y += sx;
+		var tr = J3DScene.transforms;
 		
-		J3DScene.transforms.ring1.rotation.y += sx;
-		J3DScene.transforms.ring2.rotation.y -= sx * 0.1;
-		J3DScene.transforms.ring3.rotation.y -= sx * 0.12;
-		J3DScene.transforms.ring4.rotation.y -= sx * 0.14;
-		J3DScene.transforms.ring5.rotation.y -= sx * 0.16;
-		J3DScene.transforms.ring6.rotation.y -= sx * 0.18;
-		J3DScene.transforms.ring7.rotation.y -= sx * 0.2;
+		tr.root.rotation.y += sx;
 		
-		J3DScene.transforms.ring1.rotation.x += sy;
-		J3DScene.transforms.ring2.rotation.x -= sy * 0.1;
-		J3DScene.transforms.ring3.rotation.x -= sy * 0.12;
-		J3DScene.transforms.ring4.rotation.x -= sy * 0.14;
-		J3DScene.transforms.ring5.rotation.x -= sy * 0.16;
-		J3DScene.transforms.ring6.rotation.x -= sy * 0.18;
-		J3DScene.transforms.ring7.rotation.x -= sy * 0.2;
+		tr.ring1.rotation.y += sx;
+		tr.ring2.rotation.y -= sx * 0.1;
+		tr.ring3.rotation.y -= sx * 0.12;
+		tr.ring4.rotation.y -= sx * 0.14;
+		tr.ring5.rotation.y -= sx * 0.16;
+		tr.ring6.rotation.y -= sx * 0.18;
+		tr.ring7.rotation.y -= sx * 0.2;
+		
+		tr.ring1.rotation.x += sy;
+		tr.ring2.rotation.x -= sy * 0.1;
+		tr.ring3.rotation.x -= sy * 0.12;
+		tr.ring4.rotation.x -= sy * 0.14;
+		tr.ring5.rotation.x -= sy * 0.16;
+		tr.ring6.rotation.x -= sy * 0.18;
+		tr.ring7.rotation.x -= sy * 0.2;
 		
 		engine.render();
 	}

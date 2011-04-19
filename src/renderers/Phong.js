@@ -1,13 +1,18 @@
-phongShaderName = "Phong";
-
 J3D.Phong = function() {
-	this.shaderName = phongShaderName;
-	
+	this.name = "Phong";
 	// Parameters for Phong shader
 	this.color = J3D.Color.white;
 	this.colorTexture;
 	this.specularIntensity = 0;
 	this.shininess = 32;
+}
+
+J3D.Phong.prototype.vertSource = function() {
+	return J3D.ShaderSource.CommonInclude + J3D.ShaderSource.PhongVertex;
+}
+
+J3D.Phong.prototype.fragSource = function() {
+	return J3D.ShaderSource.CommonInclude + J3D.ShaderSource.PhongFragment;
 }
 
 J3D.Phong.prototype.setupLocations = function(shader) {
@@ -91,72 +96,3 @@ J3D.Phong.prototype.setup = function(mesh, shader, lights, ambient){
 	gl.uniform1f(shader.uSpecularIntensity, this.specularIntensity);
 	gl.uniform1f(shader.uShininess, this.shininess);
 }
-
-// ############## Shader source
-
-J3D.ShaderSource[phongShaderName] = {
-
-name: phongShaderName,
-
-vert: J3D.ShaderInclude.concat([
-
-    "attribute vec3 aVertexPosition;",
-    "attribute vec3 aVertexNormal;",
-	"attribute vec2 aTextureCoord;",
- 
-    "uniform mat4 uMVMatrix;",
-    "uniform mat4 projMat;",
-    "uniform mat3 uNMatrix;",
- 
-    "uniform vec3 uAmbientColor;",
-	
-	"varying vec4 vPosition;",
-	"varying vec3 vLight;",
-	"varying vec2 vTextureCoord;",
-	"varying vec3 vNormal;",
-
-    "void main(void) {",
-	"	 vPosition = uMVMatrix * vec4(aVertexPosition, 1.0);",
-    "    gl_Position = projMat * vPosition;",
-	
- 	"	 vTextureCoord = aTextureCoord;",
-	
-    "    vNormal = uNMatrix * aVertexNormal;",
-	"    vLight = uAmbientColor;",
-	
-
-    "}"
-]).join("\n"),
-
-frag: J3D.ShaderInclude.concat([
-    "uniform vec4 uColor;",
-	"uniform sampler2D uColorSampler;",
-	"uniform bool uHasColorSampler;",
-
-	"varying vec4 vPosition;",
-	"varying vec3 vLight;",
-	"varying vec2 vTextureCoord;",
-	"varying vec3 vNormal;",
-	
-	"uniform lightSource uLight[4];",
-	
-	"uniform float uSpecularIntensity;",
-	"uniform float uShininess;",
-
-    "void main(void) {",
-	"	vec4 tc = uColor.rgba;",
-	"	if(uHasColorSampler) tc *= texture2D(uColorSampler, vTextureCoord);",
-	
-	"	vec3 l = vLight;",
-	"   float lum = brightness(tc.rgb);",
-	"   l += computeLight(vPosition, vNormal, uSpecularIntensity, uShininess, uLight[0]) * lum;",
-	"   l += computeLight(vPosition, vNormal, uSpecularIntensity, uShininess, uLight[1]) * lum;",
-	"   l += computeLight(vPosition, vNormal, uSpecularIntensity, uShininess, uLight[2]) * lum;",
-	"   l += computeLight(vPosition, vNormal, uSpecularIntensity, uShininess, uLight[3]) * lum;",
-	
-	"	gl_FragColor = vec4(tc.rgb * l, uColor.a);",
-    "}"
-
-]).join("\n")
-
-};

@@ -1,7 +1,13 @@
-normal2ColorShaderName = "Normal2Color"
-
 J3D.Normal2Color = function() {
-	this.shaderName = normal2ColorShaderName;
+	this.name = "Normal2Color";
+}
+
+J3D.Normal2Color.prototype.vertSource = function() {
+	return J3D.ShaderSource.CommonInclude + J3D.ShaderSource.Normal2ColorVertex;
+}
+
+J3D.Normal2Color.prototype.fragSource = function() {
+	return J3D.ShaderSource.CommonInclude + J3D.ShaderSource.Normal2ColorFragment;
 }
 
 J3D.Normal2Color.prototype.setupLocations = function(shader) {
@@ -25,40 +31,3 @@ J3D.Normal2Color.prototype.setup = function(mesh, shader, lights, ambient){
 
 	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, mesh.triBuf);
 }
-
-// ############## Shader source
-
-J3D.ShaderSource[normal2ColorShaderName] = {
-
-name: normal2ColorShaderName,
-
-vert: [
-    "attribute vec3 aVertexPosition;",
-    "attribute vec3 aVertexNormal;",
- 
-    "uniform mat4 uMVMatrix;",
-    "uniform mat4 projMat;",
-    "uniform mat3 uNMatrix;",
-	
-	"varying vec3 vColor;",
-
-    "void main(void) {",
-	"    gl_Position = projMat *  uMVMatrix * vec4(aVertexPosition, 1.0);",
-    "    vColor = normalize( uNMatrix * aVertexNormal );",	
-    "}"
-].join("\n"),
-
-frag: [
-    "#ifdef GL_ES",
-    "precision highp float;",
-    "#endif",
- 
-    "varying vec3 vColor;",
-
-    "void main(void) {",
-	"   gl_FragColor =  vec4(vColor, 1.0);",
-    "}"
-
-].join("\n")
-
-};
