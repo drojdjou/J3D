@@ -8,11 +8,11 @@ J3D.Gouraud = function() {
 }
 
 J3D.Gouraud.prototype.vertSource = function() {
-	return J3D.ShaderSource.CommonInclude + J3D.ShaderSource.GouraudVertex;
+	return J3D.ShaderSource.GouraudVertex;
 }
 
 J3D.Gouraud.prototype.fragSource = function() {
-	return J3D.ShaderSource.CommonInclude + J3D.ShaderSource.GouraudFragment;
+	return J3D.ShaderSource.GouraudFragment;
 }
 
 J3D.Gouraud.prototype.setupLocations = function(shader) {

@@ -8,8 +8,16 @@ J3D.ShaderAtlas = function(){
 }
 
 J3D.ShaderAtlas.prototype.compileShaderSource = function(name, src, type){
+	var isrc;
+	
+	if(type == gl.VERTEX_SHADER) {
+		isrc = J3D.ShaderSource.CommonInclude + J3D.ShaderSource.VertexInclude + src;
+	} else {
+		isrc = J3D.ShaderSource.CommonInclude + src;
+	}
+	
 	var shader = gl.createShader(type);
-	gl.shaderSource(shader, src);
+	gl.shaderSource(shader, isrc);
     gl.compileShader(shader);
  
     if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {

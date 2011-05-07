@@ -1,12 +1,26 @@
 J3D.Loader = {};
 
+J3D.Loader.loadJSON = function(path, onLoadedFunc) {
+	
+	var request = new XMLHttpRequest();
+    request.open("GET", path);
+	
+    request.onreadystatechange = function() {
+		if (request.readyState == 4) {
+			onLoadedFunc.call(null, JSON.parse(request.responseText));
+		}
+	}
+	
+	request.send();
+}
+
 J3D.Loader.parseJSONScene = function(jscene, jmeshes, engine) {
 	
 	engine.scene.ambient = J3D.Loader.fromObject(J3D.Color, jscene.ambient);
 	
 	for(var ms in jscene.materials) {
 		var m = jscene.materials[ms];
-		m = J3D.Loader.fromObject(m.type, m);
+		m = J3D.Loader.fromObject(J3D[m.type], m);
 		m.color = J3D.Loader.fromObject(J3D.Color, m.color);
 		jscene.materials[ms] = m;
 	}

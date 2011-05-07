@@ -18,9 +18,9 @@ public class LightExportData
 	public string Type {
 		get {
 			if (lg.type == LightType.Directional)
-				return "J3D.DIRECT";
+				return "1";
 			else
-				return "J3D.POINT";
+				return "2";
 			// Spot light not supported yet, exported as point
 		
 		}

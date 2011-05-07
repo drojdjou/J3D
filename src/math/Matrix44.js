@@ -35,10 +35,12 @@ m44.prototype.perspective = function(fov, aspect, near, far){
 	this.n34 = -(2 * far * near) / n;
 	this.n43 = -1;
 	this.n44 = 0;
+	
+	this.makeArray();
 };
 
-m44.prototype.toArray = function(){
-    this.array[0] = this.n11;
+m44.prototype.makeArray = function(){
+	this.array[0] = this.n11;
 	this.array[1] = this.n21;
 	this.array[2] = this.n31;
 	this.array[3] = this.n41;
@@ -57,6 +59,8 @@ m44.prototype.toArray = function(){
 	this.array[13] = this.n24;
 	this.array[14] = this.n34;
 	this.array[15] = this.n44;
-	
+}
+
+m44.prototype.toArray = function(){
 	return this.array;
 }

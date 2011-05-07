@@ -3,11 +3,11 @@ J3D.Normal2Color = function() {
 }
 
 J3D.Normal2Color.prototype.vertSource = function() {
-	return J3D.ShaderSource.CommonInclude + J3D.ShaderSource.Normal2ColorVertex;
+	return J3D.ShaderSource.Normal2ColorVertex;
 }
 
 J3D.Normal2Color.prototype.fragSource = function() {
-	return J3D.ShaderSource.CommonInclude + J3D.ShaderSource.Normal2ColorFragment;
+	return J3D.ShaderSource.Normal2ColorFragment;
 }
 
 J3D.Normal2Color.prototype.setupLocations = function(shader) {

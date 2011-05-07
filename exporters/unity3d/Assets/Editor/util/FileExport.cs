@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 
 using Antlr.StringTemplate;
 using Antlr.StringTemplate.Language;
@@ -31,6 +32,12 @@ public class FileExport
 		string target = toFolder + asset.Substring (asset.LastIndexOf ("/") + 1);
 		File.Delete(target);
 		File.Copy (asset, target);
+	}
+	
+	// Removes trailing commas from JSON files, so that it can be parsed by JSON.parse() on JS side
+	public static string CleanJSON (StringTemplate st)
+	{
+		return Regex.Replace (st.ToString(), @",(\s*)[\},\]]", @"$1}", RegexOptions.Multiline);
 	}
 }
 

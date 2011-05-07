@@ -6,9 +6,9 @@ public class MaterialMapper
 	{
 		switch (m.shader.name) {
 		case "VertexLit":
-			return "J3D.Gouraud";
+			return "Gouraud";
 		default:
-			return "J3D.Phong";
+			return "Phong";
 		}
 	}
 }

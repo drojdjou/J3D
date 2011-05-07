@@ -18,6 +18,7 @@
 <script type="text/javascript" src="../src/engine/Mesh.js"></script>
 <script type="text/javascript" src="../src/engine/Scene.js"></script>
 <script type="text/javascript" src="../src/engine/Loader.js"></script>
+<script type="text/javascript" src="../src/engine/Loader.js"></script>
 <script type="text/javascript" src="../src/engine/ShaderAtlas.js"></script>
 <script type="text/javascript" src="../src/engine/Texture.js"></script>
 <script type="text/javascript" src="../src/engine/Transform.js"></script>
@@ -29,23 +30,24 @@
 
 <script type="text/javascript" src="../build/j3d.js"></script>
 
-
-
-<script type="text/javascript" src="models/text.js"></script>
-<script type="text/javascript" src="models/textScene.js"></script>
-
 <link rel="stylesheet" href="common.css"/>
 
 <script>
 	var mx, my = 0;
+	var jsonScene;
 	
 	function init() {
 		engine = new J3D.Engine();
-		// J3DScene, J3DMeshes = JSON objects included above (text.js, textScene.js)
-		J3D.Loader.parseJSONScene(J3DScene, J3DMeshes, engine);	
 		
+		J3D.Loader.loadJSON("models/text.js", function(jsmeshes) { 
+			J3D.Loader.loadJSON("models/textScene.js", function(jsscene) { 
+				jsonScene = jsscene;
+				J3D.Loader.parseJSONScene(jsscene, jsmeshes, engine);
+				draw();
+			})
+		});
+
 		document.onmousemove = onMouseMove;
-		draw();
 	}
 	
 	function onMouseMove(e) {
@@ -62,7 +64,7 @@
 		var sx = mx * J3D.Time.deltaTime / 1000;
 		var sy = my * J3D.Time.deltaTime / 1000;
 		
-		var tr = J3DScene.transforms;
+		var tr = jsonScene.transforms;
 		
 		tr.root.rotation.y += sx;
 		

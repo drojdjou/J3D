@@ -44,13 +44,6 @@ J3D.ShaderSource.CommonInclude = [
 ""].join("\n");
 
 J3D.ShaderSource.GouraudVertex = [
-	"attribute vec3 aVertexPosition;",
-	"attribute vec3 aVertexNormal;",
-	"attribute vec2 aTextureCoord;",
-
-	"uniform mat4 uMVMatrix;",
-	"uniform mat4 projMat;",
-	"uniform mat3 uNMatrix;",
 	"uniform vec3 uAmbientColor;",
 	"uniform lightSource uLight[4];",
 	"uniform float uSpecularIntensity;",
@@ -92,13 +85,6 @@ J3D.ShaderSource.GouraudFragment = [
 ""].join("\n");
 
 J3D.ShaderSource.Normal2ColorVertex = [
-	"attribute vec3 aVertexPosition;",
-	"attribute vec3 aVertexNormal;",
-
-	"uniform mat4 uMVMatrix;",
-	"uniform mat4 projMat;",
-	"uniform mat3 uNMatrix;",
-
 	"varying vec3 vColor;",
 
 	"void main(void) {",
@@ -117,13 +103,6 @@ J3D.ShaderSource.Normal2ColorFragment = [
 ""].join("\n");
 
 J3D.ShaderSource.PhongVertex = [
-	"attribute vec3 aVertexPosition;",
-	"attribute vec3 aVertexNormal;",
-	"attribute vec2 aTextureCoord;",
-
-	"uniform mat4 uMVMatrix;",
-	"uniform mat4 projMat;",
-	"uniform mat3 uNMatrix;",
 	"uniform vec3 uAmbientColor;",
 
 	"varying vec4 vPosition;",
@@ -169,5 +148,15 @@ J3D.ShaderSource.PhongFragment = [
 
 	"gl_FragColor = vec4(tc.rgb * l, uColor.a);",
 	"}",
+""].join("\n");
+
+J3D.ShaderSource.VertexInclude = [
+	"attribute vec3 aVertexPosition;",
+	"attribute vec3 aVertexNormal;",
+	"attribute vec2 aTextureCoord;",
+
+	"uniform mat4 uMVMatrix;",
+	"uniform mat4 projMat;",
+	"uniform mat3 uNMatrix;",
 ""].join("\n");
 

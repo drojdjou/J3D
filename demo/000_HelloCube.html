@@ -17,6 +17,7 @@
 <script type="text/javascript" src="../src/engine/Light.js"></script>
 <script type="text/javascript" src="../src/engine/Mesh.js"></script>
 <script type="text/javascript" src="../src/engine/Scene.js"></script>
+<script type="text/javascript" src="../src/engine/Loader.js"></script>
 <script type="text/javascript" src="../src/engine/ShaderAtlas.js"></script>
 <script type="text/javascript" src="../src/engine/Texture.js"></script>
 <script type="text/javascript" src="../src/engine/Transform.js"></script>
@@ -25,12 +26,8 @@
 <script type="text/javascript" src="../src/util/Time.js"></script>
 -->
 
-<!-- Include the engine code, or all the engine files separately (above) -->
+<!-- Include the engine code -->
 <script type="text/javascript" src="../build/j3d.js"></script>
-
-
-<!-- This file contains the cube model, exported from Unity3d -->
-<script type="text/javascript" src="models/cube.js"></script> 
 
 <link rel="stylesheet" href="common.css"/>
 
@@ -42,7 +39,7 @@
 		// Always start by creating an instance of the engine
 		engine = new J3D.Engine();
 		
-		// Transfomrs are basic building blocks
+		// Transforms are basic building blocks
 		// they define points in space with a position, rotation and scale
 		t = new J3D.Transform();
 		t.position = new v3(0, 0, 0);
@@ -50,9 +47,11 @@
 		t.rotation = new v3(.8, .8, .8); 
 		
 		// A transform has no visual representation until we add two things to it:
-		// - a mesh to define the shape of the object
-		t.mesh = new J3D.Mesh(Cube);
-		// Checkout cube.ja above to see how the JSON format use by J3D looks
+		// - a mesh to define the shape of the object	
+		
+		// You need to load your mesh, and this is a one-line way to do it:
+		J3D.Loader.loadJSON("models/cube.js", function(j) { t.mesh = new J3D.Mesh(j); } );
+		// (Checkout cube.js to see how the JSON format used by J3D looks)
 		
 		// - a renderer to define the way it looks 
 		t.renderer = new J3D.Normal2Color();

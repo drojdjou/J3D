@@ -1,11 +1,4 @@
 //# Normal2ColorVertex
-attribute vec3 aVertexPosition;
-attribute vec3 aVertexNormal;
- 
-uniform mat4 uMVMatrix;
-uniform mat4 projMat;
-uniform mat3 uNMatrix;
-	
 varying vec3 vColor;
 
 void main(void) {

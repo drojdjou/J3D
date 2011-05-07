@@ -8,11 +8,11 @@ J3D.Phong = function() {
 }
 
 J3D.Phong.prototype.vertSource = function() {
-	return J3D.ShaderSource.CommonInclude + J3D.ShaderSource.PhongVertex;
+	return J3D.ShaderSource.PhongVertex;
 }
 
 J3D.Phong.prototype.fragSource = function() {
-	return J3D.ShaderSource.CommonInclude + J3D.ShaderSource.PhongFragment;
+	return J3D.ShaderSource.PhongFragment;
 }
 
 J3D.Phong.prototype.setupLocations = function(shader) {
@@ -30,7 +30,7 @@ J3D.Phong.prototype.setupLocations = function(shader) {
 	shader.nMat = gl.getUniformLocation(shader, "uNMatrix");
 	
 	shader.uAmbientColor = gl.getUniformLocation(shader, "uAmbientColor");
-	
+
 	shader.uLight = [];
 	
 	for (var i = 0; i < J3D.PHONG_SHADER_MAX_LIGHTS; i++) {
@@ -59,18 +59,13 @@ J3D.Phong.prototype.setup = function(mesh, shader, lights, ambient){
 	gl.bindBuffer(gl.ARRAY_BUFFER, mesh.uv1buf);
 	gl.vertexAttribPointer(shader.uv1Attr, mesh.uvSize, gl.FLOAT, false, 0, 0);		
 
-	if (mesh.hasUV1) {
-		if (this.colorTexture != null) {		
-			gl.activeTexture(gl.TEXTURE0);
-			gl.bindTexture(gl.TEXTURE_2D, this.colorTexture.tex);
-			gl.uniform1i(shader.samplerUniform, 0);
-			gl.uniform1i(shader.uHasColorSampler, true);
-		}
-		else {
-			gl.bindTexture(gl.TEXTURE_2D, null);
-			gl.uniform1i(shader.uHasColorSampler, false);
-		}
-	} else {
+	if (mesh.hasUV1 && this.colorTexture != null) {		
+		gl.activeTexture(gl.TEXTURE0);
+		gl.bindTexture(gl.TEXTURE_2D, this.colorTexture.tex);
+		gl.uniform1i(shader.samplerUniform, 0);
+		gl.uniform1i(shader.uHasColorSampler, true);
+	}
+	else {
 		gl.bindTexture(gl.TEXTURE_2D, null);
 		gl.uniform1i(shader.uHasColorSampler, false);
 	}

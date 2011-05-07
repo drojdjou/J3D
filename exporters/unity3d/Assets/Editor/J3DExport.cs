@@ -26,8 +26,8 @@ public class J3DExport : ScriptableWizard
 			transforms = Selection.transforms;
 		}	
 	}
-
-	void OnWizardCreate ()
+	
+	void OnWizardCreate()
 	{
 		tex = new List<TransformExportData> ();
 		mex = new Hashtable ();
@@ -45,7 +45,7 @@ public class J3DExport : ScriptableWizard
 		StringTemplate mt = FileExport.LoadTemplate ("model");
 		mt.SetAttribute ("prefix", prefix + "Meshes");
 		mt.SetAttribute ("meshes", mex.Values);
-		FileExport.SaveContentsAsFile (mt.ToString (), meshesPath);
+		FileExport.SaveContentsAsFile (FileExport.CleanJSON(mt), meshesPath);
 		
 		StringTemplate st = FileExport.LoadTemplate ("scene");
 		st.SetAttribute ("ambient", RenderSettings.ambientLight);
@@ -57,7 +57,7 @@ public class J3DExport : ScriptableWizard
 		st.SetAttribute ("materials", mtx.Values);
 		st.SetAttribute ("lights", lgx);
 		st.SetAttribute ("cameras", cmx);
-		FileExport.SaveContentsAsFile (st.ToString (), scenePath);
+		FileExport.SaveContentsAsFile (FileExport.CleanJSON(st), scenePath);
 		
 		FileExport.lastExportPath = meshesPath;
 	}

@@ -18,6 +18,7 @@
 <script type="text/javascript" src="../src/engine/Light.js"></script>
 <script type="text/javascript" src="../src/engine/Mesh.js"></script>
 <script type="text/javascript" src="../src/engine/Scene.js"></script>
+<script type="text/javascript" src="../src/engine/Loader.js"></script>
 <script type="text/javascript" src="../src/engine/ShaderAtlas.js"></script>
 <script type="text/javascript" src="../src/engine/Texture.js"></script>
 <script type="text/javascript" src="../src/engine/Transform.js"></script>
@@ -27,12 +28,8 @@
 <script type="text/javascript" src="../src/util/Time.js"></script>
 -->
 
-<script type="text/javascript" src="../build/j3d.js"></script>
 
-<script type="text/javascript" src="models/crate.js"></script> 
-<script type="text/javascript" src="models/handles.js"></script> 
-<script type="text/javascript" src="models/container.js"></script> 
-<script type="text/javascript" src="models/monkeyhi.js"></script> 
+<script type="text/javascript" src="../build/j3d.js"></script>
 
 <link rel="stylesheet" href="common.css"/>
 
@@ -111,24 +108,24 @@
 
 		ct = new J3D.Transform();
 		ct.position.x = -1.5;
-		ct.mesh = new J3D.Mesh(Container);
+		J3D.Loader.loadJSON("models/container.js", function(j) { ct.mesh = new J3D.Mesh(j); } );
 		ct.renderer = ctMat;
 		
 		mo = new J3D.Transform();
-		mo.mesh = new J3D.Mesh(MonkeyHi);
+		J3D.Loader.loadJSON("models/monkeyhi.js", function(j) { mo.mesh = new J3D.Mesh(j); } );
 		mo.scale = v3.ONE().mul(.66);
 		mo.renderer = moMat;
 
 		cr = new J3D.Transform();
 		cr.position.x = 1.5;
 		cr.position.z = 0.5;
-		cr.mesh = new J3D.Mesh(Crate);
+		J3D.Loader.loadJSON("models/crate.js", function(j) { cr.mesh = new J3D.Mesh(j); } );
 		cr.renderer = crMat;
 		
 		ha = new J3D.Transform();
 		ha.position = new v3(-0.2499574, 0.4273163, -0.2176546);
 		ha.rotation.y = Math.PI;
-		ha.mesh = new J3D.Mesh(Handles);
+		J3D.Loader.loadJSON("models/handles.js", function(j) { ha.mesh = new J3D.Mesh(j); } );
 		ha.renderer = haMat;
 	
 		// Add all to the scene
