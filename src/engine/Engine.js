@@ -67,7 +67,6 @@ J3D.Engine.prototype.render = function() {
 		t.updateViewAndNormal(this.camera.inverseMat);
 		
 		gl.useProgram(s);
-		t.mesh.bindBuffers();
 		t.renderer.setup(t.mesh, s, this._lights, this.scene.ambient);
 		
 		gl.uniformMatrix4fv(s.projMat, false, this.camera.projectionMat.toArray() );

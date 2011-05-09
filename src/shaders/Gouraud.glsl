@@ -1,6 +1,6 @@
 //# GouraudVertex
 uniform vec3 uAmbientColor;
-uniform lightSource uLight[4];
+
 uniform float uSpecularIntensity;
 uniform float uShininess;
 	
@@ -14,12 +14,7 @@ void main(void) {
  	vTextureCoord = aTextureCoord;
 	
     vec3 n = normalize( uNMatrix * aVertexNormal );
-	vLight = uAmbientColor;
-	
-	vLight += computeLight(p, n, uSpecularIntensity, uShininess, uLight[0]);
-	vLight += computeLight(p, n, uSpecularIntensity, uShininess, uLight[1]);
-	vLight += computeLight(p, n, uSpecularIntensity, uShininess, uLight[2]);
-	vLight += computeLight(p, n, uSpecularIntensity, uShininess, uLight[3]);
+	vLight = uAmbientColor + computeLights(p, n, uSpecularIntensity, uShininess);
 }
 
 //# GouraudFragment

@@ -1,6 +1,6 @@
 J3D.Gouraud = function() {
 	this.name = "Gouraud";
-	// Parameters for Phong shader
+	// Parameters for Gouraud shader
 	this.color = J3D.Color.white;
 	this.colorTexture;
 	this.specularIntensity = 0;
@@ -33,7 +33,7 @@ J3D.Gouraud.prototype.setupLocations = function(shader) {
 	
 	shader.uLight = [];
 	
-	for (var i = 0; i < J3D.PHONG_SHADER_MAX_LIGHTS; i++) {
+	for (var i = 0; i < J3D.SHADER_MAX_LIGHTS; i++) {
 		shader.uLight[i] = {};
 		shader.uLight[i].type = gl.getUniformLocation(shader, "uLight[" + i + "].type");
 		shader.uLight[i].direction = gl.getUniformLocation(shader, "uLight[" + i + "].direction");
@@ -82,7 +82,7 @@ J3D.Gouraud.prototype.setup = function(mesh, shader, lights, ambient){
 
 	gl.uniform3fv(shader.uAmbientColor, ambient.rgb());
 	
-	for (var i = 0; i < J3D.PHONG_SHADER_MAX_LIGHTS; i++) {
+	for (var i = 0; i < J3D.SHADER_MAX_LIGHTS; i++) {
 		var l = lights[i];
 		if(l){
 			gl.uniform1i(shader.uLight[i].type, lights[i].light.type);

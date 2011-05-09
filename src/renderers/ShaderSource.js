@@ -1,4 +1,4 @@
-// File generated with src/shaders/compileShaders.py. Do not edit //
+// File generated with src/shaders/buildShaders.py. Do not edit //
 
 J3D.ShaderSource = {};
 
@@ -7,6 +7,15 @@ J3D.ShaderSource.CommonInclude = [
 	"precision highp float;",
 	"#endif",
 
+	"struct lightSource {",
+	"int type;",
+	"vec3 direction;",
+	"vec3 color;",
+	"vec3 position;",
+	"};",
+
+	"uniform lightSource uLight[4];",
+
 	"float luminance(vec3 c) {",
 	"return c.r * 0.299 + c.g * 0.587 + c.b * 0.114;",
 	"}",
@@ -14,13 +23,6 @@ J3D.ShaderSource.CommonInclude = [
 	"float brightness(vec3 c) {",
 	"return c.r * 0.2126 + c.g * 0.7152 + c.b * 0.0722;",
 	"}",
-
-	"struct lightSource {",
-	"int type;",
-	"vec3 direction;",
-	"vec3 color;",
-	"vec3 position;",
-	"};",
 
 	"vec3 computeLight(vec4 p, vec3 n, float si, float sh, lightSource light){",
 	"vec3 ld;",
@@ -41,11 +43,19 @@ J3D.ShaderSource.CommonInclude = [
 	"return light.color * dif + light.color * spec;",
 	"}",
 
+	"vec3 computeLights(vec4 p, vec3 n, float si, float sh) {",
+	"vec3 s = computeLight(p, n, si, sh, uLight[0]);",
+	"s += computeLight(p, n, si, sh, uLight[1]);",
+	"s += computeLight(p, n, si, sh, uLight[2]);",
+	"s += computeLight(p, n, si, sh, uLight[3]);",
+	"return s;",
+	"}",
+
 ""].join("\n");
 
 J3D.ShaderSource.GouraudVertex = [
 	"uniform vec3 uAmbientColor;",
-	"uniform lightSource uLight[4];",
+
 	"uniform float uSpecularIntensity;",
 	"uniform float uShininess;",
 
@@ -59,12 +69,7 @@ J3D.ShaderSource.GouraudVertex = [
 	"vTextureCoord = aTextureCoord;",
 
 	"vec3 n = normalize( uNMatrix * aVertexNormal );",
-	"vLight = uAmbientColor;",
-
-	"vLight += computeLight(p, n, uSpecularIntensity, uShininess, uLight[0]);",
-	"vLight += computeLight(p, n, uSpecularIntensity, uShininess, uLight[1]);",
-	"vLight += computeLight(p, n, uSpecularIntensity, uShininess, uLight[2]);",
-	"vLight += computeLight(p, n, uSpecularIntensity, uShininess, uLight[3]);",
+	"vLight = uAmbientColor + computeLights(p, n, uSpecularIntensity, uShininess);",
 	"}",
 
 ""].join("\n");
@@ -103,21 +108,16 @@ J3D.ShaderSource.Normal2ColorFragment = [
 ""].join("\n");
 
 J3D.ShaderSource.PhongVertex = [
-	"uniform vec3 uAmbientColor;",
-
 	"varying vec4 vPosition;",
 	"varying vec3 vLight;",
 	"varying vec2 vTextureCoord;",
 	"varying vec3 vNormal;",
 
 	"void main(void) {",
+	"vTextureCoord = aTextureCoord;",
+	"vNormal = uNMatrix * aVertexNormal;",
 	"vPosition = uMVMatrix * vec4(aVertexPosition, 1.0);",
 	"gl_Position = projMat * vPosition;",
-
-	"vTextureCoord = aTextureCoord;",
-
-	"vNormal = uNMatrix * aVertexNormal;",
-	"vLight = uAmbientColor;",
 	"}",
 
 ""].join("\n");
@@ -126,7 +126,8 @@ J3D.ShaderSource.PhongFragment = [
 	"uniform vec4 uColor;",
 	"uniform sampler2D uColorSampler;",
 	"uniform bool uHasColorSampler;",
-	"uniform lightSource uLight[4];",
+
+	"uniform vec3 uAmbientColor;",
 	"uniform float uSpecularIntensity;",
 	"uniform float uShininess;",
 
@@ -139,12 +140,8 @@ J3D.ShaderSource.PhongFragment = [
 	"vec4 tc = uColor.rgba;",
 	"if(uHasColorSampler) tc *= texture2D(uColorSampler, vTextureCoord);",
 
-	"vec3 l = vLight;",
 	"float lum = brightness(tc.rgb);",
-	"l += computeLight(vPosition, vNormal, uSpecularIntensity, uShininess, uLight[0]) * lum;",
-	"l += computeLight(vPosition, vNormal, uSpecularIntensity, uShininess, uLight[1]) * lum;",
-	"l += computeLight(vPosition, vNormal, uSpecularIntensity, uShininess, uLight[2]) * lum;",
-	"l += computeLight(vPosition, vNormal, uSpecularIntensity, uShininess, uLight[3]) * lum;",
+	"vec3 l = uAmbientColor + computeLights(vPosition, vNormal, uSpecularIntensity, uShininess) * lum;",
 
 	"gl_FragColor = vec4(tc.rgb * l, uColor.a);",
 	"}",

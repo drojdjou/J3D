@@ -26,6 +26,8 @@ J3D.Mesh = function(source){
 	this.normBuf;
 	this.uv1buf;
 	this.triBuf;
+	
+	this.bindBuffers();
 }
 
 J3D.Mesh.prototype.draw = function(){
