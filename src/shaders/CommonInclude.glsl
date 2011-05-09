@@ -11,6 +11,7 @@ struct lightSource {
 };
 
 uniform lightSource uLight[4];
+uniform vec3 uAmbientColor;
 	
 float luminance(vec3 c) {
     return c.r * 0.299 + c.g * 0.587 + c.b * 0.114;

@@ -36,20 +36,36 @@ J3D.ShaderAtlas.prototype.linkShader = function(renderer){
 	var vertexShader = this.programs[vertName];
 	var fragmentShader = this.programs[fragName];
 	
-	var shaderProgram = gl.createProgram();
-	gl.attachShader(shaderProgram, vertexShader);
-	gl.attachShader(shaderProgram, fragmentShader);
-	gl.linkProgram(shaderProgram);
+	var program = gl.createProgram();
+	gl.attachShader(program, vertexShader);
+	gl.attachShader(program, fragmentShader);
+	gl.linkProgram(program);
  
-	if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
-		console.log("Error creating program " + name);
+	if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+		console.log("Error linking program " + name);
 	}
 	
-	gl.useProgram(shaderProgram);
-	renderer.setupLocations(shaderProgram);
+	gl.useProgram(program);
+	
+	// Common uniforms for all shaders (if program doesn't have some of them, it's ok)
+	program.pMatrix = gl.getUniformLocation(program, "pMatrix");
+	program.mvMatrix = gl.getUniformLocation(program, "mvMatrix");
+	program.nMatrix = gl.getUniformLocation(program, "nMatrix");
+	program.uAmbientColor = gl.getUniformLocation(program, "uAmbientColor");
+	
+	program.vertAttr = gl.getAttribLocation(program, "aVertexPosition");
+	gl.enableVertexAttribArray(program.vertAttr);
+	
+	program.normAttr = gl.getAttribLocation(program, "aVertexNormal");
+	gl.enableVertexAttribArray(program.normAttr);
+	
+	program.uv1Attr = gl.getAttribLocation(program, "aTextureCoord");
+	gl.enableVertexAttribArray(program.uv1Attr);
+	
+	renderer.setupLocations(program);
 	this.shaderCount++;
 	
-	this.shaders[name] = shaderProgram;
+	this.shaders[name] = program;
 }
 
 J3D.ShaderAtlas.prototype.getShader = function (renderer) {

@@ -1,6 +1,4 @@
 //# GouraudVertex
-uniform vec3 uAmbientColor;
-
 uniform float uSpecularIntensity;
 uniform float uShininess;
 	
@@ -8,12 +6,12 @@ varying vec3 vLight;
 varying vec2 vTextureCoord;
 
 void main(void) {
-	vec4 p = uMVMatrix * vec4(aVertexPosition, 1.0);
-    gl_Position = projMat * p;
+	vec4 p = mvMatrix * vec4(aVertexPosition, 1.0);
+    gl_Position = pMatrix * p;
 	
  	vTextureCoord = aTextureCoord;
 	
-    vec3 n = normalize( uNMatrix * aVertexNormal );
+    vec3 n = normalize( nMatrix * aVertexNormal );
 	vLight = uAmbientColor + computeLights(p, n, uSpecularIntensity, uShininess);
 }
 

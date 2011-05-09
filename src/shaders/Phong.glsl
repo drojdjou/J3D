@@ -6,9 +6,9 @@ varying vec3 vNormal;
 
 void main(void) {
 	vTextureCoord = aTextureCoord;	
-    vNormal = uNMatrix * aVertexNormal;
-	vPosition = uMVMatrix * vec4(aVertexPosition, 1.0);
-    gl_Position = projMat * vPosition;
+    vNormal = nMatrix * aVertexNormal;
+	vPosition = mvMatrix * vec4(aVertexPosition, 1.0);
+    gl_Position = pMatrix * vPosition;
 }
 
 //# PhongFragment
@@ -16,7 +16,6 @@ uniform vec4 uColor;
 uniform sampler2D uColorSampler;
 uniform bool uHasColorSampler;
 
-uniform vec3 uAmbientColor;	
 uniform float uSpecularIntensity;
 uniform float uShininess;
 

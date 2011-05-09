@@ -16,21 +16,6 @@ J3D.Phong.prototype.fragSource = function() {
 }
 
 J3D.Phong.prototype.setupLocations = function(shader) {
-	shader.vertAttr = gl.getAttribLocation(shader, "aVertexPosition");
-	gl.enableVertexAttribArray(shader.vertAttr);
-	
-	shader.normAttr = gl.getAttribLocation(shader, "aVertexNormal");
-	gl.enableVertexAttribArray(shader.normAttr);
-	
-	shader.uv1Attr = gl.getAttribLocation(shader, "aTextureCoord");
-	gl.enableVertexAttribArray(shader.uv1Attr);
-		
-	shader.projMat = gl.getUniformLocation(shader, "projMat");
-	shader.mvMat = gl.getUniformLocation(shader, "uMVMatrix");
-	shader.nMat = gl.getUniformLocation(shader, "uNMatrix");
-	
-	shader.uAmbientColor = gl.getUniformLocation(shader, "uAmbientColor");
-
 	shader.uLight = [];
 	
 	for (var i = 0; i < J3D.SHADER_MAX_LIGHTS; i++) {
@@ -49,16 +34,12 @@ J3D.Phong.prototype.setupLocations = function(shader) {
 	shader.uHasColorSampler = gl.getUniformLocation(shader, "uHasColorSampler");
 }
 
-J3D.Phong.prototype.setup = function(mesh, shader, lights, ambient){	
-	gl.bindBuffer(gl.ARRAY_BUFFER, mesh.vertBuf);
-	gl.vertexAttribPointer(shader.vertAttr, mesh.vertSize, gl.FLOAT, false, 0, 0);
-	
-	gl.bindBuffer(gl.ARRAY_BUFFER, mesh.normBuf);
-	gl.vertexAttribPointer(shader.normAttr, mesh.vertSize, gl.FLOAT, false, 0, 0);
-	
-	gl.bindBuffer(gl.ARRAY_BUFFER, mesh.uv1buf);
-	gl.vertexAttribPointer(shader.uv1Attr, mesh.uvSize, gl.FLOAT, false, 0, 0);		
+J3D.Phong.prototype.setup = function(mesh, shader, lights, camera){	
 
+	gl.uniform4fv(shader.uColor, this.color.rgba());
+	gl.uniform1f(shader.uSpecularIntensity, this.specularIntensity);
+	gl.uniform1f(shader.uShininess, this.shininess);
+		
 	if (mesh.hasUV1 && this.colorTexture != null) {		
 		gl.activeTexture(gl.TEXTURE0);
 		gl.bindTexture(gl.TEXTURE_2D, this.colorTexture.tex);
@@ -70,12 +51,6 @@ J3D.Phong.prototype.setup = function(mesh, shader, lights, ambient){
 		gl.uniform1i(shader.uHasColorSampler, false);
 	}
 
-	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, mesh.triBuf);
-	
-	gl.uniform4fv(shader.uColor, this.color.rgba());
-
-	gl.uniform3fv(shader.uAmbientColor, ambient.rgb());
-	
 	for (var i = 0; i < J3D.SHADER_MAX_LIGHTS; i++) {
 		var l = lights[i];
 		if(l){
@@ -87,7 +62,4 @@ J3D.Phong.prototype.setup = function(mesh, shader, lights, ambient){
 			gl.uniform1i(shader.uLight[i].type, J3D.NONE);
 		}
 	}
-	
-	gl.uniform1f(shader.uSpecularIntensity, this.specularIntensity);
-	gl.uniform1f(shader.uShininess, this.shininess);
 }

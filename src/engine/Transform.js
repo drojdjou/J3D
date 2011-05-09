@@ -13,7 +13,7 @@ J3D.Transform = function(){
 	
 	// Local transformation matrix
 	this.matrix = mat4.create();
-	// World transformation matrix (cancatenated local transforms of all parents and self)
+	// World transformation matrix (concatenated local transforms of all parents and self)
 	this.globalMatrix = mat4.create();
 	// View transformation matrix (camera space)
 	this.viewMatrix = mat4.create();

@@ -87,12 +87,6 @@
 		"camera": "camera"
 	},
 	
-	"lamp": {
-		"position": [ 0,-0.6082401,-1.864061 ],
-		"rotation": [ 0,0,0 ],
-		"light": "lamp"
-	},
-	
 	"root": {
 		"position": [ 0,0,2 ],
 		"rotation": [ 0,0,0 ]
@@ -160,6 +154,12 @@
 		"rotation": [ 0,0,0 ],
 		"renderer": "grey",
 		"mesh": "text"
+	},
+	
+	"lamp": {
+		"position": [ 0,-0.6082401,-1.864061 ],
+		"rotation": [ 0,0,0 ],
+		"light": "lamp"
 	},
 	
 	"sun": {

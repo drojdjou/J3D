@@ -20,10 +20,9 @@ J3D.Engine = function() {
 	}
 	
 	this.setClearColor(J3D.Color.black);
-	gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
-    
-	
-	this.gl = gl;
+	gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);	
+	gl.enable(gl.CULL_FACE);
+	gl.frontFace(gl.CCW);
 	
 	this.shaderAtlas = new J3D.ShaderAtlas();
 	this.scene = new J3D.Scene();
@@ -33,6 +32,8 @@ J3D.Engine = function() {
 	
 	this._opaqueMeshes = [];
 	this._lights = [];
+	
+	this.gl = gl;
 }
 
 J3D.Engine.prototype.setClearColor = function(c) {
@@ -55,7 +56,7 @@ J3D.Engine.prototype.render = function() {
 	
 	// 2. Calculate camera inverse matrix
 	this.camera.updateInverse();
-	
+
 	//3. Calculate global positions for all lights
 	for (var i = 0; i < this._lights.length; i++) {
 		var t = this._lights[i];
@@ -72,22 +73,50 @@ J3D.Engine.prototype.render = function() {
 		t.updateViewAndNormal(this.camera.inverseMat);
 		
 		gl.useProgram(s);
-		t.renderer.setup(t.mesh, s, this._lights, this.scene.ambient);
 		
-		gl.uniformMatrix4fv(s.projMat, false, this.camera.projectionMat.toArray() );
-		gl.uniformMatrix4fv(s.mvMat, false, t.viewMatrix);
-		gl.uniformMatrix3fv(s.nMat, false, t.normalMatrix);
+		// Setup standard uniforms and attributes
+		gl.uniformMatrix4fv(s.pMatrix, false, this.camera.projectionMat.toArray() );
+		gl.uniformMatrix4fv(s.mvMatrix, false, t.viewMatrix);
+		gl.uniformMatrix3fv(s.nMatrix, false, t.normalMatrix);
+		
+		gl.uniform3fv(s.uAmbientColor, this.scene.ambient.rgb());
+		
+		if (t.mesh.vertBuf) {
+			gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.vertBuf);
+			gl.vertexAttribPointer(s.vertAttr, t.mesh.vertSize, gl.FLOAT, false, 0, 0);
+		}
+	
+		if (t.mesh.normBuf) {
+			gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.normBuf);
+			gl.vertexAttribPointer(s.normAttr, t.mesh.vertSize, gl.FLOAT, false, 0, 0);
+		}
+	
+		if (t.mesh.uv1buf) {
+			gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.uv1buf);
+			gl.vertexAttribPointer(s.uv1Attr, t.mesh.uvSize, gl.FLOAT, false, 0, 0);
+		}
+
+		
+		// Setup renderers custom uniforms and attributes
+		t.renderer.setup(t.mesh, s, this._lights, this.camera);
 
 		if(t.enabled) {	
-			var cull = t.renderer.cullMode || gl.FRONT;			
-			gl.cullFace(gl.FRONT);
+			var cull = t.renderer.cullFace || gl.BACK;			
+			gl.cullFace(cull);
 			
 			var mode = t.renderer.drawMode || gl.TRIANGLES;
-			gl.drawElements(mode, t.mesh.triNum, gl.UNSIGNED_SHORT, 0);
+			
+			if (t.mesh.triBuf) {
+				gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, t.mesh.triBuf);
+				gl.drawElements(mode, t.mesh.triNum, gl.UNSIGNED_SHORT, 0);
+			} else {
+				// TODO: Draw arrays
+			}
+			
 		}
 	}
 
-	// 4. Sort & render transparent meshes (coming soon!)
+	// 4. TODO: Sort & render transparent meshes
 
 	// #DEBUG Monitor the amount of shaders created
 	// console.log( this.shaderAtlas.shaderCount );
@@ -108,7 +137,7 @@ J3D.Engine.prototype.updateTransform = function(t, p){
 		this._opaqueMeshes.push(t);
 	}
 	
-	if (t.light ) {
+	if (t.light) {
 		this._lights.push(t);
 	}
 }
