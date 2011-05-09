@@ -30,10 +30,6 @@ J3D.Mesh = function(source){
 	this.bindBuffers();
 }
 
-J3D.Mesh.prototype.draw = function(){
-	gl.drawElements(gl.TRIANGLES, this.triNum, gl.UNSIGNED_SHORT, 0);
-}
-
 J3D.Mesh.prototype.bindBuffers = function(){
 	if(this.buffersReady) return;
 	

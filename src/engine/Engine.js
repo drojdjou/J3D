@@ -19,9 +19,9 @@ J3D.Engine = function() {
 		console.log("Error initializing webgl: " + e);
 	}
 	
-	gl.clearColor(0.0, 0.0, 0.0, 1.0);
-    gl.enable(gl.DEPTH_TEST);
-	gl.cullFace(gl.FRONT);
+	this.setClearColor(J3D.Color.black);
+	gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
+    
 	
 	this.gl = gl;
 	
@@ -35,11 +35,14 @@ J3D.Engine = function() {
 	this._lights = [];
 }
 
+J3D.Engine.prototype.setClearColor = function(c) {
+	gl.clearColor(c.r, c.g, c.b, c.a);
+}
+
 J3D.Engine.prototype.render = function() {
 	
 	J3D.Time.tick();
 
-	gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
 	this._opaqueMeshes.length = 0;
@@ -60,6 +63,8 @@ J3D.Engine.prototype.render = function() {
 	}
 	
 	// 3. Render opaque meshes
+	gl.enable(gl.DEPTH_TEST);
+	
 	for(var i = 0; i < this._opaqueMeshes.length; i++){
 		var t = this._opaqueMeshes[i];
 		var s = this.shaderAtlas.getShader(t.renderer);
@@ -73,14 +78,17 @@ J3D.Engine.prototype.render = function() {
 		gl.uniformMatrix4fv(s.mvMat, false, t.viewMatrix);
 		gl.uniformMatrix3fv(s.nMat, false, t.normalMatrix);
 
-		if(t.enabled) t.mesh.draw();
+		if(t.enabled) {	
+			var cull = t.renderer.cullMode || gl.FRONT;			
+			gl.cullFace(gl.FRONT);
+			
+			var mode = t.renderer.drawMode || gl.TRIANGLES;
+			gl.drawElements(mode, t.mesh.triNum, gl.UNSIGNED_SHORT, 0);
+		}
 	}
 
 	// 4. Sort & render transparent meshes (coming soon!)
-	
-	gl.enable(gl.DEPTH_TEST);
-	gl.disable(gl.BLEND);
-	
+
 	// #DEBUG Monitor the amount of shaders created
 	// console.log( this.shaderAtlas.shaderCount );
 	

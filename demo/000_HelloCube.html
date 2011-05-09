@@ -5,7 +5,7 @@
 
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
 
-<!--
+<!-- 
 <script type="text/javascript" src="../lib/glMatrix.js"></script>
 <script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
 <script type="text/javascript" src="../src/J3D.js"></script>
@@ -24,9 +24,9 @@
 <script type="text/javascript" src="../src/renderers/ShaderSource.js"></script>
 <script type="text/javascript" src="../src/renderers/Phong.js"></script>
 <script type="text/javascript" src="../src/renderers/Gouraud.js"></script>
+<script type="text/javascript" src="../src/renderers/Normal2Color.js"></script>
 <script type="text/javascript" src="../src/util/Time.js"></script>
 -->
-
 
 <script type="text/javascript" src="../build/j3d.js"></script>
 
@@ -40,6 +40,8 @@
 	function init() {
 		// Always start by creating an instance of the engine
 		engine = new J3D.Engine();
+		// Choose the clear color fot the viewport (default is black)
+		engine.setClearColor(J3D.Color.white);
 		
 		// Transforms are basic building blocks
 		// they define points in space with a position, rotation and scale
