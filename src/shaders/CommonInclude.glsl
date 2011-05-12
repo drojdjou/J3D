@@ -3,6 +3,20 @@
 precision highp float;
 #endif
 
+uniform mat4 mMatrix;
+uniform mat4 vMatrix;
+uniform mat3 nMatrix;
+uniform mat4 pMatrix;
+uniform vec3 uEyePosition;
+
+mat4 mvpMatrix() {
+	return pMatrix * vMatrix * mMatrix;
+}
+
+mat4 mvMatrix() {
+	return vMatrix * mMatrix;
+}
+
 struct lightSource {
 	int type;
 	vec3 direction;
@@ -23,10 +37,12 @@ float brightness(vec3 c) {
 
 vec3 computeLight(vec4 p, vec3 n, float si, float sh, lightSource light){
     vec3 ld;
+    
+    vec4 lp = vMatrix * vec4(light.position, 1.0);
 
     if(light.type == 0) return vec3(0);
     else if(light.type == 1) ld = light.direction;
-    else if(light.type == 2) ld = normalize(light.position - p.xyz);
+    else if(light.type == 2) ld = normalize(lp.xyz - p.xyz);
     float dif = max(dot(n, ld), 0.0);
 	
     float spec = 0.0;
@@ -47,4 +63,3 @@ vec3 computeLights(vec4 p, vec3 n, float si, float sh) {
 	s += computeLight(p, n, si, sh, uLight[3]);
 	return s;
 }
-

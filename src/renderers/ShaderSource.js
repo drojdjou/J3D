@@ -7,6 +7,20 @@ J3D.ShaderSource.CommonInclude = [
 	"precision highp float;",
 	"#endif",
 
+	"uniform mat4 mMatrix;",
+	"uniform mat4 vMatrix;",
+	"uniform mat3 nMatrix;",
+	"uniform mat4 pMatrix;",
+	"uniform vec3 uEyePosition;",
+
+	"mat4 mvpMatrix() {",
+	"return pMatrix * vMatrix * mMatrix;",
+	"}",
+
+	"mat4 mvMatrix() {",
+	"return vMatrix * mMatrix;",
+	"}",
+
 	"struct lightSource {",
 	"int type;",
 	"vec3 direction;",
@@ -28,9 +42,11 @@ J3D.ShaderSource.CommonInclude = [
 	"vec3 computeLight(vec4 p, vec3 n, float si, float sh, lightSource light){",
 	"vec3 ld;",
 
+	"vec4 lp = vMatrix * vec4(light.position, 1.0);",
+
 	"if(light.type == 0) return vec3(0);",
 	"else if(light.type == 1) ld = light.direction;",
-	"else if(light.type == 2) ld = normalize(light.position - p.xyz);",
+	"else if(light.type == 2) ld = normalize(lp.xyz - p.xyz);",
 	"float dif = max(dot(n, ld), 0.0);",
 
 	"float spec = 0.0;",
@@ -51,7 +67,52 @@ J3D.ShaderSource.CommonInclude = [
 	"s += computeLight(p, n, si, sh, uLight[3]);",
 	"return s;",
 	"}",
+""].join("\n");
 
+
+J3D.ShaderSource.GlassVertex = [
+	"varying vec3 vNormal;",
+	"varying vec3 t;",
+	"varying vec3 tr;",
+	"varying vec3 tg;",
+	"varying vec3 tb;",
+	"varying float rfac;",
+
+	"void main(void) {",
+	"gl_Position = mvpMatrix() * vec4(aVertexPosition, 1.0);",
+	"vNormal = normalize(nMatrix * aVertexNormal);",
+	"vec3 incident = normalize( (vec4(aVertexPosition, 1.0) * mMatrix).xyz - uEyePosition);",
+
+	"t = reflect(incident, vNormal);",
+	"tr = refract(incident, vNormal, 0.90);",
+	"tg = refract(incident, vNormal, 0.97);",
+	"tb = refract(incident, vNormal, 1.04);",
+
+	"rfac = 0.9 + 0.4 * pow(1.0 + dot(incident, vNormal), 1.1);",
+	"}",
+
+""].join("\n");
+
+J3D.ShaderSource.GlassFragment = [
+	"uniform samplerCube uCubemap;",
+
+	"varying vec3 vNormal;",
+	"varying vec3 t;",
+	"varying vec3 tr;",
+	"varying vec3 tg;",
+	"varying vec3 tb;",
+	"varying float rfac;",
+
+	"void main(void) {",
+	"vec4 ref = textureCube(uCubemap, t);",
+
+	"vec4 ret = vec4(1);",
+	"ret.r = textureCube(uCubemap, tr).r;",
+	"ret.g = textureCube(uCubemap, tg).g;",
+	"ret.b = textureCube(uCubemap, tb).b;",
+
+	"gl_FragColor = ret * rfac + ref * (1.0 - rfac);",
+	"}",
 ""].join("\n");
 
 J3D.ShaderSource.GouraudVertex = [
@@ -62,7 +123,7 @@ J3D.ShaderSource.GouraudVertex = [
 	"varying vec2 vTextureCoord;",
 
 	"void main(void) {",
-	"vec4 p = mvMatrix * vec4(aVertexPosition, 1.0);",
+	"vec4 p = mvMatrix() * vec4(aVertexPosition, 1.0);",
 	"gl_Position = pMatrix * p;",
 
 	"vTextureCoord = aTextureCoord;",
@@ -92,8 +153,8 @@ J3D.ShaderSource.Normal2ColorVertex = [
 	"varying vec3 vColor;",
 
 	"void main(void) {",
-	"gl_Position = pMatrix *  mvMatrix * vec4(aVertexPosition, 1.0);",
-	"vColor = normalize( nMatrix * aVertexNormal );",
+	"gl_Position = mvpMatrix() * vec4(aVertexPosition, 1.0);",
+	"vColor = normalize( aVertexNormal / 2.0 + vec3(0.5) );",
 	"}",
 
 ""].join("\n");
@@ -115,7 +176,7 @@ J3D.ShaderSource.PhongVertex = [
 	"void main(void) {",
 	"vTextureCoord = aTextureCoord;",
 	"vNormal = nMatrix * aVertexNormal;",
-	"vPosition = mvMatrix * vec4(aVertexPosition, 1.0);",
+	"vPosition = mvMatrix() * vec4(aVertexPosition, 1.0);",
 	"gl_Position = pMatrix * vPosition;",
 	"}",
 
@@ -145,12 +206,16 @@ J3D.ShaderSource.PhongFragment = [
 	"}",
 ""].join("\n");
 
+
 J3D.ShaderSource.ReflectiveVertex = [
 	"varying vec3 vNormal;",
+	"varying vec3 refVec;",
 
 	"void main(void) {",
-	"gl_Position = pMatrix *  mvMatrix * vec4(aVertexPosition, 1.0);",
-	"vNormal = nMatrix * aVertexNormal;",
+	"gl_Position = mvpMatrix() * vec4(aVertexPosition, 1.0);",
+	"vNormal = normalize(nMatrix * aVertexNormal);",
+	"vec3 incident = normalize( (vec4(aVertexPosition, 1.0) * mMatrix).xyz - uEyePosition);",
+	"refVec = reflect(incident, vNormal);",
 	"}",
 
 ""].join("\n");
@@ -158,20 +223,20 @@ J3D.ShaderSource.ReflectiveVertex = [
 J3D.ShaderSource.ReflectiveFragment = [
 	"uniform samplerCube uCubemap;",
 
-	"varying vec3 vNormal;",
+	"varying vec3 refVec;",
 
 	"void main(void) {",
-	"gl_FragColor = textureCube(uCubemap, vNormal);",
+	"gl_FragColor = textureCube(uCubemap, refVec);",
 	"}",
 ""].join("\n");
 
 J3D.ShaderSource.SkyboxVertex = [
-	"uniform vec4 uCameraPosition;",
+	"uniform float mid;",
 
 	"varying vec3 vVertexPosition;",
 
 	"void main(void) {",
-	"gl_Position = pMatrix * mvMatrix * vec4(aVertexPosition * uCameraPosition.w + uCameraPosition.xyz, 1.0);",
+	"gl_Position = pMatrix * vMatrix * vec4(uEyePosition + aVertexPosition * mid, 1.0);",
 	"vVertexPosition = aVertexPosition;",
 	"}",
 
@@ -191,9 +256,5 @@ J3D.ShaderSource.VertexInclude = [
 	"attribute vec3 aVertexPosition;",
 	"attribute vec3 aVertexNormal;",
 	"attribute vec2 aTextureCoord;",
-
-	"uniform mat4 mvMatrix;",
-	"uniform mat4 pMatrix;",
-	"uniform mat3 nMatrix;",
 ""].join("\n");
 

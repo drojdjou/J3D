@@ -4,10 +4,13 @@ J3D.Engine = function() {
 	this.gl;
 	
 	var cv;
+	var resolution = 1;
 	
 	cv = document.createElement("canvas");
-	cv.width = window.innerWidth;
-	cv.height = window.innerHeight;
+	cv.width = window.innerWidth / resolution;
+	cv.height = window.innerHeight / resolution;
+	cv.style.width = "100%";
+	cv.style.height = "100%";
 	document.body.appendChild(cv);
 
 	try {
@@ -44,84 +47,90 @@ J3D.Engine.prototype.render = function() {
 	
 	J3D.Time.tick();
 
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
 	this._opaqueMeshes.length = 0;
 	this._lights.length = 0;
-	
+
 	// 1. Update all transforms recursively
 	for(var i = 0; i < this.scene.numChildren; i++) {
 		this.updateTransform(this.scene.childAt(i), null);
 	}
 	
-	// 2. Calculate camera inverse matrix
-	this.camera.updateInverse();
-
+	// 2. Calculate camera inverse matrix and it's world position
+	this.camera.update();
+	
+	// 2.5. Render skybox (if any)
+	if(this.scene.skybox) {
+		gl.depthMask(false);
+		this.renderObject(this.scene.skybox);
+		gl.depthMask(true);	
+	}
+	
 	//3. Calculate global positions for all lights
 	for (var i = 0; i < this._lights.length; i++) {
 		var t = this._lights[i];
 		t.updateWorldPosition(this.camera.inverseMat);
 	}
-	
+
 	// 3. Render opaque meshes
 	gl.enable(gl.DEPTH_TEST);
-	
 	for(var i = 0; i < this._opaqueMeshes.length; i++){
-		var t = this._opaqueMeshes[i];
-		var s = this.shaderAtlas.getShader(t.renderer);
-		
-		t.updateViewAndNormal(this.camera.inverseMat);
-		
-		gl.useProgram(s);
-		
-		// Setup standard uniforms and attributes
-		gl.uniformMatrix4fv(s.pMatrix, false, this.camera.projectionMat.toArray() );
-		gl.uniformMatrix4fv(s.mvMatrix, false, t.viewMatrix);
-		gl.uniformMatrix3fv(s.nMatrix, false, t.normalMatrix);
-		
-		gl.uniform3fv(s.uAmbientColor, this.scene.ambient.rgb());
-		
-		if (t.mesh.vertBuf) {
-			gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.vertBuf);
-			gl.vertexAttribPointer(s.vertAttr, t.mesh.vertSize, gl.FLOAT, false, 0, 0);
-		}
-	
-		if (t.mesh.normBuf) {
-			gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.normBuf);
-			gl.vertexAttribPointer(s.normAttr, t.mesh.vertSize, gl.FLOAT, false, 0, 0);
-		}
-	
-		if (t.mesh.uv1buf) {
-			gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.uv1buf);
-			gl.vertexAttribPointer(s.uv1Attr, t.mesh.uvSize, gl.FLOAT, false, 0, 0);
-		}
-
-		
-		// Setup renderers custom uniforms and attributes
-		t.renderer.setup(t.mesh, s, this._lights, this.camera);
-
-		if(t.enabled) {	
-			var cull = t.renderer.cullFace || gl.BACK;			
-			gl.cullFace(cull);
-			
-			var mode = t.renderer.drawMode || gl.TRIANGLES;
-			
-			if (t.mesh.triBuf) {
-				gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, t.mesh.triBuf);
-				gl.drawElements(mode, t.mesh.triNum, gl.UNSIGNED_SHORT, 0);
-			} else {
-				// TODO: Draw arrays
-			}
-			
-		}
+		this.renderObject(this._opaqueMeshes[i]);
 	}
 
 	// 4. TODO: Sort & render transparent meshes
 
 	// #DEBUG Monitor the amount of shaders created
 	// console.log( this.shaderAtlas.shaderCount );
+
+	gl.flush();
+}
+
+J3D.Engine.prototype.renderObject = function(t) {
+	var s = this.shaderAtlas.getShader(t.renderer);
+
+	gl.useProgram(s);
 	
+	// Setup standard uniforms and attributes
+	gl.uniformMatrix4fv(s.pMatrix, false, this.camera.projectionMat.toArray() );
+	gl.uniformMatrix4fv(s.vMatrix, false, this.camera.inverseMat);
+	gl.uniformMatrix4fv(s.mMatrix, false, t.globalMatrix);
+	gl.uniformMatrix3fv(s.nMatrix, false, t.normalMatrix);
 	
+	gl.uniform3fv(s.uAmbientColor, this.scene.ambient.rgb());
+	gl.uniform3fv(s.uEyePosition, this.camera.transform.worldPosition.xyz());
+	
+	if (t.mesh.vertBuf) {
+		gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.vertBuf);
+		gl.vertexAttribPointer(s.vertAttr, t.mesh.vertSize, gl.FLOAT, false, 0, 0);
+	}
+
+	if (t.mesh.normBuf) {
+		gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.normBuf);
+		gl.vertexAttribPointer(s.normAttr, t.mesh.vertSize, gl.FLOAT, false, 0, 0);
+	}
+
+	if (t.mesh.uv1buf) {
+		gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.uv1buf);
+		gl.vertexAttribPointer(s.uv1Attr, t.mesh.uvSize, gl.FLOAT, false, 0, 0);
+	}
+
+	
+	// Setup renderers custom uniforms and attributes
+	t.renderer.setup(t.mesh, s, this._lights, this.camera);
+
+	var cull = t.renderer.cullFace || gl.BACK;			
+	gl.cullFace(cull);
+		
+	var mode = t.renderer.drawMode || gl.TRIANGLES;
+		
+	if (t.mesh.triBuf) {
+		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, t.mesh.triBuf);
+		gl.drawElements(mode, t.mesh.triNum, gl.UNSIGNED_SHORT, 0);
+	} else {
+		// TODO: Draw arrays
+	}
 }
 
 J3D.Engine.prototype.updateTransform = function(t, p){

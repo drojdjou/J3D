@@ -2,7 +2,6 @@ J3D.Reflective = function() {
 	this.name = "Reflective";
 	// Parameters
 	this.cubemap;
-	this.skybox = false;
 }
 
 J3D.Reflective.prototype.vertSource = function() {

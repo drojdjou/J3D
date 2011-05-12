@@ -18,6 +18,7 @@ java \
 --js ../src/renderers/Phong.js \
 --js ../src/renderers/Gouraud.js \
 --js ../src/renderers/Reflective.js \
+--js ../src/renderers/Glass.js \
 --js ../src/renderers/Skybox.js \
 --js ../src/renderers/ShaderSource.js \
 --js ../src/util/Color.js \

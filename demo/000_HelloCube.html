@@ -5,6 +5,9 @@
 
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
 
+<link rel="stylesheet" href="common/common.css"/>
+<script type="text/javascript" src="common/common.js"></script>
+
 <!--
 <script type="text/javascript" src="../lib/glMatrix.js"></script>
 <script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
@@ -34,11 +37,9 @@
 <script type="text/javascript" src="../build/j3d.js"></script>
 
 
-<link rel="stylesheet" href="common.css"/>
-
 <script>
 	
-	var engine, t;
+	var engine, cube;
 	
 	function init() {
 		// Always start by creating an instance of the engine
@@ -46,36 +47,24 @@
 		// Choose the clear color fot the viewport (default is black)
 		engine.setClearColor(J3D.Color.white);
 		
-		// Transforms are basic building blocks
-		// they define points in space with a position, rotation and scale
-		t = new J3D.Transform();
-		t.position = new v3(0, 0, 0);
-		// Watch out! All rotations are in radians
-		t.rotation = new v3(.8, .8, .8); 
+		// Transforms are basic building blocks they define points in space with a position, rotation and scale
+		cube = new J3D.Transform();
+		cube.rotation = new v3(.8, .8, .8); // All rotations are in radians
 		
 		// A transform has no visual representation until we add two things to it:
-		// - a mesh to define the shape of the object	
+		// 1. A mesh to define the shape of the object	
+		J3D.Loader.loadJSON("models/cube.js", function(j) {  cube.mesh = new J3D.Mesh(j); } );		
 		
-		// You need to load your mesh, and this is a one-line way to do it:
-		J3D.Loader.loadJSON("models/cube.js", function(j) { t.mesh = new J3D.Mesh(j); } );
-		// (Checkout cube.js to see how the JSON format used by J3D looks)
+		// 2. A renderer to define the way it looks 
+		cube.renderer = new J3D.Normal2Color();
 		
-		// - a renderer to define the way it looks 
-		t.renderer = new J3D.Normal2Color();
-		// This is the simplest renderer, it simply maps the color of the face to the direction of its normal, useful for debugging
-		
-		// Next, create a camera
+		// Next, create a camera and tell the engine to use this camera as point of view
 		var camera = new J3D.Camera(45);
-		// and move it a bit along the z axis so it's outside the cube, looking at it
 		camera.transform.position.z = 4;
-		// Tell the engine to use this camera as point of view when rendering
 		engine.camera = camera;
 
-		// Add the camera transform to the scene hierarchy 
-		// then the camera can be moved around same as any other transform
-		engine.scene.add(camera.transform);
-		// Finally the cube to the scene
-		engine.scene.add(t);
+		// Add objects to the scene
+		engine.scene.add(camera.transform, cube);
 
 		draw();
 	}
@@ -85,10 +74,9 @@
 		requestAnimationFrame(draw);
 
 		// Time.deltaTime = time since last frame was rendered in seconds
-		// Use this to make frame rate independent animation
-		t.rotation.x += Math.PI * J3D.Time.deltaTime / 6000;
-		t.rotation.y += Math.PI/2 * J3D.Time.deltaTime / 6000;
-
+		cube.rotation.x += Math.PI * J3D.Time.deltaTime / 6000;
+		cube.rotation.y += Math.PI/2 * J3D.Time.deltaTime / 3000;
+		
 		// Render the scene, yay!
 		engine.render();
 	}

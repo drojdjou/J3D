@@ -7,7 +7,7 @@ varying vec3 vNormal;
 void main(void) {
 	vTextureCoord = aTextureCoord;	
     vNormal = nMatrix * aVertexNormal;
-	vPosition = mvMatrix * vec4(aVertexPosition, 1.0);
+	vPosition = mvMatrix() * vec4(aVertexPosition, 1.0);
     gl_Position = pMatrix * vPosition;
 }
 

@@ -5,6 +5,9 @@
 
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
 
+<link rel="stylesheet" href="common/common.css"/>
+<script type="text/javascript" src="common/common.js"></script>
+
 <!--
 <script type="text/javascript" src="../lib/glMatrix.js"></script>
 <script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
@@ -33,9 +36,6 @@
 
 <script type="text/javascript" src="../build/j3d.js"></script>
 
-
-<link rel="stylesheet" href="common.css"/>
-
 <script>
 	var mx, my = 0;
 	var jsonScene;
@@ -62,14 +62,14 @@
 	function draw() {
 		requestAnimationFrame(draw);
 		
+		var tr = jsonScene.transforms;
+
 		if(!mx) mx = 0;
 		if(!my) my = 0;
 		
 		var sx = mx * J3D.Time.deltaTime / 1000;
 		var sy = my * J3D.Time.deltaTime / 1000;
-		
-		var tr = jsonScene.transforms;
-		
+
 		tr.root.rotation.y += sx;
 		
 		tr.ring1.rotation.y += sx;

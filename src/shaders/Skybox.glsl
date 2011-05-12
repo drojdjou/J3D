@@ -1,10 +1,10 @@
 //# SkyboxVertex
-uniform vec4 uCameraPosition;
+uniform float mid;
 
 varying vec3 vVertexPosition;
 
 void main(void) {
-	gl_Position = pMatrix * mvMatrix * vec4(aVertexPosition * uCameraPosition.w + uCameraPosition.xyz, 1.0);
+	gl_Position = pMatrix * vMatrix * vec4(uEyePosition + aVertexPosition * mid, 1.0);
 	vVertexPosition = aVertexPosition;	
 }
 

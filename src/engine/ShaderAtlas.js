@@ -11,7 +11,7 @@ J3D.ShaderAtlas.prototype.compileShaderSource = function(name, src, type){
 	var isrc;
 	
 	if(type == gl.VERTEX_SHADER) {
-		isrc = J3D.ShaderSource.CommonInclude + J3D.ShaderSource.VertexInclude + src;
+		isrc = J3D.ShaderSource.VertexInclude + J3D.ShaderSource.CommonInclude + src;
 	} else {
 		isrc = J3D.ShaderSource.CommonInclude + src;
 	}
@@ -49,9 +49,11 @@ J3D.ShaderAtlas.prototype.linkShader = function(renderer){
 	
 	// Common uniforms for all shaders (if program doesn't have some of them, it's ok)
 	program.pMatrix = gl.getUniformLocation(program, "pMatrix");
-	program.mvMatrix = gl.getUniformLocation(program, "mvMatrix");
+	program.vMatrix = gl.getUniformLocation(program, "vMatrix");
+	program.mMatrix = gl.getUniformLocation(program, "mMatrix");
 	program.nMatrix = gl.getUniformLocation(program, "nMatrix");
 	program.uAmbientColor = gl.getUniformLocation(program, "uAmbientColor");
+	program.uEyePosition = gl.getUniformLocation(program, "uEyePosition");
 	
 	program.vertAttr = gl.getAttribLocation(program, "aVertexPosition");
 	gl.enableVertexAttribArray(program.vertAttr);

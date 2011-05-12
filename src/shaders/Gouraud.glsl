@@ -6,7 +6,7 @@ varying vec3 vLight;
 varying vec2 vTextureCoord;
 
 void main(void) {
-	vec4 p = mvMatrix * vec4(aVertexPosition, 1.0);
+	vec4 p = mvMatrix() * vec4(aVertexPosition, 1.0);
     gl_Position = pMatrix * p;
 	
  	vTextureCoord = aTextureCoord;
