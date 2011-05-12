@@ -2,15 +2,61 @@ body {
 	font-family: Georgia, serif;
 	background-color: #ffffff;
 	margin: 0px;
-	overflow: hidden;
 }
 
-#options, #content {
-	position: absolute;
+#content {
+	position: fixed;
 	top: 10px; left: 10px; width: 800px;
 	color: #dddddd;
 	padding: 5px;
 	font-size: 13px;
 	text-align: left;
-	z-index:100;
+	z-index: 0;
+}
+
+#header  
+{
+     color: #ffffff;
+     background-color: #000000;
+     text-align: left;
+     position: absolute;
+     top: 0px;
+     left: 0px;
+	 padding: 4 8 4 4;
+	 z-index: 1;
+}
+
+#madewith  
+{
+     color: #ffffff;
+     background-color: #000000;
+     text-align: left;
+     position: absolute;
+     top: 0px;
+     right: 0px;
+	 padding: 4 8 4 4;
+	 z-index: 1;
+}
+
+#details  
+{
+     color: #ffffff;
+	 font-size: 12px;
+     background-color: #000000;
+     text-align: left;
+     position: absolute;
+     top: 28px;
+     left: 0px;
+	 padding: 4 4 4 4;
+	 z-index: 1;
+}
+
+a:link, a:visited {
+	color: 83c3e4;
+	text-decoration: none;
+}
+
+a:hover {
+	color: 83c3e4;
+	text-decoration: underline;
 }
