@@ -30,11 +30,13 @@
 <script type="text/javascript" src="../src/renderers/Gouraud.js"></script>
 <script type="text/javascript" src="../src/renderers/Normal2Color.js"></script>
 <script type="text/javascript" src="../src/renderers/Reflective.js"></script>
+<script type="text/javascript" src="../src/renderers/Glass.js"></script>
 <script type="text/javascript" src="../src/renderers/Skybox.js"></script>
 <script type="text/javascript" src="../src/util/Time.js"></script>
 -->
 
 <script type="text/javascript" src="../build/j3d.js"></script>
+
 
 <script>
 	var engine, scene;
@@ -45,9 +47,8 @@
 	function init() {
 		
 		engine = new J3D.Engine();
-		engine.setClearColor(J3D.Color.white);
 
-		camera = new J3D.Camera(45, 1, 10);
+		camera = new J3D.Camera(45, 1, 100);
 		camera.transform.position.z = 5;	
 		engine.camera = camera;	
 		
@@ -69,8 +70,14 @@
 		} );
 		
 		monkey = new J3D.Transform();	
+		
 		monkey.renderer = new J3D.Glass();
+		monkey.renderer.chromaticDispertion = new v3(0.90, 0.97, 1.04);
+		monkey.renderer.bias = 0.9
+		monkey.renderer.scale = 0.7;
+		monkey.renderer.power = 1.1;	
 		monkey.renderer.cubemap = cubemap;
+		
 		J3D.Loader.loadJSON("models/monkeyhi.js", function(j) { monkey.mesh = new J3D.Mesh(j); } );
 		engine.scene.add(monkey);
 
@@ -102,7 +109,7 @@
 
 <body onload="init();">
 	<script>
-		setLabels("004. Glass", "Glass shader with refraction, reflection, fresnel effect and chromatic dispersion<br>Cubemap by <a href='http://www.ataricommunity.com/forums/showthread.php?t=506748'>Jockum Skoglund</a>");
+		setLabels("004. Glass", "Glass shader with refraction, reflection, fresnel effect and chromatic dispersion<br>Cubemap by <a href='http://www.ataricommunity.com/forums/showthread.php?t=506748'>Jockum Skoglund</a> | Based on <a href='http://http.developer.nvidia.com/CgTutorial/cg_tutorial_chapter07.html'>Cg tutorial</a>");
 	</script>
 </body> 
 

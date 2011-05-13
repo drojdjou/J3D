@@ -78,17 +78,22 @@ J3D.ShaderSource.GlassVertex = [
 	"varying vec3 tb;",
 	"varying float rfac;",
 
+	"uniform vec3 chromaticDispertion;",
+	"uniform float bias;",
+	"uniform float scale;",
+	"uniform float power;",
+
 	"void main(void) {",
 	"gl_Position = mvpMatrix() * vec4(aVertexPosition, 1.0);",
 	"vNormal = normalize(nMatrix * aVertexNormal);",
 	"vec3 incident = normalize( (vec4(aVertexPosition, 1.0) * mMatrix).xyz - uEyePosition);",
 
 	"t = reflect(incident, vNormal);",
-	"tr = refract(incident, vNormal, 0.90);",
-	"tg = refract(incident, vNormal, 0.97);",
-	"tb = refract(incident, vNormal, 1.04);",
+	"tr = refract(incident, vNormal, chromaticDispertion.x);",
+	"tg = refract(incident, vNormal, chromaticDispertion.y);",
+	"tb = refract(incident, vNormal, chromaticDispertion.z);",
 
-	"rfac = 0.9 + 0.4 * pow(1.0 + dot(incident, vNormal), 1.1);",
+	"rfac = bias + scale * pow(1.0 + dot(incident, vNormal), power);",
 	"}",
 
 ""].join("\n");
