@@ -1,0 +1,106 @@
+<html> 
+ 
+<head> 
+<title>005 | Static particles | J3D</title> 
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
+
+<link rel="stylesheet" href="common/common.css"/>
+<script type="text/javascript" src="common/common.js"></script>
+
+<!--
+<script type="text/javascript" src="../lib/glMatrix.js"></script>
+<script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
+<script type="text/javascript" src="../src/J3D.js"></script>
+<script type="text/javascript" src="../src/util/Color.js"></script>
+<script type="text/javascript" src="../src/math/Vector3.js"></script>
+<script type="text/javascript" src="../src/math/Matrix44.js"></script>
+<script type="text/javascript" src="../src/engine/Engine.js"></script>
+<script type="text/javascript" src="../src/engine/Camera.js"></script>
+<script type="text/javascript" src="../src/engine/Light.js"></script>
+<script type="text/javascript" src="../src/engine/Mesh.js"></script>
+<script type="text/javascript" src="../src/engine/ParticleSystem.js"></script>
+<script type="text/javascript" src="../src/engine/Scene.js"></script>
+<script type="text/javascript" src="../src/engine/Loader.js"></script>
+<script type="text/javascript" src="../src/engine/ShaderAtlas.js"></script>
+<script type="text/javascript" src="../src/engine/Texture.js"></script>
+<script type="text/javascript" src="../src/engine/Cubemap.js"></script>
+<script type="text/javascript" src="../src/engine/Transform.js"></script>
+<script type="text/javascript" src="../src/renderers/ShaderSource.js"></script>
+<script type="text/javascript" src="../src/renderers/Phong.js"></script>
+<script type="text/javascript" src="../src/renderers/Gouraud.js"></script>
+<script type="text/javascript" src="../src/renderers/Normal2Color.js"></script>
+<script type="text/javascript" src="../src/renderers/Reflective.js"></script>
+<script type="text/javascript" src="../src/renderers/Glass.js"></script>
+<script type="text/javascript" src="../src/renderers/Skybox.js"></script>
+<script type="text/javascript" src="../src/renderers/Particle.js"></script>
+<script type="text/javascript" src="../src/util/Time.js"></script>
+-->
+
+<script type="text/javascript" src="../build/j3d.js"></script>
+
+
+
+<script>
+	var engine, scene;
+	var root, monkey, camera;
+	var mx, my = 0;
+	var isMouseDown = false;
+	
+	function init() {
+		
+		engine = new J3D.Engine();
+
+		camera = new J3D.Camera(45, 1, 1000);
+		camera.transform.position.z = 100;	
+		engine.camera = camera;	
+		
+		root = new J3D.Transform();
+		root.add(camera.transform);
+		engine.scene.add(root);
+
+		monkey = new J3D.Transform();	
+		
+		monkey.renderer = new J3D.Particle();
+		
+		monkey.mesh = new J3D.ParticleSystem( { numParticles: getNumParticles(), spread: 200 } );
+		
+		engine.scene.add(monkey);
+
+		document.onmousemove = onMouseMove;
+		
+		draw();
+	}
+	
+	function getNumParticles() {
+		return parseInt(window.location.hash.substring(1)) || 1000000;
+	}
+	
+	function onMouseMove(e) {
+		mx = ( e.clientX / window.innerWidth  ) * 2 - 1;
+		my = ( e.clientY / window.innerHeight ) * 2 - 1;
+	}
+	
+	function draw() {
+		requestAnimationFrame(draw);
+		
+		if (!isNaN(mx) && !isNaN(my)) {
+			// Rotate the root to which camera is attached 
+			root.rotation.x += my * J3D.Time.deltaTime / 1000;
+			root.rotation.y += mx * J3D.Time.deltaTime / 2000;
+		}
+		
+		engine.render();
+	}
+	
+</script>
+
+</head> 
+
+<body onload="init();">
+	<script>
+		setLabels("005. Static particles", "Rendering " + getNumParticles() + " static particles.<br>Add #Number to the url to change the amount.");
+	</script>
+</body> 
+
+</html> 

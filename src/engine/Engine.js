@@ -105,6 +105,11 @@ J3D.Engine.prototype.renderObject = function(t) {
 		gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.vertBuf);
 		gl.vertexAttribPointer(s.vertAttr, t.mesh.vertSize, gl.FLOAT, false, 0, 0);
 	}
+	
+	if (t.mesh.colorBuf) {
+		gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.colorBuf);
+		gl.vertexAttribPointer(s.colorAttr, t.mesh.colorSize, gl.FLOAT, false, 0, 0);
+	}
 
 	if (t.mesh.normBuf) {
 		gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.normBuf);
@@ -122,14 +127,14 @@ J3D.Engine.prototype.renderObject = function(t) {
 
 	var cull = t.renderer.cullFace || gl.BACK;			
 	gl.cullFace(cull);
-		
-	var mode = t.renderer.drawMode || gl.TRIANGLES;
-		
+	
+	var mode = (t.renderer.drawMode != null) ? t.renderer.drawMode : gl.TRIANGLES;
+	
 	if (t.mesh.triBuf) {
 		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, t.mesh.triBuf);
 		gl.drawElements(mode, t.mesh.triNum, gl.UNSIGNED_SHORT, 0);
 	} else {
-		// TODO: Draw arrays
+		gl.drawArrays(mode, 0, t.mesh.vertNum);
 	}
 }
 

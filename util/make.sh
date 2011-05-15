@@ -14,12 +14,14 @@ java \
 --js ../src/engine/Cubemap.js \
 --js ../src/engine/Transform.js \
 --js ../src/engine/ShaderAtlas.js \
+--js ../src/engine/ParticleSystem.js \
 --js ../src/renderers/Normal2Color.js \
 --js ../src/renderers/Phong.js \
 --js ../src/renderers/Gouraud.js \
 --js ../src/renderers/Reflective.js \
 --js ../src/renderers/Glass.js \
 --js ../src/renderers/Skybox.js \
+--js ../src/renderers/Particle.js \
 --js ../src/renderers/ShaderSource.js \
 --js ../src/util/Color.js \
 --js ../src/util/Time.js \

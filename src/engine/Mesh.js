@@ -20,6 +20,7 @@ J3D.Mesh = function(source){
 		this.uv1 = new Float32Array(this.vertNum * this.uvSize);
 	}
 
+	// TODO: remove this
 	this.buffersReady = false;
 	this.vertBuf;
 	this.colorBuf;
