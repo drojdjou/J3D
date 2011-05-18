@@ -1,5 +1,7 @@
+./buildShaders.py
+
 java \
--jar make/compiler.jar \
+-jar build/compiler.jar \
 --js_output_file ../build/j3dt.js \
 --js ../src/J3D.js \
 --js ../src/math/Vector3.js \
@@ -14,7 +16,8 @@ java \
 --js ../src/engine/Cubemap.js \
 --js ../src/engine/Transform.js \
 --js ../src/engine/ShaderAtlas.js \
---js ../src/engine/ParticleSystem.js \
+--js ../src/engine/Particles.js \
+--js ../src/renderers/Shader.js \
 --js ../src/renderers/Normal2Color.js \
 --js ../src/renderers/Phong.js \
 --js ../src/renderers/Gouraud.js \
@@ -28,7 +31,7 @@ java \
 --js ../lib/requestAnimationFrame.js \
 --warning_level QUIET
 
-cat ./make/info.txt ../lib/glMatrix.js ../build/j3dt.js > ../build/j3d.js
+cat ./build/info.txt ../lib/glMatrix.js ../build/j3dt.js > ../build/j3d.js
 
 rm -Rf ../build/j3dt.js
 

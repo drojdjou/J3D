@@ -2,13 +2,13 @@
 
 import glob, os
 
-jsf = open("../renderers/ShaderSource.js", 'w')
+jsf = open("../src/renderers/ShaderSource.js", 'w')
 isw = False
 
 jsf.write("// File generated with src/shaders/buildShaders.py. Do not edit //\n\n")
 jsf.write("J3D.ShaderSource = {};\n\n")
 
-for infile in glob.glob( "*.glsl" ):
+for infile in glob.glob( "../src/shaders/*.glsl" ):
 	
 	glsl = open(infile, 'r')
 	
