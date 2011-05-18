@@ -3,6 +3,8 @@
 precision highp float;
 #endif
 
+uniform float uTime;
+
 uniform mat4 mMatrix;
 uniform mat4 vMatrix;
 uniform mat3 nMatrix;

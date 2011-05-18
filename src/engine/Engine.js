@@ -34,6 +34,7 @@ J3D.Engine = function() {
 	this.canvas = cv;
 	
 	this._opaqueMeshes = [];
+	this._transparentMeshes = [];
 	this._lights = [];
 	
 	this.gl = gl;
@@ -50,6 +51,7 @@ J3D.Engine.prototype.render = function() {
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
 	this._opaqueMeshes.length = 0;
+	this._transparentMeshes.length = 0;
 	this._lights.length = 0;
 
 	// 1. Update all transforms recursively
@@ -74,12 +76,22 @@ J3D.Engine.prototype.render = function() {
 	}
 
 	// 3. Render opaque meshes
+	gl.disable(gl.BLEND);
 	gl.enable(gl.DEPTH_TEST);
 	for(var i = 0; i < this._opaqueMeshes.length; i++){
 		this.renderObject(this._opaqueMeshes[i]);
 	}
 
-	// 4. TODO: Sort & render transparent meshes
+	// 4. Render transparent meshes	(TODO: sort before rendering)
+	gl.disable(gl.DEPTH_TEST);
+	gl.enable(gl.BLEND);
+	for(var i = 0; i < this._transparentMeshes.length; i++) {
+		var t = this._transparentMeshes[i];
+		var srcFactor = (t.mesh.srcFactor != null) ? t.mesh.srcFactor : gl.SRC_ALPHA;
+		var dstFactor = (t.mesh.dstFactor != null) ? t.mesh.dstFactor : gl.ONE;
+		gl.blendFunc(srcFactor, dstFactor);
+		this.renderObject(t);
+	}
 
 	// #DEBUG Monitor the amount of shaders created
 	// console.log( this.shaderAtlas.shaderCount );
@@ -93,6 +105,8 @@ J3D.Engine.prototype.renderObject = function(t) {
 	gl.useProgram(s);
 	
 	// Setup standard uniforms and attributes
+	gl.uniform1f(s.uTime, J3D.Time.time);
+	
 	gl.uniformMatrix4fv(s.pMatrix, false, this.camera.projectionMat.toArray() );
 	gl.uniformMatrix4fv(s.vMatrix, false, this.camera.inverseMat);
 	gl.uniformMatrix4fv(s.mMatrix, false, t.globalMatrix);
@@ -119,6 +133,11 @@ J3D.Engine.prototype.renderObject = function(t) {
 	if (t.mesh.uv1buf) {
 		gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.uv1buf);
 		gl.vertexAttribPointer(s.uv1Attr, t.mesh.uvSize, gl.FLOAT, false, 0, 0);
+	}
+	
+	if (t.mesh.animBuf) {
+		gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.animBuf);
+		gl.vertexAttribPointer(s.animAttr, t.mesh.animSize, gl.FLOAT, false, 0, 0);
 	}
 
 	
@@ -147,8 +166,11 @@ J3D.Engine.prototype.updateTransform = function(t, p){
 	
 	if(!t.enabled) return;
 	
-	if (t.renderer && t.mesh) {
-		this._opaqueMeshes.push(t);
+	if (t.renderer && t.mesh) {	
+		if(t.mesh.renderMode == J3D.RENDER_AS_TRANSPARENT) 
+			this._transparentMeshes.push(t);	
+		else 
+			this._opaqueMeshes.push(t);
 	}
 	
 	if (t.light) {

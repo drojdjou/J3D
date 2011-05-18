@@ -1,4 +1,6 @@
 J3D.Mesh = function(source){
+	this.renderMode = J3D.RENDER_AS_OPAQUE;
+	
 	this.vertSize = 3;
 	this.uvSize = 2;
 	this.colorSize = 4;
@@ -29,6 +31,16 @@ J3D.Mesh = function(source){
 	this.triBuf;
 	
 	this.bindBuffers();
+}
+
+J3D.Mesh.setTransparency = function(transparency, srcFactor, dstFactor) {
+	if(!transparency) {
+		this.renderMode = J3D.RENDER_AS_OPAQUE;
+	} else {
+		this.renderMode = J3D.RENDER_AS_TRANSPARENT;
+		this.srcFactor = srcFactor;
+		this.dstFactor = dstFactor;
+	}
 }
 
 J3D.Mesh.prototype.bindBuffers = function(){

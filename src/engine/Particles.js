@@ -1,34 +1,40 @@
+J3D.Particles = function(setup) {
+	this.renderMode = J3D.RENDER_AS_OPAQUE;
 
-J3D.Particles = function(setup){
-	
-	var origin = setup.origin || v3.ZERO();
-	var spread = setup.spread || 0;
-	var amount = setup.amount || 0;
-	
 	this.vertSize = 3;
-	this.vertices = new Float32Array(amount * this.vertSize);
-	this.vertNum = amount;
-	
-	this.colorSize = 4;
-	this.colors = new Float32Array(amount * this.colorSize);
-
-	
-	for(var i = 0; i < amount * this.vertSize; i += this.vertSize) {
-		this.vertices[i]   = origin.x + Math.random() * spread * 2.0 - spread + Math.random();
-		this.vertices[i+1] = origin.y + Math.random() * spread * 2.0 - spread + Math.random();
-		this.vertices[i+2] = origin.z + Math.random() * spread * 2.0 - spread + Math.random();
-	}
-	
-	for(var i = 0; i < amount * this.colorSize; i++) {
-		this.colors[i] = 0.5 + Math.random() / 2.0;
-	}
+	this.vertices = setup.positions;
+	this.vertNum = setup.positions.length / this.vertSize;
 	
 	this.vertBuf = gl.createBuffer();
 	gl.bindBuffer(gl.ARRAY_BUFFER, this.vertBuf);
 	gl.bufferData(gl.ARRAY_BUFFER, this.vertices, gl.STATIC_DRAW);
 	
-	this.colorBuf = gl.createBuffer();
-	gl.bindBuffer(gl.ARRAY_BUFFER, this.colorBuf);
-	gl.bufferData(gl.ARRAY_BUFFER, this.colors, gl.STATIC_DRAW);
+	if (setup.colors) {
+		this.colorSize = 4;
+		this.colors = setup.colors;
+		
+		this.colorBuf = gl.createBuffer();
+		gl.bindBuffer(gl.ARRAY_BUFFER, this.colorBuf);
+		gl.bufferData(gl.ARRAY_BUFFER, this.colors, gl.STATIC_DRAW);
+	}
 	
+	if (setup.animation) {
+		if(!setup.animationSize) throw new Error("Please specify the size of animaton attribute");
+		this.animSize = setup.animationSize;
+		this.animation = setup.animation;
+		
+		this.animBuf = gl.createBuffer();
+		gl.bindBuffer(gl.ARRAY_BUFFER, this.animBuf);
+		gl.bufferData(gl.ARRAY_BUFFER, this.animation, gl.STATIC_DRAW);
+	}
+}
+
+J3D.Particles.prototype.setTransparency = function(transparency, srcFactor, dstFactor) {
+	if(!transparency) {
+		this.renderMode = J3D.RENDER_AS_OPAQUE;
+	} else {
+		this.renderMode = J3D.RENDER_AS_TRANSPARENT;
+		this.srcFactor = srcFactor;
+		this.dstFactor = dstFactor;
+	}
 }

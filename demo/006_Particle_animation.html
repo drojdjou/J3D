@@ -1,7 +1,7 @@
 <html> 
  
 <head> 
-<title>005 | Static particles | J3D</title> 
+<title>006 | Particle stream | J3D</title> 
 
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
 
@@ -41,34 +41,56 @@
 <script type="text/javascript" src="../build/j3d.js"></script>
 
 
+
 <script id="particleVertexShader" type="x-shader/x-vertex"> 
+	attribute vec2 aVertexAnimation;
+	
 	varying vec4 vColor;
 	varying float eyeDist;
+	varying float orderPos;
 	
 	void main(void) {
-		vec4 worldPos = mMatrix * vec4(aVertexPosition, 1.0);
+	
+		orderPos = mod(aVertexAnimation.x - uTime * 0.5, 1.0);
+	
+		float a = aVertexPosition.x - uTime * 0.4;
+		float b = aVertexPosition.y * uTime * 5.0;
+		
+		float r = 27.5 + 5.0 * sin(a * 8.0);		
+		vec3 knotPos = vec3(cos(a * 5.0) * r, sin(a * 4.0) * r, cos(a * 8.0) * r * 2.0); 
+		
+		float z = aVertexPosition.z;
+		vec3 orbitPos = vec3(cos(b) * z, sin(b) * z, cos(b) * z);
+		
+		vec4 worldPos = mMatrix * vec4(knotPos + orbitPos, 1.0);
 		
 		vColor = aVertexColor;
-		eyeDist = clamp( distance( uEyePosition, worldPos.xyz ) / 300.0, 0.0, 1.0);
+		eyeDist = clamp( distance( uEyePosition, worldPos.xyz ) / 240.0, 0.0, 1.0);
 		
 		gl_Position = pMatrix * vMatrix * worldPos;
-		gl_PointSize = 2.0 * (1.0 - eyeDist);
+		gl_PointSize = 30.0 * (1.0 - eyeDist);
+		
+		
 	}
 </script>
 
 <script id="particleFragmentShader" type="x-shader/x-fragment"> 
 	uniform vec4 uColor;
+	uniform sampler2D uParticleTex;
 	
 	varying vec4 vColor;
 	varying float eyeDist;
+	varying float orderPos;
 	
 	void main(void) {
-		gl_FragColor = vec4( uColor.rgb * (1.0 - eyeDist) * vColor.rgb, 1.0 );
+		vec4 texCol = texture2D(uParticleTex, gl_PointCoord);
+		vec3 indCol = vec3(orderPos, orderPos, 0.5 - orderPos);
+		gl_FragColor = vec4( indCol * vec3(1.0 - eyeDist) * uColor.rgb, texCol.a * (1.0 - eyeDist) );
 	}
 </script>
 
 <script>
-	var engine, scene, stars, camera;
+	var engine, scene, stars, camera, texture;
 	var mx, my = 0;
 
 	function init() {
@@ -81,6 +103,8 @@
 
 		stars = new J3D.Transform();	
 		
+		texture = new J3D.Texture("models/textures/smoke.png"); 
+		
 		var v = document.getElementById("particleVertexShader").firstChild.nodeValue;
 		var f = document.getElementById("particleFragmentShader").firstChild.nodeValue;
 		var particleShader = new J3D.Shader("StaticParticle", v, f);
@@ -88,27 +112,63 @@
 		
 		particleShader.setupLocations = function(shader) {
 			shader.uColor = gl.getUniformLocation(shader, "uColor");
+			shader.uParticleTex = gl.getUniformLocation(shader, "uParticleTex");
 		}
 		
 		particleShader.setup = function(mesh, shader, lights, camera) {
+			gl.activeTexture(gl.TEXTURE0);
+			gl.bindTexture(gl.TEXTURE_2D, texture.tex);
+			gl.uniform1i(shader.uParticleTex, 0);
+			
 			if (!isNaN(mx) && !isNaN(my)) {
-				gl.uniform4fv(shader.uColor, [1 - (mx + 1 / 2), my + 1 / 2, 1, 1]);
+				gl.uniform4fv(shader.uColor, [0.8, 0.3, 0.2, 1]);
+				//gl.uniform4fv(shader.uColor, [1 - (mx + 1 / 2), my + 1 / 2, 0.2, 1]);
 			}
 		}
 
-		stars.renderer = particleShader;	
-			
-		var a = getParticleAmount();
+		stars.renderer = particleShader;
+
+		var a = getParticleAmount();	
 		stars.mesh = new J3D.Particles({
-			positions: J3D.ParticleUtil.insideCube(a, 400),
-			colors: J3D.ParticleUtil.randomColors(a, 0.5)
-		});		
+			positions: distributeAngles(a),
+			colors: J3D.ParticleUtil.randomColors(a, 0, 1),
+			animation: prepareAnimationAttributes(a, 8),
+			animationSize: 1
+		});	
 		
+		stars.mesh.setTransparency(true, gl.SRC_ALPHA, gl.DST_ALPHA);
+			
 		engine.scene.add(stars);
 
 		document.onmousemove = onMouseMove;
 		
 		draw();
+	}
+	
+	function prepareAnimationAttributes(amount, maxOffset) {
+		var animdata = new Float32Array(amount * 2);
+
+		for (var i = 0; i < amount; i++) {
+			animdata[i] = i / amount + Math.random() * 0.05;
+		}
+	
+		return animdata;
+	}
+	
+	function distributeAngles(amount, origin) {
+		var vertices = new Float32Array(amount * 3);
+		
+		var step = Math.PI * 0.25 / amount;
+		
+		origin = origin || v3.ZERO();	
+		
+		for (var i = 0; i < amount * 3; i += 3) {
+			vertices[i] = step * i / 3;
+			vertices[i + 1] = Math.random();
+			vertices[i + 2] = (1 + ((amount * 1.5) - Math.abs(i - amount * 1.5)) / (amount * 0.15)) * (0.1 + Math.random());
+		}
+		
+		return vertices;
 	}
 
 	function onMouseMove(e) {
@@ -117,17 +177,11 @@
 	}
 	
 	function getParticleAmount() {
-		return parseInt(window.location.hash.substring(1)) || 1000000;
+		return 5000;
 	}
 	
 	function draw() {
 		requestAnimationFrame(draw);
-		
-		if (!isNaN(mx) && !isNaN(my)) {
-			stars.rotation.x += my * J3D.Time.deltaTime / 1000;
-			stars.rotation.y += mx * J3D.Time.deltaTime / 2000;
-		}
-		
 		engine.render();
 	}
 	
@@ -137,7 +191,7 @@
 
 <body onload="init();">
 	<script>
-		setLabels("005. Static particles", "Rendering " + getParticleAmount() + " static particles.<br>Add #Number to the url to change the amount.");
+		setLabels("006. Particle stream", "A stream of textured particles<br>animated with a vertex shader");
 	</script>
 </body> 
 

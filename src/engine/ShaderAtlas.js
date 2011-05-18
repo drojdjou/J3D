@@ -47,7 +47,9 @@ J3D.ShaderAtlas.prototype.linkShader = function(renderer){
 	
 	gl.useProgram(program);
 	
-	// Common uniforms for all shaders (if program doesn't have some of them, it's ok)
+	// Common uniforms and attributes for all shaders
+	program.uTime = gl.getUniformLocation(program, "uTime");
+	
 	program.pMatrix = gl.getUniformLocation(program, "pMatrix");
 	program.vMatrix = gl.getUniformLocation(program, "vMatrix");
 	program.mMatrix = gl.getUniformLocation(program, "mMatrix");
@@ -66,6 +68,9 @@ J3D.ShaderAtlas.prototype.linkShader = function(renderer){
 
 	program.colorAttr = gl.getAttribLocation(program, "aVertexColor");
 	gl.enableVertexAttribArray(program.colorAttr);
+	
+	program.animAttr = gl.getAttribLocation(program, "aVertexAnimation");
+	gl.enableVertexAttribArray(program.animAttr);
 	
 	
 	renderer.setupLocations(program);

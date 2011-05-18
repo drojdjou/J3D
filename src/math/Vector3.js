@@ -78,3 +78,4 @@ v3.ONE = function() { return new v3(1, 1, 1); }
 v3.RIGHT = function() { return new v3(1, 0, 0); }
 v3.UP = function() { return new v3(0, 1, 0); }
 v3.FORWARD = function() { return new v3(0, 0, 1); }
+v3.random = function() { return new v3(Math.random() * 2 - 1, Math.random() * 2 - 1, Math.random() * 2 - 1); }

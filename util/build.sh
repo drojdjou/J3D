@@ -24,10 +24,10 @@ java \
 --js ../src/renderers/Reflective.js \
 --js ../src/renderers/Glass.js \
 --js ../src/renderers/Skybox.js \
---js ../src/renderers/Particle.js \
 --js ../src/renderers/ShaderSource.js \
 --js ../src/util/Color.js \
 --js ../src/util/Time.js \
+--js ../src/util/ParticleUtil.js \
 --js ../lib/requestAnimationFrame.js \
 --warning_level QUIET
 
