@@ -98,7 +98,7 @@
 
 		stars.renderer = particleShader;		
 		stars.mesh = new J3D.Particles( { 
-			amount: parseInt(window.location.hash.substring(1)) || 1000000, 
+			amount: getParticleAmount(), 
 			spread: 200 
 		});		
 		engine.scene.add(stars);
@@ -111,6 +111,10 @@
 	function onMouseMove(e) {
 		mx = ( e.clientX / window.innerWidth  ) * 2 - 1;
 		my = ( e.clientY / window.innerHeight ) * 2 - 1;
+	}
+	
+	function getParticleAmount() {
+		return parseInt(window.location.hash.substring(1)) || 1000000;
 	}
 	
 	function draw() {
@@ -130,7 +134,7 @@
 
 <body onload="init();">
 	<script>
-		setLabels("005. Static particles", "Rendering " + getNumParticles() + " static particles.<br>Add #Number to the url to change the amount.");
+		setLabels("005. Static particles", "Rendering " + getParticleAmount() + " static particles.<br>Add #Number to the url to change the amount.");
 	</script>
 </body> 
 
