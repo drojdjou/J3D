@@ -28,6 +28,8 @@ struct lightSource {
 
 uniform lightSource uLight[4];
 uniform vec3 uAmbientColor;
+
+uniform vec4 uTileOffset;
 	
 float luminance(vec3 c) {
     return c.r * 0.299 + c.g * 0.587 + c.b * 0.114;
@@ -64,4 +66,8 @@ vec3 computeLights(vec4 p, vec3 n, float si, float sh) {
 	s += computeLight(p, n, si, sh, uLight[2]);
 	s += computeLight(p, n, si, sh, uLight[3]);
 	return s;
+}
+
+vec2 getTextureCoord(vec2 uv) {
+	return uv * uTileOffset.xy + uTileOffset.zw;
 }

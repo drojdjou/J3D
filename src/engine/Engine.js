@@ -115,6 +115,8 @@ J3D.Engine.prototype.renderObject = function(t) {
 	gl.uniform3fv(s.uAmbientColor, this.scene.ambient.rgb());
 	gl.uniform3fv(s.uEyePosition, this.camera.transform.worldPosition.xyz());
 	
+	gl.uniform4fv(s.uTileOffset, t.getTileOffset());
+	
 	if (t.mesh.vertBuf) {
 		gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.vertBuf);
 		gl.vertexAttribPointer(s.vertAttr, t.mesh.vertSize, gl.FLOAT, false, 0, 0);

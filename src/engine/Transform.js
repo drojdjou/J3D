@@ -26,6 +26,12 @@ J3D.Transform = function(){
 	this.mesh;
 	this.camera;
 	this.light;
+	
+	// Texture tile and offset.
+	// Can also be specified in the renderer, but this will override
+	// the settings for this specific object unless tile = 1 and offset = 0
+	this.textureTile = v2.ONE();
+	this.textureOffset = v2.ZERO();
 
 	this.add = function(t){
 		children.push(t);
@@ -82,6 +88,18 @@ J3D.Transform.prototype.updateWorldPosition = function(){
 	this.worldPosition.x = tmp[0];
 	this.worldPosition.y = tmp[1];
 	this.worldPosition.z = tmp[2];
+}
+
+J3D.Transform.prototype.getTileOffset = function() {
+	var t, o;
+	
+	if(this.renderer.textureTile && this.textureTile.isOne()) t = this.renderer.textureTile.xy();
+	else t = this.textureTile.xy();
+	
+	if(this.renderer.textureOffset && this.textureOffset.isZero()) o = this.renderer.textureOffset.xy();
+	else o = this.textureOffset.xy();
+
+	return t.concat(o);
 }
 
 

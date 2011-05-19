@@ -5,6 +5,7 @@ java \
 --js_output_file ../build/j3dt.js \
 --js ../src/J3D.js \
 --js ../src/math/Vector3.js \
+--js ../src/math/Vector2.js \
 --js ../src/math/Matrix44.js \
 --js ../src/engine/Engine.js \
 --js ../src/engine/Scene.js \

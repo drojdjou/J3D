@@ -39,7 +39,7 @@ v3.prototype.add = function(b) {
 	return v3.add(this, b);
 }
 
-v3.prototype.xyz = function(b) {
+v3.prototype.xyz = function() {
 	return [this.x, this.y, this.z];
 }
 

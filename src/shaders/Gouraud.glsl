@@ -9,7 +9,7 @@ void main(void) {
 	vec4 p = mvMatrix() * vec4(aVertexPosition, 1.0);
     gl_Position = pMatrix * p;
 	
- 	vTextureCoord = aTextureCoord;
+ 	vTextureCoord = getTextureCoord(aTextureCoord);
 	
     vec3 n = normalize( nMatrix * aVertexNormal );
 	vLight = uAmbientColor + computeLights(p, n, uSpecularIntensity, uShininess);

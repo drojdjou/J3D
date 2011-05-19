@@ -1,0 +1,138 @@
+<html> 
+ 
+<head> 
+<title>007 | Texture tile and offset | J3D</title> 
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
+
+<link rel="stylesheet" href="common/common.css"/>
+<script type="text/javascript" src="common/common.js"></script>
+
+<!--
+<script type="text/javascript" src="../lib/glMatrix.js"></script>
+<script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
+<script type="text/javascript" src="../src/J3D.js"></script>
+<script type="text/javascript" src="../src/util/Color.js"></script>
+<script type="text/javascript" src="../src/math/Vector2.js"></script>
+<script type="text/javascript" src="../src/math/Vector3.js"></script>
+<script type="text/javascript" src="../src/math/Matrix44.js"></script>
+<script type="text/javascript" src="../src/engine/Engine.js"></script>
+<script type="text/javascript" src="../src/engine/Camera.js"></script>
+<script type="text/javascript" src="../src/engine/Light.js"></script>
+<script type="text/javascript" src="../src/engine/Mesh.js"></script>
+<script type="text/javascript" src="../src/engine/Scene.js"></script>
+<script type="text/javascript" src="../src/engine/Loader.js"></script>
+<script type="text/javascript" src="../src/engine/ShaderAtlas.js"></script>
+<script type="text/javascript" src="../src/engine/Texture.js"></script>
+<script type="text/javascript" src="../src/engine/Cubemap.js"></script>
+<script type="text/javascript" src="../src/engine/Transform.js"></script>
+<script type="text/javascript" src="../src/renderers/ShaderSource.js"></script>
+<script type="text/javascript" src="../src/renderers/Phong.js"></script>
+<script type="text/javascript" src="../src/renderers/Gouraud.js"></script>
+<script type="text/javascript" src="../src/renderers/Normal2Color.js"></script>
+<script type="text/javascript" src="../src/renderers/Reflective.js"></script>
+<script type="text/javascript" src="../src/renderers/Skybox.js"></script>
+<script type="text/javascript" src="../src/util/Time.js"></script>
+-->
+
+<script type="text/javascript" src="../build/j3d.js"></script>
+
+
+
+<script>
+	
+	var engine, cubemesh, sun, cube1, cube2, cube3;
+	
+	function init() {
+		
+		var texpath = "models/textures/checkerboard.png";
+		
+		engine = new J3D.Engine();
+		engine.setClearColor(J3D.Color.white);		
+		engine.scene.ambient = new J3D.Color(.75, .75, .75, 1);
+		
+		sun = new J3D.Transform();
+		sun.light = new J3D.Light(J3D.DIRECT);
+		sun.light.color = new J3D.Color(.75, .75, .75, 1);
+		sun.light.direction = new v3(0, -1, 0).norm();
+		
+		cube1 = new J3D.Transform();	
+		cube1.position.x = -2;
+		cube1.renderer = new J3D.Gouraud();
+		cube1.renderer.textureTile = new v2(0.5, 0.5);
+		cube1.renderer.colorTexture = new J3D.Texture(texpath);
+		cube1.textureOffset = new v2(0.66, 0.66);
+		
+		cube2 = new J3D.Transform();	
+		cube2.position.x = 0;
+		cube2.renderer = new J3D.Phong();
+		cube2.renderer.colorTexture = new J3D.Texture(texpath);
+		cube2.renderer.textureTile = new v2(4, 4); // < this will be overriden by the line below
+		cube2.textureTile = new v2(2, 2); // <- comment out to use renderers settings above
+		
+		cube3 = new J3D.Transform();	
+		cube3.position.x = 2;
+		cube3.renderer = new J3D.Gouraud();
+		cube3.renderer.colorTexture = new J3D.Texture(texpath);
+		
+		J3D.Loader.loadJSON("models/cube.js", function(j) {  
+			cubemesh = new J3D.Mesh(j); 
+			cube1.mesh = cubemesh;
+			cube2.mesh = cubemesh;
+			cube3.mesh = cubemesh;
+		} );
+		
+		var camera = new J3D.Camera(30);
+		camera.transform.position.z = 6;
+		engine.camera = camera;
+
+		engine.scene.add(camera.transform, sun, cube1, cube2, cube3);
+
+		draw();
+	}
+	
+	function draw() {
+		requestAnimationFrame(draw);
+
+		cube1.rotation.x += Math.PI * J3D.Time.deltaTime / 12000;
+		cube1.rotation.y -= Math.PI * J3D.Time.deltaTime / 6000;
+		
+		cube2.rotation.x -= Math.PI * J3D.Time.deltaTime / 10000;
+		cube2.rotation.y += Math.PI * J3D.Time.deltaTime / 7000;
+		
+		cube3.rotation.x += Math.PI * J3D.Time.deltaTime / 13000;
+		cube3.rotation.y -= Math.PI * J3D.Time.deltaTime / 5000;
+		
+		// tile and offset can be animated as well!
+		var a = Math.sin(J3D.Time.time);
+		cube3.textureTile.x = cube3.textureTile.y = 2 + a;
+		cube3.textureOffset.x = cube3.textureOffset.y = -a/2;
+		
+		engine.render();
+	}
+	
+</script>
+
+</head> 
+
+<body onload="init();">
+	
+	<script>
+		setLabels("007. Texture tile and offset", "Example of how to add tiling and an offset to a texture");
+	</script>
+	
+</body> 
+
+</html> 
+
+
+
+
+
+
+
+
+
+
+
+

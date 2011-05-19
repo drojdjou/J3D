@@ -33,6 +33,8 @@ J3D.ShaderSource.CommonInclude = [
 	"uniform lightSource uLight[4];",
 	"uniform vec3 uAmbientColor;",
 
+	"uniform vec4 uTileOffset;",
+
 	"float luminance(vec3 c) {",
 	"return c.r * 0.299 + c.g * 0.587 + c.b * 0.114;",
 	"}",
@@ -68,6 +70,10 @@ J3D.ShaderSource.CommonInclude = [
 	"s += computeLight(p, n, si, sh, uLight[2]);",
 	"s += computeLight(p, n, si, sh, uLight[3]);",
 	"return s;",
+	"}",
+
+	"vec2 getTextureCoord(vec2 uv) {",
+	"return uv * uTileOffset.xy + uTileOffset.zw;",
 	"}",
 ""].join("\n");
 
@@ -133,7 +139,7 @@ J3D.ShaderSource.GouraudVertex = [
 	"vec4 p = mvMatrix() * vec4(aVertexPosition, 1.0);",
 	"gl_Position = pMatrix * p;",
 
-	"vTextureCoord = aTextureCoord;",
+	"vTextureCoord = getTextureCoord(aTextureCoord);",
 
 	"vec3 n = normalize( nMatrix * aVertexNormal );",
 	"vLight = uAmbientColor + computeLights(p, n, uSpecularIntensity, uShininess);",
@@ -181,7 +187,7 @@ J3D.ShaderSource.PhongVertex = [
 	"varying vec3 vNormal;",
 
 	"void main(void) {",
-	"vTextureCoord = aTextureCoord;",
+	"vTextureCoord = getTextureCoord(aTextureCoord);",
 	"vNormal = nMatrix * aVertexNormal;",
 	"vPosition = mvMatrix() * vec4(aVertexPosition, 1.0);",
 	"gl_Position = pMatrix * vPosition;",

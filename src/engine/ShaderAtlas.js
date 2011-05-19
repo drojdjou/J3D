@@ -57,6 +57,8 @@ J3D.ShaderAtlas.prototype.linkShader = function(renderer){
 	program.uAmbientColor = gl.getUniformLocation(program, "uAmbientColor");
 	program.uEyePosition = gl.getUniformLocation(program, "uEyePosition");
 	
+	program.uTileOffset = gl.getUniformLocation(program, "uTileOffset");
+	
 	program.vertAttr = gl.getAttribLocation(program, "aVertexPosition");
 	gl.enableVertexAttribArray(program.vertAttr);
 	
