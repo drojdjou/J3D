@@ -12,7 +12,7 @@ public class NamesUtil
 	
 	public static string CleanMat (string n)
 	{
-		return CleanLc (n).Replace (" (Instance)", "");
+		return CleanLc (n).Replace ("_(instance)", "");
 	}
 }
 

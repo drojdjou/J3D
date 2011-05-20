@@ -17,11 +17,18 @@ J3D.Loader.loadJSON = function(path, onLoadedFunc) {
 J3D.Loader.parseJSONScene = function(jscene, jmeshes, engine) {
 	
 	engine.scene.ambient = J3D.Loader.fromObject(J3D.Color, jscene.ambient);
+	engine.setClearColor( J3D.Loader.fromObject(J3D.Color, jscene.background) );
+	
+	for(var txs in jscene.textures) {
+		var tx = new J3D.Texture( jscene.path + jscene.textures[txs].file );
+		jscene.textures[txs] = tx;
+	}
 	
 	for(var ms in jscene.materials) {
 		var m = jscene.materials[ms];
 		m = J3D.Loader.fromObject(J3D[m.type], m);
 		m.color = J3D.Loader.fromObject(J3D.Color, m.color);
+		if(m.colorTexture) m.colorTexture = jscene.textures[m.colorTexture];
 		jscene.materials[ms] = m;
 	}
 	

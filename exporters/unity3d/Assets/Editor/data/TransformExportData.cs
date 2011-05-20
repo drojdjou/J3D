@@ -52,14 +52,27 @@ public class TransformExportData
 	public string[] Position {
 		get {
 			Vector3 p = t.localPosition;
-			return new string[] { (p.x).ToString (ExporterProps.LN), p.y.ToString (ExporterProps.LN), (-p.z).ToString (ExporterProps.LN) };
+			return new string[] { (p.x).ToString (ExporterProps.LN), (p.y).ToString (ExporterProps.LN), (-p.z).ToString (ExporterProps.LN) };
+		}
+	}
+	
+	public string[] Rotation {
+		get {
+			return RotationSwitched;
+		}
+	}
+	
+	public string[] RotationRaw {
+		get {
+			Vector3 r = t.rotation.eulerAngles;
+			return new string[] { (r.x).ToString (ExporterProps.LN), (r.y).ToString (ExporterProps.LN), (r.z).ToString (ExporterProps.LN) }; 
 		}
 	}
 
-	public string[] Rotation {
+	public string[] RotationSwitched {
 		get {
 			
-			Matrix4x4 rm = Matrix4x4.TRS (Vector3.zero, t.rotation, Vector3.one);
+			Matrix4x4 rm = Matrix4x4.TRS (Vector3.zero, t.localRotation, Vector3.one);
 			
 			rm[0, 2] = -rm[0, 2];
 			rm[1, 2] = -rm[1, 2];
@@ -87,7 +100,7 @@ public class TransformExportData
 				thetaY = 0;
 			}
 			
-			Debug.Log (t.name + ": " + t.rotation.eulerAngles + " > " + (thetaX * Mathf.Rad2Deg) + ", " + (thetaY * Mathf.Rad2Deg) + ", " + (thetaZ * Mathf.Rad2Deg));
+			//Debug.Log (t.name + ": " + t.rotation.eulerAngles + " > " + (thetaX * Mathf.Rad2Deg) + ", " + (thetaY * Mathf.Rad2Deg) + ", " + (thetaZ * Mathf.Rad2Deg));
 			
 			return new string[] { 
 				thetaX.ToString (ExporterProps.LN),

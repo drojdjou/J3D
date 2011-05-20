@@ -36,8 +36,9 @@ public class LightExportData
 	
 	public string[] Direction {
 		get {
-			Vector3 p = t.TransformDirection (t.forward);
-			return new string[] { p.x.ToString (ExporterProps.LN), p.y.ToString (ExporterProps.LN), p.z.ToString (ExporterProps.LN) };
+			//Vector3 p = t.TransformDirection (t.forward);
+			Vector3 p = t.forward;
+			return new string[] { p.x.ToString (ExporterProps.LN), p.y.ToString (ExporterProps.LN), (-p.z).ToString (ExporterProps.LN) };
 		}
 	}
 }

@@ -7,8 +7,8 @@ varying vec3 vNormal;
 void main(void) {
 	vTextureCoord = getTextureCoord(aTextureCoord);	
     vNormal = nMatrix * aVertexNormal;
-	vPosition = mvMatrix() * vec4(aVertexPosition, 1.0);
-    gl_Position = pMatrix * vPosition;
+	vPosition = mMatrix * vec4(aVertexPosition, 1.0);
+    gl_Position = pMatrix * vMatrix * vPosition;
 }
 
 //# PhongFragment
@@ -28,8 +28,7 @@ void main(void) {
 	vec4 tc = uColor.rgba;
 	if(uHasColorSampler) tc *= texture2D(uColorSampler, vTextureCoord);
 	
-	float lum = brightness(tc.rgb);
-	vec3 l = uAmbientColor + computeLights(vPosition, vNormal, uSpecularIntensity, uShininess) * lum;
+	vec3 l = computeLights(vPosition, vNormal, uSpecularIntensity, uShininess);// * brightness(tc.rgb);
 	
 	gl_FragColor = vec4(tc.rgb * l, uColor.a);
 }

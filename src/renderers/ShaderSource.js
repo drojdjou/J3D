@@ -46,22 +46,21 @@ J3D.ShaderSource.CommonInclude = [
 	"vec3 computeLight(vec4 p, vec3 n, float si, float sh, lightSource light){",
 	"vec3 ld;",
 
-	"vec4 lp = vMatrix * vec4(light.position, 1.0);",
-
 	"if(light.type == 0) return vec3(0);",
-	"else if(light.type == 1) ld = light.direction;",
-	"else if(light.type == 2) ld = normalize(lp.xyz - p.xyz);",
+	"else if(light.type == 1) ld = -light.direction;",
+	"else if(light.type == 2) ld = normalize(light.position - p.xyz);",
+
 	"float dif = max(dot(n, ld), 0.0);",
 
 	"float spec = 0.0;",
 
 	"if(si > 0.0) {",
-	"vec3 eyed = normalize(-p.xyz);",
+	"vec3 eyed = normalize(uEyePosition - p.xyz);",
 	"vec3 refd = reflect(-ld, n);",
 	"spec = pow(max(dot(refd, eyed), 0.0), sh) * si;",
 	"};",
 
-	"return light.color * dif + light.color * spec;",
+	"return uAmbientColor + light.color * dif + light.color * spec;",
 	"}",
 
 	"vec3 computeLights(vec4 p, vec3 n, float si, float sh) {",
@@ -136,13 +135,11 @@ J3D.ShaderSource.GouraudVertex = [
 	"varying vec2 vTextureCoord;",
 
 	"void main(void) {",
-	"vec4 p = mvMatrix() * vec4(aVertexPosition, 1.0);",
-	"gl_Position = pMatrix * p;",
-
+	"vec4 p = mMatrix * vec4(aVertexPosition, 1.0);",
+	"gl_Position = pMatrix * vMatrix * p;",
 	"vTextureCoord = getTextureCoord(aTextureCoord);",
-
 	"vec3 n = normalize( nMatrix * aVertexNormal );",
-	"vLight = uAmbientColor + computeLights(p, n, uSpecularIntensity, uShininess);",
+	"vLight = computeLights(p, n, uSpecularIntensity, uShininess);",
 	"}",
 
 ""].join("\n");
@@ -189,8 +186,8 @@ J3D.ShaderSource.PhongVertex = [
 	"void main(void) {",
 	"vTextureCoord = getTextureCoord(aTextureCoord);",
 	"vNormal = nMatrix * aVertexNormal;",
-	"vPosition = mvMatrix() * vec4(aVertexPosition, 1.0);",
-	"gl_Position = pMatrix * vPosition;",
+	"vPosition = mMatrix * vec4(aVertexPosition, 1.0);",
+	"gl_Position = pMatrix * vMatrix * vPosition;",
 	"}",
 
 ""].join("\n");
@@ -212,8 +209,7 @@ J3D.ShaderSource.PhongFragment = [
 	"vec4 tc = uColor.rgba;",
 	"if(uHasColorSampler) tc *= texture2D(uColorSampler, vTextureCoord);",
 
-	"float lum = brightness(tc.rgb);",
-	"vec3 l = uAmbientColor + computeLights(vPosition, vNormal, uSpecularIntensity, uShininess) * lum;",
+	"vec3 l = computeLights(vPosition, vNormal, uSpecularIntensity, uShininess);// * brightness(tc.rgb);",
 
 	"gl_FragColor = vec4(tc.rgb * l, uColor.a);",
 	"}",

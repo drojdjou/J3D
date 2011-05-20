@@ -11,5 +11,15 @@ public class MaterialMapper
 			return "Phong";
 		}
 	}
+	
+	public static string GetJ3DTextureName (string t)
+	{
+		switch (t) {
+		case "_MainTex":
+			return "colorTexture";
+		default:
+			return "colorTexture";
+		}
+	}
 }
 

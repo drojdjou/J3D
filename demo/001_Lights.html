@@ -14,6 +14,7 @@
 <script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
 <script type="text/javascript" src="../src/J3D.js"></script>
 <script type="text/javascript" src="../src/util/Color.js"></script>
+<script type="text/javascript" src="../src/math/Vector2.js"></script>
 <script type="text/javascript" src="../src/math/Vector3.js"></script>
 <script type="text/javascript" src="../src/math/Matrix44.js"></script>
 <script type="text/javascript" src="../src/engine/Engine.js"></script>
@@ -51,7 +52,8 @@
 		// Setup camera
 
 		camera = new J3D.Camera(45);
-		camera.transform.position.z = 4;
+		camera.transform.position.z = -4;
+		camera.transform.rotation.y = Math.PI;
 		engine.camera = camera;
 		
 		// Setup lights
@@ -64,7 +66,7 @@
 		light2 = new J3D.Transform();
 		light2.light = new J3D.Light(J3D.POINT);
 		light2.light.color = new J3D.Color(redLightMax, 0, 0, 1);
-		light2.position = new v3(-10, 0, 0);
+		light2.position = new v3(10, 0, 0);
 		
 		light3 = new J3D.Transform();
 		light3.light = new J3D.Light(J3D.POINT);
@@ -127,8 +129,8 @@
 		cr.renderer = crMat;
 		
 		ha = new J3D.Transform();
-		ha.position = new v3(-0.2499574, 0.4273163, -0.2176546);
-		ha.rotation.y = Math.PI;
+		ha.position = new v3(0.2499574, 0.4273163, -0.2176546);
+		ha.rotation.y = 0;//Math.PI;
 		J3D.Loader.loadJSON("models/handles.js", function(j) { ha.mesh = new J3D.Mesh(j); } );
 		ha.renderer = haMat;
 	
@@ -147,7 +149,7 @@
 		light3.enabled = document.getElementById("blue").checked;
 		
 		if (document.getElementById("ambient").checked) {
-			scene.ambient = new J3D.Color(.2, .2, .2, 1);
+			scene.ambient = new J3D.Color(.1, .1, .1, 1);
 		} else {
 			scene.ambient = J3D.Color.black;
 		}

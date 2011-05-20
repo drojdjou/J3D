@@ -6,13 +6,11 @@ varying vec3 vLight;
 varying vec2 vTextureCoord;
 
 void main(void) {
-	vec4 p = mvMatrix() * vec4(aVertexPosition, 1.0);
-    gl_Position = pMatrix * p;
-	
+	vec4 p = mMatrix * vec4(aVertexPosition, 1.0);
+    gl_Position = pMatrix * vMatrix * p;
  	vTextureCoord = getTextureCoord(aTextureCoord);
-	
     vec3 n = normalize( nMatrix * aVertexNormal );
-	vLight = uAmbientColor + computeLights(p, n, uSpecularIntensity, uShininess);
+	vLight = computeLights(p, n, uSpecularIntensity, uShininess);
 }
 
 //# GouraudFragment

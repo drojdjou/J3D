@@ -17,7 +17,7 @@ J3D.Transform = function(){
 	this.globalMatrix = mat4.create();
 	// Normal matrix (inverse/transpose of view matrix for use with normals)
 	this.normalMatrix = mat3.create();
-	
+
 	this.isStatic = false;
 	this._lockedMatrix = false;
 	this.enabled = true;
@@ -66,11 +66,11 @@ J3D.Transform.prototype.updateWorld = function(parent){
 	mat4.identity(this.matrix);
 	
 	mat4.translate(this.matrix, [this.position.x, this.position.y, this.position.z]);
-	
+
 	mat4.rotateZ(this.matrix, this.rotation.z);
 	mat4.rotateX(this.matrix, this.rotation.x);
 	mat4.rotateY(this.matrix, this.rotation.y);
-	
+
 	mat4.scale(this.matrix, [this.scale.x, this.scale.y, this.scale.z]);
 
 	if(parent != null) mat4.multiply(parent.globalMatrix, this.matrix, this.globalMatrix);
@@ -82,7 +82,7 @@ J3D.Transform.prototype.updateWorld = function(parent){
 	if(this.isStatic) this._lockedMatrix = true;
 }
 
-J3D.Transform.prototype.updateWorldPosition = function(){
+J3D.Transform.prototype.updateWorldPosition = function() {
 	var tmp = [0,0,0];	
 	mat4.multiplyVec3(this.globalMatrix, tmp);
 	this.worldPosition.x = tmp[0];

@@ -42,22 +42,21 @@ float brightness(vec3 c) {
 vec3 computeLight(vec4 p, vec3 n, float si, float sh, lightSource light){
     vec3 ld;
     
-    vec4 lp = vMatrix * vec4(light.position, 1.0);
-
     if(light.type == 0) return vec3(0);
-    else if(light.type == 1) ld = light.direction;
-    else if(light.type == 2) ld = normalize(lp.xyz - p.xyz);
+    else if(light.type == 1) ld = -light.direction;
+    else if(light.type == 2) ld = normalize(light.position - p.xyz);
+    
     float dif = max(dot(n, ld), 0.0);
 	
     float spec = 0.0;
     
     if(si > 0.0) {
-    	vec3 eyed = normalize(-p.xyz);
+    	vec3 eyed = normalize(uEyePosition - p.xyz);
     	vec3 refd = reflect(-ld, n);
     	spec = pow(max(dot(refd, eyed), 0.0), sh) * si;
     };
 	
-    return light.color * dif + light.color * spec;
+    return uAmbientColor + light.color * dif + light.color * spec;
 }
 
 vec3 computeLights(vec4 p, vec3 n, float si, float sh) {

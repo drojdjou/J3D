@@ -25,7 +25,7 @@ J3D.Engine = function() {
 	this.setClearColor(J3D.Color.black);
 	gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);	
 	gl.enable(gl.CULL_FACE);
-	gl.frontFace(gl.CCW);
+	gl.frontFace(gl.CW);
 	
 	this.shaderAtlas = new J3D.ShaderAtlas();
 	this.scene = new J3D.Scene();
@@ -72,7 +72,7 @@ J3D.Engine.prototype.render = function() {
 	//3. Calculate global positions for all lights
 	for (var i = 0; i < this._lights.length; i++) {
 		var t = this._lights[i];
-		t.updateWorldPosition(this.camera.inverseMat);
+		t.updateWorldPosition();
 	}
 
 	// 3. Render opaque meshes

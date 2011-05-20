@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 
 using UnityEngine;
 using UnityEditor;
@@ -15,11 +16,13 @@ public class J3DExport : ScriptableWizard
 	public Transform[] transforms;
 	
 	private List<TransformExportData> tex;
-	private Hashtable mex;
-	private Hashtable mtx;
 	private List<LightExportData> lgx;
 	private List<CameraExportData> cmx;
-
+	
+	private Hashtable mex;
+	private Hashtable mtx;
+	private Hashtable txx;
+	
 	void OnWizardUpdate ()
 	{
 		if (transforms == null && Selection.transforms.Length > 0) {
@@ -27,37 +30,56 @@ public class J3DExport : ScriptableWizard
 		}	
 	}
 	
-	void OnWizardCreate()
+	void OnWizardCreate ()
 	{
 		tex = new List<TransformExportData> ();
-		mex = new Hashtable ();
-		mtx = new Hashtable ();
 		lgx = new List<LightExportData> ();
 		cmx = new List<CameraExportData> ();
+		
+		mex = new Hashtable ();
+		mtx = new Hashtable ();
+		txx = new Hashtable ();
 		
 		for (var i = 0; i < transforms.Length; i++) {
 			RecurseTransform (transforms[i]);
 		}
 		
+		// Some textures might have been marked as readable for exporting, apply those chnage now
+		AssetDatabase.Refresh ();
+		
 		string meshesPath = EditorUtility.SaveFilePanel ("Save meshes", FileExport.lastExportPath, "", "js");
 		string scenePath = meshesPath.Substring (0, meshesPath.Length - 3) + "Scene.js";
-		
+		string texturePath = meshesPath.Substring (0, meshesPath.LastIndexOf ("/") + 1);
+
 		StringTemplate mt = FileExport.LoadTemplate ("model");
 		mt.SetAttribute ("prefix", prefix + "Meshes");
 		mt.SetAttribute ("meshes", mex.Values);
-		FileExport.SaveContentsAsFile (FileExport.CleanJSON(mt), meshesPath);
+		FileExport.SaveContentsAsFile (FileExport.CleanJSON (mt), meshesPath);
 		
 		StringTemplate st = FileExport.LoadTemplate ("scene");
 		st.SetAttribute ("ambient", RenderSettings.ambientLight);
+		
+		if (Camera.mainCamera != null)
+			st.SetAttribute ("background", Camera.mainCamera.backgroundColor);
+		else
+			st.SetAttribute ("background", Color.black);
+		
 		st.SetAttribute ("prefix", prefix + "Scene");
 		st.SetAttribute ("meshPrefix", prefix + "Meshes");
 		st.SetAttribute ("transforms", tex);
 		st.SetAttribute ("root", tex[0]);
 		st.SetAttribute ("meshes", mex.Values);
 		st.SetAttribute ("materials", mtx.Values);
+		st.SetAttribute ("textures", txx.Values);
 		st.SetAttribute ("lights", lgx);
 		st.SetAttribute ("cameras", cmx);
 		FileExport.SaveContentsAsFile (FileExport.CleanJSON(st), scenePath);
+		
+		foreach(TextureExportData t in txx.Values) {
+			if(t.IsImage) {
+				File.WriteAllBytes (texturePath + t.FileName, t.pngData);
+			}
+		}
 		
 		FileExport.lastExportPath = meshesPath;
 	}
@@ -74,9 +96,18 @@ public class J3DExport : ScriptableWizard
 			if (!mex.ContainsKey (me.Name))
 				mex.Add (me.Name, me);
 			
-			MaterialExportData mt = new MaterialExportData (t);
+			List<string> textures = TextureUtil.ExtractTexturesNames (t.renderer.sharedMaterial);
+			
+			MaterialExportData mt = new MaterialExportData (t, textures);
 			if (!mtx.ContainsKey (mt.Name))
 				mtx.Add (mt.Name, mt);
+			
+			foreach (string tn in textures) {
+				TextureExportData tx = new TextureExportData (t.renderer.sharedMaterial.GetTexture (tn));
+				if (!txx.ContainsKey (tx.Name))
+					txx.Add (tx.Name, tx);
+			}
+			
 		}
 		
 		if (t.light != null) {

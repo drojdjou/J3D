@@ -18,9 +18,9 @@ public class MeshExportData
 		get {
 			List<string> vs = new List<string> ();
 			foreach (Vector3 v in m.vertices) {
-				vs.Add (v.x.ToString(ExporterProps.LN));
-				vs.Add (v.y.ToString (ExporterProps.LN));
-				vs.Add ((v.z).ToString (ExporterProps.LN));
+				vs.Add (( v.x).ToString(ExporterProps.LN));
+				vs.Add (( v.y).ToString (ExporterProps.LN));
+				vs.Add ((-v.z).ToString (ExporterProps.LN));
 			}
 			return vs.ToArray ();
 		}
@@ -30,9 +30,9 @@ public class MeshExportData
 		get {
 			List<string> vs = new List<string> ();
 			foreach (Vector3 v in m.normals) {
-				vs.Add (v.x.ToString (ExporterProps.SN));
-				vs.Add (v.y.ToString (ExporterProps.SN));
-				vs.Add ((v.z).ToString (ExporterProps.SN));
+				vs.Add (( v.x).ToString (ExporterProps.SN));
+				vs.Add (( v.y).ToString (ExporterProps.SN));
+				vs.Add ((-v.z).ToString (ExporterProps.SN));
 			}
 			return vs.ToArray ();
 		}

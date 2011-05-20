@@ -57,7 +57,7 @@ J3D.Phong.prototype.setup = function(mesh, shader, lights, camera){
 			gl.uniform1i(shader.uLight[i].type, lights[i].light.type);
 			gl.uniform3fv(shader.uLight[i].direction, lights[i].light.direction.xyz());
 			gl.uniform3fv(shader.uLight[i].color, lights[i].light.color.rgb());
-			gl.uniform3fv(shader.uLight[i].position, lights[i].worldPosition.xyz());			
+			gl.uniform3fv(shader.uLight[i].position, lights[i].worldPosition.xyz() );			
 		} else {
 			gl.uniform1i(shader.uLight[i].type, J3D.NONE);
 		}

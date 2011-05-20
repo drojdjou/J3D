@@ -1,13 +1,24 @@
 {
 	
+"path" : "",
 "ambient": { "r":$ambient.r$, "g":$ambient.g$, "b":$ambient.b$, "a":$ambient.a$ },
+"background": { "r":$background.r$, "g":$background.g$, "b":$background.b$, "a":$background.a$ },
+
+"textures": {
+$textures:{	
+	"$it.Name$": { 
+		"file": "$it.FileName$"
+	},
+}$
+},
 	
 "materials": {
 $materials:{	
 	"$it.Name$": { 
 		"type": "$it.Type$",
 		"color": { "r":$it.Color.r$, "g":$it.Color.g$, "b":$it.Color.b$, "a":$it.Color.a$ },
-		"specularIntensity": $it.SpecularIntensity$
+		"specularIntensity": $it.SpecularIntensity$,
+		$it.Textures; separator=",\n"$
 	},
 }$
 },
