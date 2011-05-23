@@ -5,8 +5,10 @@ What is J3D?
 
 Demos:
 
-Hello Cube
-http://www.everyday3d.com/j3d/demo/000_HelloCube.html
+[Hello Cube - basic example http://www.everyday3d.com/j3d/thumbs/001_hellocube.jpg]
+(http://www.everyday3d.com/j3d/demo/000_HelloCube.html)
+
+
 
 Lights
 http://www.everyday3d.com/j3d/demo/001_Lights.html
