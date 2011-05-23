@@ -14,7 +14,7 @@ Demos:
 (http://www.everyday3d.com/j3d/demo/001_Lights.html)
 
 [![Scene exported from Unity3d](http://www.everyday3d.com/j3d/thumbs/003_scene.jpg)]
-http://www.everyday3d.com/j3d/demo/002_Scene.html)
+(http://www.everyday3d.com/j3d/demo/002_Scene.html)
 
 [![Cubemap / Reflective material / Skybox](http://www.everyday3d.com/j3d/thumbs/004_skybox.jpg)]
 (http://www.everyday3d.com/j3d/demo/003_Cubemap.html)
