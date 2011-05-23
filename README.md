@@ -6,30 +6,48 @@ It's open source.
 
 Demos:
 
-[Hello Cube - basic example ![Hello Cube](http://www.everyday3d.com/j3d/thumbs/001_hellocube.jpg)]
+[![Hello Cube](http://www.everyday3d.com/j3d/thumbs/001_hellocube.jpg)]
 (http://www.everyday3d.com/j3d/demo/000_HelloCube.html)
 
 
+[![Lights](http://www.everyday3d.com/j3d/thumbs/002_lights.jpg)]
+(http://www.everyday3d.com/j3d/demo/001_Lights.html)
 
-Lights
-http://www.everyday3d.com/j3d/demo/001_Lights.html
+[![Scene exported from Unity3d](http://www.everyday3d.com/j3d/thumbs/003_scene.jpg)]
+http://www.everyday3d.com/j3d/demo/002_Scene.html)
 
-Scene exported from Unity3d
-http://www.everyday3d.com/j3d/demo/002_Scene.html
+[![Cubemap / Reflective material / Skybox](http://www.everyday3d.com/j3d/thumbs/004_skybox.jpg)]
+(http://www.everyday3d.com/j3d/demo/003_Cubemap.html)
 
-Cubemap / Reflective material / Skybox
-http://www.everyday3d.com/j3d/demo/003_Cubemap.html
+[![Glass / Refraction, reflection, fresnel, chromatic dispersion](http://www.everyday3d.com/j3d/thumbs/005_glass.jpg)]
+(http://www.everyday3d.com/j3d/demo/004_Glass.html)
 
-Glass / Refraction, reflection, fresnel, chromatic dispersion
-http://www.everyday3d.com/j3d/demo/004_Glass.html
+[![1.000.000 static particles (or more :)](http://www.everyday3d.com/j3d/thumbs/006_particles.jpg)]
+(http://www.everyday3d.com/j3d/demo/005_Particles.html)
 
-1.000.000 static particles (or more :)
-http://www.everyday3d.com/j3d/demo/005_Particles.html
+[![Particle stream](http://www.everyday3d.com/j3d/thumbs/007_stream.jpg)]
+(http://www.everyday3d.com/j3d/demo/006_Particle_animation.html)
 
-Particle stream
-http://www.everyday3d.com/j3d/demo/006_Particle_animation.html
+[![Texture tile and offset](http://www.everyday3d.com/j3d/thumbs/008_tileoffset.jpg)]
+(http://www.everyday3d.com/j3d/demo/007_TileAndOffset.html)
 
-Texture tile and offset
-http://www.everyday3d.com/j3d/demo/007_TileAndOffset.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 More will come.
