@@ -45,7 +45,7 @@ J3D.Gouraud.prototype.setup = function(mesh, shader, lights, camera){
 			
 			gl.activeTexture(gl.TEXTURE0);
 			gl.bindTexture(gl.TEXTURE_2D, this.colorTexture.tex);
-			gl.uniform1i(shader.samplerUniform, 0);
+			gl.uniform1i(shader.uColorSampler, 0);
 			gl.uniform1i(shader.uHasColorSampler, true);
 		}
 		else {

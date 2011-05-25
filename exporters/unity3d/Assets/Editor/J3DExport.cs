@@ -23,6 +23,8 @@ public class J3DExport : ScriptableWizard
 	private Hashtable mtx;
 	private Hashtable txx;
 	
+	private LightmapExportData led;
+	
 	void OnWizardUpdate ()
 	{
 		if (transforms == null && Selection.transforms.Length > 0) {
@@ -32,6 +34,10 @@ public class J3DExport : ScriptableWizard
 	
 	void OnWizardCreate ()
 	{
+		// Rename all gameobjects so that there are none with the same name
+		
+		led = new LightmapExportData ();
+		
 		tex = new List<TransformExportData> ();
 		lgx = new List<LightExportData> ();
 		cmx = new List<CameraExportData> ();
@@ -73,13 +79,15 @@ public class J3DExport : ScriptableWizard
 		st.SetAttribute ("textures", txx.Values);
 		st.SetAttribute ("lights", lgx);
 		st.SetAttribute ("cameras", cmx);
-		FileExport.SaveContentsAsFile (FileExport.CleanJSON(st), scenePath);
+		FileExport.SaveContentsAsFile (FileExport.CleanJSON (st), scenePath);
 		
-		foreach(TextureExportData t in txx.Values) {
-			if(t.IsImage) {
+		foreach (TextureExportData t in txx.Values) {
+			if (t.IsImage) {
 				File.WriteAllBytes (texturePath + t.FileName, t.pngData);
 			}
 		}
+		
+		
 		
 		FileExport.lastExportPath = meshesPath;
 	}
@@ -88,6 +96,8 @@ public class J3DExport : ScriptableWizard
 	{
 		if (!t.gameObject.active)
 			return;
+		
+		
 		
 		tex.Add (new TransformExportData (t));
 		

@@ -30,3 +30,16 @@ J3D.Scene = function() {
 		this.skybox.mesh = mesh;
 	}
 }
+
+J3D.Scene.prototype.find = function(path) {
+	var p = path.split("/");
+	
+	for(var i = 0; i < this.numChildren; i++) {
+		if(this.childAt(i).name == p[0]) {
+			if(p.length == 1) return this.childAt(i);
+			else return this.childAt(i).find(p.slice(1));
+		}
+	}
+	
+	return null;
+}

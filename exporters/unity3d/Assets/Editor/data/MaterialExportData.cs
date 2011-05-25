@@ -4,10 +4,12 @@ using System.Collections.Generic;
 public class MaterialExportData
 {
 	private Material m;
+	private Transform t;
 	private List<string> textures;
 
 	public MaterialExportData (Transform t, List<string> textures)
 	{
+		this.t = t;
 		m = t.gameObject.renderer.sharedMaterial;
 		this.textures = textures;
 	}
@@ -17,11 +19,25 @@ public class MaterialExportData
 	}
 	
 	public string Type {
-		get { return MaterialMapper.GetJ3DRenderer (m); }
+		get { return MaterialMapper.GetJ3DRenderer (m, t); }
 	}
 	
 	public Color Color {
 		get { return m.color; }
+	}
+	
+	public string[] TextureScale {
+		get {
+			Vector2 p = m.GetTextureScale (this.textures[0]);
+			return new string[] { (p.x).ToString (ExporterProps.LN), (p.y).ToString (ExporterProps.LN) };
+		}
+	}
+	
+	public string[] TextureOffset {
+		get {
+			Vector2 p = m.GetTextureOffset (this.textures[0]);
+			return new string[] { (p.x).ToString (ExporterProps.LN), (p.y).ToString (ExporterProps.LN) };
+		}
 	}
 	
 	public string[] Textures {

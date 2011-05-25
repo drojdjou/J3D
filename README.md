@@ -19,3 +19,5 @@ It was created by [Bartek Drozdz](http://www.everyday3d.com/)
 (http://www.everyday3d.com/j3d/demo/006_Particle_animation.html)
 [![Texture tile and offset](http://www.everyday3d.com/j3d/thumbs/008_tileoffset.jpg)]
 (http://www.everyday3d.com/j3d/demo/007_TileAndOffset.html)
+[![Lightmapped scene](http://www.everyday3d.com/j3d/thumbs/009_lightmap.jpg)]
+(http://www.everyday3d.com/j3d/demo/008_Lightmap.html)

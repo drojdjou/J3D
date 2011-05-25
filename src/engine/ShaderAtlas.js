@@ -67,6 +67,9 @@ J3D.ShaderAtlas.prototype.linkShader = function(renderer){
 	
 	program.uv1Attr = gl.getAttribLocation(program, "aTextureCoord");
 	gl.enableVertexAttribArray(program.uv1Attr);
+	
+	program.uv2Attr = gl.getAttribLocation(program, "aTextureCoord2");
+	gl.enableVertexAttribArray(program.uv2Attr);
 
 	program.colorAttr = gl.getAttribLocation(program, "aVertexColor");
 	gl.enableVertexAttribArray(program.colorAttr);

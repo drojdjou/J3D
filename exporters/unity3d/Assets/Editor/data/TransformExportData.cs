@@ -28,6 +28,27 @@ public class TransformExportData
 	public string MaterialName {
 		get { return NamesUtil.CleanMat (t.gameObject.renderer.sharedMaterial.name); }
 	}
+	
+	public bool HasLightmap {
+		get { return t.gameObject.renderer.lightmapIndex != 255 && t.gameObject.renderer.lightmapIndex != -1; }
+	}
+	
+	public int LightmapIndex {
+		get { return t.gameObject.renderer.lightmapIndex; }
+	}
+	
+	public string[] LightmapTileOffset {
+		get {
+			Vector4 p = t.gameObject.renderer.lightmapTilingOffset;
+			return new string[] { 
+				p.x.ToString (ExporterProps.LN), 
+				p.y.ToString (ExporterProps.LN), 
+				p.z.ToString (ExporterProps.LN),
+				p.w.ToString (ExporterProps.LN)
+			};
+		
+		}
+	}
 
 	public string LightName {
 		get { return NamesUtil.CleanLc (t.gameObject.light.name); }

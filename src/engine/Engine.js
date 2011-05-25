@@ -137,6 +137,11 @@ J3D.Engine.prototype.renderObject = function(t) {
 		gl.vertexAttribPointer(s.uv1Attr, t.mesh.uvSize, gl.FLOAT, false, 0, 0);
 	}
 	
+	if (t.mesh.uv2buf) {
+		gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.uv2buf);
+		gl.vertexAttribPointer(s.uv2Attr, t.mesh.uvSize, gl.FLOAT, false, 0, 0);
+	}
+	
 	if (t.mesh.animBuf) {
 		gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.animBuf);
 		gl.vertexAttribPointer(s.animAttr, t.mesh.animSize, gl.FLOAT, false, 0, 0);
@@ -144,7 +149,7 @@ J3D.Engine.prototype.renderObject = function(t) {
 
 	
 	// Setup renderers custom uniforms and attributes
-	t.renderer.setup(t.mesh, s, this._lights, this.camera);
+	t.renderer.setup(t.mesh, s, this._lights, this.camera, t);
 
 	var cull = t.renderer.cullFace || gl.BACK;			
 	gl.cullFace(cull);

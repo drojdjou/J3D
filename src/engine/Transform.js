@@ -1,5 +1,8 @@
-J3D.Transform = function(){
+J3D.Transform = function(n){
 	var that = this;
+	
+	this.name = n;
+	
 	var children = [];
 	this.numChildren = 0;
 	
@@ -60,6 +63,20 @@ J3D.Transform.prototype.clone = function(){
 	return c;
 }
 
+J3D.Transform.prototype.forward = function() {
+	// TODO: optimize
+	var tm = mat4.create();
+	var tv = mat4.multiplyVec3( mat3.toMat4(this.normalMatrix, tm), [0,0,1]);
+	return new v3(tv[0], tv[1], tv[2]).norm();
+}
+
+J3D.Transform.prototype.left = function() {
+	// TODO: optimize
+	var tm = mat4.create();
+	var tv = mat4.multiplyVec3( mat3.toMat4(this.normalMatrix, tm), [1,0,0]);
+	return new v3(tv[0], tv[1], tv[2]).norm();
+}
+
 J3D.Transform.prototype.updateWorld = function(parent){
 	if(this._lockedMatrix) return;
 	
@@ -102,9 +119,15 @@ J3D.Transform.prototype.getTileOffset = function() {
 	return t.concat(o);
 }
 
-
-
-
-
-
+J3D.Transform.prototype.find = function(p) {
+	
+	for(var i = 0; i < this.numChildren; i++) {
+		if(this.childAt(i).name == p[0]) {
+			if(p.length == 1) return this.childAt(i);
+			else return this.childAt(i).find(p.slice(1));
+		}
+	}
+	
+	return null;
+}
 

@@ -28,6 +28,8 @@ J3D.Loader.parseJSONScene = function(jscene, jmeshes, engine) {
 		var m = jscene.materials[ms];
 		m = J3D.Loader.fromObject(J3D[m.type], m);
 		m.color = J3D.Loader.fromObject(J3D.Color, m.color);
+		if(m.textureTile) m.textureTile = J3D.Loader.v2FromArray(m.textureTile);
+		if(m.textureOffset) m.textureOffset = J3D.Loader.v2FromArray(m.textureOffset);
 		if(m.colorTexture) m.colorTexture = jscene.textures[m.colorTexture];
 		jscene.materials[ms] = m;
 	}
@@ -48,8 +50,8 @@ J3D.Loader.parseJSONScene = function(jscene, jmeshes, engine) {
 		engine.camera = cm;
 	}
 	
-	for(var ts in jscene.transforms) {
-		var t = jscene.transforms[ts];
+	for(var i = 0; i < jscene.transforms.length; i++) {
+		var t = jscene.transforms[i];
 		t = J3D.Loader.fromObject(J3D.Transform, t);
 		t.position = J3D.Loader.v3FromArray(t.position);
 		t.rotation = J3D.Loader.v3FromArray(t.rotation);
@@ -63,13 +65,19 @@ J3D.Loader.parseJSONScene = function(jscene, jmeshes, engine) {
 			t.camera = jscene.cameras[t.camera];
 		}
 
-		jscene.transforms[ts] = t;
+		jscene.transforms[i] = t;
 	}
 	
-	for (var ts in jscene.transforms) {
-		var t = jscene.transforms[ts];
+	var findByName = function(n) {
+		for (var i = 0; i < jscene.transforms.length; i++) {
+			if(jscene.transforms[i].name == n) return jscene.transforms[i];
+		}
+	}
+	
+	for(var i = 0; i < jscene.transforms.length; i++) {
+		var t = jscene.transforms[i];
 		if (t.parent) {
-			t.parent = jscene.transforms[t.parent];
+			t.parent = findByName(t.parent);
 			t.parent.add(t);
 		} else {
 			engine.scene.add(t);
@@ -81,6 +89,10 @@ J3D.Loader.fromObject = function(type, obj){
 	var t = new type();
 	for(var p in obj) t[p] = obj[p];
 	return t;
+}
+
+J3D.Loader.v2FromArray = function(arr){
+	return new v2(arr[0], arr[1]);
 }
 
 J3D.Loader.v3FromArray = function(arr){

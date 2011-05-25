@@ -21,6 +21,13 @@ J3D.Mesh = function(source){
 	} else {
 		this.uv1 = new Float32Array(this.vertNum * this.uvSize);
 	}
+	
+	this.hasUV2 = source.uv2.length > 0;
+	if(this.hasUV2){
+		this.uv2 = new Float32Array(source.uv2);
+	} else {
+		this.uv2 = new Float32Array(this.vertNum * this.uvSize);
+	}
 
 	// TODO: remove this
 	this.buffersReady = false;
@@ -28,6 +35,7 @@ J3D.Mesh = function(source){
 	this.colorBuf;
 	this.normBuf;
 	this.uv1buf;
+	this.uv2buf;
 	this.triBuf;
 	
 	this.bindBuffers();
@@ -61,6 +69,10 @@ J3D.Mesh.prototype.bindBuffers = function(){
 	this.uv1buf = gl.createBuffer();
 	gl.bindBuffer(gl.ARRAY_BUFFER, this.uv1buf);
 	gl.bufferData(gl.ARRAY_BUFFER, this.uv1, gl.STATIC_DRAW);
+	
+	this.uv2buf = gl.createBuffer();
+	gl.bindBuffer(gl.ARRAY_BUFFER, this.uv2buf);
+	gl.bufferData(gl.ARRAY_BUFFER, this.uv2, gl.STATIC_DRAW);
 
 	this.triBuf = gl.createBuffer();
 	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.triBuf);

@@ -4,11 +4,16 @@ body {
 	margin: 0px;
 }
 
+h2 {
+	font-weight: normal;
+	color: #555;
+	padding-right: 20%;
+}
+
 #content {
-	position: fixed;
-	top: 10px; left: 10px; width: 800px;
+	top: 10px; left: 10px;
 	color: #dddddd;
-	padding: 5px;
+	padding: 4px;
 	font-size: 13px;
 	text-align: left;
 	z-index: 0;
@@ -38,17 +43,31 @@ body {
 	 z-index: 1;
 }
 
-#details  
+#details
 {
      color: #ffffff;
 	 font-size: 12px;
      background-color: #000000;
      text-align: left;
      position: absolute;
+	 padding: 4 4 4 4;
      top: 28px;
      left: 0px;
-	 padding: 4 4 4 4;
 	 z-index: 1;
+}
+
+.thumb
+{
+	 float: left;
+	 padding: 8 16 8 0;
+}
+
+.thumbdesc {
+    font-size: 12px;
+    text-align: left;
+	background-color: #000000;
+	padding: 5 5 5 5;
+	margin-top: 1;
 }
 
 a:link, a:visited {

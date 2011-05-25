@@ -25,6 +25,7 @@ java \
 --js ../src/renderers/Reflective.js \
 --js ../src/renderers/Glass.js \
 --js ../src/renderers/Skybox.js \
+--js ../src/renderers/Lightmap.js \
 --js ../src/renderers/ShaderSource.js \
 --js ../src/util/Color.js \
 --js ../src/util/Time.js \

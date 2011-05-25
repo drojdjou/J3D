@@ -37,7 +37,7 @@ public class FileExport
 	// Removes trailing commas from JSON files, so that it can be parsed by JSON.parse() on JS side
 	public static string CleanJSON (StringTemplate st)
 	{
-		return Regex.Replace (st.ToString(), @",(\s*)[\},\]]", @"$1}", RegexOptions.Multiline);
+		return Regex.Replace (st.ToString(), @",(\s*)([\},\]])", @"$1$2", RegexOptions.Multiline);
 	}
 }
 

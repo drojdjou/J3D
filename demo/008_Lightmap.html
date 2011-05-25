@@ -1,7 +1,7 @@
 <html> 
  
 <head> 
-<title>002 | Scene | J3D</title> 
+<title>008 | Lightmapped scene | J3D</title> 
 
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
 
@@ -39,67 +39,104 @@
 <script type="text/javascript" src="../build/j3d.js"></script>
 
 <script>
-	var mx, my = 0;
-	var jsonScene;
-	var root;
-	var rings = [];
+	var mx = 0, my = 0;	
+	var fps, eye;
+	var lightmaps, nolightmaps;
+	var showmaps = true;
+	var moveLeft = 0, moveForward = 0;
 	
 	function init() {
 		engine = new J3D.Engine();
 		
-		J3D.Loader.loadJSON("models/text.js", function(jsmeshes) { 
-			J3D.Loader.loadJSON("models/textScene.js", function(jsscene) { 
-				jsonScene = jsscene;
+		var path = "models/008/";
+		
+		lightmaps = [];
+		nolightmaps = [];
+		
+		lightmaps.push( new J3D.Texture(path + "lightmap0.jpg") );
+		lightmaps.push( new J3D.Texture(path + "lightmap1.jpg") );
+		
+		nolightmaps.push( new J3D.Texture(path + "white.png") );
+		nolightmaps.push( new J3D.Texture(path + "white.png") );
+		
+		J3D.LightmapAtlas = lightmaps;
+		
+		J3D.Loader.loadJSON(path + "bunker.js", function(jsmeshes) { 
+			J3D.Loader.loadJSON(path + "bunkerScene.js", function(jsscene) { 
+				jsscene.path = path;
 				J3D.Loader.parseJSONScene(jsscene, jsmeshes, engine);
-				
-				root = engine.scene.find("root");
-				
-				rings[0] = engine.scene.find("root/ring1");
-				rings[1] = engine.scene.find("root/ring1/ring2");
-				rings[2] = engine.scene.find("root/ring1/ring2/ring3");
-				rings[3] = engine.scene.find("root/ring1/ring2/ring3/ring4");
-				rings[4] = engine.scene.find("root/ring1/ring2/ring3/ring4/ring5");
-				rings[5] = engine.scene.find("root/ring1/ring2/ring3/ring4/ring5/ring6");
-				rings[6] = engine.scene.find("root/ring1/ring2/ring3/ring4/ring5/ring6/ring7");
-				
+				fps = engine.scene.find("fps");
+				eye = engine.scene.find("fps/eye");
 				draw();
 			})
 		});
-
+		
 		document.onmousemove = onMouseMove;
+		document.onkeydown = onKeyDown;
+		document.onkeyup = onKeyUp;
+	}
+	
+	function onKeyDown(e) {
+		switch(e.keyCode) {
+			case 32:
+				showmaps = !showmaps;
+				break;
+			case 37:
+			case 65:
+				moveLeft = -0.04;
+				break;
+			case 39:
+			case 68:
+				moveLeft = 0.04;
+				break;
+			case 38:
+			case 87:
+				moveForward = -0.04;
+				break;
+			case 40:
+			case 83:
+				moveForward = 0.04;
+				break;
+		}
+	}
+	
+	function onKeyUp(e) {
+		switch(e.keyCode) {
+			case 38:
+			case 40:
+			case 87:
+			case 83:
+				moveForward = 0;
+				break;
+			case 37:
+			case 39:
+			case 65:
+			case 68:
+				moveLeft = 0;
+				break;
+		}
 	}
 	
 	function onMouseMove(e) {
 		mx = ( e.clientX / window.innerWidth  ) * 2 - 1;
 		my = ( e.clientY / window.innerHeight ) * 2 - 1;
 	}
-	
+
 	function draw() {
 		requestAnimationFrame(draw);
 		
-		if(!mx) mx = 0;
-		if(!my) my = 0;
+		J3D.LightmapAtlas = (showmaps) ? lightmaps : nolightmaps;
 		
-		var sx = mx * J3D.Time.deltaTime / 1000;
-		var sy = my * J3D.Time.deltaTime / 1000;
-
-		root.rotation.y += sx;
+		fps.position = fps.position.add( fps.forward().mul(moveForward).add( fps.left().mul(moveLeft) ));
 		
-		rings[0].rotation.y += sx;
-		rings[1].rotation.y -= sx * 0.1;
-		rings[2].rotation.y -= sx * 0.12;
-		rings[3].rotation.y -= sx * 0.14;
-		rings[4].rotation.y -= sx * 0.16;
-		rings[5].rotation.y -= sx * 0.18;
-		rings[6].rotation.y -= sx * 0.2;
+		// Poor man's collision detection ;) 
+		fps.position.x = Math.min(3.5, fps.position.x);
+		fps.position.x = Math.max(-3.5, fps.position.x);		
+		fps.position.z = Math.min(2.4, fps.position.z);
+		fps.position.z = Math.max(-2.4, fps.position.z);
 		
-		rings[0].rotation.x += sy;
-		rings[1].rotation.x -= sy * 0.1;
-		rings[2].rotation.x -= sy * 0.12;
-		rings[3].rotation.x -= sy * 0.14;
-		rings[4].rotation.x -= sy * 0.16;
-		rings[5].rotation.x -= sy * 0.18;
-		rings[6].rotation.x -= sy * 0.2;
+		fps.rotation.y = -mx * Math.PI * 2;
+		eye.rotation.x = -my * Math.PI * .25;
 		
 		engine.render();
 	}
@@ -110,7 +147,7 @@
 
 <body onload="init();">
 	<script>
-		setLabels("002. Unity3d scene", "A simple scene with lights, camera and meshes<br>exported from Unity3d");
+		setLabels("008. Lightmapped scene", "Lightmapped scene built with Cinema4D/Unity3D.<br>Cursor keys/WASD to move, mouse to look around.<br>Press space to toggle lightmaps.");
 	</script>
 </body> 
 

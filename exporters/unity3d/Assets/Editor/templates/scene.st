@@ -18,6 +18,8 @@ $materials:{
 		"type": "$it.Type$",
 		"color": { "r":$it.Color.r$, "g":$it.Color.g$, "b":$it.Color.b$, "a":$it.Color.a$ },
 		"specularIntensity": $it.SpecularIntensity$,
+		"textureTile": [ $it.TextureScale; separator=","$ ],
+		"textureOffset": [ $it.TextureOffset; separator=","$ ],
 		$it.Textures; separator=",\n"$
 	},
 }$
@@ -44,9 +46,10 @@ $cameras:{
 }$
 },
 
-"transforms": {
+"transforms": [
 $transforms:{	
-	"$it.Name$": {
+	{
+		"name": "$it.name$",
 		$if(it.HasParent)$
 		"parent": "$it.Parent$",$endif$
 		"position": [ $it.Position; separator=","$ ],
@@ -57,10 +60,13 @@ $transforms:{
 		"camera": "$it.CameraName$",$endif$
 		$if(it.HasRenderer)$
 		"renderer": "$it.MaterialName$",
-		"mesh": "$it.MeshName$"$endif$
+		"mesh": "$it.MeshName$",$endif$
+		$if(it.HasLightmap)$
+		"lightmapIndex": $it.LightmapIndex$,
+		"lightmapTileOffset": [ $it.LightmapTileOffset; separator=","$ ],$endif$
 	},
 }$
-}
+]
 }
 
 

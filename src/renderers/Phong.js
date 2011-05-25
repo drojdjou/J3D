@@ -40,10 +40,10 @@ J3D.Phong.prototype.setup = function(mesh, shader, lights, camera){
 	gl.uniform1f(shader.uSpecularIntensity, this.specularIntensity);
 	gl.uniform1f(shader.uShininess, this.shininess);
 		
-	if (mesh.hasUV1 && this.colorTexture != null) {		
+	if (mesh.hasUV1 && this.colorTexture != null && this.colorTexture.tex != null) {		
 		gl.activeTexture(gl.TEXTURE0);
 		gl.bindTexture(gl.TEXTURE_2D, this.colorTexture.tex);
-		gl.uniform1i(shader.samplerUniform, 0);
+		gl.uniform1i(shader.uColorSampler, 0);
 		gl.uniform1i(shader.uHasColorSampler, true);
 	}
 	else {
