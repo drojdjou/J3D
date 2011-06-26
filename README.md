@@ -21,3 +21,5 @@ It was created by [Bartek Drozdz](http://www.everyday3d.com/)
 (http://www.everyday3d.com/j3d/demo/007_TileAndOffset.html)
 [![Lightmapped scene](http://www.everyday3d.com/j3d/thumbs/009_lightmap.jpg)]
 (http://www.everyday3d.com/j3d/demo/008_Lightmap.html)
+[![Basic filter](http://www.everyday3d.com/j3d/thumbs/010_basicfilter.jpg)]
+(http://www.everyday3d.com/j3d/demo/009_BasicFilter.html)
