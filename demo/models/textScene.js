@@ -98,6 +98,13 @@
 "transforms": [
 	
 	{
+		"name": "camera",
+		"position": [ 0,0,-0.5 ],
+		"rotation": [ 0,3.141592,0 ],
+		"camera": "camera"
+	},
+	
+	{
 		"name": "sun",
 		"position": [ 0,0,0.01425409 ],
 		"rotation": [ -0.8351003,-3.136525,0.2129833 ],
@@ -180,13 +187,6 @@
 		"rotation": [ 0,0,0 ],
 		"renderer": "grey",
 		"mesh": "text"
-	},
-	
-	{
-		"name": "camera",
-		"position": [ 0,0,-0.5 ],
-		"rotation": [ 0,3.141592,0 ],
-		"camera": "camera"
 	}
 
 ]

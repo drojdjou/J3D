@@ -77,7 +77,6 @@ J3D.ShaderAtlas.prototype.linkShader = function(renderer){
 	program.animAttr = gl.getAttribLocation(program, "aVertexAnimation");
 	gl.enableVertexAttribArray(program.animAttr);
 	
-	
 	renderer.setupLocations(program);
 	this.shaderCount++;
 	

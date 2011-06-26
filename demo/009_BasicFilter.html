@@ -1,0 +1,138 @@
+<html> 
+ 
+<head> 
+<title>009 | Basic Filter | J3D</title> 
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
+
+<link rel="stylesheet" href="common/common.css"/>
+<script type="text/javascript" src="common/common.js"></script>
+
+<!--
+<script type="text/javascript" src="../lib/glMatrix.js"></script>
+<script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
+<script type="text/javascript" src="../src/J3D.js"></script>
+<script type="text/javascript" src="../src/util/Color.js"></script>
+<script type="text/javascript" src="../src/math/Vector2.js"></script>
+<script type="text/javascript" src="../src/math/Vector3.js"></script>
+<script type="text/javascript" src="../src/math/Matrix44.js"></script>
+<script type="text/javascript" src="../src/engine/Engine.js"></script>
+<script type="text/javascript" src="../src/engine/Camera.js"></script>
+<script type="text/javascript" src="../src/engine/Light.js"></script>
+<script type="text/javascript" src="../src/engine/Mesh.js"></script>
+<script type="text/javascript" src="../src/engine/Scene.js"></script>
+<script type="text/javascript" src="../src/engine/Loader.js"></script>
+<script type="text/javascript" src="../src/engine/ShaderAtlas.js"></script>
+<script type="text/javascript" src="../src/engine/Texture.js"></script>
+<script type="text/javascript" src="../src/engine/Cubemap.js"></script>
+<script type="text/javascript" src="../src/engine/Transform.js"></script>
+<script type="text/javascript" src="../src/engine/Postprocess.js"></script>
+<script type="text/javascript" src="../src/renderers/ShaderSource.js"></script>
+<script type="text/javascript" src="../src/renderers/Phong.js"></script>
+<script type="text/javascript" src="../src/renderers/Gouraud.js"></script>
+<script type="text/javascript" src="../src/renderers/Normal2Color.js"></script>
+<script type="text/javascript" src="../src/renderers/Reflective.js"></script>
+<script type="text/javascript" src="../src/renderers/Glass.js"></script>
+<script type="text/javascript" src="../src/renderers/Skybox.js"></script>
+<script type="text/javascript" src="../src/renderers/Shader.js"></script>
+<script type="text/javascript" src="../src/util/Time.js"></script>
+-->
+
+<script type="text/javascript" src="../build/j3d.js"></script>
+
+
+<script id="basicFilter" type="x-shader/x-filter">
+	#ifdef GL_ES
+	precision highp float;
+	#endif
+	
+	uniform sampler2D uTexture;
+	
+	varying vec2 vTextureCoord;
+	
+	float brightness(vec3 c) {
+	    return c.r * 0.2126 + c.g * 0.7152 + c.b * 0.0722;
+	}
+	
+	void main(void) {
+
+		float m1 = sin(vTextureCoord.y * 16.0) * cos(vTextureCoord.x * 10.0) * 0.02;
+		
+		vec4 a = texture2D(uTexture, vTextureCoord + m1 * 0.5);
+		vec4 b = texture2D(uTexture, vTextureCoord + m1);
+		vec4 c = texture2D(uTexture, vTextureCoord + m1 * 1.5);
+
+		gl_FragColor = vec4(a.r, b.g, c.b, 1.0);
+		
+	}
+</script>
+
+<script>
+	
+	var engine, cube, pp, sun;
+	
+	function init() {
+		engine = new J3D.Engine();
+
+		engine.setClearColor(J3D.Color.black);
+		
+		sun = new J3D.Transform();
+		sun.light = new J3D.Light(J3D.DIRECT);
+		sun.light.color = new J3D.Color(.9, .8, .7, 1);
+		sun.light.direction = new v3(-1, 0, -1).norm();
+		
+		engine.scene.ambient = new J3D.Color(.1, .12, .14, 1);
+		
+		cube = new J3D.Transform();
+		cube.rotation = new v3(0, Math.PI, Math.PI); // All rotations are in radians
+		
+		J3D.Loader.loadJSON("models/monkeyhi.js", function(j) {  cube.mesh = new J3D.Mesh(j); } );		
+		
+		cube.renderer = new J3D.Phong();
+		cube.renderer.specularIntensity = 10;
+		cube.renderer.shininess = 32;
+		
+		var camera = new J3D.Camera(45);
+		var fs = document.getElementById("basicFilter").firstChild.nodeValue;
+		camera.filter = new J3D.Shader("InvertFilter", J3D.ShaderSource.FilterCommonVertex, fs);
+		camera.transform.position.z = 4;
+		engine.camera = camera;
+		
+		engine.scene.add(camera.transform, cube, sun);
+		
+		draw();
+	}
+	
+	function draw() {
+		requestAnimationFrame(draw);	
+		
+		cube.rotation.x += Math.PI * J3D.Time.deltaTime / 12000;
+		cube.rotation.y -= Math.PI * J3D.Time.deltaTime / 6000;
+		engine.render();
+	}
+	
+</script>
+
+</head> 
+
+<body onload="init();">
+	
+	<script>
+		setLabels("009. Basic filter", "Custom image effect applied to a scene");
+	</script>
+	
+</body> 
+
+</html> 
+
+
+
+
+
+
+
+
+
+
+
+

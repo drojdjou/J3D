@@ -8,6 +8,8 @@ J3D.Mesh = function(source){
 	this.vertices = new Float32Array(source.vertices);
 	this.vertNum = source.vertices.length / this.vertSize;
 	
+	this.hasElements = source.tris.length > 0;
+	
 	this.tris = new Uint16Array(source.tris);
 	this.triNum = source.tris.length;
 
@@ -41,7 +43,7 @@ J3D.Mesh = function(source){
 	this.bindBuffers();
 }
 
-J3D.Mesh.setTransparency = function(transparency, srcFactor, dstFactor) {
+J3D.Mesh.prototype.setTransparency = function(transparency, srcFactor, dstFactor) {
 	if(!transparency) {
 		this.renderMode = J3D.RENDER_AS_OPAQUE;
 	} else {

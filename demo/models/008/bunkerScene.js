@@ -2,7 +2,7 @@
 	
 "path" : "",
 "ambient": { "r":0.1492537, "g":0.1492537, "b":0.1492537, "a":1 },
-"background": { "r":0, "g":0, "b":0, "a":1 },
+"background": { "r":0.1916647, "g":0.3019664, "b":0.4745098, "a":1 },
 
 "textures": {
 	
@@ -107,9 +107,8 @@
 		"type": "Lightmap",
 		"color": { "r":0.6567164, "g":0, "b":0, "a":1 },
 		"specularIntensity": 0,
-		"textureTile": [ 1,1 ],
-		"textureOffset": [ 0,0 ],
-		"colorTexture": "white"
+		"textureTile": [  ],
+		"textureOffset": [  ]
 	},
 	
 	"base": { 

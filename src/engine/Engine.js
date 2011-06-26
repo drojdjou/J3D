@@ -1,8 +1,26 @@
 var gl;
 
-J3D.Engine = function() {
-	this.gl;
-	
+/** Render to texture and postprocessing
+ *  
+ *  Cases:
+ *  a. render to a texture
+ *  a.1 needs to be rendered before anythng else
+ *  a.2 needs a camera where renderTarget != null
+ *  
+ *  b. add post process effect
+ *  b.1 happens after everything, but the fbo needs to be setup first
+ *  b.2 can be used with render to texture as well
+ *  b.3 uses a filter collection to determine which effects (and in what order) to apply
+ *  b.4 renders to texture, creates the quad and applies the effect (repeats for each effect)
+ *  
+ *  Alpha:
+ *  Camera can have filter added
+ *  If filter is present than only one is applied
+ *  Renders to an FBO
+ *  Uses the texture to render a full screen quad
+ */
+
+J3D.Engine = function() {	
 	var cv;
 	var resolution = 1;
 	
@@ -14,7 +32,7 @@ J3D.Engine = function() {
 	document.body.appendChild(cv);
 
 	try {
-		gl = cv.getContext("experimental-webgl");
+		gl = cv.getContext("experimental-webgl", { alpha: false });
 		gl.viewportWidth = cv.width;
 		gl.viewportHeight = cv.height;
 	} 
@@ -38,6 +56,8 @@ J3D.Engine = function() {
 	this._lights = [];
 	
 	this.gl = gl;
+	
+	this.postprocess = new J3D.Postprocess();
 }
 
 J3D.Engine.prototype.setClearColor = function(c) {
@@ -47,12 +67,21 @@ J3D.Engine.prototype.setClearColor = function(c) {
 J3D.Engine.prototype.render = function() {
 	
 	J3D.Time.tick();
+	
+	// ################ PP
+	if (this.camera.filter != null) {
+		this.postprocess.setFilter(this.camera.filter);
+		this.postprocess.bindFBO();
+	}
 
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
 	this._opaqueMeshes.length = 0;
 	this._transparentMeshes.length = 0;
 	this._lights.length = 0;
+	
+	// 0. If camera has filter - prepare FBO
+	// ...
 
 	// 1. Update all transforms recursively
 	for(var i = 0; i < this.scene.numChildren; i++) {
@@ -97,6 +126,13 @@ J3D.Engine.prototype.render = function() {
 	// console.log( this.shaderAtlas.shaderCount );
 
 	gl.flush();
+	
+	// If camera has filter - use FOB to render to a full-screen quad
+	// ################ PP
+	if (this.camera.filter != null) {
+		this.postprocess.releaseFBO();
+		this.postprocess.renderToScreen();
+	}
 }
 
 J3D.Engine.prototype.renderObject = function(t) {
@@ -156,7 +192,7 @@ J3D.Engine.prototype.renderObject = function(t) {
 	
 	var mode = (t.renderer.drawMode != null) ? t.renderer.drawMode : gl.TRIANGLES;
 	
-	if (t.mesh.triBuf) {
+	if (t.mesh.hasElements) {
 		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, t.mesh.triBuf);
 		gl.drawElements(mode, t.mesh.triNum, gl.UNSIGNED_SHORT, 0);
 	} else {

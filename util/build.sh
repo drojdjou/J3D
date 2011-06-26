@@ -18,6 +18,7 @@ java \
 --js ../src/engine/Transform.js \
 --js ../src/engine/ShaderAtlas.js \
 --js ../src/engine/Particles.js \
+--js ../src/engine/Postprocess.js \
 --js ../src/renderers/Shader.js \
 --js ../src/renderers/Normal2Color.js \
 --js ../src/renderers/Phong.js \

@@ -12,6 +12,8 @@ J3D.Camera = function(fov, near, far, aspect){
 	this.inverseMat = mat4.create();
 	
 	this.transform = new J3D.Transform();
+	
+	this.filter = null;
 }
 
 J3D.Camera.prototype.update = function(){
