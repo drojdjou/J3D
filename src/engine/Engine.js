@@ -1,25 +1,5 @@
 var gl;
 
-/** Render to texture and postprocessing
- *  
- *  Cases:
- *  a. render to a texture
- *  a.1 needs to be rendered before anythng else
- *  a.2 needs a camera where renderTarget != null
- *  
- *  b. add post process effect
- *  b.1 happens after everything, but the fbo needs to be setup first
- *  b.2 can be used with render to texture as well
- *  b.3 uses a filter collection to determine which effects (and in what order) to apply
- *  b.4 renders to texture, creates the quad and applies the effect (repeats for each effect)
- *  
- *  Alpha:
- *  Camera can have filter added
- *  If filter is present than only one is applied
- *  Renders to an FBO
- *  Uses the texture to render a full screen quad
- */
-
 J3D.Engine = function() {	
 	var cv;
 	var resolution = 1;
@@ -46,6 +26,7 @@ J3D.Engine = function() {
 	gl.frontFace(gl.CW);
 	
 	this.shaderAtlas = new J3D.ShaderAtlas();
+	this.effectAtlas = new J3D.EffectAtlas();
 	this.scene = new J3D.Scene();
 	this.camera;
 	
@@ -68,50 +49,46 @@ J3D.Engine.prototype.render = function() {
 	
 	J3D.Time.tick();
 	
-	// ################ PP
-	if (this.camera.filter != null) {
-		this.postprocess.setFilter(this.camera.filter);
-		this.postprocess.bindFBO();
-	}
+	// 1. Setup post-processing effect(s) - if any
+	this.postprocess.prepare(this.camera);
 
+	// 2. Clear buffers on screen or in current FBO
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
+	// 3. Clear collecions
 	this._opaqueMeshes.length = 0;
 	this._transparentMeshes.length = 0;
 	this._lights.length = 0;
-	
-	// 0. If camera has filter - prepare FBO
-	// ...
 
-	// 1. Update all transforms recursively
+	// 4. Update all transforms recursively
 	for(var i = 0; i < this.scene.numChildren; i++) {
 		this.updateTransform(this.scene.childAt(i), null);
 	}
 	
-	// 2. Calculate camera inverse matrix and it's world position
+	// 5. Calculate camera inverse matrix and it's world position
 	this.camera.update();
 	
-	// 2.5. Render skybox (if any)
+	// 6. Render sky box (if any)
 	if(this.scene.skybox) {
 		gl.depthMask(false);
 		this.renderObject(this.scene.skybox);
 		gl.depthMask(true);	
 	}
 	
-	//3. Calculate global positions for all lights
+	// 7. Calculate global positions for all lights
 	for (var i = 0; i < this._lights.length; i++) {
 		var t = this._lights[i];
 		t.updateWorldPosition();
 	}
 
-	// 3. Render opaque meshes
+	// 8. Render opaque meshes
 	gl.disable(gl.BLEND);
 	gl.enable(gl.DEPTH_TEST);
 	for(var i = 0; i < this._opaqueMeshes.length; i++){
 		this.renderObject(this._opaqueMeshes[i]);
 	}
 
-	// 4. Render transparent meshes	(TODO: sort before rendering)
+	// 9. Render transparent meshes	(TODO: sort before rendering)
 	gl.disable(gl.DEPTH_TEST);
 	gl.enable(gl.BLEND);
 	for(var i = 0; i < this._transparentMeshes.length; i++) {
@@ -127,12 +104,8 @@ J3D.Engine.prototype.render = function() {
 
 	gl.flush();
 	
-	// If camera has filter - use FOB to render to a full-screen quad
-	// ################ PP
-	if (this.camera.filter != null) {
-		this.postprocess.releaseFBO();
-		this.postprocess.renderToScreen();
-	}
+	// 10. Apply post-processing effect(s) - if any
+	this.postprocess.apply();
 }
 
 J3D.Engine.prototype.renderObject = function(t) {

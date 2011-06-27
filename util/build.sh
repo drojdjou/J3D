@@ -1,5 +1,7 @@
 ./buildShaders.py
 
+./buildEffects.py
+
 java \
 -jar build/compiler.jar \
 --js_output_file ../build/j3dt.js \
@@ -19,6 +21,9 @@ java \
 --js ../src/engine/ShaderAtlas.js \
 --js ../src/engine/Particles.js \
 --js ../src/engine/Postprocess.js \
+--js ../src/engine/Filter.js \
+--js ../src/engine/FrameBuffer.js \
+--js ../src/engine/EffectAtlas.js \
 --js ../src/renderers/Shader.js \
 --js ../src/renderers/Normal2Color.js \
 --js ../src/renderers/Phong.js \
@@ -28,6 +33,7 @@ java \
 --js ../src/renderers/Skybox.js \
 --js ../src/renderers/Lightmap.js \
 --js ../src/renderers/ShaderSource.js \
+--js ../src/effects/EffectSource.js \
 --js ../src/util/Color.js \
 --js ../src/util/Time.js \
 --js ../src/util/ParticleUtil.js \

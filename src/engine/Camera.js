@@ -15,6 +15,9 @@ J3D.Camera = function(fov, near, far, aspect){
 	
 	this.filter = null;
 }
+J3D.Camera.prototype.hasFilters = function(){
+	return this.filter != null;
+}
 
 J3D.Camera.prototype.update = function(){
 	mat4.inverse(this.transform.globalMatrix, this.inverseMat);

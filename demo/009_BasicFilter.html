@@ -22,11 +22,15 @@
 <script type="text/javascript" src="../src/engine/Mesh.js"></script>
 <script type="text/javascript" src="../src/engine/Scene.js"></script>
 <script type="text/javascript" src="../src/engine/Loader.js"></script>
+<script type="text/javascript" src="../src/engine/Filter.js"></script>
 <script type="text/javascript" src="../src/engine/ShaderAtlas.js"></script>
+<script type="text/javascript" src="../src/engine/EffectAtlas.js"></script>
 <script type="text/javascript" src="../src/engine/Texture.js"></script>
 <script type="text/javascript" src="../src/engine/Cubemap.js"></script>
 <script type="text/javascript" src="../src/engine/Transform.js"></script>
 <script type="text/javascript" src="../src/engine/Postprocess.js"></script>
+<script type="text/javascript" src="../src/engine/FrameBuffer.js"></script>
+<script type="text/javascript" src="../src/effects/EffectSource.js"></script>
 <script type="text/javascript" src="../src/renderers/ShaderSource.js"></script>
 <script type="text/javascript" src="../src/renderers/Phong.js"></script>
 <script type="text/javascript" src="../src/renderers/Gouraud.js"></script>
@@ -42,21 +46,13 @@
 
 
 <script id="basicFilter" type="x-shader/x-filter">
-	#ifdef GL_ES
-	precision highp float;
-	#endif
-	
 	uniform sampler2D uTexture;
 	
 	varying vec2 vTextureCoord;
-	
-	float brightness(vec3 c) {
-	    return c.r * 0.2126 + c.g * 0.7152 + c.b * 0.0722;
-	}
-	
+
 	void main(void) {
 
-		float m1 = sin(vTextureCoord.y * 16.0) * cos(vTextureCoord.x * 10.0) * 0.02;
+		float m1 = sin(uTime * 3.0 + vTextureCoord.y * 16.0) * cos(uTime * 2.0 + vTextureCoord.x * 10.0) * 0.02;
 		
 		vec4 a = texture2D(uTexture, vTextureCoord + m1 * 0.5);
 		vec4 b = texture2D(uTexture, vTextureCoord + m1);
@@ -84,7 +80,7 @@
 		engine.scene.ambient = new J3D.Color(.1, .12, .14, 1);
 		
 		cube = new J3D.Transform();
-		cube.rotation = new v3(0, Math.PI, Math.PI); // All rotations are in radians
+		cube.rotation = new v3(0, Math.PI, 0); // All rotations are in radians
 		
 		J3D.Loader.loadJSON("models/monkeyhi.js", function(j) {  cube.mesh = new J3D.Mesh(j); } );		
 		
@@ -93,9 +89,10 @@
 		cube.renderer.shininess = 32;
 		
 		var camera = new J3D.Camera(45);
-		var fs = document.getElementById("basicFilter").firstChild.nodeValue;
-		camera.filter = new J3D.Shader("InvertFilter", J3D.ShaderSource.FilterCommonVertex, fs);
 		camera.transform.position.z = 4;
+		
+		camera.filter = new J3D.Filter("BasicFilter", document.getElementById("basicFilter").firstChild.nodeValue);
+
 		engine.camera = camera;
 		
 		engine.scene.add(camera.transform, cube, sun);

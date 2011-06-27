@@ -39,6 +39,27 @@
 
 <script type="text/javascript" src="../build/j3d.js"></script>
 
+<script id="basicFilter" type="x-shader/x-filter">
+	#ifdef GL_ES
+	precision highp float;
+	#endif
+	
+	uniform sampler2D uTexture;
+	
+	varying vec2 vTextureCoord;
+
+	void main(void) {
+
+		float m1 = sin(uTime * 2.0 + vTextureCoord.y * 6.0) * cos(uTime * -1.0 + vTextureCoord.x * 4.0) * 0.03;
+		
+		vec4 a = texture2D(uTexture, vTextureCoord + m1 * 0.5);
+		vec4 b = texture2D(uTexture, vTextureCoord + m1);
+		vec4 c = texture2D(uTexture, vTextureCoord + m1 * 1.5);
+
+		gl_FragColor = vec4(a.r, b.g, c.b, 1.0);
+		
+	}
+</script>
 
 <script>
 	var mx = 0, my = 0;	
@@ -46,11 +67,14 @@
 	var lightmaps, nolightmaps;
 	var showmaps = true;
 	var moveLeft = 0, moveForward = 0;
+	var filter;
 	
 	function init() {
 		engine = new J3D.Engine();
 		
 		var path = "models/008/";
+		
+		filter = new J3D.Filter("BasicFilter", document.getElementById("basicFilter").firstChild.nodeValue);
 		
 		lightmaps = [];
 		nolightmaps = [];
@@ -73,6 +97,8 @@
 			})
 		});
 		
+		
+		
 		document.onmousemove = onMouseMove;
 		document.onkeydown = onKeyDown;
 		document.onkeyup = onKeyUp;
@@ -80,9 +106,6 @@
 	
 	function onKeyDown(e) {
 		switch(e.keyCode) {
-			case 32:
-				showmaps = !showmaps;
-				break;
 			case 37:
 			case 65:
 				moveLeft = -0.04;
@@ -127,7 +150,9 @@
 	function draw() {
 		requestAnimationFrame(draw);
 		
-		J3D.LightmapAtlas = (showmaps) ? lightmaps : nolightmaps;
+		J3D.LightmapAtlas = (document.getElementById("toglm").checked) ? nolightmaps : lightmaps;
+		
+		engine.camera.filter = (document.getElementById("dizzy").checked) ? filter : null;
 		
 		fps.position = fps.position.add( fps.forward().mul(moveForward).add( fps.left().mul(moveLeft) ));
 		
@@ -149,8 +174,13 @@
 
 <body onload="init();">
 	<script>
-		setLabels("008. Lightmapped scene", "Lightmapped scene built with Cinema4D/Unity3D.<br>Cursor keys/WASD to move, mouse to look around.<br>Press space to toggle lightmaps.");
+		setLabels("008. Lightmapped scene");
 	</script>
+		<div id="details">
+		Lightmapped scene built with Cinema4D/Unity3D.<br>Cursor keys/WASD to move, mouse to look around.<br><br>
+		<input type='checkbox' id='toglm'> Toggle lightmaps
+		<input type='checkbox' id='dizzy'> Make me dizzy
+	</div>
 </body> 
 
 </html> 

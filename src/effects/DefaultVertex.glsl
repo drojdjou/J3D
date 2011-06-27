@@ -1,4 +1,4 @@
-//# FilterCommonVertex
+//# DefaultVertex
 attribute vec2 aVertexPosition;
 attribute vec2 aTextureCoord;
 
