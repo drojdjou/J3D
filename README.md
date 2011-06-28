@@ -23,3 +23,5 @@ It was created by [Bartek Drozdz](http://www.everyday3d.com/)
 (http://www.everyday3d.com/j3d/demo/008_Lightmap.html)
 [![Basic filter](http://www.everyday3d.com/j3d/thumbs/010_basicfilter.jpg)]
 (http://www.everyday3d.com/j3d/demo/009_BasicFilter.html)
+[![Toon shading](http://www.everyday3d.com/j3d/thumbs/011_toon.jpg)]
+(http://www.everyday3d.com/j3d/demo/010_ToonShading.html)

@@ -33,6 +33,7 @@ java \
 --js ../src/renderers/Skybox.js \
 --js ../src/renderers/Lightmap.js \
 --js ../src/renderers/ShaderSource.js \
+--js ../src/renderers/Toon.js \
 --js ../src/effects/EffectSource.js \
 --js ../src/util/Color.js \
 --js ../src/util/Time.js \
