@@ -327,7 +327,6 @@ J3D.ShaderSource.ToonVertex = [
 J3D.ShaderSource.ToonFragment = [
 	"uniform vec4 uColor;",
 	"uniform sampler2D uColorSampler;",
-	"uniform bool uHasColorSampler;",
 
 	"varying float vLight;",
 	"varying vec2 vTextureCoord;",

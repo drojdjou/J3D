@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="common/common.css"/>
 <script type="text/javascript" src="common/common.js"></script>
 
+
 <!--
 <script type="text/javascript" src="../lib/glMatrix.js"></script>
 <script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
@@ -22,20 +23,31 @@
 <script type="text/javascript" src="../src/engine/Mesh.js"></script>
 <script type="text/javascript" src="../src/engine/Scene.js"></script>
 <script type="text/javascript" src="../src/engine/Loader.js"></script>
+<script type="text/javascript" src="../src/engine/Filter.js"></script>
 <script type="text/javascript" src="../src/engine/ShaderAtlas.js"></script>
+<script type="text/javascript" src="../src/engine/EffectAtlas.js"></script>
 <script type="text/javascript" src="../src/engine/Texture.js"></script>
 <script type="text/javascript" src="../src/engine/Cubemap.js"></script>
 <script type="text/javascript" src="../src/engine/Transform.js"></script>
+<script type="text/javascript" src="../src/engine/Postprocess.js"></script>
+<script type="text/javascript" src="../src/engine/Primitives.js"></script>
+<script type="text/javascript" src="../src/engine/FrameBuffer.js"></script>
+<script type="text/javascript" src="../src/effects/EffectSource.js"></script>
 <script type="text/javascript" src="../src/renderers/ShaderSource.js"></script>
 <script type="text/javascript" src="../src/renderers/Phong.js"></script>
+<script type="text/javascript" src="../src/renderers/Toon.js"></script>
 <script type="text/javascript" src="../src/renderers/Gouraud.js"></script>
 <script type="text/javascript" src="../src/renderers/Normal2Color.js"></script>
 <script type="text/javascript" src="../src/renderers/Reflective.js"></script>
+<script type="text/javascript" src="../src/renderers/Glass.js"></script>
 <script type="text/javascript" src="../src/renderers/Skybox.js"></script>
+<script type="text/javascript" src="../src/renderers/Shader.js"></script>
 <script type="text/javascript" src="../src/util/Time.js"></script>
+<script type="text/javascript" src="../src/util/ShaderUtil.js"></script>
 -->
 
 <script type="text/javascript" src="../build/j3d.js"></script>
+
 
 
 
@@ -67,7 +79,13 @@
 		cube2.position.x = 0;
 		cube2.renderer = new J3D.Phong();
 		cube2.renderer.colorTexture = new J3D.Texture(texpath);
-		cube2.renderer.textureTile = new v2(4, 4); // < this will be overriden by the line below
+		
+		/*
+		 *  There are two ways to specify tile and offset values: per renderer and per object
+		 *  If settings are specified per object they override whatever was set per renderer.
+		 */
+		
+		cube2.renderer.textureTile = new v2(4, 4); // <- per renderer (will be used by all object that share this renderer)
 		cube2.textureTile = new v2(2, 2); // <- comment out to use renderers settings above
 		
 		cube3 = new J3D.Transform();	
@@ -75,12 +93,10 @@
 		cube3.renderer = new J3D.Gouraud();
 		cube3.renderer.colorTexture = new J3D.Texture(texpath);
 		
-		J3D.Loader.loadJSON("models/cube.js", function(j) {  
-			cubemesh = new J3D.Mesh(j); 
-			cube1.mesh = cubemesh;
-			cube2.mesh = cubemesh;
-			cube3.mesh = cubemesh;
-		} );
+		cubemesh = J3D.Primitive.Cube(1, 1, 1); 
+		cube1.mesh = cubemesh;
+		cube2.mesh = cubemesh;
+		cube3.mesh = cubemesh;
 		
 		var camera = new J3D.Camera(30);
 		camera.transform.position.z = 6;
@@ -118,7 +134,7 @@
 <body onload="init();">
 	
 	<script>
-		setLabels("007. Texture tile and offset", "Example of how to add tiling and an offset to a texture");
+		setLabels("007. Texture tile, offset and animation");
 	</script>
 	
 </body> 

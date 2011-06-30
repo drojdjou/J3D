@@ -24,6 +24,7 @@ java \
 --js ../src/engine/Filter.js \
 --js ../src/engine/FrameBuffer.js \
 --js ../src/engine/EffectAtlas.js \
+--js ../src/engine/Primitives.js \
 --js ../src/renderers/Shader.js \
 --js ../src/renderers/Normal2Color.js \
 --js ../src/renderers/Phong.js \
@@ -38,6 +39,7 @@ java \
 --js ../src/util/Color.js \
 --js ../src/util/Time.js \
 --js ../src/util/ParticleUtil.js \
+--js ../src/util/ShaderUtil.js \
 --js ../lib/requestAnimationFrame.js \
 --warning_level QUIET
 

@@ -29,7 +29,6 @@ void main(void) {
 //# ToonFragment
 uniform vec4 uColor;
 uniform sampler2D uColorSampler;
-uniform bool uHasColorSampler;
 
 varying float vLight;
 varying vec2 vTextureCoord;

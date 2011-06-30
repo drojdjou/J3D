@@ -14,25 +14,16 @@ J3D.Lightmap.prototype.fragSource = function() {
 }
 
 J3D.Lightmap.prototype.setupLocations = function(shader) {
-	shader.uColor = gl.getUniformLocation(shader, "uColor");
-	shader.uColorSampler = gl.getUniformLocation(shader, "uColorSampler");
-	shader.uLightmapSampler = gl.getUniformLocation(shader, "uLightmapSampler");
-	shader.uLightmapAtlas = gl.getUniformLocation(shader, "uLightmapAtlas");
+	J3D.ShaderUtil.saveUniformLocations(shader, ["uColor", "uColorSampler", "uLightmapSampler", "uLightmapAtlas"]);
 }
 
 J3D.Lightmap.prototype.setup = function(mesh, shader, lights, camera, transform){	
-
-	gl.uniform4fv(shader.uLightmapAtlas, transform.lightmapTileOffset);
-	
+	gl.uniform4fv(shader.uLightmapAtlas, transform.lightmapTileOffset);	
 	gl.uniform4fv(shader.uColor, this.color.rgba());
 	
 	if (this.colorTexture) {
-		gl.activeTexture(gl.TEXTURE0);
-		gl.bindTexture(gl.TEXTURE_2D, this.colorTexture.tex);
-		gl.uniform1i(shader.uColorSampler, 0);
+		J3D.ShaderUtil.setTexture(shader, 0, "uColorSampler", this.colorTexture.tex);
 	}
 	
-	gl.activeTexture(gl.TEXTURE1);
-	gl.bindTexture(gl.TEXTURE_2D, J3D.LightmapAtlas[transform.lightmapIndex].tex);
-	gl.uniform1i(shader.uLightmapSampler, 1);
+	J3D.ShaderUtil.setTexture(shader, 1, "uLightmapSampler", J3D.LightmapAtlas[transform.lightmapIndex].tex);
 }

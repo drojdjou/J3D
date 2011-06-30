@@ -42,9 +42,11 @@
 <script type="text/javascript" src="../src/renderers/Skybox.js"></script>
 <script type="text/javascript" src="../src/renderers/Shader.js"></script>
 <script type="text/javascript" src="../src/util/Time.js"></script>
+<script type="text/javascript" src="../src/util/ShaderUtil.js"></script>
 -->
 
 <script type="text/javascript" src="../build/j3d.js"></script>
+
 
 <script>
 	
@@ -67,10 +69,8 @@
 		sun.light.color = new J3D.Color(.9, .8, .7, 1);
 		sun.light.direction = new v3(-1, 0, -1).norm();
 		
-		//engine.scene.ambient = new J3D.Color(.1, .12, .14, 1);
-		
 		elephant = new J3D.Transform();
-		elephant.rotation = new v3(0, Math.PI, 0); // All rotations are in radians
+		elephant.rotation = new v3(0, Math.PI, 0);
 		
 		J3D.Loader.loadJSON("models/elephant.js", function(j) {  elephant.mesh = new J3D.Mesh(j); } );		
 		
@@ -112,10 +112,11 @@
 		setLabels("010. Toon shading");
 	</script>
 	<div id="details">
-		Example of toon shading using different color ramp:<br>
+		Example of toon shading using color ramps:<br>
 		<input type='radio' id="ra" name='ramp' checked> ramp A 
 		<input type='radio' id="rb" name='ramp'> ramp B 
-		<input type='radio' id="rc" name='ramp' value='c'> ramp C
+		<input type='radio' id="rc" name='ramp' value='c'> ramp C<br>
+		Elephant model from <a href="http://www.3dmodelfree.com/models//27289-0.htm">here</a>.
 	</div>	
 </body> 
 

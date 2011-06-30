@@ -16,22 +16,8 @@ J3D.Phong.prototype.fragSource = function() {
 }
 
 J3D.Phong.prototype.setupLocations = function(shader) {
-	shader.uLight = [];
-	
-	for (var i = 0; i < J3D.SHADER_MAX_LIGHTS; i++) {
-		shader.uLight[i] = {};
-		shader.uLight[i].type = gl.getUniformLocation(shader, "uLight[" + i + "].type");
-		shader.uLight[i].direction = gl.getUniformLocation(shader, "uLight[" + i + "].direction");
-		shader.uLight[i].position = gl.getUniformLocation(shader, "uLight[" + i + "].position");
-		shader.uLight[i].color = gl.getUniformLocation(shader, "uLight[" + i + "].color");
-	}
-	
-	shader.uSpecularIntensity = gl.getUniformLocation(shader, "uSpecularIntensity");
-	shader.uShininess = gl.getUniformLocation(shader, "uShininess");
-	
-	shader.uColorSampler = gl.getUniformLocation(shader, "uColorSampler");
- 	shader.uColor = gl.getUniformLocation(shader, "uColor");
-	shader.uHasColorSampler = gl.getUniformLocation(shader, "uHasColorSampler");
+	J3D.ShaderUtil.setupLights(shader);
+	J3D.ShaderUtil.saveUniformLocations(shader, ["uSpecularIntensity", "uShininess", "uColorSampler", "uColor", "uHasColorSampler"])
 }
 
 J3D.Phong.prototype.setup = function(mesh, shader, lights, camera){	
@@ -41,9 +27,7 @@ J3D.Phong.prototype.setup = function(mesh, shader, lights, camera){
 	gl.uniform1f(shader.uShininess, this.shininess);
 		
 	if (mesh.hasUV1 && this.colorTexture != null && this.colorTexture.tex != null) {		
-		gl.activeTexture(gl.TEXTURE0);
-		gl.bindTexture(gl.TEXTURE_2D, this.colorTexture.tex);
-		gl.uniform1i(shader.uColorSampler, 0);
+		J3D.ShaderUtil.setTexture(shader, 0, "uColorSampler", this.colorTexture.tex);
 		gl.uniform1i(shader.uHasColorSampler, true);
 	}
 	else {
@@ -51,15 +35,5 @@ J3D.Phong.prototype.setup = function(mesh, shader, lights, camera){
 		gl.uniform1i(shader.uHasColorSampler, false);
 	}
 
-	for (var i = 0; i < J3D.SHADER_MAX_LIGHTS; i++) {
-		var l = lights[i];
-		if(l){
-			gl.uniform1i(shader.uLight[i].type, lights[i].light.type);
-			gl.uniform3fv(shader.uLight[i].direction, lights[i].light.direction.xyz());
-			gl.uniform3fv(shader.uLight[i].color, lights[i].light.color.rgb());
-			gl.uniform3fv(shader.uLight[i].position, lights[i].worldPosition.xyz() );			
-		} else {
-			gl.uniform1i(shader.uLight[i].type, J3D.NONE);
-		}
-	}
+	J3D.ShaderUtil.setLights(shader, lights);
 }
