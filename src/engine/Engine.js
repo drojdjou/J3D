@@ -45,15 +45,25 @@ J3D.Engine.prototype.setClearColor = function(c) {
 	gl.clearColor(c.r, c.g, c.b, c.a);
 }
 
-J3D.Engine.prototype.render = function() {
-	
+J3D.Engine.prototype.render = function(){
 	J3D.Time.tick();
 	
 	// 1. Setup post-processing effect(s) - if any
 	this.postprocess.prepare(this.camera);
-
+	
 	// 2. Clear buffers on screen or in current FBO
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+	
+	// 3-9
+	if(this.scene.numChildren > 0) this.renderScene();
+
+	// 10. Apply post-processing effect(s) - if any
+	this.postprocess.apply();
+}
+
+J3D.Engine.prototype.renderScene = function(){
+
+	
 
 	// 3. Clear collecions
 	this._opaqueMeshes.length = 0;
@@ -103,9 +113,6 @@ J3D.Engine.prototype.render = function() {
 	// console.log( this.shaderAtlas.shaderCount );
 
 	gl.flush();
-	
-	// 10. Apply post-processing effect(s) - if any
-	this.postprocess.apply();
 }
 
 J3D.Engine.prototype.renderObject = function(t) {

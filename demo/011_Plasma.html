@@ -1,0 +1,134 @@
+<html> 
+
+<head> 
+
+<title>011 | Plasma Effect | J3D</title> 
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
+
+<link rel="stylesheet" href="common/common.css"/>
+<script type="text/javascript" src="common/common.js"></script>
+
+<!--
+<script type="text/javascript" src="../lib/glMatrix.js"></script>
+<script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
+<script type="text/javascript" src="../src/J3D.js"></script>
+<script type="text/javascript" src="../src/util/Color.js"></script>
+<script type="text/javascript" src="../src/math/Vector2.js"></script>
+<script type="text/javascript" src="../src/math/Vector3.js"></script>
+<script type="text/javascript" src="../src/math/Matrix44.js"></script>
+<script type="text/javascript" src="../src/engine/Engine.js"></script>
+<script type="text/javascript" src="../src/engine/Camera.js"></script>
+<script type="text/javascript" src="../src/engine/Light.js"></script>
+<script type="text/javascript" src="../src/engine/Mesh.js"></script>
+<script type="text/javascript" src="../src/engine/Scene.js"></script>
+<script type="text/javascript" src="../src/engine/Loader.js"></script>
+<script type="text/javascript" src="../src/engine/Filter.js"></script>
+<script type="text/javascript" src="../src/engine/ShaderAtlas.js"></script>
+<script type="text/javascript" src="../src/engine/EffectAtlas.js"></script>
+<script type="text/javascript" src="../src/engine/Texture.js"></script>
+<script type="text/javascript" src="../src/engine/Cubemap.js"></script>
+<script type="text/javascript" src="../src/engine/Transform.js"></script>
+<script type="text/javascript" src="../src/engine/Postprocess.js"></script>
+<script type="text/javascript" src="../src/engine/FrameBuffer.js"></script>
+<script type="text/javascript" src="../src/effects/EffectSource.js"></script>
+<script type="text/javascript" src="../src/renderers/ShaderSource.js"></script>
+<script type="text/javascript" src="../src/renderers/Phong.js"></script>
+<script type="text/javascript" src="../src/renderers/Gouraud.js"></script>
+<script type="text/javascript" src="../src/renderers/Normal2Color.js"></script>
+<script type="text/javascript" src="../src/renderers/Reflective.js"></script>
+<script type="text/javascript" src="../src/renderers/Glass.js"></script>
+<script type="text/javascript" src="../src/renderers/Skybox.js"></script>
+<script type="text/javascript" src="../src/renderers/Shader.js"></script>
+<script type="text/javascript" src="../src/util/Time.js"></script>
+-->
+
+<script type="text/javascript" src="../build/j3d.js"></script>
+
+
+<script id="plasmaShader" type="x-shader/x-filter">
+	uniform sampler2D uTexture;	
+	varying vec2 vTextureCoord;
+
+	void main(void) {
+		vec2 ca = vec2(0.1, 0.2);
+		vec2 cb = vec2(0.7, 0.9);
+		float da = distance(vTextureCoord, ca);
+		float db = distance(vTextureCoord, cb);
+		
+		float t = uTime * 0.5;
+		
+		float c1 = sin(da * cos(t) * 16.0 + t * 4.0);
+		float c2 = cos(vTextureCoord.y * 8.0 + t);
+		float c3 = cos(db * 14.0) + sin(t);
+	
+		float p = (c1 + c2 + c3) / 3.0;
+	
+		gl_FragColor = texture2D(uTexture, vec2(p, p));
+	}
+</script>
+
+<script>
+	
+	var engine, ctex, texture, texture2, texture3;
+	
+	function init() {
+		engine = new J3D.Engine();
+
+		texture = new J3D.Texture("models/textures/colorramp1.png");
+		texture2 = new J3D.Texture("models/textures/colorramp2.png");
+		texture3 = new J3D.Texture("models/textures/colorramp3.png");
+		
+		ctex = texture;
+
+		var camera = new J3D.Camera();
+		camera.filter = new J3D.Filter("BasicFilter", document.getElementById("plasmaShader").firstChild.nodeValue);
+		camera.filter.setup = function(program) {}
+		camera.filter.prepare = function(postprocess, program) {}
+		camera.filter.apply = function(postprocess, program) {
+			postprocess.drawQuad(ctex.tex, program, null); // <- null = draw to screen
+		}
+
+		engine.camera = camera;
+		draw();
+	}
+	
+	function draw() {
+		requestAnimationFrame(draw);	
+		
+		if(document.getElementById("ra").checked) ctex = texture;
+		if(document.getElementById("rb").checked) ctex = texture2;
+		if(document.getElementById("rc").checked) ctex = texture3;
+		
+		engine.render();
+	}
+	
+</script>
+
+</head> 
+
+<body onload="init();">
+	
+	<script>
+		setLabels("011. Plasma effect");
+	</script>
+		<div id="details">
+		<input type='radio' id="ra" name='ramp' checked> color A 
+		<input type='radio' id="rb" name='ramp'> color B 
+		<input type='radio' id="rc" name='ramp' value='c'> color C
+	</div>	
+</body> 
+
+</html> 
+
+
+
+
+
+
+
+
+
+
+
+
