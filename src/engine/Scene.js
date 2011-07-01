@@ -22,12 +22,11 @@ J3D.Scene = function() {
 		return children[i];
 	}
 
-	// TODO: Get rid of the mesh and create the geometry proceduraly
-	this.addSkybox = function(cubemap, mesh) {
+	this.addSkybox = function(cubemap) {
 		this.skybox = new J3D.Transform();
 		this.skybox.renderer = new J3D.Skybox();
 		this.skybox.renderer.cubemap = cubemap;
-		this.skybox.mesh = mesh;
+		this.skybox.mesh = J3D.Primitive.Cube(1, 1, 1).flip();
 	}
 }
 

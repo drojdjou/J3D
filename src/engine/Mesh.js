@@ -53,6 +53,34 @@ J3D.Mesh.prototype.setTransparency = function(transparency, srcFactor, dstFactor
 	}
 }
 
+J3D.Mesh.prototype.flip = function(){
+	var tv = [];
+	
+	for(var i = 0; i < this.vertices.length; i += 3) {
+		tv.push(this.vertices[i], this.vertices[i+2], this.vertices[i+1]);
+	}
+	
+	this.vertices = new Float32Array(tv);
+	
+	var tn = [];
+	
+	for(var i = 0; i < this.normals.length; i += 3) {
+		var v = new v3(this.normals[i], this.normals[i+1], this.normals[i+2])
+		v.neg();
+		tn = tn.concat(v.xyz());
+	}
+	
+	this.normals = new Float32Array(tn);
+	
+	gl.bindBuffer(gl.ARRAY_BUFFER, this.vertBuf);
+	gl.bufferData(gl.ARRAY_BUFFER, this.vertices, gl.STATIC_DRAW);
+	
+	gl.bindBuffer(gl.ARRAY_BUFFER, this.normBuf);
+	gl.bufferData(gl.ARRAY_BUFFER, this.normals, gl.STATIC_DRAW);
+	
+	return this;
+}
+
 J3D.Mesh.prototype.bindBuffers = function(){
 	if(this.buffersReady) return;
 	
@@ -82,3 +110,5 @@ J3D.Mesh.prototype.bindBuffers = function(){
 	
 	this.buffersReady = true;
 }
+
+

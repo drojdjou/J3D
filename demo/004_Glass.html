@@ -64,10 +64,8 @@
 			front: "models/textures/skybox/front.jpg",
 		});
 
-		J3D.Loader.loadJSON("models/skybox.js", function(j) { 
-			engine.scene.addSkybox(cubemap, new J3D.Mesh(j));
-		} );
-		
+		engine.scene.addSkybox(cubemap);
+
 		monkey = new J3D.Transform();	
 		
 		monkey.renderer = new J3D.Glass();
@@ -110,6 +108,21 @@
 	<script>
 		setLabels("004. Glass", "Glass shader with refraction, reflection, fresnel effect and chromatic dispersion<br>Cubemap by <a href='http://www.ataricommunity.com/forums/showthread.php?t=506748'>Jockum Skoglund</a> | Based on <a href='http://http.developer.nvidia.com/CgTutorial/cg_tutorial_chapter07.html'>Cg tutorial</a>");
 	</script>
+	
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-24294554-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
 </body> 
 
 </html> 

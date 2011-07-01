@@ -22,20 +22,30 @@
 <script type="text/javascript" src="../src/engine/Mesh.js"></script>
 <script type="text/javascript" src="../src/engine/Scene.js"></script>
 <script type="text/javascript" src="../src/engine/Loader.js"></script>
+<script type="text/javascript" src="../src/engine/Filter.js"></script>
 <script type="text/javascript" src="../src/engine/ShaderAtlas.js"></script>
+<script type="text/javascript" src="../src/engine/EffectAtlas.js"></script>
 <script type="text/javascript" src="../src/engine/Texture.js"></script>
 <script type="text/javascript" src="../src/engine/Cubemap.js"></script>
 <script type="text/javascript" src="../src/engine/Transform.js"></script>
+<script type="text/javascript" src="../src/engine/Postprocess.js"></script>
+<script type="text/javascript" src="../src/engine/FrameBuffer.js"></script>
+<script type="text/javascript" src="../src/engine/Primitives.js"></script>
+<script type="text/javascript" src="../src/effects/EffectSource.js"></script>
 <script type="text/javascript" src="../src/renderers/ShaderSource.js"></script>
 <script type="text/javascript" src="../src/renderers/Phong.js"></script>
 <script type="text/javascript" src="../src/renderers/Gouraud.js"></script>
 <script type="text/javascript" src="../src/renderers/Normal2Color.js"></script>
 <script type="text/javascript" src="../src/renderers/Reflective.js"></script>
+<script type="text/javascript" src="../src/renderers/Glass.js"></script>
 <script type="text/javascript" src="../src/renderers/Skybox.js"></script>
+<script type="text/javascript" src="../src/renderers/Shader.js"></script>
 <script type="text/javascript" src="../src/util/Time.js"></script>
+<script type="text/javascript" src="../src/util/ShaderUtil.js"></script>
 -->
 
 <script type="text/javascript" src="../build/j3d.js"></script>
+
 
 <script>
 	var engine, scene;
@@ -65,9 +75,7 @@
 			front: "models/textures/skybox/front.jpg",
 		});
 
-		J3D.Loader.loadJSON("models/skybox.js", function(j) { 
-			engine.scene.addSkybox(cubemap, new J3D.Mesh(j));
-		} );
+		engine.scene.addSkybox(cubemap);
 		
 		monkey = new J3D.Transform();	
 		monkey.renderer = new J3D.Reflective();
@@ -105,6 +113,21 @@
 	<script>
 		setLabels("003. Cubemaps", "Example of a skybox and a reflective material<br>Cubemap by <a href='http://www.ataricommunity.com/forums/showthread.php?t=506748'>Jockum Skoglund</a>");
 	</script>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-24294554-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
 </body> 
 
 </html> 
