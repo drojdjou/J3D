@@ -1,14 +1,15 @@
 <html> 
  
 <head> 
-<title>009 | Basic Filter | J3D</title> 
+<title>012 | Particle Rain | J3D</title> 
+<!-- Elephant model: http://www.3dmodelfree.com/models//27289-0.htm -->
 
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
 
 <link rel="stylesheet" href="common/common.css"/>
 <script type="text/javascript" src="common/common.js"></script>
 
-
+<!--
 <script type="text/javascript" src="../lib/glMatrix.js"></script>
 <script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
 <script type="text/javascript" src="../src/J3D.js"></script>
@@ -33,6 +34,8 @@
 <script type="text/javascript" src="../src/effects/EffectSource.js"></script>
 <script type="text/javascript" src="../src/renderers/ShaderSource.js"></script>
 <script type="text/javascript" src="../src/renderers/Phong.js"></script>
+<script type="text/javascript" src="../src/renderers/Toon.js"></script>
+<script type="text/javascript" src="../src/renderers/Depth.js"></script>
 <script type="text/javascript" src="../src/renderers/Gouraud.js"></script>
 <script type="text/javascript" src="../src/renderers/Normal2Color.js"></script>
 <script type="text/javascript" src="../src/renderers/Reflective.js"></script>
@@ -41,75 +44,113 @@
 <script type="text/javascript" src="../src/renderers/Shader.js"></script>
 <script type="text/javascript" src="../src/util/Time.js"></script>
 <script type="text/javascript" src="../src/util/ShaderUtil.js"></script>
-
-<!--
-<script type="text/javascript" src="../build/j3d.js"></script>
 -->
 
+<script type="text/javascript" src="../build/j3d.js"></script>
 
-<script id="basicFilter" type="x-shader/x-filter">
-	uniform sampler2D uTexture;
+<script id="rainVertex" type="x-shader/x-vertex">
+	attribute vec4 aParticle;
+	uniform sampler2D uTexture;	
+	uniform float uTime;
 	
-	varying vec2 vTextureCoord;
+	
+	varying vec4 vParticle;
+	varying float illum;
+
+	void main(void) {	
+		vec4 pt = aParticle;
+		
+		pt.y = pt.y - (uTime * (1.0 + pt.z) / 10.0);
+		pt.y = mod(pt.y, 1.0);
+		
+		vec2 p = vec2(pt.x * 2.0 - 1.0, pt.y * 2.0 - 1.0);
+		
+		vec4 c = texture2D(uTexture, pt.xy);
+		
+		p.x += (0.05 + c.r * 0.95) * 0.02 * sin(pt.w * uTime * 3.0);
+		p.y += c.r * 0.02;
+		
+		illum = c.r;
+		
+		gl_Position = vec4(p, 0.0, 1.0);
+		gl_PointSize = 2.0;
+		
+		vParticle = pt;
+	}
+</script>
+
+<script id="rainFilter" type="x-shader/x-filter">
+	varying vec4 vParticle;
+	varying float illum;
 
 	void main(void) {
-
-		float m1 = sin(uTime * 3.0 + vTextureCoord.y * 16.0) * cos(uTime * 2.0 + vTextureCoord.x * 10.0) * 0.02;
-		
-		vec4 a = texture2D(uTexture, vTextureCoord + m1 * 0.5);
-		vec4 b = texture2D(uTexture, vTextureCoord + m1);
-		vec4 c = texture2D(uTexture, vTextureCoord + m1 * 1.5);
-
-		gl_FragColor = vec4(a.r, b.g, c.b, 1.0);
-		
+		float a = (0.2 + illum * 0.8) * sin(uTime * vParticle.w + vParticle.w);
+		gl_FragColor = vec4(a,a,a,  1.0);
 	}
 </script>
 
 <script>
 	
-	var engine, cube, pp, sun;
+	var engine, elephant, sun;
+	var mx, my = 0;
 	
 	function init() {
 		engine = new J3D.Engine();
-
+		
 		engine.setClearColor(J3D.Color.black);
+		
+		elephant = new J3D.Transform();
+		elephant.rotation = new v3(0, Math.PI, 0);
+		
+		J3D.Loader.loadJSON("models/elephant.js", function(j) {  elephant.mesh = new J3D.Mesh(j); } );		
+		
+		elephant.renderer = new J3D.Phong();
 		
 		sun = new J3D.Transform();
 		sun.light = new J3D.Light(J3D.DIRECT);
 		sun.light.color = new J3D.Color(.9, .8, .7, 1);
 		sun.light.direction = new v3(-1, 0, -1).norm();
 		
-		engine.scene.ambient = new J3D.Color(.1, .12, .14, 1);
+
+		var camera = new J3D.Camera(45, 3, 20);
+		camera.transform.position.z = 14;
+		camera.transform.position.y = -1.2;
 		
-		cube = new J3D.Transform();
-		cube.rotation = new v3(0, Math.PI, 0); // All rotations are in radians
+		camera.filter = new J3D.Filter("RainFilter", 
+			document.getElementById("rainFilter").firstChild.nodeValue, 
+			document.getElementById("rainVertex").firstChild.nodeValue);
 		
-		J3D.Loader.loadJSON("models/monkeyhi.js", function(j) {  cube.mesh = new J3D.Mesh(j); } );		
+		var cd = [];
+		for(var i = 0; i < 50000; i++) {
+			cd.push(Math.random(), Math.random(), Math.random() * Math.PI, Math.random() * Math.PI);
+		}
 		
-		cube.renderer = new J3D.Phong();
-		cube.renderer.specularIntensity = 10;
-		cube.renderer.shininess = 32;
-		
-		var camera = new J3D.Camera(45);
-		camera.transform.position.z = 4;
-		
-		camera.filter = new J3D.Filter("BasicFilter", document.getElementById("basicFilter").firstChild.nodeValue);
-		
-		
+		engine.postprocess.addCustomAttribute("aParticle", new Float32Array(cd), 4, true);
+		engine.postprocess.drawMode = gl.POINTS;
 
 		engine.camera = camera;
 		
-		engine.scene.add(camera.transform, cube, sun);
+		engine.scene.add(camera.transform, elephant, sun);
+		document.onmousemove = onMouseMove;
 		
 		draw();
 	}
 	
+	function onMouseMove(e) {
+		mx = ( e.clientX / window.innerWidth  ) * 2 - 1;
+		my = ( e.clientY / window.innerHeight ) * 2 - 1;
+	}
+	
 	function draw() {
-		requestAnimationFrame(draw);	
+		if(!mx) mx = 0;
+		if(!my) my = 0;
 		
-		cube.rotation.x += Math.PI * J3D.Time.deltaTime / 12000;
-		cube.rotation.y -= Math.PI * J3D.Time.deltaTime / 6000;
+		elephant.rotation.x = my;
+		elephant.rotation.y += mx * 0.1;
+		
+		//elephant.rotation.y -= Math.PI * J3D.Time.deltaTime / 12000;
 		engine.render();
+		requestAnimationFrame(draw);	
 	}
 	
 </script>
@@ -119,9 +160,9 @@
 <body onload="init();">
 	
 	<script>
-		setLabels("009. Basic filter", "Custom image effect applied to a scene");
+		setLabels("012. Particle Rain", "Silhouette of an elephant in a rain of particles.<br>(currently, doesn't work with ANGLE on Win/Chrome)");
 	</script>
-	
+
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -135,7 +176,7 @@
   })();
 
 </script>
-	
+
 </body> 
 
 </html> 

@@ -1,6 +1,6 @@
 var gl;
 
-J3D.Engine = function() {	
+J3D.Engine = function(webglSettings) {	
 	var cv;
 	var resolution = 1;
 	
@@ -12,7 +12,7 @@ J3D.Engine = function() {
 	document.body.appendChild(cv);
 
 	try {
-		gl = cv.getContext("experimental-webgl", { alpha: false });
+		gl = cv.getContext("experimental-webgl", webglSettings);
 		gl.viewportWidth = cv.width;
 		gl.viewportHeight = cv.height;
 	} 

@@ -18,6 +18,10 @@ J3D.Primitive.Cube = function(w, h, d) {
 	return new J3D.Mesh(c);
 }
 
+J3D.Primitive.Plane = function(w, h) {
+	
+}
+
 J3D.Primitive.getEmptyGeometry = function(){
 	var g = {};
 	g.vertices = [];	 
@@ -29,11 +33,18 @@ J3D.Primitive.getEmptyGeometry = function(){
 	return g;
 }
 
-J3D.Primitive.addQuad = function(g, p1, p2, p3, p4) {
+J3D.Primitive.addQuad = function(g, p1, p2, p3, p4, minU, maxU, minV, maxV) {
 	var n1 = v3.cross(p1.sub(p2), p2.sub(p3)).norm();
 	var p = g.vertices.length / 3;
+	
+	var nu = (minU) ? minU : 0;
+	var xu = (maxU) ? maxU : 1;
+	var nv = (minV) ? minV : 0;
+	var xv = (maxV) ? maxV : 1;
+	
+		
 	g.vertices.push(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z, p3.x, p3.y, p3.z, p4.x, p4.y, p4.z);
 	g.normals.push (n1.x, n1.y, n1.z, n1.x, n1.y, n1.z, n1.x, n1.y, n1.z, n1.x, n1.y, n1.z);
-	g.uv1.push(0,0, 0,1, 1,1, 1,0);
+	g.uv1.push(nu,nv, nu,xv, xu,xv, xu,nv);
 	g.tris.push(p, p + 1, p + 2, p, p + 2, p + 3);
 }

@@ -82,7 +82,7 @@
 		ctex = texture;
 
 		var camera = new J3D.Camera();
-		camera.filter = new J3D.Filter("BasicFilter", document.getElementById("plasmaShader").firstChild.nodeValue);
+		camera.filter = new J3D.Filter("PlasmaFilter", document.getElementById("plasmaShader").firstChild.nodeValue);
 		camera.filter.setup = function(program) {}
 		camera.filter.prepare = function(postprocess, program) {}
 		camera.filter.apply = function(postprocess, program) {
