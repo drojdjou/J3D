@@ -45,6 +45,8 @@
 	var rings = [];
 	
 	function init() {
+		if(!checkWebGL()) return;
+
 		engine = new J3D.Engine();
 		
 		J3D.Loader.loadJSON("models/text.js", function(jsmeshes) { 

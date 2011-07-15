@@ -53,6 +53,8 @@
 	var engine, elephant, sun, ramp1, ramp2, ramp3;
 	
 	function init() {
+		if(!checkWebGL()) return;
+		
 		engine = new J3D.Engine();
 		
 		ramp1 = new J3D.Texture("models/textures/toonramp2.png");
@@ -79,7 +81,7 @@
 		elephant.renderer.shininess = 20;
 		elephant.renderer.rampTexture = ramp1;
 		
-		var camera = new J3D.Camera(45);
+		var camera = new J3D.Camera();
 		camera.transform.position.z = 12;
 		camera.transform.position.y = -1.2;
 		camera.filter = new J3D.Filter("BasicFilter", J3D.EffectSource.VignetteEffect);

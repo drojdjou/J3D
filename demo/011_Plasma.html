@@ -73,6 +73,8 @@
 	var engine, ctex, texture, texture2, texture3;
 	
 	function init() {
+		if(!checkWebGL()) return;
+		
 		engine = new J3D.Engine();
 
 		texture = new J3D.Texture("models/textures/colorramp1.png");

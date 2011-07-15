@@ -70,6 +70,8 @@
 	var engine, cube, pp, sun;
 	
 	function init() {
+		if(!checkWebGL()) return;
+		
 		engine = new J3D.Engine();
 
 		engine.setClearColor(J3D.Color.black);
@@ -90,7 +92,7 @@
 		cube.renderer.specularIntensity = 10;
 		cube.renderer.shininess = 32;
 		
-		var camera = new J3D.Camera(45);
+		var camera = new J3D.Camera();
 		camera.transform.position.z = 4;
 		
 		camera.filter = new J3D.Filter("BasicFilter", document.getElementById("basicFilter").firstChild.nodeValue);

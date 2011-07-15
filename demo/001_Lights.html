@@ -55,13 +55,15 @@
 	
 	function init() {
 		
+		if(!checkWebGL()) return;
+
 		// Create engine
 		
 		engine = new J3D.Engine();
 		
 		// Setup camera
 
-		camera = new J3D.Camera(45);
+		camera = new J3D.Camera();
 		camera.transform.position.z = -4;
 		camera.transform.rotation.y = Math.PI;
 		engine.camera = camera;

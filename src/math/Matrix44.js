@@ -25,6 +25,28 @@ m44.prototype.identity = function(){
     this.n44 = 1;
 }
 
+// based on https://github.com/mrdoob/three.js/blob/master/src/core/Matrix4.js
+m44.prototype.ortho = function(left, right, top, bottom, near, far) {
+
+	var x, y, z, w, h, p;
+
+	w = right - left;
+	h = top - bottom;
+	p = far - near;
+	x = ( right + left ) / w;
+	y = ( top + bottom ) / h;
+	z = ( far + near ) / p;
+
+	this.n11 = 2 / w;
+	this.n14 = -x;
+	this.n22 = 2 / h; 
+	this.n24 = -y;
+	this.n33 = -2 / p; 
+	this.n34 = -z;
+
+	this.makeArray();
+}
+
 m44.prototype.perspective = function(fov, aspect, near, far){
     var t = near * Math.tan(fov * Math.PI / 360);
 	var n = far - near;

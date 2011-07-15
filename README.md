@@ -29,3 +29,5 @@ It was created by [Bartek Drozdz](http://www.everyday3d.com/)
 (http://www.everyday3d.com/j3d/demo/011_Plasma.html)
 [![Particle Rain](http://www.everyday3d.com/j3d/thumbs/013_rain.jpg)]
 (http://www.everyday3d.com/j3d/demo/012_ParticleRain.html)
+[![Paper](http://www.everyday3d.com/j3d/thumbs/014_paper.jpg)]
+(http://www.everyday3d.com/j3d/demo/013_Paper.html)

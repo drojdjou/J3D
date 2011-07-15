@@ -52,6 +52,7 @@
 	var engine, cubemesh, sun, cube1, cube2, cube3;
 	
 	function init() {
+		if(!checkWebGL()) return;
 		
 		var texpath = "models/textures/checkerboard.png";
 		
@@ -94,7 +95,7 @@
 		cube2.mesh = cubemesh;
 		cube3.mesh = cubemesh;
 		
-		var camera = new J3D.Camera(30);
+		var camera = new J3D.Camera({ fov:30 });
 		camera.transform.position.z = 6;
 		engine.camera = camera;
 

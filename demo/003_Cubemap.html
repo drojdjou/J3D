@@ -54,11 +54,12 @@
 	var isMouseDown = false;
 	
 	function init() {
+		if(!checkWebGL()) return;
 		
 		engine = new J3D.Engine();
 		engine.setClearColor(J3D.Color.white);
 
-		camera = new J3D.Camera(45, 1, 10);
+		camera = new J3D.Camera({far: 100});
 		camera.transform.position.z = 5;	
 		engine.camera = camera;	
 		

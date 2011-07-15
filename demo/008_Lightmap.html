@@ -79,6 +79,8 @@
 	var filter;
 	
 	function init() {
+		if(!checkWebGL()) return;
+		
 		engine = new J3D.Engine();
 		
 		var path = "models/008/";

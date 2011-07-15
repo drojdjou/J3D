@@ -97,9 +97,11 @@
 	var mx, my = 0;
 
 	function init() {
+		if(!checkWebGL()) return;
+		
 		engine = new J3D.Engine();
 
-		camera = new J3D.Camera(45, 1, 1000);
+		camera = new J3D.Camera();
 		camera.transform.position.z = 100;	
 		engine.camera = camera;	
 		engine.scene.add(camera.transform);

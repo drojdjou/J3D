@@ -1,6 +1,8 @@
 var gl;
 
 J3D.Engine = function(webglSettings) {	
+	this.webglEnabled = true;
+	
 	var cv;
 	var resolution = 1;
 	
@@ -17,7 +19,7 @@ J3D.Engine = function(webglSettings) {
 		gl.viewportHeight = cv.height;
 	} 
 	catch (e) {
-		console.log("Error initializing webgl: " + e);
+		this.webglEnabled = false;
 	}
 	
 	this.setClearColor(J3D.Color.black);

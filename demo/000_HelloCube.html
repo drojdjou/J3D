@@ -53,9 +53,11 @@
 	
 	function init() {
 		
+		if(!checkWebGL()) return;
+		
 		// Always start by creating an instance of the engine
-		engine = new J3D.Engine();
-		// Choose the clear color fot the viewport (default is black)
+		engine = new J3D.Engine();	
+		// Choose the clear color of the viewport (default is black)
 		engine.setClearColor(J3D.Color.white);
 		
 		// Transforms are basic building blocks they define points in space with a position, rotation and scale
@@ -70,7 +72,7 @@
 		cube.renderer = new J3D.Normal2Color();
 		
 		// Next, create a camera and tell the engine to use this camera as point of view
-		var camera = new J3D.Camera(45);
+		var camera = new J3D.Camera();
 		camera.transform.position.z = 4;
 		engine.camera = camera;
 

@@ -1,0 +1,226 @@
+<html> 
+ 
+<head> 
+<title>013 | Paper | J3D</title> 
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
+
+<link rel="stylesheet" href="common/common.css"/>
+<script type="text/javascript" src="common/common.js"></script>
+<script type="text/javascript" src="js/dat.gui.js"></script>
+
+<!--
+<script type="text/javascript" src="../lib/glMatrix.js"></script>
+<script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
+<script type="text/javascript" src="../src/J3D.js"></script>
+<script type="text/javascript" src="../src/util/Color.js"></script>
+<script type="text/javascript" src="../src/math/Vector2.js"></script>
+<script type="text/javascript" src="../src/math/Vector3.js"></script>
+<script type="text/javascript" src="../src/math/Matrix44.js"></script>
+<script type="text/javascript" src="../src/engine/Engine.js"></script>
+<script type="text/javascript" src="../src/engine/Camera.js"></script>
+<script type="text/javascript" src="../src/engine/Light.js"></script>
+<script type="text/javascript" src="../src/engine/Mesh.js"></script>
+<script type="text/javascript" src="../src/engine/Scene.js"></script>
+<script type="text/javascript" src="../src/engine/Loader.js"></script>
+<script type="text/javascript" src="../src/engine/Filter.js"></script>
+<script type="text/javascript" src="../src/engine/ShaderAtlas.js"></script>
+<script type="text/javascript" src="../src/engine/EffectAtlas.js"></script>
+<script type="text/javascript" src="../src/engine/Texture.js"></script>
+<script type="text/javascript" src="../src/engine/Cubemap.js"></script>
+<script type="text/javascript" src="../src/engine/Transform.js"></script>
+<script type="text/javascript" src="../src/engine/Postprocess.js"></script>
+<script type="text/javascript" src="../src/engine/Primitives.js"></script>
+<script type="text/javascript" src="../src/engine/FrameBuffer.js"></script>
+<script type="text/javascript" src="../src/effects/EffectSource.js"></script>
+<script type="text/javascript" src="../src/renderers/ShaderSource.js"></script>
+<script type="text/javascript" src="../src/renderers/Phong.js"></script>
+<script type="text/javascript" src="../src/renderers/Toon.js"></script>
+<script type="text/javascript" src="../src/renderers/Depth.js"></script>
+<script type="text/javascript" src="../src/renderers/Gouraud.js"></script>
+<script type="text/javascript" src="../src/renderers/Normal2Color.js"></script>
+<script type="text/javascript" src="../src/renderers/Reflective.js"></script>
+<script type="text/javascript" src="../src/renderers/Glass.js"></script>
+<script type="text/javascript" src="../src/renderers/Skybox.js"></script>
+<script type="text/javascript" src="../src/renderers/Shader.js"></script>
+<script type="text/javascript" src="../src/util/Time.js"></script>
+<script type="text/javascript" src="../src/util/ShaderUtil.js"></script>
+-->
+
+<script type="text/javascript" src="../build/j3d.js"></script>
+
+
+<script id="paperVertex" type="x-shader/x-vertex">
+varying vec4 vPosition;
+varying vec2 vTextureCoord;
+varying vec3 vNormal;
+
+uniform float uBendAngle;
+uniform vec2 uBounds;
+uniform float uOffset;
+uniform float uBendAxisAngle;
+
+void main(void) {
+	vTextureCoord = getTextureCoord(aTextureCoord);	
+    vNormal = nMatrix * aVertexNormal;
+	
+	vec3 p = bend(aVertexPosition, uBendAngle, uBounds, uOffset, uBendAxisAngle);
+
+	vPosition = mMatrix * vec4(p, 1.0);
+    gl_Position = pMatrix * vMatrix * vPosition;
+}
+</script>
+
+<script id="paperFragment" type="x-shader/x-filter">
+uniform sampler2D uColorSampler;
+
+varying vec4 vPosition;
+varying vec2 vTextureCoord;
+varying vec3 vNormal;
+
+void main(void) {
+	gl_FragColor = texture2D(uColorSampler, vTextureCoord);
+}
+</script>
+
+<script>
+	var engine, sun;
+	var properties, gui;
+	var a = 0;
+	
+	var Properties = function() {
+		this.bendAngle = -1.8;
+		this.offset = 0.5;
+		this.bendAxisAngle = 0;
+		this.rotationX = 0;
+		this.rotationY = 0;
+		this.rotationZ = 0;
+		this.animate = true;
+	}
+
+	window.onload = function(){
+		if(!checkWebGL()) return;
+		
+		properties = new Properties();	
+		
+		DAT.GUI.autoPlace = false;
+		
+		gui = new DAT.GUI();
+		gui.domElement.style.position = 'absolute';
+		gui.domElement.style.top = '51px';
+		gui.domElement.style.left = '0px';
+		gui.domElement.style.zIndex = 200;
+		document.body.appendChild( gui.domElement );
+		
+		gui.add(properties, 'bendAngle').min(Math.PI * -2).max(Math.PI * 2).listen();
+		
+		gui.add(properties, 'animate').onChange(function(n) {
+		   if(n) a = Math.asin(properties.bendAngle / (Math.PI * 2));
+		});
+		
+		gui.add(properties, 'offset').min(0).max(1);
+		gui.add(properties, 'bendAxisAngle').min(Math.PI * -0.5).max(Math.PI * 0.5);
+		gui.add(properties, 'rotationX').min(Math.PI * -0.5).max(Math.PI * 0.5);
+		gui.add(properties, 'rotationY').min(Math.PI * -0.5).max(Math.PI * 0.5);
+		gui.add(properties, 'rotationZ').min(Math.PI * -0.5).max(Math.PI * 0.5);
+
+		engine = new J3D.Engine();
+		gl.disable(gl.CULL_FACE);
+		
+		engine.setClearColor(new J3D.Color(.1, .1, .1, 1));
+		engine.scene.ambient = new J3D.Color(.8, .8, .8, 1);
+
+		var camera = new J3D.Camera({ far: 10000 });
+		camera.transform.position.z = 1200;
+		engine.camera = camera;
+		engine.scene.add(camera.transform);
+
+		var v = document.getElementById("paperVertex").firstChild.nodeValue;
+		var f = document.getElementById("paperFragment").firstChild.nodeValue;
+		var pr = new J3D.Shader("Paper", v, f);
+		pr.colorTexture = new J3D.Texture("models/textures/firetruck1.jpg");
+		
+		pr.setupLocations = function(shader) {
+			shader.uBendAngle = gl.getUniformLocation(shader, "uBendAngle");
+			shader.uBounds = gl.getUniformLocation(shader, "uBounds");
+			shader.uOffset = gl.getUniformLocation(shader, "uOffset");
+			shader.uBendAxisAngle = gl.getUniformLocation(shader, "uBendAxisAngle");
+			shader.uColorSampler = gl.getUniformLocation(shader, "uColorSampler");
+		}
+		
+		pr.setup = function(mesh, shader, lights, camera) {
+			gl.uniform2fv(shader.uBounds, [-400, 800]);
+			
+			if (properties.animate) {
+				a += 0.02;
+				properties.bendAngle = Math.sin(a) * Math.PI * 2;
+				gl.uniform1f(shader.uBendAngle, properties.bendAngle);
+				
+			}
+			else {
+				gl.uniform1f(shader.uBendAngle, properties.bendAngle);
+			}
+			
+			gl.uniform1f(shader.uOffset, properties.offset);
+			gl.uniform1f(shader.uBendAxisAngle, properties.bendAxisAngle);
+			
+			gl.activeTexture(gl.TEXTURE0);
+			gl.bindTexture(gl.TEXTURE_2D, this.colorTexture.tex);
+			gl.uniform1i(shader.uColorSampler, 0);
+		}
+		
+		photo = new J3D.Transform();
+		photo.renderer = pr;
+		photo.mesh = J3D.Primitive.Plane(800, 534, 80, 53);
+		engine.scene.add(photo);
+		
+		draw();
+	}
+
+	function draw() {
+		engine.render();
+		photo.rotation.x = properties.rotationX;
+		photo.rotation.y = properties.rotationY;
+		photo.rotation.z = properties.rotationZ;
+		requestAnimationFrame(draw);	
+	}
+	
+</script>
+
+</head> 
+
+<body>
+	
+<script>
+	setLabels("013. Paper", "Paper simulation / plane bending demo");
+</script>
+
+<!--script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-24294554-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script-->
+
+</body> 
+
+</html> 
+
+
+
+
+
+
+
+
+
+
+
+

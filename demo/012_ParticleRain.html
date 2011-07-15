@@ -95,6 +95,8 @@
 	var mx, my = 0;
 	
 	function init() {
+		if(!checkWebGL()) return;
+		
 		engine = new J3D.Engine();
 		
 		engine.setClearColor(J3D.Color.black);
@@ -112,7 +114,7 @@
 		sun.light.direction = new v3(-1, 0, -1).norm();
 		
 
-		var camera = new J3D.Camera(45, 3, 20);
+		var camera = new J3D.Camera();
 		camera.transform.position.z = 14;
 		camera.transform.position.y = -1.2;
 		
