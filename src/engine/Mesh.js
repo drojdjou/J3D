@@ -1,4 +1,11 @@
-J3D.Mesh = function(source){
+J3D.Mesh = function(source, isStatic){
+	if (!source) {
+		source = J3D.Primitive.getEmptyGeometry();
+		this.isStatic = false;
+	} else {
+		this.isStatic = isStatic || true;
+	} 
+	
 	this.renderMode = J3D.RENDER_AS_OPAQUE;
 	
 	this.vertSize = 3;
@@ -31,8 +38,7 @@ J3D.Mesh = function(source){
 		this.uv2 = new Float32Array(this.vertNum * this.uvSize);
 	}
 
-	// TODO: remove this
-	this.buffersReady = false;
+	//this.buffersReady = false;
 	this.vertBuf;
 	this.colorBuf;
 	this.normBuf;
@@ -40,7 +46,7 @@ J3D.Mesh = function(source){
 	this.uv2buf;
 	this.triBuf;
 	
-	this.bindBuffers();
+	if(this.isStatic) this.bindBuffers();
 }
 
 J3D.Mesh.prototype.setTransparency = function(transparency, srcFactor, dstFactor) {

@@ -135,34 +135,34 @@ J3D.Engine.prototype.renderObject = function(t) {
 	
 	gl.uniform4fv(s.uTileOffset, t.getTileOffset());
 	
-	if (t.mesh.vertBuf) {
+	if (t.mesh.vertBuf && s.attributes.aVertexPosition != null) {
 		gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.vertBuf);
-		gl.vertexAttribPointer(s.vertAttr, t.mesh.vertSize, gl.FLOAT, false, 0, 0);
+		gl.vertexAttribPointer(s.attributes.aVertexPosition, t.mesh.vertSize, gl.FLOAT, false, 0, 0);
 	}
 	
-	if (t.mesh.colorBuf) {
+	if (t.mesh.colorBuf && s.attributes.aVertexColor != null) {
 		gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.colorBuf);
-		gl.vertexAttribPointer(s.colorAttr, t.mesh.colorSize, gl.FLOAT, false, 0, 0);
+		gl.vertexAttribPointer(s.attributes.aVertexColor, t.mesh.colorSize, gl.FLOAT, false, 0, 0);
 	}
 
-	if (t.mesh.normBuf) {
+	if (t.mesh.normBuf && s.attributes.aVertexNormal != null) {
 		gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.normBuf);
-		gl.vertexAttribPointer(s.normAttr, t.mesh.vertSize, gl.FLOAT, false, 0, 0);
+		gl.vertexAttribPointer(s.attributes.aVertexNormal, t.mesh.vertSize, gl.FLOAT, false, 0, 0);
 	}
 
-	if (t.mesh.uv1buf) {
+	if (t.mesh.uv1buf && s.attributes.aTextureCoord != null) {
 		gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.uv1buf);
-		gl.vertexAttribPointer(s.uv1Attr, t.mesh.uvSize, gl.FLOAT, false, 0, 0);
+		gl.vertexAttribPointer(s.attributes.aTextureCoord, t.mesh.uvSize, gl.FLOAT, false, 0, 0);
 	}
 	
-	if (t.mesh.uv2buf) {
+	if (t.mesh.uv2buf && s.attributes.aTextureCoord2 != null) {
 		gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.uv2buf);
-		gl.vertexAttribPointer(s.uv2Attr, t.mesh.uvSize, gl.FLOAT, false, 0, 0);
+		gl.vertexAttribPointer(s.attributes.aTextureCoord2, t.mesh.uvSize, gl.FLOAT, false, 0, 0);
 	}
 	
-	if (t.mesh.animBuf) {
+	if (t.mesh.animBuf && s.attributes.aVertexAnimation != null) {
 		gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.animBuf);
-		gl.vertexAttribPointer(s.animAttr, t.mesh.animSize, gl.FLOAT, false, 0, 0);
+		gl.vertexAttribPointer(s.attributes.aVertexAnimation, t.mesh.animSize, gl.FLOAT, false, 0, 0);
 	}
 
 	

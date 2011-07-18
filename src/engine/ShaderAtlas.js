@@ -59,7 +59,15 @@ J3D.ShaderAtlas.prototype.linkShader = function(renderer){
 	
 	program.uTileOffset = gl.getUniformLocation(program, "uTileOffset");
 	
-	program.vertAttr = gl.getAttribLocation(program, "aVertexPosition");
+	program.attributes = {};
+	var numAttr = gl.getProgramParameter(program, gl.ACTIVE_ATTRIBUTES);
+	for(var i = 0; i < numAttr; i++) {
+		var acAttr = gl.getActiveAttrib(program, i);
+		program.attributes[acAttr.name] = gl.getAttribLocation(program, acAttr.name);
+		gl.enableVertexAttribArray(program.attributes[acAttr.name]);
+	}
+	
+	/*program.vertAttr = gl.getAttribLocation(program, "aVertexPosition");
 	gl.enableVertexAttribArray(program.vertAttr);
 	
 	program.normAttr = gl.getAttribLocation(program, "aVertexNormal");
@@ -75,7 +83,7 @@ J3D.ShaderAtlas.prototype.linkShader = function(renderer){
 	gl.enableVertexAttribArray(program.colorAttr);
 	
 	program.animAttr = gl.getAttribLocation(program, "aVertexAnimation");
-	gl.enableVertexAttribArray(program.animAttr);
+	gl.enableVertexAttribArray(program.animAttr);*/
 	
 	renderer.setupLocations(program);
 	this.shaderCount++;
