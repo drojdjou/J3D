@@ -8,12 +8,16 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 	this.mipmap = true;
 	this.flip = true;
 	
+	if (params) {
+		this.onLoad = params.onLoad;
+	}
+	
 	var isPOT = function(x, y){
 	    return x > 0 && y > 0 && (x & (x - 1)) == 0 && (y & (y - 1)) == 0;
 	}
 		
 	var setupTexture = function(){
-		//console.log(that.src.width + " x " + that.src.height + " isPOT: " + isPOT(that.src.width, that.src.height));
+		// console.log(that.src.width + " x " + that.src.height + " isPOT: " + isPOT(that.src.width, that.src.height));
 		
 		var p = that.src && isPOT(that.src.width, that.src.height);
 		
@@ -30,13 +34,15 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 		if (p) {
 			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, that.wrapMode);
 			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, that.wrapMode);
-		} else { // NonPOT testures can only be clamped to edge
+		} else { // Non-POT textures can only be clamped to edge
 			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
 			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 		}
 		
 		if(that.mipmap && p) gl.generateMipmap(gl.TEXTURE_2D);	
 		gl.bindTexture(gl.TEXTURE_2D, null);
+		
+		if(that.onLoad) that.onLoad.call();
 	}
 	
 	var load = function(src){

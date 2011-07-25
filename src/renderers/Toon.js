@@ -15,12 +15,6 @@ J3D.Toon.prototype.fragSource = function() {
 	return J3D.ShaderSource.ToonFragment;
 }
 
-J3D.Toon.prototype.setupLocations = function(shader) {
-	J3D.ShaderUtil.setupLights(shader);
-	J3D.ShaderUtil.saveUniformLocations(shader, ["uColorSampler", "uColor", "uHasColorSampler"])
-
-}
-
 J3D.Toon.prototype.setup = function(mesh, shader, lights, camera){	
 	gl.uniform4fv(shader.uColor, this.color.rgba());
 	J3D.ShaderUtil.setTexture(shader, 0, "uColorSampler", this.rampTexture.tex);

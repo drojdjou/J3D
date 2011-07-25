@@ -84,25 +84,20 @@
 		var f = document.getElementById("particleFragmentShader").firstChild.nodeValue;
 		var particleShader = new J3D.Shader("StaticParticle", v, f);
 		particleShader.drawMode = gl.POINTS;
-		
-		particleShader.setupLocations = function(shader) {
-			shader.uColor = gl.getUniformLocation(shader, "uColor");
-		}
-		
+
 		particleShader.setup = function(mesh, shader, lights, camera) {
 			if (!isNaN(mx) && !isNaN(my)) {
-				gl.uniform4fv(shader.uColor, [1 - (mx + 1 / 2), my + 1 / 2, 1, 1]);
+				gl.uniform4fv(shader.uniforms.uColor, [1 - (mx + 1 / 2), my + 1 / 2, 1, 1]);
 			}
 		}
 
 		stars.renderer = particleShader;	
 			
 		var a = getParticleAmount();
-		stars.mesh = new J3D.Particles({
-			positions: J3D.ParticleUtil.insideCube(a, 400),
-			colors: J3D.ParticleUtil.randomColors(a, 0.5)
-		});		
-		
+		stars.geometry = new J3D.Geometry();
+		stars.geometry.addArray("aVertexPosition", J3D.ParticleUtil.insideCube(a, 400), 3);
+		stars.geometry.addArray("aVertexColor", J3D.ParticleUtil.randomColors(a, 0.5), 4);
+
 		engine.scene.add(stars);
 
 		document.onmousemove = onMouseMove;

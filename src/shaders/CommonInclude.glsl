@@ -3,22 +3,6 @@
 precision highp float;
 #endif
 
-uniform float uTime;
-
-uniform mat4 mMatrix;
-uniform mat4 vMatrix;
-uniform mat3 nMatrix;
-uniform mat4 pMatrix;
-uniform vec3 uEyePosition;
-
-mat4 mvpMatrix() {
-	return pMatrix * vMatrix * mMatrix;
-}
-
-mat4 mvMatrix() {
-	return vMatrix * mMatrix;
-}
-
 struct lightSource {
 	int type;
 	vec3 direction;
@@ -26,10 +10,23 @@ struct lightSource {
 	vec3 position;
 };
 
+uniform float uTime;
+uniform mat4 mMatrix;
+uniform mat4 vMatrix;
+uniform mat3 nMatrix;
+uniform mat4 pMatrix;
+uniform vec3 uEyePosition;
 uniform lightSource uLight[4];
 uniform vec3 uAmbientColor;
-
 uniform vec4 uTileOffset;
+	
+mat4 mvpMatrix() {
+	return pMatrix * vMatrix * mMatrix;
+}
+
+mat4 mvMatrix() {
+	return vMatrix * mMatrix;
+}
 	
 float luminance(vec3 c) {
     return c.r * 0.299 + c.g * 0.587 + c.b * 0.114;
@@ -56,11 +53,12 @@ vec3 computeLight(vec4 p, vec3 n, float si, float sh, lightSource light){
     	spec = pow(max(dot(refd, eyed), 0.0), sh) * si;
     };
 	
-    return uAmbientColor + light.color * dif + light.color * spec;
+    return light.color * dif + light.color * spec;
 }
 
 vec3 computeLights(vec4 p, vec3 n, float si, float sh) {
-	vec3 s = computeLight(p, n, si, sh, uLight[0]);
+	vec3 s = uAmbientColor;
+	s += computeLight(p, n, si, sh, uLight[0]);
 	s += computeLight(p, n, si, sh, uLight[1]);
 	s += computeLight(p, n, si, sh, uLight[2]);
 	s += computeLight(p, n, si, sh, uLight[3]);

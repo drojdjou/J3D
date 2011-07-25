@@ -47,17 +47,12 @@ J3D.ShaderAtlas.prototype.linkShader = function(renderer){
 	
 	gl.useProgram(program);
 	
-	// Common uniforms and attributes for all shaders
-	program.uTime = gl.getUniformLocation(program, "uTime");
-	
-	program.pMatrix = gl.getUniformLocation(program, "pMatrix");
-	program.vMatrix = gl.getUniformLocation(program, "vMatrix");
-	program.mMatrix = gl.getUniformLocation(program, "mMatrix");
-	program.nMatrix = gl.getUniformLocation(program, "nMatrix");
-	program.uAmbientColor = gl.getUniformLocation(program, "uAmbientColor");
-	program.uEyePosition = gl.getUniformLocation(program, "uEyePosition");
-	
-	program.uTileOffset = gl.getUniformLocation(program, "uTileOffset");
+	program.uniforms = {};
+	var numUni = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS);
+	for(var i = 0; i < numUni; i++) {
+		var acUni = gl.getActiveUniform(program, i);
+		program.uniforms[acUni.name] = gl.getUniformLocation(program, acUni.name);
+	}
 	
 	program.attributes = {};
 	var numAttr = gl.getProgramParameter(program, gl.ACTIVE_ATTRIBUTES);
@@ -66,28 +61,8 @@ J3D.ShaderAtlas.prototype.linkShader = function(renderer){
 		program.attributes[acAttr.name] = gl.getAttribLocation(program, acAttr.name);
 		gl.enableVertexAttribArray(program.attributes[acAttr.name]);
 	}
-	
-	/*program.vertAttr = gl.getAttribLocation(program, "aVertexPosition");
-	gl.enableVertexAttribArray(program.vertAttr);
-	
-	program.normAttr = gl.getAttribLocation(program, "aVertexNormal");
-	gl.enableVertexAttribArray(program.normAttr);
-	
-	program.uv1Attr = gl.getAttribLocation(program, "aTextureCoord");
-	gl.enableVertexAttribArray(program.uv1Attr);
-	
-	program.uv2Attr = gl.getAttribLocation(program, "aTextureCoord2");
-	gl.enableVertexAttribArray(program.uv2Attr);
 
-	program.colorAttr = gl.getAttribLocation(program, "aVertexColor");
-	gl.enableVertexAttribArray(program.colorAttr);
-	
-	program.animAttr = gl.getAttribLocation(program, "aVertexAnimation");
-	gl.enableVertexAttribArray(program.animAttr);*/
-	
-	renderer.setupLocations(program);
 	this.shaderCount++;
-	
 	this.shaders[name] = program;
 }
 

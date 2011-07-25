@@ -114,34 +114,25 @@
 		var f = document.getElementById("particleFragmentShader").firstChild.nodeValue;
 		var particleShader = new J3D.Shader("StaticParticle", v, f);
 		particleShader.drawMode = gl.POINTS;
-		
-		particleShader.setupLocations = function(shader) {
-			shader.uColor = gl.getUniformLocation(shader, "uColor");
-			shader.uParticleTex = gl.getUniformLocation(shader, "uParticleTex");
-		}
-		
+
 		particleShader.setup = function(mesh, shader, lights, camera) {
-			gl.activeTexture(gl.TEXTURE0);
-			gl.bindTexture(gl.TEXTURE_2D, texture.tex);
-			gl.uniform1i(shader.uParticleTex, 0);
+			J3D.ShaderUtil.setTexture(shader, 0, "uParticleTex", texture.tex);
 			
 			if (!isNaN(mx) && !isNaN(my)) {
-				gl.uniform4fv(shader.uColor, [0.8, 0.3, 0.2, 1]);
-				//gl.uniform4fv(shader.uColor, [1 - (mx + 1 / 2), my + 1 / 2, 0.2, 1]);
+				gl.uniform4fv(shader.uniforms.uColor, [0.8, 0.3, 0.2, 1]);
 			}
 		}
 
 		stars.renderer = particleShader;
 
 		var a = getParticleAmount();	
-		stars.mesh = new J3D.Particles({
-			positions: distributeAngles(a),
-			colors: J3D.ParticleUtil.randomColors(a, 0, 1),
-			animation: prepareAnimationAttributes(a, 8),
-			animationSize: 1
-		});	
 		
-		stars.mesh.setTransparency(true, gl.SRC_ALPHA, gl.DST_ALPHA);
+		stars.geometry = new J3D.Geometry();
+		stars.geometry.addArray("aVertexPosition", distributeAngles(a), 3);
+		stars.geometry.addArray("aVertexColor", J3D.ParticleUtil.randomColors(a, 0, 1), 4);
+		stars.geometry.addArray("aVertexAnimation", prepareAnimationAttributes(a, 8), 2);
+
+		stars.geometry.setTransparency(true, gl.SRC_ALPHA, gl.DST_ALPHA);
 			
 		engine.scene.add(stars);
 
@@ -151,7 +142,7 @@
 	}
 	
 	function prepareAnimationAttributes(amount, maxOffset) {
-		var animdata = new Float32Array(amount * 2);
+		var animdata = new Float32Array(amount);
 
 		for (var i = 0; i < amount; i++) {
 			animdata[i] = i / amount + Math.random() * 0.05;

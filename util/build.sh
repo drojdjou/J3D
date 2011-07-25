@@ -12,6 +12,7 @@ java \
 --js ../src/engine/Engine.js \
 --js ../src/engine/Scene.js \
 --js ../src/engine/Loader.js \
+--js ../src/engine/Geometry.js \
 --js ../src/engine/Mesh.js \
 --js ../src/engine/Light.js \
 --js ../src/engine/Camera.js \
@@ -26,11 +27,9 @@ java \
 --js ../src/engine/EffectAtlas.js \
 --js ../src/engine/Primitives.js \
 --js ../src/renderers/Shader.js \
---js ../src/renderers/Normal2Color.js \
 --js ../src/renderers/Phong.js \
 --js ../src/renderers/Gouraud.js \
 --js ../src/renderers/Reflective.js \
---js ../src/renderers/Glass.js \
 --js ../src/renderers/Skybox.js \
 --js ../src/renderers/Lightmap.js \
 --js ../src/renderers/ShaderSource.js \

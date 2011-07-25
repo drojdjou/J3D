@@ -86,7 +86,7 @@
 		cube = new J3D.Transform();
 		cube.rotation = new v3(0, Math.PI, 0); // All rotations are in radians
 		
-		J3D.Loader.loadJSON("models/monkeyhi.js", function(j) {  cube.mesh = new J3D.Mesh(j); } );		
+		J3D.Loader.loadJSON("models/monkeyhi.js", function(j) {  cube.geometry = new J3D.Mesh(j); } );		
 		
 		cube.renderer = new J3D.Phong();
 		cube.renderer.specularIntensity = 10;

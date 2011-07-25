@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="common/common.css"/>
 <script type="text/javascript" src="common/common.js"></script>
 
+<!--
 <script type="text/javascript" src="../lib/glMatrix.js"></script>
 <script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
 <script type="text/javascript" src="../src/J3D.js"></script>
@@ -18,6 +19,7 @@
 <script type="text/javascript" src="../src/engine/Engine.js"></script>
 <script type="text/javascript" src="../src/engine/Camera.js"></script>
 <script type="text/javascript" src="../src/engine/Light.js"></script>
+<script type="text/javascript" src="../src/engine/Geometry.js"></script>
 <script type="text/javascript" src="../src/engine/Mesh.js"></script>
 <script type="text/javascript" src="../src/engine/Scene.js"></script>
 <script type="text/javascript" src="../src/engine/Loader.js"></script>
@@ -43,10 +45,9 @@
 <script type="text/javascript" src="../src/renderers/Shader.js"></script>
 <script type="text/javascript" src="../src/util/Time.js"></script>
 <script type="text/javascript" src="../src/util/ShaderUtil.js"></script>
-
-<!--
-<script type="text/javascript" src="../build/j3d.js"></script>
 -->
+
+<script type="text/javascript" src="../build/j3d.js"></script>
 
 <script>
 	
@@ -67,10 +68,10 @@
 		
 		// A transform has no visual representation until we add two things to it:
 		// 1. A mesh to define the shape of the object	
-		cube.mesh = J3D.Primitive.Cube(1, 1, 1);	
+		cube.geometry = J3D.Primitive.Cube(1, 1, 1);	
 		
 		// 2. A renderer to define the way it looks 
-		cube.renderer = new J3D.Normal2Color();
+		cube.renderer = new J3D.Shader("Normal2Color", J3D.ShaderSource.Normal2ColorVertex, J3D.ShaderSource.Normal2ColorFragment);
 		
 		// Next, create a camera and tell the engine to use this camera as point of view
 		var camera = new J3D.Camera();

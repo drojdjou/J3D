@@ -5,7 +5,6 @@
 
 
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
-
 <link rel="stylesheet" href="common/common.css"/>
 <script type="text/javascript" src="common/common.js"></script>
 
@@ -20,6 +19,7 @@
 <script type="text/javascript" src="../src/engine/Engine.js"></script>
 <script type="text/javascript" src="../src/engine/Camera.js"></script>
 <script type="text/javascript" src="../src/engine/Light.js"></script>
+<script type="text/javascript" src="../src/engine/Geometry.js"></script>
 <script type="text/javascript" src="../src/engine/Mesh.js"></script>
 <script type="text/javascript" src="../src/engine/Scene.js"></script>
 <script type="text/javascript" src="../src/engine/Loader.js"></script>
@@ -30,11 +30,13 @@
 <script type="text/javascript" src="../src/engine/Cubemap.js"></script>
 <script type="text/javascript" src="../src/engine/Transform.js"></script>
 <script type="text/javascript" src="../src/engine/Postprocess.js"></script>
+<script type="text/javascript" src="../src/engine/Primitives.js"></script>
 <script type="text/javascript" src="../src/engine/FrameBuffer.js"></script>
 <script type="text/javascript" src="../src/effects/EffectSource.js"></script>
 <script type="text/javascript" src="../src/renderers/ShaderSource.js"></script>
 <script type="text/javascript" src="../src/renderers/Phong.js"></script>
 <script type="text/javascript" src="../src/renderers/Toon.js"></script>
+<script type="text/javascript" src="../src/renderers/Depth.js"></script>
 <script type="text/javascript" src="../src/renderers/Gouraud.js"></script>
 <script type="text/javascript" src="../src/renderers/Normal2Color.js"></script>
 <script type="text/javascript" src="../src/renderers/Reflective.js"></script>
@@ -126,28 +128,27 @@
 
 		ct = new J3D.Transform();
 		ct.position.x = -1.5;
-		J3D.Loader.loadJSON("models/container.js", function(j) { ct.mesh = new J3D.Mesh(j); } );
+		J3D.Loader.loadJSON("models/container.js", function(j) { ct.geometry = new J3D.Mesh(j); } );
 		ct.renderer = ctMat;
 		
 		mo = new J3D.Transform();
-		J3D.Loader.loadJSON("models/monkeyhi.js", function(j) { mo.mesh = new J3D.Mesh(j); } );
+		J3D.Loader.loadJSON("models/monkeyhi.js", function(j) { mo.geometry = new J3D.Mesh(j); } );
 		mo.scale = v3.ONE().mul(.66);
 		mo.renderer = moMat;
 
 		cr = new J3D.Transform();
 		cr.position.x = 1.5;
 		cr.position.z = 0.5;
-		J3D.Loader.loadJSON("models/crate.js", function(j) { cr.mesh = new J3D.Mesh(j); } );
+		J3D.Loader.loadJSON("models/crate.js", function(j) { cr.geometry = new J3D.Mesh(j); } );
 		cr.renderer = crMat;
 		
 		ha = new J3D.Transform();
 		ha.position = new v3(0.2499574, 0.4273163, -0.2176546);
 		ha.rotation.y = 0;//Math.PI;
-		J3D.Loader.loadJSON("models/handles.js", function(j) { ha.mesh = new J3D.Mesh(j); } );
+		J3D.Loader.loadJSON("models/handles.js", function(j) { ha.geometry = new J3D.Mesh(j); } );
 		ha.renderer = haMat;
 	
 		// Add all to the scene
-		
 		scene.add(ct);
 		scene.add(mo);
 		scene.add(cr).add(ha);

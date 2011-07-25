@@ -1,6 +1,6 @@
 J3D.Shader = function(n, v, f) {
 	if(!n) throw new Error("You must specify a name for custom shaders");
-	if(!v || !f) throw new Error("You must pass a vertex and fragmet shader source for custom shaders");
+	if(!v || !f) throw new Error("You must pass a vertex and fragment shader source for custom shaders");
 	
 	this.name = n;
 	this.drawMode = gl.TRIANGLES;
@@ -15,10 +15,6 @@ J3D.Shader.prototype.vertSource = function() {
 
 J3D.Shader.prototype.fragSource = function() {
 	return this._fragSource;
-}
-
-J3D.Shader.prototype.setupLocations = function(shader) {
-	
 }
 
 J3D.Shader.prototype.setup = function(mesh, shader, lights, camera) {

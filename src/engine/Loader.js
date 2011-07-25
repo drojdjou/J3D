@@ -1,11 +1,11 @@
 J3D.Loader = {};
 
-J3D.Loader.loadJSON = function(path, onLoadedFunc) {
-	
+J3D.Loader.loadJSON = function(path, onLoadedFunc){
+
 	var request = new XMLHttpRequest();
-    request.open("GET", path);
+	request.open("GET", path);
 	
-    request.onreadystatechange = function() {
+	request.onreadystatechange = function(){
 		if (request.readyState == 4) {
 			onLoadedFunc.call(null, JSON.parse(request.responseText));
 		}
@@ -57,7 +57,7 @@ J3D.Loader.parseJSONScene = function(jscene, jmeshes, engine) {
 		t.rotation = J3D.Loader.v3FromArray(t.rotation);
 		
 		if(t.renderer) t.renderer = jscene.materials[t.renderer];
-		if(t.mesh) t.mesh = new J3D.Mesh(jmeshes[t.mesh]);
+		if(t.mesh) t.geometry = new J3D.Mesh(jmeshes[t.mesh]);
 		if(t.light) t.light = jscene.lights[t.light];
 		
 		if (t.camera) {
@@ -97,4 +97,42 @@ J3D.Loader.v2FromArray = function(arr){
 
 J3D.Loader.v3FromArray = function(arr){
 	return new v3(arr[0], arr[1], arr[2]);
+}
+
+J3D.Loader.loadGLSL = function(path, onLoadedFunc, isFilter){
+	var request = new XMLHttpRequest();
+	request.open("GET", path);
+	
+	request.onreadystatechange = function(){
+		if (request.readyState == 4) {
+			onLoadedFunc.call(null, J3D.Loader.parseGLSL(request.responseText, isFilter));
+		}
+	}
+	
+	request.send();
+}
+
+J3D.Loader.parseGLSL = function(source, isFilter){
+	var vs = "";
+	var fs = "";
+	
+	var ls = source.split("\n");
+	var buf = "";
+	for(var i = 0; i < ls.length; i++) {
+		if(ls[i].indexOf("//#") > -1) {
+			if(ls[i].indexOf("Fragment") > -1) {
+				vs = buf;
+				buf = "";
+			}
+		} else {
+			var l = ls[i];
+			if(l.indexOf("//") > -1) l = l.substring(0, l.indexOf("//"));
+			buf += l;
+		}
+	}
+	
+	fs = buf;
+	
+	if(isFilter) return new J3D.Filter("Filter" + Math.round(Math.random() * 1000), fs, vs);
+	else return new J3D.Shader("Shader" + Math.round(Math.random() * 1000), vs, fs);
 }

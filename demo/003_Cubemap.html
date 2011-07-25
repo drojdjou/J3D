@@ -19,6 +19,7 @@
 <script type="text/javascript" src="../src/engine/Engine.js"></script>
 <script type="text/javascript" src="../src/engine/Camera.js"></script>
 <script type="text/javascript" src="../src/engine/Light.js"></script>
+<script type="text/javascript" src="../src/engine/Geometry.js"></script>
 <script type="text/javascript" src="../src/engine/Mesh.js"></script>
 <script type="text/javascript" src="../src/engine/Scene.js"></script>
 <script type="text/javascript" src="../src/engine/Loader.js"></script>
@@ -34,6 +35,8 @@
 <script type="text/javascript" src="../src/effects/EffectSource.js"></script>
 <script type="text/javascript" src="../src/renderers/ShaderSource.js"></script>
 <script type="text/javascript" src="../src/renderers/Phong.js"></script>
+<script type="text/javascript" src="../src/renderers/Toon.js"></script>
+<script type="text/javascript" src="../src/renderers/Depth.js"></script>
 <script type="text/javascript" src="../src/renderers/Gouraud.js"></script>
 <script type="text/javascript" src="../src/renderers/Normal2Color.js"></script>
 <script type="text/javascript" src="../src/renderers/Reflective.js"></script>
@@ -45,6 +48,7 @@
 -->
 
 <script type="text/javascript" src="../build/j3d.js"></script>
+
 
 
 <script>
@@ -81,7 +85,7 @@
 		monkey = new J3D.Transform();	
 		monkey.renderer = new J3D.Reflective();
 		monkey.renderer.cubemap = cubemap;
-		J3D.Loader.loadJSON("models/monkeyhi.js", function(j) { monkey.mesh = new J3D.Mesh(j); } );
+		J3D.Loader.loadJSON("models/monkeyhi.js", function(j) { monkey.geometry = new J3D.Mesh(j); } );
 		engine.scene.add(monkey);
 
 		document.onmousemove = onMouseMove;

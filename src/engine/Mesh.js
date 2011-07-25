@@ -1,120 +1,76 @@
-J3D.Mesh = function(source, isStatic){
-	if (!source) {
-		source = J3D.Primitive.getEmptyGeometry();
-		this.isStatic = false;
-	} else {
-		this.isStatic = isStatic || true;
-	} 
+/*
+ *  A Mesh is a structured geometry coming from and external source (either a JSON file or generated with code)
+ *  
+ *  Typically a Mesh is designed to hold data about 3D objects. It has a primary set of attributes that will be interpeted by name:
+ *  vertices (3 x float), colors (4 x float), normals (3 x float), uv1 (2 x float), uv2 (2 x float) - none is mandatory.
+ * 
+ *  If an attribute named "tris" is present it will be interpreted as the elements array.
+ *  
+ *  WARNING: Other attributes in the "source" will be ignored.
+ *  
+ *  Mesh extends Geometry, so more attributes can be added if necessary.
+ */
+J3D.Mesh = function(source){
+	J3D.Geometry.call( this );
 	
-	this.renderMode = J3D.RENDER_AS_OPAQUE;
+	this.hasUV1 = false;
 	
-	this.vertSize = 3;
-	this.uvSize = 2;
-	this.colorSize = 4;
-
-	this.vertices = new Float32Array(source.vertices);
-	this.vertNum = source.vertices.length / this.vertSize;
-	
-	this.hasElements = source.tris.length > 0;
-	
-	this.tris = new Uint16Array(source.tris);
-	this.triNum = source.tris.length;
-
-	this.colors = new Float32Array(source.colors);
-
-	this.normals = new Float32Array(source.normals);
-	
-	this.hasUV1 = source.uv1.length > 0;
-	if(this.hasUV1){
-		this.uv1 = new Float32Array(source.uv1);
-	} else {
-		this.uv1 = new Float32Array(this.vertNum * this.uvSize);
+	for(var attr in source) {
+		switch (attr) {
+			case "vertices":
+				this.vertexPositionBuffer = this.addArray("aVertexPosition", new Float32Array(source[attr]), 3);
+			break;
+			case "colors":
+				if(source[attr].length > 0) this.addArray("aVertexColor", new Float32Array(source[attr]), 4);
+			break;
+			case "normals":
+				if(source[attr].length > 0) 
+					this.vertexNormalBuffer = this.addArray("aVertexNormal", new Float32Array(source[attr]), 3);
+				else 
+					this.vertexNormalBuffer = this.addArray("aVertexNormal", new Float32Array(this.size * 3), 3);
+			break;
+			case "uv1":
+				if(source[attr].length > 0) this.addArray("aTextureCoord", new Float32Array(source[attr]), 2);
+				else this.addArray("aTextureCoord", new Float32Array(this.size * 2), 2);
+				this.hasUV1 = true;
+			break;
+			case "uv2":
+				if(source[attr].length > 0) this.addArray("aTextureCoord2", new Float32Array(source[attr]), 2);
+			break;
+			case "tris":
+				if(source[attr].length > 0) this.addElement(new Uint16Array(source[attr]));
+			break;
+			default:
+				console.log("WARNING! Unknown attribute: " + attr);
+			break;
+		}
 	}
-	
-	this.hasUV2 = source.uv2.length > 0;
-	if(this.hasUV2){
-		this.uv2 = new Float32Array(source.uv2);
-	} else {
-		this.uv2 = new Float32Array(this.vertNum * this.uvSize);
-	}
 
-	//this.buffersReady = false;
-	this.vertBuf;
-	this.colorBuf;
-	this.normBuf;
-	this.uv1buf;
-	this.uv2buf;
-	this.triBuf;
-	
-	if(this.isStatic) this.bindBuffers();
+	this.flip = function(){
+		var tv = [];
+		var vertices = this.vertexPositionBuffer.data;
+		for (var i = 0; i < vertices.length; i += 3) {
+			tv.push(vertices[i], vertices[i + 2], vertices[i + 1]);
+		}
+		vertices = new Float32Array(tv);
+		
+		var tn = [];
+		var normals = this.vertexNormalBuffer.data;
+		for (var i = 0; i < normals.length; i += 3) {
+			var v = new v3(normals[i], normals[i + 1], normals[i + 2])
+			v.neg();
+			tn = tn.concat(v.xyz());
+		}
+		normals = new Float32Array(tn);
+		
+		this.replaceArrayData(this.vertexPositionBuffer, vertices);
+		this.replaceArrayData(this.vertexNormalBuffer, normals);
+		
+		return this;
+	}
 }
 
-J3D.Mesh.prototype.setTransparency = function(transparency, srcFactor, dstFactor) {
-	if(!transparency) {
-		this.renderMode = J3D.RENDER_AS_OPAQUE;
-	} else {
-		this.renderMode = J3D.RENDER_AS_TRANSPARENT;
-		this.srcFactor = srcFactor;
-		this.dstFactor = dstFactor;
-	}
-}
-
-J3D.Mesh.prototype.flip = function(){
-	var tv = [];
-	
-	for(var i = 0; i < this.vertices.length; i += 3) {
-		tv.push(this.vertices[i], this.vertices[i+2], this.vertices[i+1]);
-	}
-	
-	this.vertices = new Float32Array(tv);
-	
-	var tn = [];
-	
-	for(var i = 0; i < this.normals.length; i += 3) {
-		var v = new v3(this.normals[i], this.normals[i+1], this.normals[i+2])
-		v.neg();
-		tn = tn.concat(v.xyz());
-	}
-	
-	this.normals = new Float32Array(tn);
-	
-	gl.bindBuffer(gl.ARRAY_BUFFER, this.vertBuf);
-	gl.bufferData(gl.ARRAY_BUFFER, this.vertices, gl.STATIC_DRAW);
-	
-	gl.bindBuffer(gl.ARRAY_BUFFER, this.normBuf);
-	gl.bufferData(gl.ARRAY_BUFFER, this.normals, gl.STATIC_DRAW);
-	
-	return this;
-}
-
-J3D.Mesh.prototype.bindBuffers = function(){
-	if(this.buffersReady) return;
-	
-	this.vertBuf = gl.createBuffer();
-	gl.bindBuffer(gl.ARRAY_BUFFER, this.vertBuf);
-	gl.bufferData(gl.ARRAY_BUFFER, this.vertices, gl.STATIC_DRAW);
-	
-	this.colorBuf = gl.createBuffer();
-	gl.bindBuffer(gl.ARRAY_BUFFER, this.colorBuf);
-	gl.bufferData(gl.ARRAY_BUFFER, this.colors, gl.STATIC_DRAW);
-	
-	this.normBuf = gl.createBuffer();
-	gl.bindBuffer(gl.ARRAY_BUFFER, this.normBuf);
-	gl.bufferData(gl.ARRAY_BUFFER, this.normals, gl.STATIC_DRAW);
-	
-	this.uv1buf = gl.createBuffer();
-	gl.bindBuffer(gl.ARRAY_BUFFER, this.uv1buf);
-	gl.bufferData(gl.ARRAY_BUFFER, this.uv1, gl.STATIC_DRAW);
-	
-	this.uv2buf = gl.createBuffer();
-	gl.bindBuffer(gl.ARRAY_BUFFER, this.uv2buf);
-	gl.bufferData(gl.ARRAY_BUFFER, this.uv2, gl.STATIC_DRAW);
-
-	this.triBuf = gl.createBuffer();
-	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.triBuf);
-	gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, this.tris, gl.STATIC_DRAW);
-	
-	this.buffersReady = true;
-}
-
+J3D.Mesh.prototype = new J3D.Geometry();
+J3D.Mesh.prototype.constructor = J3D.Mesh;
+J3D.Mesh.prototype.supr = J3D.Geometry.prototype;
 

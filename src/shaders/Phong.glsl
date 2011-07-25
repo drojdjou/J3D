@@ -9,6 +9,7 @@ void main(void) {
     vNormal = nMatrix * aVertexNormal;
 	vPosition = mMatrix * vec4(aVertexPosition, 1.0);
     gl_Position = pMatrix * vMatrix * vPosition;
+    gl_PointSize = 5.0;
 }
 
 //# PhongFragment

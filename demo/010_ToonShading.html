@@ -74,7 +74,7 @@
 		elephant = new J3D.Transform();
 		elephant.rotation = new v3(0, Math.PI, 0);
 		
-		J3D.Loader.loadJSON("models/elephant.js", function(j) {  elephant.mesh = new J3D.Mesh(j); } );		
+		J3D.Loader.loadJSON("models/elephant.js", function(j) {  elephant.geometry = new J3D.Mesh(j); } );		
 		
 		elephant.renderer = new J3D.Toon();
 		elephant.renderer.specularIntensity = 10;

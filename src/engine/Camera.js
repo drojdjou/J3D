@@ -20,8 +20,8 @@ J3D.Camera = function(params){
 	} else {
 		if(!params.left) params.left = 0;
 		if(!params.right) params.right = 1;
-		if(!params.top) params.top = 0;
-		if(!params.bottom) params.bottom = 1;
+		if(!params.top) params.top = 1;
+		if(!params.bottom) params.bottom = 0;
 	}
 	
 	this.near = params.near;

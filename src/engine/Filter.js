@@ -1,7 +1,7 @@
 J3D.Filter = function(name, effectSource, customVertex){
 	this.name = name;
 	this.drawMode = gl.TRIANGLES;
-	this._vertSource = (customVertex) ? customVertex : J3D.EffectSource.DefaultVertex;
+	this._vertSource = (customVertex && customVertex != "") ? customVertex : J3D.EffectSource.DefaultVertex;
 	this._fragSource = effectSource;
 };
 

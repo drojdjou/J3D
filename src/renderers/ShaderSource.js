@@ -7,13 +7,22 @@ J3D.ShaderSource.CommonInclude = [
 	"precision highp float;",
 	"#endif",
 
-	"uniform float uTime;",
+	"struct lightSource {",
+	"int type;",
+	"vec3 direction;",
+	"vec3 color;",
+	"vec3 position;",
+	"};",
 
+	"uniform float uTime;",
 	"uniform mat4 mMatrix;",
 	"uniform mat4 vMatrix;",
 	"uniform mat3 nMatrix;",
 	"uniform mat4 pMatrix;",
 	"uniform vec3 uEyePosition;",
+	"uniform lightSource uLight[4];",
+	"uniform vec3 uAmbientColor;",
+	"uniform vec4 uTileOffset;",
 
 	"mat4 mvpMatrix() {",
 	"return pMatrix * vMatrix * mMatrix;",
@@ -22,18 +31,6 @@ J3D.ShaderSource.CommonInclude = [
 	"mat4 mvMatrix() {",
 	"return vMatrix * mMatrix;",
 	"}",
-
-	"struct lightSource {",
-	"int type;",
-	"vec3 direction;",
-	"vec3 color;",
-	"vec3 position;",
-	"};",
-
-	"uniform lightSource uLight[4];",
-	"uniform vec3 uAmbientColor;",
-
-	"uniform vec4 uTileOffset;",
 
 	"float luminance(vec3 c) {",
 	"return c.r * 0.299 + c.g * 0.587 + c.b * 0.114;",
@@ -60,11 +57,12 @@ J3D.ShaderSource.CommonInclude = [
 	"spec = pow(max(dot(refd, eyed), 0.0), sh) * si;",
 	"};",
 
-	"return uAmbientColor + light.color * dif + light.color * spec;",
+	"return light.color * dif + light.color * spec;",
 	"}",
 
 	"vec3 computeLights(vec4 p, vec3 n, float si, float sh) {",
-	"vec3 s = computeLight(p, n, si, sh, uLight[0]);",
+	"vec3 s = uAmbientColor;",
+	"s += computeLight(p, n, si, sh, uLight[0]);",
 	"s += computeLight(p, n, si, sh, uLight[1]);",
 	"s += computeLight(p, n, si, sh, uLight[2]);",
 	"s += computeLight(p, n, si, sh, uLight[3]);",
@@ -93,57 +91,6 @@ J3D.ShaderSource.DepthFragment = [
 	"void main(void) {",
 	"float d = 1.0 - depth;",
 	"gl_FragColor = vec4(d, d, d, 1.0);",
-	"}",
-""].join("\n");
-
-
-J3D.ShaderSource.GlassVertex = [
-	"varying vec3 vNormal;",
-	"varying vec3 t;",
-	"varying vec3 tr;",
-	"varying vec3 tg;",
-	"varying vec3 tb;",
-	"varying float rfac;",
-
-	"uniform vec3 chromaticDispertion;",
-	"uniform float bias;",
-	"uniform float scale;",
-	"uniform float power;",
-
-	"void main(void) {",
-	"gl_Position = mvpMatrix() * vec4(aVertexPosition, 1.0);",
-	"vNormal = normalize(nMatrix * aVertexNormal);",
-	"vec3 incident = normalize( (vec4(aVertexPosition, 1.0) * mMatrix).xyz - uEyePosition);",
-
-	"t = reflect(incident, vNormal);",
-	"tr = refract(incident, vNormal, chromaticDispertion.x);",
-	"tg = refract(incident, vNormal, chromaticDispertion.y);",
-	"tb = refract(incident, vNormal, chromaticDispertion.z);",
-
-	"rfac = bias + scale * pow(1.0 + dot(incident, vNormal), power);",
-	"}",
-
-""].join("\n");
-
-J3D.ShaderSource.GlassFragment = [
-	"uniform samplerCube uCubemap;",
-
-	"varying vec3 vNormal;",
-	"varying vec3 t;",
-	"varying vec3 tr;",
-	"varying vec3 tg;",
-	"varying vec3 tb;",
-	"varying float rfac;",
-
-	"void main(void) {",
-	"vec4 ref = textureCube(uCubemap, t);",
-
-	"vec4 ret = vec4(1);",
-	"ret.r = textureCube(uCubemap, tr).r;",
-	"ret.g = textureCube(uCubemap, tg).g;",
-	"ret.b = textureCube(uCubemap, tb).b;",
-
-	"gl_FragColor = ret * rfac + ref * (1.0 - rfac);",
 	"}",
 ""].join("\n");
 
@@ -241,6 +188,7 @@ J3D.ShaderSource.PhongVertex = [
 	"vNormal = nMatrix * aVertexNormal;",
 	"vPosition = mMatrix * vec4(aVertexPosition, 1.0);",
 	"gl_Position = pMatrix * vMatrix * vPosition;",
+	"gl_PointSize = 5.0;",
 	"}",
 
 ""].join("\n");
@@ -337,6 +285,7 @@ J3D.ShaderSource.ToonVertex = [
 	"void main(void) {",
 	"vec4 p = mMatrix * vec4(aVertexPosition, 1.0);",
 	"gl_Position = pMatrix * vMatrix * p;",
+	"gl_PointSize = 10.0;",
 	"vTextureCoord = getTextureCoord(aTextureCoord);",
 	"vec3 n = normalize( nMatrix * aVertexNormal );",
 	"vLight = lightIntensity(p, n);",

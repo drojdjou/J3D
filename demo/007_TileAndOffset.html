@@ -91,9 +91,9 @@
 		cube3.renderer.colorTexture = new J3D.Texture(texpath);
 		
 		cubemesh = J3D.Primitive.Cube(1, 1, 1); 
-		cube1.mesh = cubemesh;
-		cube2.mesh = cubemesh;
-		cube3.mesh = cubemesh;
+		cube1.geometry = cubemesh;
+		cube2.geometry = cubemesh;
+		cube3.geometry = cubemesh;
 		
 		var camera = new J3D.Camera({ fov:30 });
 		camera.transform.position.z = 6;

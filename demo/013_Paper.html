@@ -139,39 +139,29 @@ void main(void) {
 		var f = document.getElementById("paperFragment").firstChild.nodeValue;
 		var pr = new J3D.Shader("Paper", v, f);
 		pr.colorTexture = new J3D.Texture("models/textures/firetruck1.jpg");
-		
-		pr.setupLocations = function(shader) {
-			shader.uBendAngle = gl.getUniformLocation(shader, "uBendAngle");
-			shader.uBounds = gl.getUniformLocation(shader, "uBounds");
-			shader.uOffset = gl.getUniformLocation(shader, "uOffset");
-			shader.uBendAxisAngle = gl.getUniformLocation(shader, "uBendAxisAngle");
-			shader.uColorSampler = gl.getUniformLocation(shader, "uColorSampler");
-		}
-		
+
 		pr.setup = function(mesh, shader, lights, camera) {
-			gl.uniform2fv(shader.uBounds, [-400, 800]);
+			gl.uniform2fv(shader.uniforms.uBounds, [-400, 800]);
 			
 			if (properties.animate) {
 				a += 0.02;
 				properties.bendAngle = Math.sin(a) * Math.PI * 2;
-				gl.uniform1f(shader.uBendAngle, properties.bendAngle);
+				gl.uniform1f(shader.uniforms.uBendAngle, properties.bendAngle);
 				
 			}
 			else {
-				gl.uniform1f(shader.uBendAngle, properties.bendAngle);
+				gl.uniform1f(shader.uniforms.uBendAngle, properties.bendAngle);
 			}
 			
-			gl.uniform1f(shader.uOffset, properties.offset);
-			gl.uniform1f(shader.uBendAxisAngle, properties.bendAxisAngle);
+			gl.uniform1f(shader.uniforms.uOffset, properties.offset);
+			gl.uniform1f(shader.uniforms.uBendAxisAngle, properties.bendAxisAngle);
 			
-			gl.activeTexture(gl.TEXTURE0);
-			gl.bindTexture(gl.TEXTURE_2D, this.colorTexture.tex);
-			gl.uniform1i(shader.uColorSampler, 0);
+			J3D.ShaderUtil.setTexture(shader, 0, "uColorSampler", this.colorTexture.tex);
 		}
 		
 		photo = new J3D.Transform();
 		photo.renderer = pr;
-		photo.mesh = J3D.Primitive.Plane(800, 534, 80, 53);
+		photo.geometry = J3D.Primitive.Plane(800, 534, 80, 53);
 		engine.scene.add(photo);
 		
 		draw();

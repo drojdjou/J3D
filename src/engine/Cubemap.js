@@ -23,7 +23,7 @@ J3D.Cubemap = function(faces){
 		gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
 		gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 	
-		gl.generateMipmap(gl.GL_TEXTURE_CUBE_MAP);
+		gl.generateMipmap(gl.TEXTURE_CUBE_MAP);
 		
 		gl.bindTexture(gl.TEXTURE_CUBE_MAP, null);
 	}

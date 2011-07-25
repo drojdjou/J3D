@@ -1,7 +1,7 @@
 J3D.Primitive = {};
 
 J3D.Primitive.Cube = function(w, h, d) {
-	var c = J3D.Primitive.getEmptyGeometry();
+	var c = J3D.Primitive.getEmpty();
 	w = w * 0.5;
 	h = h * 0.5;
 	d = d * 0.5;
@@ -19,7 +19,7 @@ J3D.Primitive.Cube = function(w, h, d) {
 }
 
 J3D.Primitive.Plane = function(w, h, wd, hd) {
-	var c = J3D.Primitive.getEmptyGeometry();
+	var c = J3D.Primitive.getEmpty();
 	w = w * 0.5;
 	h = h * 0.5;
 	
@@ -63,13 +63,11 @@ J3D.Primitive.Plane = function(w, h, wd, hd) {
 	return new J3D.Mesh(c);
 }
 
-J3D.Primitive.getEmptyGeometry = function(){
+J3D.Primitive.getEmpty = function(){
 	var g = {};
 	g.vertices = [];	 
 	g.normals = [];
-	g.colors = [];
 	g.uv1 = [];
-	g.uv2 = [];
 	g.tris = [];
 	return g;
 }

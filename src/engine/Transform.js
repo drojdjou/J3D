@@ -26,7 +26,7 @@ J3D.Transform = function(n){
 	this.enabled = true;
 	
 	this.renderer;	
-	this.mesh;
+	this.geometry;
 	this.camera;
 	this.light;
 	

@@ -21,6 +21,7 @@ float lightIntensity(vec4 p, vec3 n) {
 void main(void) {
 	vec4 p = mMatrix * vec4(aVertexPosition, 1.0);
     gl_Position = pMatrix * vMatrix * p;
+    gl_PointSize = 10.0;
  	vTextureCoord = getTextureCoord(aTextureCoord);
     vec3 n = normalize( nMatrix * aVertexNormal );
 	vLight = lightIntensity(p, n);

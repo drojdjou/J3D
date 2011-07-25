@@ -26,7 +26,7 @@ J3D.Engine = function(webglSettings) {
 	gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);	
 	gl.enable(gl.CULL_FACE);
 	gl.frontFace(gl.CW);
-	
+
 	this.shaderAtlas = new J3D.ShaderAtlas();
 	this.effectAtlas = new J3D.EffectAtlas();
 	this.scene = new J3D.Scene();
@@ -105,8 +105,8 @@ J3D.Engine.prototype.renderScene = function(){
 	gl.enable(gl.BLEND);
 	for(var i = 0; i < this._transparentMeshes.length; i++) {
 		var t = this._transparentMeshes[i];
-		var srcFactor = (t.mesh.srcFactor != null) ? t.mesh.srcFactor : gl.SRC_ALPHA;
-		var dstFactor = (t.mesh.dstFactor != null) ? t.mesh.dstFactor : gl.ONE;
+		var srcFactor = (t.geometry.srcFactor != null) ? t.geometry.srcFactor : gl.SRC_ALPHA;
+		var dstFactor = (t.geometry.dstFactor != null) ? t.geometry.dstFactor : gl.ONE;
 		gl.blendFunc(srcFactor, dstFactor);
 		this.renderObject(t);
 	}
@@ -114,7 +114,7 @@ J3D.Engine.prototype.renderScene = function(){
 	// #DEBUG Monitor the amount of shaders created
 	// console.log( this.shaderAtlas.shaderCount );
 
-	gl.flush();
+	// gl.flush();
 }
 
 J3D.Engine.prototype.renderObject = function(t) {
@@ -123,62 +123,39 @@ J3D.Engine.prototype.renderObject = function(t) {
 	gl.useProgram(s);
 	
 	// Setup standard uniforms and attributes
-	gl.uniform1f(s.uTime, J3D.Time.time);
+	gl.uniform1f(s.uniforms.uTime, J3D.Time.time);
 	
-	gl.uniformMatrix4fv(s.pMatrix, false, this.camera.projectionMat.toArray() );
-	gl.uniformMatrix4fv(s.vMatrix, false, this.camera.inverseMat);
-	gl.uniformMatrix4fv(s.mMatrix, false, t.globalMatrix);
-	gl.uniformMatrix3fv(s.nMatrix, false, t.normalMatrix);
+	gl.uniformMatrix4fv(s.uniforms.pMatrix, false, this.camera.projectionMat.toArray() );
+	gl.uniformMatrix4fv(s.uniforms.vMatrix, false, this.camera.inverseMat);
+	gl.uniformMatrix4fv(s.uniforms.mMatrix, false, t.globalMatrix);
+	gl.uniformMatrix3fv(s.uniforms.nMatrix, false, t.normalMatrix);
 	
-	gl.uniform3fv(s.uAmbientColor, this.scene.ambient.rgb());
-	gl.uniform3fv(s.uEyePosition, this.camera.transform.worldPosition.xyz());
+	gl.uniform3fv(s.uniforms.uAmbientColor, this.scene.ambient.rgb());
+	gl.uniform3fv(s.uniforms.uEyePosition, this.camera.transform.worldPosition.xyz());
 	
-	gl.uniform4fv(s.uTileOffset, t.getTileOffset());
-	
-	if (t.mesh.vertBuf && s.attributes.aVertexPosition != null) {
-		gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.vertBuf);
-		gl.vertexAttribPointer(s.attributes.aVertexPosition, t.mesh.vertSize, gl.FLOAT, false, 0, 0);
-	}
-	
-	if (t.mesh.colorBuf && s.attributes.aVertexColor != null) {
-		gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.colorBuf);
-		gl.vertexAttribPointer(s.attributes.aVertexColor, t.mesh.colorSize, gl.FLOAT, false, 0, 0);
-	}
+	gl.uniform4fv(s.uniforms.uTileOffset, t.getTileOffset());
 
-	if (t.mesh.normBuf && s.attributes.aVertexNormal != null) {
-		gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.normBuf);
-		gl.vertexAttribPointer(s.attributes.aVertexNormal, t.mesh.vertSize, gl.FLOAT, false, 0, 0);
+	for(var i = 0; i < t.geometry.arrays.length; i++) {
+		var vbo = t.geometry.arrays[i];	
+		if(s.attributes[vbo.name] != null) {
+			gl.bindBuffer(gl.ARRAY_BUFFER, vbo.buffer);
+			gl.vertexAttribPointer(s.attributes[vbo.name], vbo.itemSize, gl.FLOAT, false, 0, 0);
+		}
 	}
-
-	if (t.mesh.uv1buf && s.attributes.aTextureCoord != null) {
-		gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.uv1buf);
-		gl.vertexAttribPointer(s.attributes.aTextureCoord, t.mesh.uvSize, gl.FLOAT, false, 0, 0);
-	}
-	
-	if (t.mesh.uv2buf && s.attributes.aTextureCoord2 != null) {
-		gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.uv2buf);
-		gl.vertexAttribPointer(s.attributes.aTextureCoord2, t.mesh.uvSize, gl.FLOAT, false, 0, 0);
-	}
-	
-	if (t.mesh.animBuf && s.attributes.aVertexAnimation != null) {
-		gl.bindBuffer(gl.ARRAY_BUFFER, t.mesh.animBuf);
-		gl.vertexAttribPointer(s.attributes.aVertexAnimation, t.mesh.animSize, gl.FLOAT, false, 0, 0);
-	}
-
-	
+		
 	// Setup renderers custom uniforms and attributes
-	t.renderer.setup(t.mesh, s, this._lights, this.camera, t);
+	t.renderer.setup(t.geometry, s, this._lights, this.camera, t);
 
 	var cull = t.renderer.cullFace || gl.BACK;			
 	gl.cullFace(cull);
 	
 	var mode = (t.renderer.drawMode != null) ? t.renderer.drawMode : gl.TRIANGLES;
 	
-	if (t.mesh.hasElements) {
-		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, t.mesh.triBuf);
-		gl.drawElements(mode, t.mesh.triNum, gl.UNSIGNED_SHORT, 0);
+	if (t.geometry.hasElements) {
+		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, t.geometry.elements.buffer);
+		gl.drawElements(mode, t.geometry.elements.size, gl.UNSIGNED_SHORT, 0);
 	} else {
-		gl.drawArrays(mode, 0, t.mesh.vertNum);
+		gl.drawArrays(mode, 0, t.geometry.size);
 	}
 }
 
@@ -191,8 +168,8 @@ J3D.Engine.prototype.updateTransform = function(t, p){
 	
 	if(!t.enabled) return;
 	
-	if (t.renderer && t.mesh) {	
-		if(t.mesh.renderMode == J3D.RENDER_AS_TRANSPARENT) 
+	if (t.renderer && t.geometry) {	
+		if(t.geometry.renderMode == J3D.RENDER_AS_TRANSPARENT) 
 			this._transparentMeshes.push(t);	
 		else 
 			this._opaqueMeshes.push(t);
