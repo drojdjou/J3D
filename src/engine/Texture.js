@@ -5,11 +5,14 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 	this.wrapMode = gl.REPEAT;
 	this.magFilter = gl.LINEAR;
 	this.minFilter = gl.LINEAR_MIPMAP_NEAREST;
-	this.mipmap = true;
-	this.flip = true;
-	
+
 	if (params) {
 		this.onLoad = params.onLoad;
+		this.mipmap = (params.mipmap != null) ? params.mipmap : true;
+		this.flip = (params.flip != null) ? params.flip : true;
+	} else {
+		this.mipmap = true;
+		this.flip = true;
 	}
 	
 	var isPOT = function(x, y){

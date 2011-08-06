@@ -17,6 +17,6 @@ J3D.Shader.prototype.fragSource = function() {
 	return this._fragSource;
 }
 
-J3D.Shader.prototype.setup = function(mesh, shader, lights, camera) {
+J3D.Shader.prototype.setup = function(mesh, shader, camera) {
 	
 }

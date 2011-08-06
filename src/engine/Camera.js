@@ -18,10 +18,10 @@ J3D.Camera = function(params){
 		if(!params.fov) params.fov = 45;
 		if(!params.aspect) params.aspect = gl.viewportWidth / gl.viewportHeight;
 	} else {
-		if(!params.left) params.left = 0;
-		if(!params.right) params.right = 1;
-		if(!params.top) params.top = 1;
-		if(!params.bottom) params.bottom = 0;
+		if(params.left == null) params.left = 0;
+		if(params.right == null) params.right = 1;
+		if(params.top == null) params.top = 0;
+		if(params.bottom == null) params.bottom = 1;
 	}
 	
 	this.near = params.near;

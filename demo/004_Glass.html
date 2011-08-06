@@ -111,7 +111,7 @@
 
 		engine.scene.addSkybox(cubemap);
 
-		shader.setup = function(mesh, shader, lights, camera) {
+		shader.setup = function(mesh, shader, camera) {
 			J3D.ShaderUtil.setTextureCube(shader, 0, "uCubemap", cubemap.tex);
 			gl.uniform3fv(shader.uniforms.chromaticDispertion, [properties.dispersionRed, properties.dispersionGreen, properties.dispersionBlue]);	
 			gl.uniform1f(shader.uniforms.bias, properties.bias);	

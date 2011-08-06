@@ -15,8 +15,7 @@ J3D.Toon.prototype.fragSource = function() {
 	return J3D.ShaderSource.ToonFragment;
 }
 
-J3D.Toon.prototype.setup = function(mesh, shader, lights, camera){	
+J3D.Toon.prototype.setup = function(mesh, shader, camera){	
 	gl.uniform4fv(shader.uColor, this.color.rgba());
 	J3D.ShaderUtil.setTexture(shader, 0, "uColorSampler", this.rampTexture.tex);
-	J3D.ShaderUtil.setLights(shader, lights);
 }

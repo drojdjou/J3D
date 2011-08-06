@@ -25,3 +25,7 @@ J3D.ShaderUtil.setLights = function(shader, lights) {
 		}
 	}
 }
+
+J3D.ShaderUtil.setUniform = function(name, value) {
+	//
+}

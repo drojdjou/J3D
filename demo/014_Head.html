@@ -1,0 +1,272 @@
+<html> 
+ 
+<head> 
+<title>014 | Head | J3D</title> 
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
+
+<link rel="stylesheet" href="../demo/common/common.css"/>
+<script type="text/javascript" src="../demo/common/common.js"></script>
+
+<!--
+<script type="text/javascript" src="../lib/glMatrix.js"></script>
+<script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
+<script type="text/javascript" src="../src/J3D.js"></script>
+<script type="text/javascript" src="../src/util/Color.js"></script>
+<script type="text/javascript" src="../src/math/Vector2.js"></script>
+<script type="text/javascript" src="../src/math/Vector3.js"></script>
+<script type="text/javascript" src="../src/math/Matrix44.js"></script>
+<script type="text/javascript" src="../src/engine/Engine.js"></script>
+<script type="text/javascript" src="../src/engine/Camera.js"></script>
+<script type="text/javascript" src="../src/engine/Light.js"></script>
+<script type="text/javascript" src="../src/engine/Geometry.js"></script>
+<script type="text/javascript" src="../src/engine/Mesh.js"></script>
+<script type="text/javascript" src="../src/engine/Scene.js"></script>
+<script type="text/javascript" src="../src/engine/Loader.js"></script>
+<script type="text/javascript" src="../src/engine/Filter.js"></script>
+<script type="text/javascript" src="../src/engine/ShaderAtlas.js"></script>
+<script type="text/javascript" src="../src/engine/EffectAtlas.js"></script>
+<script type="text/javascript" src="../src/engine/Texture.js"></script>
+<script type="text/javascript" src="../src/engine/Cubemap.js"></script>
+<script type="text/javascript" src="../src/engine/Transform.js"></script>
+<script type="text/javascript" src="../src/engine/Postprocess.js"></script>
+<script type="text/javascript" src="../src/engine/Primitives.js"></script>
+<script type="text/javascript" src="../src/engine/FrameBuffer.js"></script>
+<script type="text/javascript" src="../src/effects/EffectSource.js"></script>
+<script type="text/javascript" src="../src/renderers/ShaderSource.js"></script>
+<script type="text/javascript" src="../src/renderers/Phong.js"></script>
+<script type="text/javascript" src="../src/renderers/Toon.js"></script>
+<script type="text/javascript" src="../src/renderers/Gouraud.js"></script>
+<script type="text/javascript" src="../src/renderers/Reflective.js"></script>
+<script type="text/javascript" src="../src/renderers/Glass.js"></script>
+<script type="text/javascript" src="../src/renderers/Skybox.js"></script>
+<script type="text/javascript" src="../src/renderers/Shader.js"></script>
+<script type="text/javascript" src="../src/util/Time.js"></script>
+<script type="text/javascript" src="../src/util/ShaderUtil.js"></script>
+-->
+
+<script type="text/javascript" src="../build/j3d.js"></script>
+
+
+<script>
+	var mx, my = 0;
+	var engine;
+	var path = "../demo/models/014/";
+	
+	var base, lee, eyeLeft, eyeRight, head, cam;
+	var tgry, tgrz, tgpz;
+	var auto;
+	
+	var defphong, cover, reflective, toon, glitter, darkglass;
+	var dispersion;
+	var shd = 0;
+	
+	var t = 0;
+	var shadersToLoad;
+	
+	function init(){
+		if (!checkWebGL()) 
+			return;
+			
+		console.log("Starting...");
+		
+		engine = new J3D.Engine();
+
+		shadersToLoad = 4;
+		
+		J3D.Loader.loadGLSL("../demo/shaders/GoldHead.glsl", function(s) {
+			reflective = s;
+			setup();
+		});
+		
+		J3D.Loader.loadGLSL("../demo/shaders/Glitter.glsl", function(s) {
+			glitter = s;
+			setup();
+		});
+		
+		J3D.Loader.loadGLSL("../demo/shaders/DarkGlass.glsl", function(s) {
+			darkglass = s;
+			setup();
+		});
+		
+		J3D.Loader.loadGLSL("../demo/shaders/Stripes.glsl", function(s) {
+			toon = s;
+			setup();
+		});
+	}
+	
+	function setup() {
+		shadersToLoad--;
+		if(shadersToLoad > 0) return;
+		
+		console.log("Shaders loaded...");
+		
+		var cubemap = new J3D.Cubemap({
+			left: path + "cubemap/front.jpg",
+			right: path + "cubemap/back.jpg",
+			up: path + "cubemap/left.jpg",
+			down: path + "cubemap/right.jpg",
+			back: path + "cubemap/top.jpg",
+			front: path + "cubemap/top.jpg",
+		});
+		
+		var headTex = new J3D.Texture(path + "map_col.jpg");
+		
+		var particleTex = new J3D.Texture(path + "particle01.png");
+		particleTex.wrapMode = gl.CLAMP_TO_EDGE;
+		
+		var ramp = new J3D.Texture(path + "goldramp.png");
+		
+		reflective.setup = function(mesh, shader, camera) {
+			J3D.ShaderUtil.setTextureCube(shader, 0, "uCubemap", cubemap.tex);
+			J3D.ShaderUtil.setTexture(shader, 1, "uColorTexture", headTex.tex);
+		}
+		
+		darkglass.setup = function(mesh, shader, camera) {
+			J3D.ShaderUtil.setTextureCube(shader, 0, "uCubemap", cubemap.tex);
+			J3D.ShaderUtil.setTexture(shader, 1, "uColorTexture", headTex.tex);
+			gl.uniform3fv(shader.uniforms.chromaticDispertion, [0.02, 0.0, -0.02]);	
+			gl.uniform1f(shader.uniforms.bias, 0.0);	
+			gl.uniform1f(shader.uniforms.scale, 1.8);	
+			gl.uniform1f(shader.uniforms.power, 3.0);	
+		}
+
+		glitter.setup = function(mesh, shader, camera){	
+			J3D.ShaderUtil.setTexture(shader, 0, "uColorSampler", ramp.tex);
+			J3D.ShaderUtil.setTexture(shader, 1, "uParticle", particleTex.tex);
+		}
+		
+		toon.setup = function(mesh, shader, camera){	
+			J3D.ShaderUtil.setTexture(shader, 0, "uColorSampler", ramp.tex);
+		}
+
+		J3D.Loader.loadJSON(path + "leeperry.js", function(jsmeshes) { 
+			J3D.Loader.loadJSON(path + "leeperryScene.js", function(jsscene) { 
+				jsscene.path = path;
+				J3D.Loader.parseJSONScene(jsscene, jsmeshes, engine);
+				
+				base = engine.scene.find("base");
+				cam = engine.scene.find("base/camera");
+				
+				lee = engine.scene.find("headbase");
+				
+				head = engine.scene.find("headbase/head");
+
+				defphong = head.renderer;
+				
+				console.log("Models loaded...");
+
+				draw();
+				
+				console.log("Rendering...");
+			})
+		});
+		
+		document.onmousemove = onMouseMove;
+		document.onmousedown = changeShaderManual;
+		
+		auto = setInterval("changeShader()", 5000);
+	}
+	
+	function setRenderer(r, m) {
+		if (r != null) {
+			head.renderer = r;
+		} else {
+			head.renderer = defphong;
+		}
+		
+		if (m != null) {
+			head.renderer.drawMode = m;
+		}
+	}
+	
+	function setTransparency(t, s, d) {
+		head.geometry.setTransparency(t, s, d);
+	}
+	
+	function changeShaderManual() {
+		clearInterval(auto);
+		 changeShader();
+	}
+	
+	function changeShader() {
+        shd = (shd + 1) % 5;
+        switch (shd) {
+            case 0:
+                setRenderer(null, gl.TRIANGLES);
+				setTransparency(false);
+				//engine.camera.filter = null;
+                break;
+			case 1:
+                setRenderer(darkglass, gl.TRIANGLES);
+				setTransparency(false);
+				//engine.camera.filter = null;
+                break;
+            case 2:
+                setRenderer(reflective, gl.TRIANGLES);
+				setTransparency(false);
+				//engine.camera.filter = null;
+                break;
+            case 3:
+                setRenderer(toon, gl.TRIANGLES);
+				setTransparency(false);
+				//engine.camera.filter = null;
+                break;
+            case 4:
+                setRenderer(glitter, gl.POINTS);
+				setTransparency(true, gl.SRC_ALPHA, gl.DST_ALPHA);
+				//engine.camera.filter = null;
+                break;
+        }
+	}
+	
+	function onMouseMove(e) {
+		mx = ( e.clientX / window.innerWidth  ) * 2 - 1;
+		my = ( e.clientY / window.innerHeight ) * 2 - 1;
+	}
+	
+	function draw() {
+		requestAnimationFrame(draw);
+		
+		if(isNaN(mx)) mx = 0;
+		if(isNaN(my)) my = 0;
+		
+		tgry = mx * Math.PI / 3.0;
+		tgrz = -mx * Math.PI / 15.0;	
+		tgpz = my - 1;
+		
+		lee.rotation.y += (tgry - lee.rotation.y) / 2;
+		lee.rotation.z += (tgrz - lee.rotation.z) / 12;
+		lee.position.z += (tgpz - lee.position.z) / 10;
+		
+		lee.rotation.x = Math.sin(t) * 0.1;
+		t += 0.1;
+	
+		engine.render();
+	}
+		
+</script>
+
+</head> 
+
+<body onload="init();">
+	<script>
+		setLabels("014. Head", "Head model featuring a few shaders.<br>Keep moving your mouse, click to change the shader.<br>3D Head Scan by <a href='http://www.ir-ltd.net/infinite-3d-head-scan-released'>Lee Perry-Smith</a>");
+	</script>
+	
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-24294554-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body> 
+
+</html> 

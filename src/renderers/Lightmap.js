@@ -13,7 +13,7 @@ J3D.Lightmap.prototype.fragSource = function() {
 	return J3D.ShaderSource.LightmapFragment;
 }
 
-J3D.Lightmap.prototype.setup = function(mesh, shader, lights, camera, transform){	
+J3D.Lightmap.prototype.setup = function(mesh, shader, camera, transform){	
 	gl.uniform4fv(shader.uniforms.uLightmapAtlas, transform.lightmapTileOffset);	
 	gl.uniform4fv(shader.uniforms.uColor, this.color.rgba());
 	

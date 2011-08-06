@@ -15,7 +15,7 @@ J3D.Gouraud.prototype.fragSource = function() {
 	return J3D.ShaderSource.GouraudFragment;
 }
 
-J3D.Gouraud.prototype.setup = function(mesh, shader, lights, camera){	
+J3D.Gouraud.prototype.setup = function(mesh, shader, camera){	
 
 	gl.uniform4fv(shader.uniforms.uColor, this.color.rgba());
 	gl.uniform1f(shader.uniforms.uSpecularIntensity, this.specularIntensity);
@@ -28,6 +28,4 @@ J3D.Gouraud.prototype.setup = function(mesh, shader, lights, camera){
 		gl.bindTexture(gl.TEXTURE_2D, null);
 		gl.uniform1i(shader.uniforms.uHasColorSampler, false);
 	}
-
-	J3D.ShaderUtil.setLights(shader, lights);
 }

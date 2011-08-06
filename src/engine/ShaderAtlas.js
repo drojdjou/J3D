@@ -48,10 +48,12 @@ J3D.ShaderAtlas.prototype.linkShader = function(renderer){
 	gl.useProgram(program);
 	
 	program.uniforms = {};
+	program.uniformTypes = {};
 	var numUni = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS);
 	for(var i = 0; i < numUni; i++) {
 		var acUni = gl.getActiveUniform(program, i);
 		program.uniforms[acUni.name] = gl.getUniformLocation(program, acUni.name);
+		program.uniformTypes[acUni.name] = acUni.type;
 	}
 	
 	program.attributes = {};

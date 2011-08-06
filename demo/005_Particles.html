@@ -66,7 +66,7 @@
 
 <script>
 	var engine, scene, stars, camera;
-	var mx, my = 0;
+	var mx = 0, my = 0;
 
 	function init() {
 		if(!checkWebGL()) return;
@@ -85,7 +85,7 @@
 		var particleShader = new J3D.Shader("StaticParticle", v, f);
 		particleShader.drawMode = gl.POINTS;
 
-		particleShader.setup = function(mesh, shader, lights, camera) {
+		particleShader.setup = function(mesh, shader, camera) {
 			if (!isNaN(mx) && !isNaN(my)) {
 				gl.uniform4fv(shader.uniforms.uColor, [1 - (mx + 1 / 2), my + 1 / 2, 1, 1]);
 			}

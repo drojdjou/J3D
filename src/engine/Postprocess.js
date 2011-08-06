@@ -1,21 +1,21 @@
-/** Render to texture and postprocessing
- *  
- *  Cases:
- *  a. render to a texture
- *  a.1 needs to be rendered before anything else
- *  a.2 needs a camera where renderTarget != null
- *  
- *  b. add post process effect
- *  b.1 happens after everything, but the fbo needs to be setup first
- *  b.2 can be used with render to texture as well
- *  b.3 uses a filter collection to determine which effects (and in what order) to apply
- *  b.4 renders to texture, creates the quad and applies the effect (repeats for each effect)
- *  
- *  Alpha:
- *  Camera can have filter added
- *  If filter is present than only one is applied
- *  Renders to an FBO
- *  Uses the texture to render a full screen quad
+/**
+ * var engine = new Engine;
+ * 
+ * var scene = new Scene;
+ * scene.camera = new Camera;
+ * 
+ * var postprocess = new Postprocess;
+ * [postprocess.fbo = new Framebuffer;]
+ * postprocess.filter = new Filter;
+ * [postprocess.geometry = new Geometry;]
+ * 
+ * engine.renderScene(scene, [post.fbo], [scene.camera]);
+ * [engine.renderFilter(postprocess, [post2.fbo2]);]
+ * 
+ * 
+ * var effect = new Effect
+ * effect.render()
+ * 
  */
 
 J3D.Postprocess = function(){ // (vr, hr)

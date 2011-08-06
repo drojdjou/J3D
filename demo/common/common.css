@@ -24,6 +24,13 @@ h4 {
 	line-height: 20px;
 }
 
+p {
+	font-weight: normal;
+	font-size: 14px;
+	color: #555;
+	line-height: 20px;
+}
+
 .mini {
 	position: relative;
 	font-size: 8pt;
@@ -133,4 +140,9 @@ a:link, a:visited {
 
 a:hover {
 	text-decoration: underline;
+}
+
+#booked {
+	color: #ffffff;
+	background-color: #b00000;
 }

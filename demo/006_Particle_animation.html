@@ -115,7 +115,7 @@
 		var particleShader = new J3D.Shader("StaticParticle", v, f);
 		particleShader.drawMode = gl.POINTS;
 
-		particleShader.setup = function(mesh, shader, lights, camera) {
+		particleShader.setup = function(mesh, shader, camera) {
 			J3D.ShaderUtil.setTexture(shader, 0, "uParticleTex", texture.tex);
 			
 			if (!isNaN(mx) && !isNaN(my)) {
@@ -142,10 +142,10 @@
 	}
 	
 	function prepareAnimationAttributes(amount, maxOffset) {
-		var animdata = new Float32Array(amount);
+		var animdata = new Float32Array(amount * 2);
 
-		for (var i = 0; i < amount; i++) {
-			animdata[i] = i / amount + Math.random() * 0.05;
+		for (var i = 0; i < amount * 2; i++) {
+			animdata[i] = i / (amount * 2) + Math.random() * 0.05;
 		}
 	
 		return animdata;

@@ -1,5 +1,5 @@
 var m44 = function(){
-	this.array = new Float32Array(16);
+	this.array = [];//new Float32Array(16);
 	this.identity();
 }
 
@@ -31,20 +31,22 @@ m44.prototype.ortho = function(left, right, top, bottom, near, far) {
 	var x, y, z, w, h, p;
 
 	w = right - left;
-	h = top - bottom;
+	h = bottom - top;
 	p = far - near;
 	x = ( right + left ) / w;
-	y = ( top + bottom ) / h;
+	y = ( bottom + top ) / h;
 	z = ( far + near ) / p;
 
 	this.n11 = 2 / w;
 	this.n14 = -x;
-	this.n22 = 2 / h; 
-	this.n24 = -y;
-	this.n33 = -2 / p; 
+	this.n22 = -2 / h; 
+	this.n24 = y;
+	this.n33 = 2 / p; 
 	this.n34 = -z;
 
 	this.makeArray();
+	
+	//console.log(this.array.join(","));
 }
 
 m44.prototype.perspective = function(fov, aspect, near, far){

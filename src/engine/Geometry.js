@@ -25,7 +25,7 @@ J3D.Geometry.prototype.addArray = function(name, data, itemSize, type, usage) {
 	return vbo;
 }
 
-J3D.Geometry.prototype.replaceArrayData = function(vbo, data, usage) {
+J3D.Geometry.prototype.replaceArray = function(vbo, data, usage) {
 	if(!usage) usage = gl.STATIC_DRAW;
 	vbo.data = data;
 	gl.bindBuffer(gl.ARRAY_BUFFER, vbo.buffer);

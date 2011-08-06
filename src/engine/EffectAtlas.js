@@ -45,7 +45,10 @@ J3D.EffectAtlas.prototype.linkShader = function(renderer){
 	gl.useProgram(program);
 	
 	// Common uniforms and attributes for all effects
+	// TODO ==== remove this
 	program.uTime = gl.getUniformLocation(program, "uTime");
+	program.uTexture = gl.getUniformLocation(program, "uTexture");
+	// ------------
 	
 	program.aVertexPosition = gl.getAttribLocation(program, "aVertexPosition");
 	gl.enableVertexAttribArray(program.aVertexPosition);
@@ -53,7 +56,17 @@ J3D.EffectAtlas.prototype.linkShader = function(renderer){
 	program.aTextureCoord = gl.getAttribLocation(program, "aTextureCoord");
 	gl.enableVertexAttribArray(program.aTextureCoord);
 		
-	program.uTexture = gl.getUniformLocation(program, "uTexture");
+	
+	
+	program.uniforms = {};
+	program.uniformTypes = {};
+	var numUni = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS);
+	for(var i = 0; i < numUni; i++) {
+		var acUni = gl.getActiveUniform(program, i);
+		program.uniforms[acUni.name] = gl.getUniformLocation(program, acUni.name);
+		program.uniformTypes[acUni.name] = acUni.type;
+		console.log(acUni.name);
+	}
 
 	renderer.setup(program);
 	this.shaderCount++;

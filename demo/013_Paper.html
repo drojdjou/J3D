@@ -140,7 +140,7 @@ void main(void) {
 		var pr = new J3D.Shader("Paper", v, f);
 		pr.colorTexture = new J3D.Texture("models/textures/firetruck1.jpg");
 
-		pr.setup = function(mesh, shader, lights, camera) {
+		pr.setup = function(mesh, shader, camera) {
 			gl.uniform2fv(shader.uniforms.uBounds, [-400, 800]);
 			
 			if (properties.animate) {

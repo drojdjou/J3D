@@ -134,6 +134,8 @@ J3D.Engine.prototype.renderObject = function(t) {
 	gl.uniform3fv(s.uniforms.uEyePosition, this.camera.transform.worldPosition.xyz());
 	
 	gl.uniform4fv(s.uniforms.uTileOffset, t.getTileOffset());
+	
+	J3D.ShaderUtil.setLights(s, this._lights);
 
 	for(var i = 0; i < t.geometry.arrays.length; i++) {
 		var vbo = t.geometry.arrays[i];	
@@ -144,7 +146,7 @@ J3D.Engine.prototype.renderObject = function(t) {
 	}
 		
 	// Setup renderers custom uniforms and attributes
-	t.renderer.setup(t.geometry, s, this._lights, this.camera, t);
+	t.renderer.setup(t.geometry, s, this.camera, t);
 
 	var cull = t.renderer.cullFace || gl.BACK;			
 	gl.cullFace(cull);

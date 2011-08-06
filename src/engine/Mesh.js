@@ -1,7 +1,7 @@
 /*
  *  A Mesh is a structured geometry coming from and external source (either a JSON file or generated with code)
  *  
- *  Typically a Mesh is designed to hold data about 3D objects. It has a primary set of attributes that will be interpeted by name:
+ *  Typically a Mesh is designed to hold data about 3D objects. It has a primary set of attributes that will be interpreted by name:
  *  vertices (3 x float), colors (4 x float), normals (3 x float), uv1 (2 x float), uv2 (2 x float) - none is mandatory.
  * 
  *  If an attribute named "tris" is present it will be interpreted as the elements array.
