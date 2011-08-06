@@ -1,4 +1,4 @@
-//# DefaultVertex
+//# BasicFilterVertex
 attribute vec2 aVertexPosition;
 attribute vec2 aTextureCoord;
 

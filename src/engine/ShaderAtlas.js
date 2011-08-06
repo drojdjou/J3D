@@ -1,20 +1,27 @@
-J3D.ShaderSource = {};
-
 J3D.ShaderAtlas = function(){
 	this.shaders = {};
 	this.programs = {};
-	
 	this.shaderCount = 0;
 }
 
-J3D.ShaderAtlas.prototype.compileShaderSource = function(name, src, type){
+J3D.ShaderAtlas.prototype.compileShaderSource = function(name, src, type, isFilter){
 	var isrc;
 	
-	if(type == gl.VERTEX_SHADER) {
-		isrc = J3D.ShaderSource.VertexInclude + J3D.ShaderSource.CommonInclude + src;
-	} else {
-		isrc = J3D.ShaderSource.CommonInclude + src;
-	}
+	if(!isFilter) {
+		if (type == gl.VERTEX_SHADER) {
+			isrc = J3D.ShaderSource.VertexInclude + J3D.ShaderSource.CommonInclude + src;
+		}
+		else {
+			isrc = J3D.ShaderSource.CommonInclude + src;
+		}
+	} else {	
+		if (type == gl.FRAGMENT_SHADER) {
+			isrc = J3D.ShaderSource.CommonFilterInclude + src;
+		}
+		else {
+			isrc = src;
+		}
+	}	
 	
 	var shader = gl.createShader(type);
 	gl.shaderSource(shader, isrc);
@@ -72,6 +79,16 @@ J3D.ShaderAtlas.prototype.getShader = function (renderer) {
 	if(!this.shaders[renderer.name]) {
 		this.compileShaderSource(renderer.name + "Vert", renderer.vertSource(), gl.VERTEX_SHADER);
 		this.compileShaderSource(renderer.name + "Frag", renderer.fragSource(), gl.FRAGMENT_SHADER);
+		this.linkShader(renderer);
+	}
+	
+	return this.shaders[renderer.name];
+}
+
+J3D.ShaderAtlas.prototype.getFilter = function (renderer) {
+	if(!this.shaders[renderer.name]) {
+		this.compileShaderSource(renderer.name + "Vert", renderer.vertSource(), gl.VERTEX_SHADER, true);
+		this.compileShaderSource(renderer.name + "Frag", renderer.fragSource(), gl.FRAGMENT_SHADER, true);
 		this.linkShader(renderer);
 	}
 	

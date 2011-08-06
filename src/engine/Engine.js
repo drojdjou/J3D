@@ -28,7 +28,6 @@ J3D.Engine = function(webglSettings) {
 	gl.frontFace(gl.CW);
 
 	this.shaderAtlas = new J3D.ShaderAtlas();
-	this.effectAtlas = new J3D.EffectAtlas();
 	this.scene = new J3D.Scene();
 	this.camera;
 	
@@ -39,8 +38,6 @@ J3D.Engine = function(webglSettings) {
 	this._lights = [];
 	
 	this.gl = gl;
-	
-	this.postprocess = new J3D.Postprocess();
 }
 
 J3D.Engine.prototype.setClearColor = function(c) {
@@ -50,17 +47,9 @@ J3D.Engine.prototype.setClearColor = function(c) {
 J3D.Engine.prototype.render = function(){
 	J3D.Time.tick();
 	
-	// 1. Setup post-processing effect(s) - if any
-	this.postprocess.prepare(this.camera);
-	
-	// 2. Clear buffers on screen or in current FBO
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 	
-	// 3-9
 	if(this.scene.numChildren > 0) this.renderScene();
-
-	// 10. Apply post-processing effect(s) - if any
-	this.postprocess.apply();
 }
 
 J3D.Engine.prototype.renderScene = function(){

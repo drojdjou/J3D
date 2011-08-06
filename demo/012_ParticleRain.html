@@ -79,7 +79,7 @@
 	}
 </script>
 
-<script id="rainFilter" type="x-shader/x-filter">
+<script id="rainFragment" type="x-shader/x-filter">
 	varying vec4 vParticle;
 	varying float illum;
 
@@ -91,7 +91,7 @@
 
 <script>
 	
-	var engine, elephant, sun;
+	var engine, elephant, sun, post;
 	var mx, my = 0;
 	
 	function init() {
@@ -118,17 +118,22 @@
 		camera.transform.position.z = 14;
 		camera.transform.position.y = -1.2;
 		
-		camera.filter = new J3D.Filter("RainFilter", 
-			document.getElementById("rainFilter").firstChild.nodeValue, 
-			document.getElementById("rainVertex").firstChild.nodeValue);
+		post = new J3D.Postprocess(engine);
+		post.drawMode = gl.POINTS;
+		
+		post.filter = new J3D.Shader("RainFilter", 
+			document.getElementById("rainVertex").firstChild.nodeValue, 
+			document.getElementById("rainFragment").firstChild.nodeValue
+		);
 		
 		var cd = [];
 		for(var i = 0; i < 50000; i++) {
 			cd.push(Math.random(), Math.random(), Math.random() * Math.PI, Math.random() * Math.PI);
 		}
 		
-		engine.postprocess.addCustomAttribute("aParticle", new Float32Array(cd), 4, true);
-		engine.postprocess.drawMode = gl.POINTS;
+		post.geometry = new J3D.Geometry();
+		post.geometry.addArray("aParticle", new Float32Array(cd), 4);
+		
 
 		engine.camera = camera;
 		
@@ -151,7 +156,9 @@
 		elephant.rotation.y += mx * 0.1;
 		
 		//elephant.rotation.y -= Math.PI * J3D.Time.deltaTime / 12000;
-		engine.render();
+		
+		post.render();
+		
 		requestAnimationFrame(draw);	
 	}
 	

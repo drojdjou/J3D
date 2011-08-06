@@ -18,6 +18,13 @@ J3D.Primitive.Cube = function(w, h, d) {
 	return new J3D.Mesh(c);
 }
 
+J3D.Primitive.FullScreenQuad = function() {
+	var c = new J3D.Geometry();
+	c.addArray("aVertexPosition", new Float32Array([-1, 1,     1, 1,     1, -1,     -1, 1,     1, -1,     -1, -1]), 2);
+	c.addArray("aTextureCoord", new Float32Array([0, 1,     1, 1,     1, 0,     0, 1,     1, 0,    0, 0]), 2);
+	return c;
+}
+
 J3D.Primitive.Plane = function(w, h, wd, hd) {
 	var c = J3D.Primitive.getEmpty();
 	w = w * 0.5;

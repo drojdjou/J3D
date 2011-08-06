@@ -7,8 +7,7 @@
  *  If an attribute named "tris" is present it will be interpreted as the elements array.
  *  
  *  WARNING: Other attributes in the "source" will be ignored.
- *  
- *  Mesh extends Geometry, so more attributes can be added if necessary.
+ *  Mesh extends Geometry, so more attributes can be added manually if necessary.
  */
 J3D.Mesh = function(source){
 	J3D.Geometry.call( this );
@@ -63,8 +62,8 @@ J3D.Mesh = function(source){
 		}
 		normals = new Float32Array(tn);
 		
-		this.replaceArrayData(this.vertexPositionBuffer, vertices);
-		this.replaceArrayData(this.vertexNormalBuffer, normals);
+		this.replaceArray(this.vertexPositionBuffer, vertices);
+		this.replaceArray(this.vertexNormalBuffer, normals);
 		
 		return this;
 	}

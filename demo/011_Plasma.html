@@ -9,7 +9,6 @@
 <link rel="stylesheet" href="common/common.css"/>
 <script type="text/javascript" src="common/common.js"></script>
 
-<!--
 <script type="text/javascript" src="../lib/glMatrix.js"></script>
 <script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
 <script type="text/javascript" src="../src/J3D.js"></script>
@@ -20,30 +19,29 @@
 <script type="text/javascript" src="../src/engine/Engine.js"></script>
 <script type="text/javascript" src="../src/engine/Camera.js"></script>
 <script type="text/javascript" src="../src/engine/Light.js"></script>
+<script type="text/javascript" src="../src/engine/Geometry.js"></script>
 <script type="text/javascript" src="../src/engine/Mesh.js"></script>
 <script type="text/javascript" src="../src/engine/Scene.js"></script>
 <script type="text/javascript" src="../src/engine/Loader.js"></script>
-<script type="text/javascript" src="../src/engine/Filter.js"></script>
 <script type="text/javascript" src="../src/engine/ShaderAtlas.js"></script>
-<script type="text/javascript" src="../src/engine/EffectAtlas.js"></script>
 <script type="text/javascript" src="../src/engine/Texture.js"></script>
 <script type="text/javascript" src="../src/engine/Cubemap.js"></script>
 <script type="text/javascript" src="../src/engine/Transform.js"></script>
 <script type="text/javascript" src="../src/engine/Postprocess.js"></script>
+<script type="text/javascript" src="../src/engine/Primitives.js"></script>
 <script type="text/javascript" src="../src/engine/FrameBuffer.js"></script>
-<script type="text/javascript" src="../src/effects/EffectSource.js"></script>
-<script type="text/javascript" src="../src/renderers/ShaderSource.js"></script>
+<script type="text/javascript" src="../src/engine/ShaderSource.js"></script>
+<script type="text/javascript" src="../src/engine/Shader.js"></script>
 <script type="text/javascript" src="../src/renderers/Phong.js"></script>
 <script type="text/javascript" src="../src/renderers/Gouraud.js"></script>
-<script type="text/javascript" src="../src/renderers/Normal2Color.js"></script>
 <script type="text/javascript" src="../src/renderers/Reflective.js"></script>
-<script type="text/javascript" src="../src/renderers/Glass.js"></script>
 <script type="text/javascript" src="../src/renderers/Skybox.js"></script>
-<script type="text/javascript" src="../src/renderers/Shader.js"></script>
 <script type="text/javascript" src="../src/util/Time.js"></script>
--->
+<script type="text/javascript" src="../src/util/ShaderUtil.js"></script>
 
+<!--
 <script type="text/javascript" src="../build/j3d.js"></script>
+-->
 
 
 <script id="plasmaShader" type="x-shader/x-filter">
@@ -70,7 +68,7 @@
 
 <script>
 	
-	var engine, ctex, texture, texture2, texture3;
+	var engine, ctex, texture, texture2, texture3, post;
 	
 	function init() {
 		if(!checkWebGL()) return;
@@ -84,14 +82,16 @@
 		ctex = texture;
 
 		var camera = new J3D.Camera();
-		camera.filter = new J3D.Filter("PlasmaFilter", document.getElementById("plasmaShader").firstChild.nodeValue);
-		camera.filter.setup = function(program) {}
-		camera.filter.prepare = function(postprocess, program) {}
-		camera.filter.apply = function(postprocess, program) {
-			postprocess.drawQuad(ctex.tex, program, null); // <- null = draw to screen
+		engine.camera = camera;
+		
+		post = new J3D.Postprocess(engine);
+		post.filter = new J3D.Shader("PlasmaFilter", J3D.ShaderSource.BasicFilterVertex, document.getElementById("plasmaShader").firstChild.nodeValue);
+		
+		post.render = function() {
+			J3D.Time.tick();
+			this.renderEffect(ctex.tex);
 		}
 
-		engine.camera = camera;
 		draw();
 	}
 	
@@ -102,7 +102,7 @@
 		if(document.getElementById("rb").checked) ctex = texture2;
 		if(document.getElementById("rc").checked) ctex = texture3;
 		
-		engine.render();
+		post.render();
 	}
 	
 </script>

@@ -76,7 +76,7 @@
 	var lightmaps, nolightmaps;
 	var showmaps = true;
 	var moveLeft = 0, moveForward = 0;
-	var filter;
+	var post;
 	
 	function init() {
 		if(!checkWebGL()) return;
@@ -85,7 +85,8 @@
 		
 		var path = "models/008/";
 		
-		filter = new J3D.Filter("BasicFilter", document.getElementById("basicFilter").firstChild.nodeValue);
+		post = new J3D.Postprocess(engine);
+		post.filter = new J3D.Shader("BasicFilter", J3D.ShaderSource.BasicFilterVertex, document.getElementById("basicFilter").firstChild.nodeValue);
 		
 		lightmaps = [];
 		nolightmaps = [];
@@ -163,8 +164,6 @@
 		
 		J3D.LightmapAtlas = (document.getElementById("toglm").checked) ? nolightmaps : lightmaps;
 		
-		engine.camera.filter = (document.getElementById("dizzy").checked) ? filter : null;
-		
 		fps.position = fps.position.add( fps.forward().mul(moveForward).add( fps.left().mul(moveLeft) ));
 		
 		// Poor man's collision detection ;) 
@@ -176,7 +175,8 @@
 		fps.rotation.y = -mx * Math.PI * 2;
 		eye.rotation.x = -my * Math.PI * .25;
 		
-		engine.render();
+		if(document.getElementById("dizzy").checked) post.render();
+		else engine.render();
 	}
 		
 </script>

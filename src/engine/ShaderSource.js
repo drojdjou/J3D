@@ -1,6 +1,27 @@
-// File generated with src/shaders/buildShaders.py. Do not edit //
+// File generated with util/buildShaders.py. Do not edit //
 
 J3D.ShaderSource = {};
+
+J3D.ShaderSource.BasicFilterVertex = [
+	"attribute vec2 aVertexPosition;",
+	"attribute vec2 aTextureCoord;",
+
+	"varying vec2 vTextureCoord;",
+
+	"void main(void) {",
+	"gl_Position = vec4(aVertexPosition, 0.0, 1.0);",
+	"vTextureCoord = aTextureCoord;",
+	"}",
+
+""].join("\n");
+
+J3D.ShaderSource.CommonFilterInclude = [
+	"#ifdef GL_ES",
+	"precision highp float;",
+	"#endif",
+
+	"uniform float uTime;",
+""].join("\n");
 
 J3D.ShaderSource.CommonInclude = [
 	"#ifdef GL_ES",
@@ -331,6 +352,18 @@ J3D.ShaderSource.VertexInclude = [
 	"ip.y = op.x * sin(-a) + op.y * cos(-a);",
 
 	"return ip;",
+	"}",
+""].join("\n");
+
+J3D.ShaderSource.Vignette = [
+	"uniform sampler2D uTexture;",
+	"varying vec2 vTextureCoord;",
+
+	"void main(void) {",
+	"vec2 m = vec2(0.5, 0.5);",
+	"float d = distance(m, vTextureCoord) * 1.0;",
+	"vec3 c = texture2D(uTexture, vTextureCoord).rgb * (1.0 - d * d);",
+	"gl_FragColor = vec4(c.rgb, 1.0);",
 	"}",
 ""].join("\n");
 

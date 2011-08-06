@@ -19,26 +19,23 @@
 <script type="text/javascript" src="../src/engine/Engine.js"></script>
 <script type="text/javascript" src="../src/engine/Camera.js"></script>
 <script type="text/javascript" src="../src/engine/Light.js"></script>
+<script type="text/javascript" src="../src/engine/Geometry.js"></script>
 <script type="text/javascript" src="../src/engine/Mesh.js"></script>
 <script type="text/javascript" src="../src/engine/Scene.js"></script>
 <script type="text/javascript" src="../src/engine/Loader.js"></script>
-<script type="text/javascript" src="../src/engine/Filter.js"></script>
 <script type="text/javascript" src="../src/engine/ShaderAtlas.js"></script>
-<script type="text/javascript" src="../src/engine/EffectAtlas.js"></script>
 <script type="text/javascript" src="../src/engine/Texture.js"></script>
 <script type="text/javascript" src="../src/engine/Cubemap.js"></script>
 <script type="text/javascript" src="../src/engine/Transform.js"></script>
 <script type="text/javascript" src="../src/engine/Postprocess.js"></script>
+<script type="text/javascript" src="../src/engine/Primitives.js"></script>
 <script type="text/javascript" src="../src/engine/FrameBuffer.js"></script>
-<script type="text/javascript" src="../src/effects/EffectSource.js"></script>
-<script type="text/javascript" src="../src/renderers/ShaderSource.js"></script>
+<script type="text/javascript" src="../src/engine/ShaderSource.js"></script>
+<script type="text/javascript" src="../src/engine/Shader.js"></script>
 <script type="text/javascript" src="../src/renderers/Phong.js"></script>
 <script type="text/javascript" src="../src/renderers/Gouraud.js"></script>
-<script type="text/javascript" src="../src/renderers/Normal2Color.js"></script>
 <script type="text/javascript" src="../src/renderers/Reflective.js"></script>
-<script type="text/javascript" src="../src/renderers/Glass.js"></script>
 <script type="text/javascript" src="../src/renderers/Skybox.js"></script>
-<script type="text/javascript" src="../src/renderers/Shader.js"></script>
 <script type="text/javascript" src="../src/util/Time.js"></script>
 <script type="text/javascript" src="../src/util/ShaderUtil.js"></script>
 -->
@@ -68,6 +65,7 @@
 <script>
 	
 	var engine, cube, pp, sun;
+	var filter, post;
 	
 	function init() {
 		if(!checkWebGL()) return;
@@ -94,10 +92,9 @@
 		
 		var camera = new J3D.Camera();
 		camera.transform.position.z = 4;
-		
-		camera.filter = new J3D.Filter("BasicFilter", document.getElementById("basicFilter").firstChild.nodeValue);
-		
-		
+
+		post = new J3D.Postprocess(engine);
+		post.filter = new J3D.Shader("BasicFilter", J3D.ShaderSource.BasicFilterVertex, document.getElementById("basicFilter").firstChild.nodeValue);
 
 		engine.camera = camera;
 		
@@ -111,7 +108,8 @@
 		
 		cube.rotation.x += Math.PI * J3D.Time.deltaTime / 12000;
 		cube.rotation.y -= Math.PI * J3D.Time.deltaTime / 6000;
-		engine.render();
+		
+		post.render();
 	}
 	
 </script>

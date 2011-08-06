@@ -37,12 +37,6 @@ J3D.Camera = function(params){
 	this.inverseMat = mat4.create();
 	
 	this.transform = new J3D.Transform();
-	
-	this.filter = null;
-}
-
-J3D.Camera.prototype.hasFilters = function(){
-	return this.filter != null;
 }
 
 J3D.Camera.prototype.update = function(){
