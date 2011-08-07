@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="common/common.css"/>
 <script type="text/javascript" src="common/common.js"></script>
 
-
+<!--
 <script type="text/javascript" src="../lib/glMatrix.js"></script>
 <script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
 <script type="text/javascript" src="../src/J3D.js"></script>
@@ -39,10 +39,10 @@
 <script type="text/javascript" src="../src/engine/Shader.js"></script>
 <script type="text/javascript" src="../src/util/Time.js"></script>
 <script type="text/javascript" src="../src/util/ShaderUtil.js"></script>
-
-<!--	
-<script type="text/javascript" src="../build/j3d.js"></script>
 -->
+	
+<script type="text/javascript" src="../build/j3d.js"></script>
+
 
 
 <script>
@@ -68,9 +68,8 @@
 		cube.renderer.color = new J3D.Color(1,0,0,1);
 		
 		camera = new J3D.Transform();
-		camera.position.z = 4;
 		camera.camera = new J3D.Camera();
-		
+		camera.position.z = 4;
 		engine.camera = camera;
 
 		engine.scene.add(camera, cube, light);
