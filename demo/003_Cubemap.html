@@ -58,12 +58,13 @@
 		engine = new J3D.Engine();
 		engine.setClearColor(J3D.Color.white);
 
-		camera = new J3D.Camera({far: 100});
-		camera.transform.position.z = 5;	
+		camera = new J3D.Transform();
+		camera.camera = new J3D.Camera({far: 100});
+		camera.position.z = 5;	
 		engine.camera = camera;	
 		
 		root = new J3D.Transform();
-		root.add(camera.transform);
+		root.add(camera);
 		engine.scene.add(root);
 
 		cubemap = new J3D.Cubemap({

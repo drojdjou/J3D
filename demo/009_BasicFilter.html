@@ -90,16 +90,16 @@
 		cube.renderer.specularIntensity = 10;
 		cube.renderer.shininess = 32;
 		
-		var camera = new J3D.Camera();
-		camera.transform.position.z = 4;
+		var camera = new J3D.Transform();
+		camera.camera = new J3D.Camera();
+		camera.position.z = 4;
+		engine.camera = camera;
+		
+		engine.scene.add(camera, cube, sun);
 
 		post = new J3D.Postprocess(engine);
 		post.filter = new J3D.Shader("BasicFilter", J3D.ShaderSource.BasicFilterVertex, document.getElementById("basicFilter").firstChild.nodeValue);
 
-		engine.camera = camera;
-		
-		engine.scene.add(camera.transform, cube, sun);
-		
 		draw();
 	}
 	

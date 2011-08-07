@@ -114,9 +114,11 @@
 		sun.light.direction = new v3(-1, 0, -1).norm();
 		
 
-		var camera = new J3D.Camera();
-		camera.transform.position.z = 14;
-		camera.transform.position.y = -1.2;
+		var camera = new J3D.Transform(); 
+		camera.camera = new J3D.Camera();
+		camera.position.z = 14;
+		camera.position.y = -1.2;
+		engine.camera = camera;
 		
 		post = new J3D.Postprocess(engine);
 		post.drawMode = gl.POINTS;
@@ -133,11 +135,9 @@
 		
 		post.geometry = new J3D.Geometry();
 		post.geometry.addArray("aParticle", new Float32Array(cd), 4);
-		
 
-		engine.camera = camera;
+		engine.scene.add(camera, elephant, sun);
 		
-		engine.scene.add(camera.transform, elephant, sun);
 		document.onmousemove = onMouseMove;
 		
 		draw();

@@ -46,8 +46,6 @@ J3D.Loader.parseJSONScene = function(jscene, jmeshes, engine) {
 		var cm = jscene.cameras[cms];
 		cm = new J3D.Camera({fov:cm.fov, near:cm.near, far:cm.far});
 		jscene.cameras[cms] = cm;
-		// Thus the last camera on the list wins... (TODO: make it more predictable)
-		engine.camera = cm;
 	}
 	
 	for(var i = 0; i < jscene.transforms.length; i++) {
@@ -61,8 +59,9 @@ J3D.Loader.parseJSONScene = function(jscene, jmeshes, engine) {
 		if(t.light) t.light = jscene.lights[t.light];
 		
 		if (t.camera) {
-			jscene.cameras[t.camera].transform = t;
+			//jscene.cameras[t.camera].transform = t;
 			t.camera = jscene.cameras[t.camera];
+			engine.camera = t;
 		}
 
 		jscene.transforms[i] = t;

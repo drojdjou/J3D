@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="common/common.css"/>
 <script type="text/javascript" src="common/common.js"></script>
 
+<!--
 <script type="text/javascript" src="../lib/glMatrix.js"></script>
 <script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
 <script type="text/javascript" src="../src/J3D.js"></script>
@@ -38,10 +39,10 @@
 <script type="text/javascript" src="../src/renderers/Skybox.js"></script>
 <script type="text/javascript" src="../src/util/Time.js"></script>
 <script type="text/javascript" src="../src/util/ShaderUtil.js"></script>
-
-<!--
-<script type="text/javascript" src="../build/j3d.js"></script>
 -->
+
+<script type="text/javascript" src="../build/j3d.js"></script>
+
 
 
 <script id="plasmaShader" type="x-shader/x-filter">
@@ -81,12 +82,8 @@
 		
 		ctex = texture;
 
-		var camera = new J3D.Camera();
-		engine.camera = camera;
-		
-		post = new J3D.Postprocess(engine);
+		post = new J3D.Postprocess();
 		post.filter = new J3D.Shader("PlasmaFilter", J3D.ShaderSource.BasicFilterVertex, document.getElementById("plasmaShader").firstChild.nodeValue);
-		
 		post.render = function() {
 			J3D.Time.tick();
 			this.renderEffect(ctex.tex);

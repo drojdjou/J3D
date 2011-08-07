@@ -95,11 +95,12 @@
 		cube2.geometry = cubemesh;
 		cube3.geometry = cubemesh;
 		
-		var camera = new J3D.Camera({ fov:30 });
-		camera.transform.position.z = 6;
+		var camera = new J3D.Transform();
+		camera.camera = new J3D.Camera({ fov:30 });
+		camera.position.z = 6;
 		engine.camera = camera;
 
-		engine.scene.add(camera.transform, sun, cube1, cube2, cube3);
+		engine.scene.add(camera, sun, cube1, cube2, cube3);
 
 		draw();
 	}

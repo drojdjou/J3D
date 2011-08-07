@@ -130,10 +130,11 @@ void main(void) {
 		engine.setClearColor(new J3D.Color(.1, .1, .1, 1));
 		engine.scene.ambient = new J3D.Color(.8, .8, .8, 1);
 
-		var camera = new J3D.Camera({ far: 10000 });
-		camera.transform.position.z = 1200;
+		var camera = new J3D.Transform();
+		camera.camera = new J3D.Camera({ far: 10000 });
+		camera.position.z = 1200;
 		engine.camera = camera;
-		engine.scene.add(camera.transform);
+		engine.scene.add(camera);
 
 		var v = document.getElementById("paperVertex").firstChild.nodeValue;
 		var f = document.getElementById("paperFragment").firstChild.nodeValue;

@@ -81,18 +81,16 @@
 		elephant.renderer.shininess = 20;
 		elephant.renderer.rampTexture = ramp1;
 		
-		var camera = new J3D.Camera();
-		camera.transform.position.z = 12;
-		camera.transform.position.y = -1.2;
+		var camera = new J3D.Transform();
+		camera.camera = new J3D.Camera();
+		camera.position.z = 12;
+		camera.position.y = -1.2;
+		engine.camera = camera;
+		engine.scene.add(camera, elephant, sun);
 		
 		post = new J3D.Postprocess(engine);
 		post.filter = new J3D.Shader("VignetteFilter", J3D.ShaderSource.BasicFilterVertex, J3D.ShaderSource.Vignette);
 
-		
-		engine.camera = camera;
-		
-		engine.scene.add(camera.transform, elephant, sun);
-		
 		draw();
 	}
 	

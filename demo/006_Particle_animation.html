@@ -101,10 +101,11 @@
 		
 		engine = new J3D.Engine();
 
-		camera = new J3D.Camera();
-		camera.transform.position.z = 100;	
+		camera = new J3D.Transform();
+		camera.camera = new J3D.Camera();
+		camera.position.z = 100;	
 		engine.camera = camera;	
-		engine.scene.add(camera.transform);
+		engine.scene.add(camera);
 
 		stars = new J3D.Transform();	
 		

@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="common/common.css"/>
 <script type="text/javascript" src="common/common.js"></script>
 
-<!--
+
 <script type="text/javascript" src="../lib/glMatrix.js"></script>
 <script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
 <script type="text/javascript" src="../src/J3D.js"></script>
@@ -23,74 +23,64 @@
 <script type="text/javascript" src="../src/engine/Mesh.js"></script>
 <script type="text/javascript" src="../src/engine/Scene.js"></script>
 <script type="text/javascript" src="../src/engine/Loader.js"></script>
-<script type="text/javascript" src="../src/engine/Filter.js"></script>
 <script type="text/javascript" src="../src/engine/ShaderAtlas.js"></script>
-<script type="text/javascript" src="../src/engine/EffectAtlas.js"></script>
 <script type="text/javascript" src="../src/engine/Texture.js"></script>
 <script type="text/javascript" src="../src/engine/Cubemap.js"></script>
 <script type="text/javascript" src="../src/engine/Transform.js"></script>
 <script type="text/javascript" src="../src/engine/Postprocess.js"></script>
-<script type="text/javascript" src="../src/engine/FrameBuffer.js"></script>
 <script type="text/javascript" src="../src/engine/Primitives.js"></script>
-<script type="text/javascript" src="../src/effects/EffectSource.js"></script>
-<script type="text/javascript" src="../src/renderers/ShaderSource.js"></script>
+<script type="text/javascript" src="../src/engine/FrameBuffer.js"></script>
+<script type="text/javascript" src="../src/engine/ShaderSource.js"></script>
 <script type="text/javascript" src="../src/renderers/Phong.js"></script>
 <script type="text/javascript" src="../src/renderers/Toon.js"></script>
 <script type="text/javascript" src="../src/renderers/Gouraud.js"></script>
 <script type="text/javascript" src="../src/renderers/Reflective.js"></script>
 <script type="text/javascript" src="../src/renderers/Skybox.js"></script>
-<script type="text/javascript" src="../src/renderers/Shader.js"></script>
+<script type="text/javascript" src="../src/engine/Shader.js"></script>
 <script type="text/javascript" src="../src/util/Time.js"></script>
 <script type="text/javascript" src="../src/util/ShaderUtil.js"></script>
--->
 
+<!--	
 <script type="text/javascript" src="../build/j3d.js"></script>
+-->
 
 
 <script>
 	
-	var engine, cube;
+	var engine, cube, light;
 	
-	function init() {
+	window.onload = function() {
 		
 		if(!checkWebGL()) return;
 		
-		// Always start by creating an instance of the engine
 		engine = new J3D.Engine();	
-		// Choose the clear color of the viewport (default is black)
 		engine.setClearColor(J3D.Color.white);
+		engine.scene.ambient = new J3D.Color(.5, .5, .5, 1);
 		
-		// Transforms are basic building blocks they define points in space with a position, rotation and scale
+		light = new J3D.Transform();
+		light.light = new J3D.Light(J3D.DIRECT);
+		light.light.color = new J3D.Color(.5, .5, .5, 1);
+		light.light.direction = new v3(1, 0, 1).norm();
+		
 		cube = new J3D.Transform();
-		cube.rotation = new v3(.8, .8, .8); // All rotations are in radians
+		cube.geometry = J3D.Primitive.Cube(1, 1, 1);		
+		cube.renderer = new J3D.Phong();
+		cube.renderer.color = new J3D.Color(1,0,0,1);
 		
-		// A transform has no visual representation until we add two things to it:
-		// 1. A mesh to define the shape of the object	
-		cube.geometry = J3D.Primitive.Cube(1, 1, 1);	
+		camera = new J3D.Transform();
+		camera.position.z = 4;
+		camera.camera = new J3D.Camera();
 		
-		// 2. A renderer to define the way it looks 
-		cube.renderer = new J3D.Shader("Normal2Color", J3D.ShaderSource.Normal2ColorVertex, J3D.ShaderSource.Normal2ColorFragment);
-		
-		// Next, create a camera and tell the engine to use this camera as point of view
-		var camera = new J3D.Camera();
-		camera.transform.position.z = 4;
 		engine.camera = camera;
 
-		// Add objects to the scene
-		engine.scene.add(camera.transform, cube);
-
+		engine.scene.add(camera, cube, light);
 		draw();
 	}
 	
 	function draw() {
-		// Use requestAnimationFrame to call draw() repeatedly
 		requestAnimationFrame(draw);
-
-		// Time.deltaTime = time since last frame was rendered in seconds
 		cube.rotation.x += Math.PI * J3D.Time.deltaTime / 6000;
 		cube.rotation.y += Math.PI/2 * J3D.Time.deltaTime / 3000;
-		
-		// Render the scene, yay!
 		engine.render();
 	}
 	
@@ -98,10 +88,10 @@
 
 </head> 
 
-<body onload="init();">
+<body>
 	
 	<script>
-		setLabels("000. Hello cube");
+		setLabels("000. Hello cube", "Check <a href='https://github.com/drojdjou/J3D/wiki/How-to-create-a-cube'>here for a quick tutorial</a> on how to build this");
 	</script>
 <script type="text/javascript">
 

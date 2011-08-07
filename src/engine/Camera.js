@@ -32,16 +32,7 @@ J3D.Camera = function(params){
 	if(params.type == J3D.PERSPECTIVE) 
 		this.projectionMat.perspective(params.fov, params.aspect, params.near, params.far);
 	else 
-		this.projectionMat.ortho(params.left, params.right, params.top, params.bottom, params.near, params.far);
-	
-	this.inverseMat = mat4.create();
-	
-	this.transform = new J3D.Transform();
-}
-
-J3D.Camera.prototype.update = function(){
-	mat4.inverse(this.transform.globalMatrix, this.inverseMat);
-	this.transform.updateWorldPosition();
+		this.projectionMat.ortho(params.left, params.right, params.top, params.bottom, params.near, params.far);	
 }
 
 

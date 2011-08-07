@@ -29,7 +29,7 @@ J3D.Engine = function(webglSettings) {
 
 	this.shaderAtlas = new J3D.ShaderAtlas();
 	this.scene = new J3D.Scene();
-	this.camera;
+	this.camera; // J3D.Transform
 	
 	this.canvas = cv;
 	
@@ -67,7 +67,7 @@ J3D.Engine.prototype.renderScene = function(){
 	}
 	
 	// 5. Calculate camera inverse matrix and it's world position
-	this.camera.update();
+	this.camera.updateInverseMat();
 	
 	// 6. Render sky box (if any)
 	if(this.scene.skybox) {
@@ -114,13 +114,13 @@ J3D.Engine.prototype.renderObject = function(t) {
 	// Setup standard uniforms and attributes
 	gl.uniform1f(s.uniforms.uTime, J3D.Time.time);
 	
-	gl.uniformMatrix4fv(s.uniforms.pMatrix, false, this.camera.projectionMat.toArray() );
+	gl.uniformMatrix4fv(s.uniforms.pMatrix, false, this.camera.camera.projectionMat.toArray() );
 	gl.uniformMatrix4fv(s.uniforms.vMatrix, false, this.camera.inverseMat);
 	gl.uniformMatrix4fv(s.uniforms.mMatrix, false, t.globalMatrix);
 	gl.uniformMatrix3fv(s.uniforms.nMatrix, false, t.normalMatrix);
 	
 	gl.uniform3fv(s.uniforms.uAmbientColor, this.scene.ambient.rgb());
-	gl.uniform3fv(s.uniforms.uEyePosition, this.camera.transform.worldPosition.xyz());
+	gl.uniform3fv(s.uniforms.uEyePosition, this.camera.worldPosition.xyz());
 	
 	gl.uniform4fv(s.uniforms.uTileOffset, t.getTileOffset());
 	
@@ -135,7 +135,7 @@ J3D.Engine.prototype.renderObject = function(t) {
 	}
 		
 	// Setup renderers custom uniforms and attributes
-	t.renderer.setup(t.geometry, s, this.camera, t);
+	t.renderer.setup(t.geometry, s, this.camera.camera, t);
 
 	var cull = t.renderer.cullFace || gl.BACK;			
 	gl.cullFace(cull);

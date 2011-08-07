@@ -65,9 +65,10 @@
 		
 		// Setup camera
 
-		camera = new J3D.Camera();
-		camera.transform.position.z = -4;
-		camera.transform.rotation.y = Math.PI;
+		camera = new J3D.Transform();
+		camera.camera = new J3D.Camera();
+		camera.position.z = -4;
+		camera.rotation.y = Math.PI;
 		engine.camera = camera;
 		
 		// Setup lights
@@ -93,7 +94,7 @@
 		
 		// Add lights and camera
 		
-		scene.add(camera.transform);
+		scene.add(camera);
 		scene.add(light1);
 		scene.add(light2);
 		scene.add(light3);

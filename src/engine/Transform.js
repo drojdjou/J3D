@@ -131,3 +131,10 @@ J3D.Transform.prototype.find = function(p) {
 	return null;
 }
 
+// Used if transform is a camera
+J3D.Transform.prototype.updateInverseMat = function(transform) {
+	if(!this.inverseMat) this.inverseMat = mat4.create();
+	mat4.inverse(this.globalMatrix, this.inverseMat);
+	this.updateWorldPosition();
+}
+
