@@ -1,22 +1,22 @@
 var gl;
 
-J3D.Engine = function(webglSettings) {	
-	this.webglEnabled = true;
+J3D.Engine = function(canvas, j3dSettings, webglSettings) {	
+	var cv = (canvas) ? canvas : document.createElement("canvas");
 	
-	var cv;
-	var resolution = 1;
-	
-	cv = document.createElement("canvas");
-	cv.width = window.innerWidth / resolution;
-	cv.height = window.innerHeight / resolution;
-	cv.style.width = "100%";
-	cv.style.height = "100%";
-	document.body.appendChild(cv);
+	if (!canvas) {
+		var resolution = (j3dSettings && j3dSettings.resolution) ? j3dSettings.resolution : 1;
+		cv.width = window.innerWidth / resolution;
+		cv.height = window.innerHeight / resolution;
+		cv.style.width = "100%";
+		cv.style.height = "100%";
+		document.body.appendChild(cv);
+	}
 
 	try {
 		gl = cv.getContext("experimental-webgl", webglSettings);
 		gl.viewportWidth = cv.width;
 		gl.viewportHeight = cv.height;
+		console.log(cv.width + " x " + cv.height);
 	} 
 	catch (e) {
 		this.webglEnabled = false;
@@ -29,7 +29,7 @@ J3D.Engine = function(webglSettings) {
 
 	this.shaderAtlas = new J3D.ShaderAtlas();
 	this.scene = new J3D.Scene();
-	this.camera; // J3D.Transform
+	this.camera; // it is a J3D.Transform
 	
 	this.canvas = cv;
 	
