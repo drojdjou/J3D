@@ -25,7 +25,7 @@ J3D.Scene = function() {
 	this.addSkybox = function(cubemap) {
 		this.skybox = new J3D.Transform();
 		this.skybox.renderer = new J3D.Skybox();
-		this.skybox.renderer.cubemap = cubemap;
+		this.skybox.renderer.uCubemap = cubemap;
 		this.skybox.geometry = J3D.Primitive.Cube(1, 1, 1).flip();
 	}
 }

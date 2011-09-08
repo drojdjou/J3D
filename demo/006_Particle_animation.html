@@ -93,7 +93,7 @@
 </script>
 
 <script>
-	var engine, scene, stars, camera, texture;
+	var engine, stars, camera;
 	var mx, my = 0;
 
 	function init() {
@@ -105,29 +105,17 @@
 		camera.camera = new J3D.Camera();
 		camera.position.z = 100;	
 		engine.camera = camera;	
-		engine.scene.add(camera);
 
 		stars = new J3D.Transform();	
 		
-		texture = new J3D.Texture("models/textures/smoke.png"); 
-		
 		var v = document.getElementById("particleVertexShader").firstChild.nodeValue;
 		var f = document.getElementById("particleFragmentShader").firstChild.nodeValue;
-		var particleShader = new J3D.Shader("StaticParticle", v, f);
-		particleShader.drawMode = gl.POINTS;
-
-		particleShader.setup = function(mesh, shader, camera) {
-			J3D.ShaderUtil.setTexture(shader, 0, "uParticleTex", texture.tex);
-			
-			if (!isNaN(mx) && !isNaN(my)) {
-				gl.uniform4fv(shader.uniforms.uColor, [0.8, 0.3, 0.2, 1]);
-			}
-		}
-
-		stars.renderer = particleShader;
+		stars.renderer = new J3D.Shader("ParticleStream", v, f);
+		stars.renderer.drawMode = gl.POINTS;
+		stars.renderer.uColor = [0.8, 0.3, 0.2, 1];
+		stars.renderer.uParticleTex = new J3D.Texture("models/textures/smoke.png");
 
 		var a = getParticleAmount();	
-		
 		stars.geometry = new J3D.Geometry();
 		stars.geometry.addArray("aVertexPosition", distributeAngles(a), 3);
 		stars.geometry.addArray("aVertexColor", J3D.ParticleUtil.randomColors(a, 0, 1), 4);
@@ -135,7 +123,7 @@
 
 		stars.geometry.setTransparency(true, gl.SRC_ALPHA, gl.DST_ALPHA);
 			
-		engine.scene.add(stars);
+		engine.scene.add(stars, camera);
 
 		document.onmousemove = onMouseMove;
 		

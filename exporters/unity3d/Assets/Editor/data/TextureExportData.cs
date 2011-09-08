@@ -13,6 +13,7 @@ public class TextureExportData
 		if (IsImage) {
 			TextureImporter ti = (TextureImporter)AssetImporter.GetAtPath (Path);
 			ti.isReadable = true;
+			ti.textureFormat = TextureImporterFormat.ARGB32;
 		}
 	}
 	

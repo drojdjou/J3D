@@ -1,31 +1,18 @@
 J3D.Gouraud = function() {
-	this.name = "Gouraud";
-	// Parameters for Gouraud shader
-	this.color = J3D.Color.white;
-	this.colorTexture;
-	this.specularIntensity = 0;
-	this.shininess = 32;
+	this.uColor = J3D.Color.white;
+	this.uSpecularIntensity = 0;
+	this.uShininess = 0;
+	this.uColorSampler = null;
 }
 
-J3D.Gouraud.prototype.vertSource = function() {
-	return J3D.ShaderSource.GouraudVertex;
-}
+J3D.Gouraud.prototype = new J3D.Shader("Gouraud", J3D.ShaderSource.GouraudVertex, J3D.ShaderSource.GouraudFragment);
+J3D.Gouraud.prototype.constructor = J3D.Gouraud;
+J3D.Gouraud.prototype.supr = J3D.Shader.prototype;
 
-J3D.Gouraud.prototype.fragSource = function() {
-	return J3D.ShaderSource.GouraudFragment;
-}
-
-J3D.Gouraud.prototype.setup = function(mesh, shader, camera){	
-
-	gl.uniform4fv(shader.uniforms.uColor, this.color.rgba());
-	gl.uniform1f(shader.uniforms.uSpecularIntensity, this.specularIntensity);
-	gl.uniform1f(shader.uniforms.uShininess, this.shininess);
+J3D.Gouraud.prototype.setup = function(shader) {
+	this.uHasColorSampler = (this.uColorSampler != null);
 	
-	if (mesh.hasUV1 && this.colorTexture != null && this.colorTexture.tex != null) {
-		J3D.ShaderUtil.setTexture(shader, 0, "uColorSampler", this.colorTexture.tex);
-		gl.uniform1i(shader.uniforms.uHasColorSampler, true);
-	} else {
-		gl.bindTexture(gl.TEXTURE_2D, null);
-		gl.uniform1i(shader.uniforms.uHasColorSampler, false);
+	for(var s in shader.uniforms) {
+		if (this[s] != null) J3D.ShaderUtil.setUniform(s, shader, this);
 	}
 }

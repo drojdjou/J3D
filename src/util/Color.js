@@ -12,6 +12,10 @@ J3D.Color = function(r, g, b, a){
 	this.rgb = function() {
 		return [that.r, that.g, that.b];
 	}
+	
+	this.toUniform = function(){
+		return this.rgba();
+	}
 }
 
 J3D.Color.white = new J3D.Color(1,1,1,1);

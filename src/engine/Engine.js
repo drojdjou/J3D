@@ -16,7 +16,6 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
 		gl = cv.getContext("experimental-webgl", webglSettings);
 		gl.viewportWidth = cv.width;
 		gl.viewportHeight = cv.height;
-		console.log(cv.width + " x " + cv.height);
 	} 
 	catch (e) {
 		this.webglEnabled = false;
@@ -72,6 +71,7 @@ J3D.Engine.prototype.renderScene = function(){
 	// 6. Render sky box (if any)
 	if(this.scene.skybox) {
 		gl.depthMask(false);
+		this.scene.skybox.renderer.mid = this.camera.camera.near + (this.camera.camera.far-this.camera.camera.near)/2;	
 		this.renderObject(this.scene.skybox);
 		gl.depthMask(true);	
 	}
@@ -112,17 +112,29 @@ J3D.Engine.prototype.renderObject = function(t) {
 	gl.useProgram(s);
 	
 	// Setup standard uniforms and attributes
-	gl.uniform1f(s.uniforms.uTime, J3D.Time.time);
-	
-	gl.uniformMatrix4fv(s.uniforms.pMatrix, false, this.camera.camera.projectionMat.toArray() );
-	gl.uniformMatrix4fv(s.uniforms.vMatrix, false, this.camera.inverseMat);
-	gl.uniformMatrix4fv(s.uniforms.mMatrix, false, t.globalMatrix);
-	gl.uniformMatrix3fv(s.uniforms.nMatrix, false, t.normalMatrix);
-	
-	gl.uniform3fv(s.uniforms.uAmbientColor, this.scene.ambient.rgb());
-	gl.uniform3fv(s.uniforms.uEyePosition, this.camera.worldPosition.xyz());
-	
-	gl.uniform4fv(s.uniforms.uTileOffset, t.getTileOffset());
+	if(s.uniforms.uTime) 
+		gl.uniform1f(s.uniforms.uTime.location, J3D.Time.time);	
+		
+	if(s.uniforms.pMatrix)
+		gl.uniformMatrix4fv(s.uniforms.pMatrix.location, false, this.camera.camera.projectionMat.toArray() );
+		
+	if(s.uniforms.vMatrix) 	
+		gl.uniformMatrix4fv(s.uniforms.vMatrix.location, false, this.camera.inverseMat);
+		
+	if(s.uniforms.mMatrix) 
+		gl.uniformMatrix4fv(s.uniforms.mMatrix.location, false, t.globalMatrix);
+		
+	if(s.uniforms.nMatrix) 
+		gl.uniformMatrix3fv(s.uniforms.nMatrix.location, false, t.normalMatrix);
+			
+	if(s.uniforms.uAmbientColor) 
+		gl.uniform3fv(s.uniforms.uAmbientColor.location, this.scene.ambient.rgb());
+		
+	if(s.uniforms.uEyePosition) 
+		gl.uniform3fv(s.uniforms.uEyePosition.location, this.camera.worldPosition.xyz());
+			
+	if(s.uniforms.uTileOffset) 
+		gl.uniform4fv(s.uniforms.uTileOffset.location, t.getTileOffset());
 	
 	J3D.ShaderUtil.setLights(s, this._lights);
 
@@ -135,7 +147,7 @@ J3D.Engine.prototype.renderObject = function(t) {
 	}
 		
 	// Setup renderers custom uniforms and attributes
-	t.renderer.setup(t.geometry, s, this.camera.camera, t);
+	t.renderer.setup(s, t);
 
 	var cull = t.renderer.cullFace || gl.BACK;			
 	gl.cullFace(cull);

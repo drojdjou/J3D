@@ -83,16 +83,8 @@
 		
 		var v = document.getElementById("particleVertexShader").firstChild.nodeValue;
 		var f = document.getElementById("particleFragmentShader").firstChild.nodeValue;
-		var particleShader = new J3D.Shader("StaticParticle", v, f);
-		particleShader.drawMode = gl.POINTS;
-
-		particleShader.setup = function(mesh, shader, camera) {
-			if (!isNaN(mx) && !isNaN(my)) {
-				gl.uniform4fv(shader.uniforms.uColor, [1 - (mx + 1 / 2), my + 1 / 2, 1, 1]);
-			}
-		}
-
-		stars.renderer = particleShader;	
+		stars.renderer = new J3D.Shader("StaticParticle", v, f);
+		stars.renderer.drawMode = gl.POINTS;
 			
 		var a = getParticleAmount();
 		stars.geometry = new J3D.Geometry();
@@ -117,6 +109,8 @@
 	
 	function draw() {
 		requestAnimationFrame(draw);
+		
+		stars.renderer.uColor =  [1 - (mx + 1 / 2), my + 1 / 2, 1, 1];
 		
 		if (!isNaN(mx) && !isNaN(my)) {
 			stars.rotation.x += my * J3D.Time.deltaTime / 1000;

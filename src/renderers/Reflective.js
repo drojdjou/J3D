@@ -1,17 +1,4 @@
-J3D.Reflective = function() {
-	this.name = "Reflective";
-	// Parameters
-	this.cubemap;
-}
-
-J3D.Reflective.prototype.vertSource = function() {
-	return J3D.ShaderSource.ReflectiveVertex;
-}
-
-J3D.Reflective.prototype.fragSource = function() {
-	return J3D.ShaderSource.ReflectiveFragment;
-}
-
-J3D.Reflective.prototype.setup = function(mesh, shader, camera) {
-	J3D.ShaderUtil.setTextureCube(shader, 0, "uCubemap", this.cubemap.tex);
-}
+J3D.Reflective = function() {}
+J3D.Reflective.prototype = new J3D.Shader("Reflective", J3D.ShaderSource.ReflectiveVertex, J3D.ShaderSource.ReflectiveFragment);
+J3D.Reflective.prototype.constructor = J3D.Reflective;
+J3D.Reflective.prototype.supr = J3D.Shader.prototype;

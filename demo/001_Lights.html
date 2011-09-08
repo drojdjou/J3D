@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="common/common.css"/>
 <script type="text/javascript" src="common/common.js"></script>
 
-<!--
 <script type="text/javascript" src="../lib/glMatrix.js"></script>
 <script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
 <script type="text/javascript" src="../src/J3D.js"></script>
@@ -23,31 +22,26 @@
 <script type="text/javascript" src="../src/engine/Mesh.js"></script>
 <script type="text/javascript" src="../src/engine/Scene.js"></script>
 <script type="text/javascript" src="../src/engine/Loader.js"></script>
-<script type="text/javascript" src="../src/engine/Filter.js"></script>
 <script type="text/javascript" src="../src/engine/ShaderAtlas.js"></script>
-<script type="text/javascript" src="../src/engine/EffectAtlas.js"></script>
 <script type="text/javascript" src="../src/engine/Texture.js"></script>
 <script type="text/javascript" src="../src/engine/Cubemap.js"></script>
 <script type="text/javascript" src="../src/engine/Transform.js"></script>
 <script type="text/javascript" src="../src/engine/Postprocess.js"></script>
 <script type="text/javascript" src="../src/engine/Primitives.js"></script>
 <script type="text/javascript" src="../src/engine/FrameBuffer.js"></script>
-<script type="text/javascript" src="../src/effects/EffectSource.js"></script>
-<script type="text/javascript" src="../src/renderers/ShaderSource.js"></script>
+<script type="text/javascript" src="../src/engine/ShaderSource.js"></script>
+<script type="text/javascript" src="../src/engine/Shader.js"></script>
 <script type="text/javascript" src="../src/renderers/Phong.js"></script>
 <script type="text/javascript" src="../src/renderers/Toon.js"></script>
-<script type="text/javascript" src="../src/renderers/Depth.js"></script>
 <script type="text/javascript" src="../src/renderers/Gouraud.js"></script>
-<script type="text/javascript" src="../src/renderers/Normal2Color.js"></script>
 <script type="text/javascript" src="../src/renderers/Reflective.js"></script>
-<script type="text/javascript" src="../src/renderers/Glass.js"></script>
 <script type="text/javascript" src="../src/renderers/Skybox.js"></script>
-<script type="text/javascript" src="../src/renderers/Shader.js"></script>
 <script type="text/javascript" src="../src/util/Time.js"></script>
 <script type="text/javascript" src="../src/util/ShaderUtil.js"></script>
--->
 
+<!--
 <script type="text/javascript" src="../build/j3d.js"></script>
+-->
 
 
 <script>
@@ -108,22 +102,25 @@
 		
 		// Setup materials
 		
-		ctMat = new J3D.Phong();
-		ctMat.specularIntensity = 10;
-		ctMat.shininess = 32;
-		ctMat.colorTexture = new J3D.Texture("models/textures/containerbake512.jpg");
+		moMat = new J3D.Gouraud();
+		moMat.uSpecularIntensity = 1;
+		moMat.uShininess = 32;
+		moMat.uColor = new J3D.Color(.9,.9,.9,1);
+
 		
-		crMat = new J3D.Gouraud();
-		crMat.colorTexture = new J3D.Texture("models/textures/crate256.jpg");
+		ctMat = new J3D.Phong();
+		ctMat.uSpecularIntensity = 10;
+		ctMat.uShininess = 32;
+		ctMat.uColorSampler = new J3D.Texture("models/textures/containerbake512.jpg");
+		
+		crMat = new J3D.Phong();
+		crMat.uColorSampler = new J3D.Texture("models/textures/crate256.jpg");
 		
 		haMat = new J3D.Gouraud();
-		haMat.specularIntensity = 1;
-		haMat.color = new J3D.Color(1,1,1,1);
-		haMat.colorTexture = new J3D.Texture("models/textures/metalbase.jpg");
-		
-		moMat = new J3D.Gouraud();
-		moMat.specularIntensity = 1;
-		moMat.color = new J3D.Color(.9,.9,.9,1);
+		haMat.uSpecularIntensity = 1;
+		haMat.uShininess = 32;
+		haMat.uColor = new J3D.Color(1,1,1,1);
+		haMat.uColorSampler = new J3D.Texture("models/textures/metalbase.jpg");
 		
 		// Setup transforms and meshes (from JSON files above)
 

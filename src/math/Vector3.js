@@ -43,6 +43,10 @@ v3.prototype.xyz = function() {
 	return [this.x, this.y, this.z];
 }
 
+v3.prototype.toUniform = function() {
+	return this.xyz();
+}
+
 v3.add = function(a, b) {
 	var c = new v3(a.x, a.y, a.z);
 	c.x += b.x;

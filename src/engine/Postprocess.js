@@ -20,7 +20,7 @@ J3D.Postprocess.prototype.renderEffect = function(texture) {
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 	gl.useProgram(this.program);
 	
-	gl.uniform1f(this.program.uniforms.uTime, J3D.Time.time);
+	if(this.program.uniforms.uTime) gl.uniform1f(this.program.uniforms.uTime.location, J3D.Time.time);
 	J3D.ShaderUtil.setTexture(this.program, 0, "uTexture", texture);
 
 	for(var i = 0; i < this.geometry.arrays.length; i++) {

@@ -69,13 +69,13 @@
 		cube1.position.x = -2;
 		cube1.renderer = new J3D.Gouraud();
 		cube1.renderer.textureTile = new v2(0.5, 0.5);
-		cube1.renderer.colorTexture = new J3D.Texture(texpath);
+		cube1.renderer.uColorSampler = new J3D.Texture(texpath);
 		cube1.textureOffset = new v2(0.66, 0.66);
 		
 		cube2 = new J3D.Transform();	
 		cube2.position.x = 0;
 		cube2.renderer = new J3D.Phong();
-		cube2.renderer.colorTexture = new J3D.Texture(texpath);
+		cube2.renderer.uColorSampler = new J3D.Texture(texpath);
 		
 		/*
 		 *  There are two ways to specify tile and offset values: per renderer and per object
@@ -88,7 +88,7 @@
 		cube3 = new J3D.Transform();	
 		cube3.position.x = 2;
 		cube3.renderer = new J3D.Gouraud();
-		cube3.renderer.colorTexture = new J3D.Texture(texpath);
+		cube3.renderer.uColorSampler = new J3D.Texture(texpath);
 		
 		cubemesh = J3D.Primitive.Cube(1, 1, 1); 
 		cube1.geometry = cubemesh;

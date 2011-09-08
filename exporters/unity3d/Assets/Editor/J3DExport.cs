@@ -9,10 +9,12 @@ using UnityEditor;
 using Antlr.StringTemplate;
 using Antlr.StringTemplate.Language;
 
+public enum Extension {json, js};
+
 public class J3DExport : ScriptableWizard
 {
 	public string prefix = "J3D";
-	public bool exportHierarchy = true;
+	public Extension extenstion;
 	public Transform[] transforms;
 	
 	private List<TransformExportData> tex;
@@ -23,7 +25,7 @@ public class J3DExport : ScriptableWizard
 	private Hashtable mtx;
 	private Hashtable txx;
 	
-	private LightmapExportData led;
+	//private LightmapExportData led;
 	
 	void OnWizardUpdate ()
 	{
@@ -36,7 +38,7 @@ public class J3DExport : ScriptableWizard
 	{
 		// Rename all gameobjects so that there are none with the same name
 		
-		led = new LightmapExportData ();
+		//led = new LightmapExportData ();
 		
 		tex = new List<TransformExportData> ();
 		lgx = new List<LightExportData> ();
@@ -50,11 +52,12 @@ public class J3DExport : ScriptableWizard
 			RecurseTransform (transforms[i]);
 		}
 		
-		// Some textures might have been marked as readable for exporting, apply those chnage now
+		// Some textures might have been marked as readable for exporting, apply those chnage now.
 		AssetDatabase.Refresh ();
 		
-		string meshesPath = EditorUtility.SaveFilePanel ("Save meshes", FileExport.lastExportPath, "", "js");
-		string scenePath = meshesPath.Substring (0, meshesPath.Length - 3) + "Scene.js";
+		string meshesPath = EditorUtility.SaveFilePanel ("Save meshes", FileExport.lastExportPath, "", extenstion.ToString ());
+		int extl = (extenstion == Extension.js) ? 3 : 5;
+		string scenePath = meshesPath.Substring (0, meshesPath.Length - extl) + "Scene." + extenstion.ToString();
 		string texturePath = meshesPath.Substring (0, meshesPath.LastIndexOf ("/") + 1);
 
 		StringTemplate mt = FileExport.LoadTemplate ("model");
@@ -86,9 +89,7 @@ public class J3DExport : ScriptableWizard
 				File.WriteAllBytes (texturePath + t.FileName, t.pngData);
 			}
 		}
-		
-		
-		
+
 		FileExport.lastExportPath = meshesPath;
 	}
 	

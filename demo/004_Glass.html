@@ -112,16 +112,8 @@
 
 		engine.scene.addSkybox(cubemap);
 
-		shader.setup = function(mesh, shader, camera) {
-			J3D.ShaderUtil.setTextureCube(shader, 0, "uCubemap", cubemap.tex);
-			gl.uniform3fv(shader.uniforms.chromaticDispertion, [properties.dispersionRed, properties.dispersionGreen, properties.dispersionBlue]);	
-			gl.uniform1f(shader.uniforms.bias, properties.bias);	
-			gl.uniform1f(shader.uniforms.scale, properties.scale);	
-			gl.uniform1f(shader.uniforms.power, properties.power);	
-		}
 		
-		
-		shader.cubemap = cubemap;
+		shader.uCubemap = cubemap;
 		
 		model = new J3D.Transform();
 		model.rotation.x = 0.2;	
@@ -143,7 +135,12 @@
 	
 	function draw() {
 		requestAnimationFrame(draw);
-		
+
+		shader.chromaticDispertion = [properties.dispersionRed, properties.dispersionGreen, properties.dispersionBlue];	
+		shader.bias = properties.bias;	
+		shader.scale = properties.scale;	
+		shader.power = properties.power;	
+
 		root.rotation.x += (my - root.rotation.x) / 20;
 		root.rotation.y += mx * J3D.Time.deltaTime / 2000;
 

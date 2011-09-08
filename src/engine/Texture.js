@@ -55,9 +55,12 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
     	}
 		that.src.src = src;
 	}
-	
-	
+
 	if (typeof(source) == "string") {
 		load(source);
 	}
+}
+
+J3D.Texture.prototype.toUniform = function(){
+	return this.tex;
 }

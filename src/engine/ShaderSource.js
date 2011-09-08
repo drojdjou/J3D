@@ -228,7 +228,7 @@ J3D.ShaderSource.PhongFragment = [
 	"varying vec3 vNormal;",
 
 	"void main(void) {",
-	"vec4 tc = uColor.rgba;",
+	"vec4 tc = uColor;",
 	"if(uHasColorSampler) tc *= texture2D(uColorSampler, vTextureCoord);",
 
 	"vec3 l = computeLights(vPosition, vNormal, uSpecularIntensity, uShininess);// * brightness(tc.rgb);",

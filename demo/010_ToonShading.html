@@ -77,9 +77,7 @@
 		J3D.Loader.loadJSON("models/elephant.js", function(j) {  elephant.geometry = new J3D.Mesh(j); } );		
 		
 		elephant.renderer = new J3D.Toon();
-		elephant.renderer.specularIntensity = 10;
-		elephant.renderer.shininess = 20;
-		elephant.renderer.rampTexture = ramp1;
+		elephant.renderer.uColorSampler = ramp1;
 		
 		var camera = new J3D.Transform();
 		camera.camera = new J3D.Camera();
@@ -95,9 +93,9 @@
 	}
 	
 	function draw() {
-		if(document.getElementById("ra").checked) elephant.renderer.rampTexture = ramp1;
-		if(document.getElementById("rb").checked) elephant.renderer.rampTexture = ramp2;
-		if(document.getElementById("rc").checked) elephant.renderer.rampTexture = ramp3;
+		if(document.getElementById("ra").checked) elephant.renderer.uColorSampler = ramp1;
+		if(document.getElementById("rb").checked) elephant.renderer.uColorSampler = ramp2;
+		if(document.getElementById("rc").checked) elephant.renderer.uColorSampler = ramp3;
 		
 		elephant.rotation.y -= Math.PI * J3D.Time.deltaTime / 6000;
 		post.render();

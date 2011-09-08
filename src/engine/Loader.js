@@ -27,10 +27,10 @@ J3D.Loader.parseJSONScene = function(jscene, jmeshes, engine) {
 	for(var ms in jscene.materials) {
 		var m = jscene.materials[ms];
 		m = J3D.Loader.fromObject(J3D[m.type], m);
-		m.color = J3D.Loader.fromObject(J3D.Color, m.color);
+		m.uColor = J3D.Loader.fromObject(J3D.Color, m.color);
 		if(m.textureTile) m.textureTile = J3D.Loader.v2FromArray(m.textureTile);
 		if(m.textureOffset) m.textureOffset = J3D.Loader.v2FromArray(m.textureOffset);
-		if(m.colorTexture) m.colorTexture = jscene.textures[m.colorTexture];
+		if(m.colorTexture) m.uColorSampler = jscene.textures[m.colorTexture];
 		jscene.materials[ms] = m;
 	}
 	

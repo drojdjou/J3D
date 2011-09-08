@@ -49,3 +49,7 @@ J3D.Cubemap = function(faces){
 	load("back", 	faces.back);
 	load("front", 	faces.front);
 }
+
+J3D.Cubemap.prototype.toUniform = function(){
+	return this.tex;
+}
