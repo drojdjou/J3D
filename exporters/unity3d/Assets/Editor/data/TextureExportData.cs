@@ -5,15 +5,17 @@ using UnityEditor;
 public class TextureExportData
 {
 	private Texture t;
+	private TextureImporter ti;
 	
 	public TextureExportData (Texture t)
 	{
 		this.t = t;
 		
 		if (IsImage) {
-			TextureImporter ti = (TextureImporter)AssetImporter.GetAtPath (Path);
-			ti.isReadable = true;
-			ti.textureFormat = TextureImporterFormat.ARGB32;
+			ti = (TextureImporter)AssetImporter.GetAtPath (Path);
+			// Those settings are not applied, only updated in the UI which is very confusing :(
+//			ti.isReadable = true;
+//			ti.textureFormat = TextureImporterFormat.ARGB32;
 		}
 	}
 	
@@ -27,6 +29,10 @@ public class TextureExportData
 	
 	public string Name {
 		get { return NamesUtil.CleanLc (t.name); }
+	}
+	
+	public TextureImporterFormat Format {
+		get { return ti.textureFormat; }
 	}
 	
 	public string FileName {

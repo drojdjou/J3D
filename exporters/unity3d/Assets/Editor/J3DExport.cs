@@ -57,7 +57,7 @@ public class J3DExport : ScriptableWizard
 		
 		string meshesPath = EditorUtility.SaveFilePanel ("Save meshes", FileExport.lastExportPath, "", extenstion.ToString ());
 		int extl = (extenstion == Extension.js) ? 3 : 5;
-		string scenePath = meshesPath.Substring (0, meshesPath.Length - extl) + "Scene." + extenstion.ToString();
+		string scenePath = meshesPath.Substring (0, meshesPath.Length - extl) + "Scene." + extenstion.ToString ();
 		string texturePath = meshesPath.Substring (0, meshesPath.LastIndexOf ("/") + 1);
 
 		StringTemplate mt = FileExport.LoadTemplate ("model");
@@ -86,7 +86,12 @@ public class J3DExport : ScriptableWizard
 		
 		foreach (TextureExportData t in txx.Values) {
 			if (t.IsImage) {
-				File.WriteAllBytes (texturePath + t.FileName, t.pngData);
+				if (t.Format != TextureImporterFormat.ARGB32) {
+					Debug.Log ("WARNING! Texture " + t.Name + " has wrong format. Should be ARGB32");
+				} else {
+					File.WriteAllBytes (texturePath + t.FileName, t.pngData);
+					//Debug.Log ("Exporting texture " + t.Name + " / Format: " + t.Format.ToString());
+				}
 			}
 		}
 
