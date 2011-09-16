@@ -1,7 +1,7 @@
 {
 	
 "path" : "",
-"ambient": { "r":0.3134328, "g":0.3134328, "b":0.3134328, "a":1 },
+"ambient": { "r":0.7089552, "g":0.7089552, "b":0.7089552, "a":1 },
 "background": { "r":0.1567164, "g":0.1567164, "b":0.1567164, "a":1 },
 
 "textures": {
@@ -30,15 +30,6 @@
 	
 "materials": {
 	
-	"table_no_name": { 
-		"type": "Phong",
-		"color": { "r":1, "g":1, "b":1, "a":1 },
-		"specularIntensity": 0,
-		"textureTile": [ 1,1 ],
-		"textureOffset": [ 0,0 ],
-		"colorTexture": "brownwood"
-	},
-	
 	"wicket": { 
 		"type": "Phong",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
@@ -46,6 +37,15 @@
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "base"
+	},
+	
+	"table": { 
+		"type": "Phong",
+		"color": { "r":1, "g":1, "b":1, "a":1 },
+		"specularIntensity": 0,
+		"textureTile": [ 1,1 ],
+		"textureOffset": [ 0,0 ],
+		"colorTexture": "brownwood"
 	},
 	
 	"crate": { 
@@ -57,7 +57,7 @@
 		"colorTexture": "crate"
 	},
 	
-	"floor_tut": { 
+	"floor": { 
 		"type": "Phong",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
 		"specularIntensity": 0,
@@ -66,7 +66,7 @@
 		"colorTexture": "floor"
 	},
 	
-	"container_mat": { 
+	"container": { 
 		"type": "Phong",
 		"color": { "r":0.8, "g":0.8, "b":0.8, "a":1 },
 		"specularIntensity": 0,
@@ -81,7 +81,7 @@
 	
 	"sun": { 
 		"type": 1,
-		"color": { "r":0.7761194, "g":0.7761194, "b":0.7761194, "a":1 },
+		"color": { "r":1, "g":1, "b":1, "a":1 },
 		"direction": [ 0.254125,-0.6397581,-0.7253483 ]
 	}
 
@@ -100,20 +100,6 @@
 "transforms": [
 	
 	{
-		"name": "camera",
-		"position": [ 0,1.514377,3.068089 ],
-		"rotation": [ -0.4922459,0,0 ],
-		"camera": "camera"
-	},
-	
-	{
-		"name": "sun",
-		"position": [ -0.5425003,0.9019744,1.322142 ],
-		"rotation": [ -0.7227816,-0.2569429,0.0000000298 ],
-		"light": "sun"
-	},
-	
-	{
 		"name": "root",
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ]
@@ -124,80 +110,30 @@
 		"parent": "root",
 		"position": [ -0.5995703,-0.03661597,0.146524 ],
 		"rotation": [ 0,-2.262642,0 ],
-		"renderer": "table_no_name",
+		"renderer": "table",
 		"mesh": "chair"
 	},
 	
 	{
-		"name": "container",
+		"name": "container1",
 		"parent": "root",
-		"position": [ -0.06462091,0.5609035,-0.91889 ],
-		"rotation": [ 0,0,0 ],
-		"renderer": "container_mat",
+		"position": [ -1.364722,0.376525,0.7739075 ],
+		"rotation": [ -1.247126,1.570797,1.570797 ],
+		"renderer": "container",
 		"mesh": "container"
 	},
 	
 	{
-		"name": "container",
+		"name": "container2",
 		"parent": "root",
-		"position": [ -1.364722,0.376525,0.7739075 ],
-		"rotation": [ -1.247126,1.570797,1.570797 ],
-		"renderer": "container_mat",
+		"position": [ -0.06462091,0.5609035,-0.91889 ],
+		"rotation": [ 0,0,0 ],
+		"renderer": "container",
 		"mesh": "container"
 	},
 	
 	{
 		"name": "crate1",
-		"parent": "root",
-		"position": [ 0.3156057,-0.01173282,1.262562 ],
-		"rotation": [ 0,1.224036,0 ]
-	},
-	
-	{
-		"name": "wood",
-		"parent": "crate1",
-		"position": [ 0,0,0 ],
-		"rotation": [ 0,0,0 ],
-		"renderer": "crate",
-		"mesh": "crate"
-	},
-	
-	{
-		"name": "metal",
-		"parent": "crate1",
-		"position": [ -0.2499574,0.4273163,0.2176546 ],
-		"rotation": [ 0,-3.141593,0 ],
-		"renderer": "wicket",
-		"mesh": "wickets"
-	},
-	
-	{
-		"name": "crate2",
-		"parent": "root",
-		"position": [ 0.7647158,0.4382426,-0.07609676 ],
-		"rotation": [ 0,0.1165319,0 ]
-	},
-	
-	{
-		"name": "wood",
-		"parent": "crate2",
-		"position": [ 0,0,0 ],
-		"rotation": [ 0,0,0 ],
-		"renderer": "crate",
-		"mesh": "crate"
-	},
-	
-	{
-		"name": "metal",
-		"parent": "crate2",
-		"position": [ -0.2499574,0.4273163,0.2176546 ],
-		"rotation": [ 0,-3.141593,0 ],
-		"renderer": "wicket",
-		"mesh": "wickets"
-	},
-	
-	{
-		"name": "crate3",
 		"parent": "root",
 		"position": [ 0.7866896,-0.01173282,-0.07866907 ],
 		"rotation": [ 0,0,0 ]
@@ -205,6 +141,56 @@
 	
 	{
 		"name": "wood",
+		"parent": "crate1",
+		"position": [ 0,0,0 ],
+		"rotation": [ 0,0,0 ],
+		"renderer": "crate",
+		"mesh": "crate"
+	},
+	
+	{
+		"name": "metal",
+		"parent": "crate1",
+		"position": [ -0.2499574,0.4273163,0.2176546 ],
+		"rotation": [ 0,3.141593,0 ],
+		"renderer": "wicket",
+		"mesh": "wickets"
+	},
+	
+	{
+		"name": "crate2",
+		"parent": "root",
+		"position": [ 0.3156057,-0.01173282,1.262562 ],
+		"rotation": [ 0,1.224036,0 ]
+	},
+	
+	{
+		"name": "wood",
+		"parent": "crate2",
+		"position": [ 0,0,0 ],
+		"rotation": [ 0,0,0 ],
+		"renderer": "crate",
+		"mesh": "crate"
+	},
+	
+	{
+		"name": "metal",
+		"parent": "crate2",
+		"position": [ -0.2499574,0.4273163,0.2176546 ],
+		"rotation": [ 0,3.141593,0 ],
+		"renderer": "wicket",
+		"mesh": "wickets"
+	},
+	
+	{
+		"name": "crate3",
+		"parent": "root",
+		"position": [ 0.7647158,0.4382426,-0.07609676 ],
+		"rotation": [ 0,0.1165319,0 ]
+	},
+	
+	{
+		"name": "wood",
 		"parent": "crate3",
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
@@ -216,7 +202,7 @@
 		"name": "metal",
 		"parent": "crate3",
 		"position": [ -0.2499574,0.4273163,0.2176546 ],
-		"rotation": [ 0,-3.141593,0 ],
+		"rotation": [ 0,3.141593,0 ],
 		"renderer": "wicket",
 		"mesh": "wickets"
 	},
@@ -226,8 +212,22 @@
 		"parent": "root",
 		"position": [ -0.2684895,0,0.2199331 ],
 		"rotation": [ 0,0,0 ],
-		"renderer": "floor_tut",
+		"renderer": "floor",
 		"mesh": "plane"
+	},
+	
+	{
+		"name": "sun",
+		"position": [ -0.5425003,0.9019744,1.322142 ],
+		"rotation": [ -0.7227816,-0.2569429,0.0000000298 ],
+		"light": "sun"
+	},
+	
+	{
+		"name": "camera",
+		"position": [ 0,1.514377,3.068089 ],
+		"rotation": [ -0.4922459,0,0 ],
+		"camera": "camera"
 	}
 
 ]
