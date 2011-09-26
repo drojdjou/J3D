@@ -104,7 +104,7 @@
 			up: path + "cubemap/left.jpg",
 			down: path + "cubemap/right.jpg",
 			back: path + "cubemap/top.jpg",
-			front: path + "cubemap/top.jpg",
+			front: path + "cubemap/top.jpg"
 		});
 		
 		var headTex = new J3D.Texture(path + "map_col.jpg");
@@ -114,28 +114,20 @@
 		
 		var ramp = new J3D.Texture(path + "goldramp.png");
 		
-		reflective.setup = function(mesh, shader, camera) {
-			J3D.ShaderUtil.setTextureCube(shader, 0, "uCubemap", cubemap.tex);
-			J3D.ShaderUtil.setTexture(shader, 1, "uColorTexture", headTex.tex);
-		}
+		reflective.uCubemap = cubemap;
+		reflective.uColorTexture = headTex;
 		
-		darkglass.setup = function(mesh, shader, camera) {
-			J3D.ShaderUtil.setTextureCube(shader, 0, "uCubemap", cubemap.tex);
-			J3D.ShaderUtil.setTexture(shader, 1, "uColorTexture", headTex.tex);
-			gl.uniform3fv(shader.uniforms.chromaticDispertion, [0.02, 0.0, -0.02]);	
-			gl.uniform1f(shader.uniforms.bias, 0.0);	
-			gl.uniform1f(shader.uniforms.scale, 1.8);	
-			gl.uniform1f(shader.uniforms.power, 3.0);	
-		}
+		darkglass.uCubemap = cubemap;
+		darkglass.uColorTexture = headTex;
+		darkglass.chromaticDispertion = [0.02, 0.0, -0.02];
+		darkglass.bias = 0.0;
+		darkglass.scale = 1.8;
+		darkglass.power = 3.0;
 
-		glitter.setup = function(mesh, shader, camera){	
-			J3D.ShaderUtil.setTexture(shader, 0, "uColorSampler", ramp.tex);
-			J3D.ShaderUtil.setTexture(shader, 1, "uParticle", particleTex.tex);
-		}
+		glitter.uColorSampler = ramp;
+		glitter.uParticle = particleTex;
 		
-		toon.setup = function(mesh, shader, camera){	
-			J3D.ShaderUtil.setTexture(shader, 0, "uColorSampler", ramp.tex);
-		}
+		toon.uColorSampler = ramp;
 
 		J3D.Loader.loadJSON(path + "leeperry.js", function(jsmeshes) { 
 			J3D.Loader.loadJSON(path + "leeperryScene.js", function(jsscene) { 
@@ -162,7 +154,7 @@
 		document.onmousemove = onMouseMove;
 		document.onmousedown = changeShaderManual;
 		
-		auto = setInterval("changeShader()", 5000);
+		auto = setInterval(changeShader, 5000);
 	}
 	
 	function setRenderer(r, m) {
@@ -183,7 +175,7 @@
 	
 	function changeShaderManual() {
 		clearInterval(auto);
-		 changeShader();
+		changeShader();
 	}
 	
 	function changeShader() {
@@ -192,28 +184,23 @@
             case 0:
                 setRenderer(null, gl.TRIANGLES);
 				setTransparency(false);
-				//engine.camera.filter = null;
-                break;
+				break;
 			case 1:
                 setRenderer(darkglass, gl.TRIANGLES);
 				setTransparency(false);
-				//engine.camera.filter = null;
-                break;
+				break;
             case 2:
                 setRenderer(reflective, gl.TRIANGLES);
 				setTransparency(false);
-				//engine.camera.filter = null;
-                break;
+				break;
             case 3:
                 setRenderer(toon, gl.TRIANGLES);
 				setTransparency(false);
-				//engine.camera.filter = null;
-                break;
+				break;
             case 4:
                 setRenderer(glitter, gl.POINTS);
 				setTransparency(true, gl.SRC_ALPHA, gl.DST_ALPHA);
-				//engine.camera.filter = null;
-                break;
+				break;
         }
 	}
 	

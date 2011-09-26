@@ -7,15 +7,13 @@ J3D.Scene = function() {
 	this.skybox;
 	
 	this.add = function() {
-		var firstAdded;
 		for (var i = 0; i < arguments.length; i++) {
 			var t = arguments[i];
 			children.push(t);
 			t.parent = null;
 			that.numChildren = children.length;
-			if(i == 0) firstAdded = t;
 		}
-		return firstAdded;
+		return this;
 	}
 	
 	this.childAt = function(i){

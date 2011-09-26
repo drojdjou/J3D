@@ -2,7 +2,7 @@
 	
 "path" : "",
 "ambient": { "r":0.1492537, "g":0.1492537, "b":0.1492537, "a":1 },
-"background": { "r":0.1916647, "g":0.3019664, "b":0.4745098, "a":1 },
+"background": { "r":0, "g":0, "b":0, "a":1 },
 
 "textures": {
 	
@@ -221,28 +221,16 @@
 "transforms": [
 	
 	{
-		"name": "fps",
+		"uid": 0,
+                "name": "bunker",
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ]
 	},
 	
 	{
-		"name": "eye",
-		"parent": "fps",
-		"position": [ 0,1.177749,0 ],
-		"rotation": [ 0,0,0 ],
-		"camera": "eye"
-	},
-	
-	{
-		"name": "bunker",
-		"position": [ 0,0,0 ],
-		"rotation": [ 0,0,0 ]
-	},
-	
-	{
-		"name": "beams",
-		"parent": "bunker",
+		"uid": 1,
+                "name": "beams",
+		"parent": 0,
 		"position": [ 0.0377121,-3.482743,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "roughwood",
@@ -252,8 +240,9 @@
 	},
 	
 	{
-		"name": "ceiling",
-		"parent": "bunker",
+		"uid": 2,
+                "name": "ceiling",
+		"parent": 0,
 		"position": [ 0.07015259,2.798332,-0.0000000763 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "planks",
@@ -263,8 +252,9 @@
 	},
 	
 	{
-		"name": "chair2",
-		"parent": "bunker",
+		"uid": 3,
+                "name": "chair2",
+		"parent": 0,
 		"position": [ -2.41186,-0.001667518,1.659862 ],
 		"rotation": [ 0,-0.1675269,0 ],
 		"renderer": "wood",
@@ -274,8 +264,9 @@
 	},
 	
 	{
-		"name": "chair",
-		"parent": "bunker",
+		"uid": 4,
+                "name": "chair",
+		"parent": 0,
 		"position": [ 2.689911,-0.0016675,1.11077 ],
 		"rotation": [ 0,1.371702,0 ],
 		"renderer": "wood",
@@ -285,15 +276,17 @@
 	},
 	
 	{
-		"name": "crate2",
-		"parent": "bunker",
+		"uid": 5,
+                "name": "crate2",
+		"parent": 0,
 		"position": [ -2.57758,0.01867372,-2.072275 ],
 		"rotation": [ 0,-2.520497,0 ]
 	},
 	
 	{
-		"name": "cratewood2",
-		"parent": "crate2",
+		"uid": 6,
+                "name": "cratewood2",
+		"parent": 5,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "planks_light",
@@ -303,8 +296,9 @@
 	},
 	
 	{
-		"name": "wickets2",
-		"parent": "crate2",
+		"uid": 7,
+                "name": "wickets2",
+		"parent": 5,
 		"position": [ -0.2499574,0.4273163,0.2176546 ],
 		"rotation": [ 0,-3.141593,0 ],
 		"renderer": "base",
@@ -314,15 +308,17 @@
 	},
 	
 	{
-		"name": "crate",
-		"parent": "bunker",
+		"uid": 8,
+                "name": "crate",
+		"parent": 0,
 		"position": [ -1.394453,0.01867372,-2.389863 ],
 		"rotation": [ 0,3.135776,0 ]
 	},
 	
 	{
-		"name": "cratewood",
-		"parent": "crate",
+		"uid": 9,
+                "name": "cratewood",
+		"parent": 8,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "planks_light",
@@ -332,8 +328,9 @@
 	},
 	
 	{
-		"name": "wickets",
-		"parent": "crate",
+		"uid": 10,
+                "name": "wickets",
+		"parent": 8,
 		"position": [ -0.2499574,0.4273163,0.2176546 ],
 		"rotation": [ 0,-3.141593,0 ],
 		"renderer": "base",
@@ -343,15 +340,17 @@
 	},
 	
 	{
-		"name": "crate3",
-		"parent": "bunker",
+		"uid": 11,
+                "name": "crate3",
+		"parent": 0,
 		"position": [ -2.012595,0.4682586,-2.302448 ],
 		"rotation": [ 0,-2.810816,0 ]
 	},
 	
 	{
-		"name": "cratewood3",
-		"parent": "crate3",
+		"uid": 12,
+                "name": "cratewood3",
+		"parent": 11,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "planks_light",
@@ -361,8 +360,9 @@
 	},
 	
 	{
-		"name": "wickets3",
-		"parent": "crate3",
+		"uid": 13,
+                "name": "wickets3",
+		"parent": 11,
 		"position": [ -0.2499574,0.4273163,0.2176546 ],
 		"rotation": [ 0,-3.141593,0 ],
 		"renderer": "base",
@@ -372,15 +372,17 @@
 	},
 	
 	{
-		"name": "filecabinet2",
-		"parent": "bunker",
+		"uid": 14,
+                "name": "filecabinet2",
+		"parent": 0,
 		"position": [ 3.772444,0.08982849,2.047704 ],
 		"rotation": [ 0,1.570796,0 ]
 	},
 	
 	{
-		"name": "bottom",
-		"parent": "filecabinet2",
+		"uid": 15,
+                "name": "bottom",
+		"parent": 14,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
@@ -390,8 +392,9 @@
 	},
 	
 	{
-		"name": "front1",
-		"parent": "filecabinet2",
+		"uid": 16,
+                "name": "front1",
+		"parent": 14,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "cabinet_front",
@@ -401,8 +404,9 @@
 	},
 	
 	{
-		"name": "fronts",
-		"parent": "filecabinet2",
+		"uid": 17,
+                "name": "fronts",
+		"parent": 14,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "cabinet_front",
@@ -412,8 +416,9 @@
 	},
 	
 	{
-		"name": "handles",
-		"parent": "filecabinet2",
+		"uid": 18,
+                "name": "handles",
+		"parent": 14,
 		"position": [ 0.06619179,0.1408208,-0.312975 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
@@ -423,8 +428,9 @@
 	},
 	
 	{
-		"name": "labelholders",
-		"parent": "filecabinet2",
+		"uid": 19,
+                "name": "labelholders",
+		"parent": 14,
 		"position": [ 0,2.263455,-0.2949442 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
@@ -434,8 +440,9 @@
 	},
 	
 	{
-		"name": "sides",
-		"parent": "filecabinet2",
+		"uid": 20,
+                "name": "sides",
+		"parent": 14,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
@@ -445,15 +452,17 @@
 	},
 	
 	{
-		"name": "filecabinet3",
-		"parent": "bunker",
+		"uid": 21,
+                "name": "filecabinet3",
+		"parent": 0,
 		"position": [ 3.76823,0.08982849,1.519595 ],
 		"rotation": [ 0,1.570796,0 ]
 	},
 	
 	{
-		"name": "bottom",
-		"parent": "filecabinet3",
+		"uid": 22,
+                "name": "bottom",
+		"parent": 21,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
@@ -463,8 +472,9 @@
 	},
 	
 	{
-		"name": "front1",
-		"parent": "filecabinet3",
+		"uid": 23,
+                "name": "front1",
+		"parent": 21,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "cabinet_front",
@@ -474,8 +484,9 @@
 	},
 	
 	{
-		"name": "fronts",
-		"parent": "filecabinet3",
+		"uid": 24,
+                "name": "fronts",
+		"parent": 21,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "cabinet_front",
@@ -485,8 +496,9 @@
 	},
 	
 	{
-		"name": "handles",
-		"parent": "filecabinet3",
+		"uid": 25,
+                "name": "handles",
+		"parent": 21,
 		"position": [ 0.06619179,0.1408208,-0.312975 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
@@ -496,8 +508,9 @@
 	},
 	
 	{
-		"name": "labelholders",
-		"parent": "filecabinet3",
+		"uid": 26,
+                "name": "labelholders",
+		"parent": 21,
 		"position": [ 0,2.263455,-0.2949442 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
@@ -507,8 +520,9 @@
 	},
 	
 	{
-		"name": "sides",
-		"parent": "filecabinet3",
+		"uid": 27,
+                "name": "sides",
+		"parent": 21,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
@@ -518,15 +532,17 @@
 	},
 	
 	{
-		"name": "filecabinet4",
-		"parent": "bunker",
+		"uid": 28,
+                "name": "filecabinet4",
+		"parent": 0,
 		"position": [ 3.764724,0.08982849,0.3267901 ],
 		"rotation": [ 0,1.570796,0 ]
 	},
 	
 	{
-		"name": "bottom",
-		"parent": "filecabinet4",
+		"uid": 29,
+                "name": "bottom",
+		"parent": 28,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
@@ -536,8 +552,9 @@
 	},
 	
 	{
-		"name": "front1",
-		"parent": "filecabinet4",
+		"uid": 30,
+                "name": "front1",
+		"parent": 28,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "cabinet_front",
@@ -547,8 +564,9 @@
 	},
 	
 	{
-		"name": "fronts",
-		"parent": "filecabinet4",
+		"uid": 31,
+                "name": "fronts",
+		"parent": 28,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "cabinet_front",
@@ -558,8 +576,9 @@
 	},
 	
 	{
-		"name": "handles",
-		"parent": "filecabinet4",
+		"uid": 32,
+                "name": "handles",
+		"parent": 28,
 		"position": [ 0.06619179,0.1408208,-0.312975 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
@@ -569,8 +588,9 @@
 	},
 	
 	{
-		"name": "labelholders",
-		"parent": "filecabinet4",
+		"uid": 33,
+                "name": "labelholders",
+		"parent": 28,
 		"position": [ 0,2.263455,-0.2949442 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
@@ -580,8 +600,9 @@
 	},
 	
 	{
-		"name": "sides",
-		"parent": "filecabinet4",
+		"uid": 34,
+                "name": "sides",
+		"parent": 28,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
@@ -591,15 +612,17 @@
 	},
 	
 	{
-		"name": "filecabinet1",
-		"parent": "bunker",
+		"uid": 35,
+                "name": "filecabinet1",
+		"parent": 0,
 		"position": [ 3.766136,0.08236891,0.8514609 ],
 		"rotation": [ 0,1.570796,0 ]
 	},
 	
 	{
-		"name": "bottom",
-		"parent": "filecabinet1",
+		"uid": 36,
+                "name": "bottom",
+		"parent": 35,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
@@ -609,8 +632,9 @@
 	},
 	
 	{
-		"name": "drawer",
-		"parent": "filecabinet1",
+		"uid": 37,
+                "name": "drawer",
+		"parent": 35,
 		"position": [ 0.2360419,2.009173,-0.5699123 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
@@ -620,8 +644,9 @@
 	},
 	
 	{
-		"name": "drawerbottom",
-		"parent": "drawer",
+		"uid": 38,
+                "name": "drawerbottom",
+		"parent": 37,
 		"position": [ 0,0.007493896,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
@@ -631,8 +656,9 @@
 	},
 	
 	{
-		"name": "files",
-		"parent": "drawer",
+		"uid": 39,
+                "name": "files",
+		"parent": 37,
 		"position": [ -0.01546959,0.005193481,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "files",
@@ -642,8 +668,9 @@
 	},
 	
 	{
-		"name": "front",
-		"parent": "drawer",
+		"uid": 40,
+                "name": "front",
+		"parent": 37,
 		"position": [ 0,0,-0.01002502 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "cabinet_front",
@@ -653,8 +680,9 @@
 	},
 	
 	{
-		"name": "handle",
-		"parent": "drawer",
+		"uid": 41,
+                "name": "handle",
+		"parent": 37,
 		"position": [ -0.2348501,0.1112711,-0.04534904 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
@@ -664,8 +692,9 @@
 	},
 	
 	{
-		"name": "labelholder",
-		"parent": "drawer",
+		"uid": 42,
+                "name": "labelholder",
+		"parent": 37,
 		"position": [ -0.2360419,0.2542819,-0.01157303 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
@@ -675,8 +704,9 @@
 	},
 	
 	{
-		"name": "front1",
-		"parent": "filecabinet1",
+		"uid": 43,
+                "name": "front1",
+		"parent": 35,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "black",
@@ -686,8 +716,9 @@
 	},
 	
 	{
-		"name": "fronts",
-		"parent": "filecabinet1",
+		"uid": 44,
+                "name": "fronts",
+		"parent": 35,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "cabinet_front",
@@ -697,8 +728,9 @@
 	},
 	
 	{
-		"name": "handles",
-		"parent": "filecabinet1",
+		"uid": 45,
+                "name": "handles",
+		"parent": 35,
 		"position": [ 0.06619179,0.1408208,-0.312975 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
@@ -708,8 +740,9 @@
 	},
 	
 	{
-		"name": "labelholders",
-		"parent": "filecabinet1",
+		"uid": 46,
+                "name": "labelholders",
+		"parent": 35,
 		"position": [ 0,2.263455,-0.2949442 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
@@ -719,8 +752,9 @@
 	},
 	
 	{
-		"name": "sides",
-		"parent": "filecabinet1",
+		"uid": 47,
+                "name": "sides",
+		"parent": 35,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
@@ -730,8 +764,9 @@
 	},
 	
 	{
-		"name": "floor",
-		"parent": "bunker",
+		"uid": 48,
+                "name": "floor",
+		"parent": 0,
 		"position": [ 0.07015259,-6.350833,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "floor",
@@ -741,8 +776,9 @@
 	},
 	
 	{
-		"name": "floorhole",
-		"parent": "bunker",
+		"uid": 49,
+                "name": "floorhole",
+		"parent": 0,
 		"position": [ 0.07015259,-0.3028809,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "planks",
@@ -752,8 +788,9 @@
 	},
 	
 	{
-		"name": "floorpanel",
-		"parent": "bunker",
+		"uid": 50,
+                "name": "floorpanel",
+		"parent": 0,
 		"position": [ 0.07015259,-0.00166748,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "floorpanel",
@@ -763,15 +800,17 @@
 	},
 	
 	{
-		"name": "fluorlight",
-		"parent": "bunker",
+		"uid": 51,
+                "name": "fluorlight",
+		"parent": 0,
 		"position": [ 1.560203,2.375764,-0.9507746 ],
 		"rotation": [ 0,0,0 ]
 	},
 	
 	{
-		"name": "fluor",
-		"parent": "fluorlight",
+		"uid": 52,
+                "name": "fluor",
+		"parent": 51,
 		"position": [ -0.02336147,-0.0416385,0.03023542 ],
 		"rotation": [ 0.0000000596,0,0 ],
 		"renderer": "white",
@@ -781,8 +820,9 @@
 	},
 	
 	{
-		"name": "fluor2",
-		"parent": "fluorlight",
+		"uid": 53,
+                "name": "fluor2",
+		"parent": 51,
 		"position": [ -0.02336147,-0.0416385,-0.0301246 ],
 		"rotation": [ 0.0000000596,0,0 ],
 		"renderer": "white",
@@ -792,8 +832,9 @@
 	},
 	
 	{
-		"name": "holder",
-		"parent": "fluorlight",
+		"uid": 54,
+                "name": "holder",
+		"parent": 51,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
@@ -803,16 +844,18 @@
 	},
 	
 	{
-		"name": "light",
-		"parent": "fluorlight",
+		"uid": 55,
+                "name": "light",
+		"parent": 51,
 		"position": [ -0.02425194,-0.3356099,-0.0005105734 ],
 		"rotation": [ 0,0,0 ],
 		"light": "light"
 	},
 	
 	{
-		"name": "top",
-		"parent": "fluorlight",
+		"uid": 56,
+                "name": "top",
+		"parent": 51,
 		"position": [ 0.45,1.027377,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
@@ -822,8 +865,9 @@
 	},
 	
 	{
-		"name": "largepipes",
-		"parent": "bunker",
+		"uid": 57,
+                "name": "largepipes",
+		"parent": 0,
 		"position": [ 0.02321442,2.337654,-1.935869 ],
 		"rotation": [ 0,-1.570796,1.570796 ],
 		"renderer": "base",
@@ -833,8 +877,9 @@
 	},
 	
 	{
-		"name": "pipe",
-		"parent": "bunker",
+		"uid": 58,
+                "name": "pipe",
+		"parent": 0,
 		"position": [ -3.801011,1.400015,1.891272 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
@@ -844,8 +889,9 @@
 	},
 	
 	{
-		"name": "pipeending",
-		"parent": "bunker",
+		"uid": 59,
+                "name": "pipeending",
+		"parent": 0,
 		"position": [ -0.005020904,2.336824,-1.936106 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "rust",
@@ -855,8 +901,9 @@
 	},
 	
 	{
-		"name": "pipeholder",
-		"parent": "bunker",
+		"uid": 60,
+                "name": "pipeholder",
+		"parent": 0,
 		"position": [ 0.05540344,2.497553,-1.936754 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
@@ -866,22 +913,25 @@
 	},
 	
 	{
-		"name": "desk",
-		"parent": "bunker",
+		"uid": 61,
+                "name": "desk",
+		"parent": 0,
 		"position": [ -2.262847,-0.0016675,1.185786 ],
 		"rotation": [ 0,-0.3045448,0 ]
 	},
 	
 	{
-		"name": "lamp",
-		"parent": "desk",
+		"uid": 62,
+                "name": "lamp",
+		"parent": 61,
 		"position": [ -0.4605259,0.8137751,0.2702942 ],
 		"rotation": [ 0,0.9535775,0 ]
 	},
 	
 	{
-		"name": "base",
-		"parent": "lamp",
+		"uid": 63,
+                "name": "base",
+		"parent": 62,
 		"position": [ 0,-0.0002431488,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "red",
@@ -891,16 +941,18 @@
 	},
 	
 	{
-		"name": "lamplight",
-		"parent": "lamp",
+		"uid": 64,
+                "name": "lamplight",
+		"parent": 62,
 		"position": [ 0.01885286,0.2885832,0.1991458 ],
 		"rotation": [ -0.7753192,-1.795006,-1.664385 ],
 		"light": "lamplight"
 	},
 	
 	{
-		"name": "stem",
-		"parent": "lamp",
+		"uid": 65,
+                "name": "stem",
+		"parent": 62,
 		"position": [ -0.009898948,0.01331375,-0.0006131363 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
@@ -910,8 +962,9 @@
 	},
 	
 	{
-		"name": "topinterior",
-		"parent": "lamp",
+		"uid": 66,
+                "name": "topinterior",
+		"parent": 62,
 		"position": [ -0.0006007031,0.399937,0.1621105 ],
 		"rotation": [ -0.2734099,-0.3037378,0.1247429 ],
 		"renderer": "white",
@@ -921,8 +974,9 @@
 	},
 	
 	{
-		"name": "topexterior",
-		"parent": "lamp",
+		"uid": 67,
+                "name": "topexterior",
+		"parent": 62,
 		"position": [ -0.0006007031,0.399937,0.1621105 ],
 		"rotation": [ -0.2734099,-0.3037376,0.1247429 ],
 		"renderer": "red",
@@ -932,8 +986,9 @@
 	},
 	
 	{
-		"name": "table",
-		"parent": "desk",
+		"uid": 68,
+                "name": "table",
+		"parent": 61,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "wood",
@@ -943,14 +998,31 @@
 	},
 	
 	{
-		"name": "walls",
-		"parent": "bunker",
+		"uid": 69,
+                "name": "walls",
+		"parent": 0,
 		"position": [ 0.4991992,-5.299922,0.09999999 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "wall",
 		"mesh": "walls",
 		"lightmapIndex": 1,
 		"lightmapTileOffset": [ 0.604492,0.604492,-0.00187302,-0.00187302 ]
+	},
+	
+	{
+		"uid": 70,
+                "name": "fps",
+		"position": [ 0,0,0 ],
+		"rotation": [ 0,0,0 ]
+	},
+	
+	{
+		"uid": 71,
+                "name": "eye",
+		"parent": 70,
+		"position": [ 0,1.177749,0 ],
+		"rotation": [ 0,0,0 ],
+		"camera": "eye"
 	}
 
 ]

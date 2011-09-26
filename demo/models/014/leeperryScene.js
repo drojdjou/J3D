@@ -7,7 +7,7 @@
 "textures": {
 	
 	"map_col": { 
-		"file": "map_col.jpg"
+		"file": "map_col.png"
 	}
 
 },
@@ -48,21 +48,24 @@
 "transforms": [
 	
 	{
-		"name": "sun",
+		"uid": 0,
+                "name": "sun",
 		"position": [ -2,0,3 ],
 		"rotation": [ 0,-0.6595559,0 ],
 		"light": "sun"
 	},
 	
 	{
-		"name": "headbase",
+		"uid": 1,
+                "name": "headbase",
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ]
 	},
 	
 	{
-		"name": "head",
-		"parent": "headbase",
+		"uid": 2,
+                "name": "head",
+		"parent": 1,
 		"position": [ -0.004249275,-0.06889248,-0.2370338 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "leeperry_defaultmat",
@@ -70,14 +73,16 @@
 	},
 	
 	{
-		"name": "base",
+		"uid": 3,
+                "name": "base",
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ]
 	},
 	
 	{
-		"name": "camera",
-		"parent": "base",
+		"uid": 4,
+                "name": "camera",
+		"parent": 3,
 		"position": [ 0,0,3 ],
 		"rotation": [ 0,0,0 ],
 		"camera": "camera"

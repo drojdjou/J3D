@@ -17,6 +17,10 @@ public class J3DExport : ScriptableWizard
 	public Extension extenstion;
 	public Transform[] transforms;
 	
+	public bool useConsole = true;
+	//public ReportLevel level = ReportLevel.Warning;
+	public bool generateReport = false;
+	
 	private List<TransformExportData> tex;
 	private List<LightExportData> lgx;
 	private List<CameraExportData> cmx;
@@ -38,6 +42,22 @@ public class J3DExport : ScriptableWizard
 	{
 		// Rename all gameobjects so that there are none with the same name
 		
+		Report.level = ReportLevel.All;
+		Report.useConsole = useConsole;
+		TransformExportData.uidc = 1;
+		
+		Report.log ("Exporting scene: " + EditorApplication.currentScene);
+		Report.log ("Platform: " + SystemInfo.operatingSystem);
+		Report.log ("Unity player: " + Application.unityVersion);
+		
+		string meshesPath = EditorUtility.SaveFilePanel ("Save meshes", FileExport.lastExportPath, "", extenstion.ToString ());
+		int extl = (extenstion == Extension.js) ? 3 : 5;
+		string scenePath = meshesPath.Substring (0, meshesPath.Length - extl) + "Scene." + extenstion.ToString ();
+		string texturePath = meshesPath.Substring (0, meshesPath.LastIndexOf ("/") + 1);
+		string reportPath = meshesPath.Substring (0, meshesPath.Length - extl) + "Log.txt";
+		
+		Report.log ("Exporting to: " + meshesPath + " " + scenePath);
+
 		//led = new LightmapExportData ();
 		
 		tex = new List<TransformExportData> ();
@@ -47,18 +67,13 @@ public class J3DExport : ScriptableWizard
 		mex = new Hashtable ();
 		mtx = new Hashtable ();
 		txx = new Hashtable ();
-		
+
 		for (var i = 0; i < transforms.Length; i++) {
-			RecurseTransform (transforms[i]);
+			RecurseTransform (transforms[i], null);
 		}
 		
-		// Some textures might have been marked as readable for exporting, apply those chnage now.
+		// Some textures might have been marked as readable for exporting, apply those changes now.
 		AssetDatabase.Refresh ();
-		
-		string meshesPath = EditorUtility.SaveFilePanel ("Save meshes", FileExport.lastExportPath, "", extenstion.ToString ());
-		int extl = (extenstion == Extension.js) ? 3 : 5;
-		string scenePath = meshesPath.Substring (0, meshesPath.Length - extl) + "Scene." + extenstion.ToString ();
-		string texturePath = meshesPath.Substring (0, meshesPath.LastIndexOf ("/") + 1);
 
 		StringTemplate mt = FileExport.LoadTemplate ("model");
 		mt.SetAttribute ("prefix", prefix + "Meshes");
@@ -86,26 +101,33 @@ public class J3DExport : ScriptableWizard
 		
 		foreach (TextureExportData t in txx.Values) {
 			if (t.IsImage) {
-				if (t.Format != TextureImporterFormat.ARGB32) {
-					Debug.Log ("WARNING! Texture " + t.Name + " has wrong format. Should be ARGB32");
+				if (t.Format != TextureImporterFormat.ARGB32 && t.Format != TextureImporterFormat.RGB24) {
+					Report.error ("Texture not exported. '" + t.Name + "' has wrong format: " + t.Format.ToString () + ", should be ARGB32 or RGB24");
+				} else if (!t.asset.isReadable) {
+					Report.error ("Texture not exported. '" + t.Name + "' not marked as readable.");
 				} else {
 					File.WriteAllBytes (texturePath + t.FileName, t.pngData);
-					//Debug.Log ("Exporting texture " + t.Name + " / Format: " + t.Format.ToString());
+					Report.log ("Exporting texture " + t.Name + " to " + texturePath + t.FileName);
 				}
 			}
 		}
+		
+		Report.log ("Exported " + tex.Count + " transforms");
 
 		FileExport.lastExportPath = meshesPath;
+		
+		Report.log ("Done!");
+		if(generateReport) Report.saveReport (reportPath);
 	}
 	
-	void RecurseTransform (Transform t)
+	void RecurseTransform (Transform t, TransformExportData p)
 	{
 		if (!t.gameObject.active)
 			return;
 		
+		TransformExportData ted = new TransformExportData (t, p);
 		
-		
-		tex.Add (new TransformExportData (t));
+		tex.Add (ted);
 		
 		if (t.renderer != null) {
 			MeshExportData me = new MeshExportData (t);
@@ -137,7 +159,7 @@ public class J3DExport : ScriptableWizard
 		}
 		
 		for (var i = 0; i < t.childCount; i++) {
-			RecurseTransform (t.GetChild (i));
+			RecurseTransform (t.GetChild (i), ted);
 		}
 	}
 

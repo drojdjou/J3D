@@ -1,0 +1,34 @@
+<html> 
+ 
+<head> 
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
+<script type="text/javascript" src="https://raw.github.com/drojdjou/J3D/master/build/j3d.js"></script>
+<script>
+	var mx = 0, my = 0;
+	var root, chair;
+	
+	window.onload = function() {
+		engine = new J3D.Engine();
+		
+		J3D.Loader.loadJSON("tutorial.json", function(jsmeshes) { 
+			J3D.Loader.loadJSON("tutorialScene.json", function(jsscene) { 
+				J3D.Loader.parseJSONScene(jsscene, jsmeshes, engine);
+				root = engine.scene.find("root");
+				chair = engine.scene.find("root/chair");
+				draw();
+			})
+		});
+	}
+	
+	function draw() {
+		root.rotation.y += 0.005;
+		chair.rotation.y -= 0.01;
+		engine.render();
+		requestAnimationFrame(draw);
+	}
+		
+</script>
+
+</head> 
+<body></body> 
+</html> 

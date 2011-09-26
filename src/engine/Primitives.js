@@ -25,18 +25,22 @@ J3D.Primitive.FullScreenQuad = function() {
 	return c;
 }
 
-J3D.Primitive.Plane = function(w, h, wd, hd) {
+J3D.Primitive.Plane = function(w, h, wd, hd, wo, ho) {
 	var c = J3D.Primitive.getEmpty();
+	
+	if(!wo) wo = 0;
+	if(!ho) ho = 0;
+ 	
 	w = w * 0.5;
 	h = h * 0.5;
 	
 	if(!wd) wd = 1;
 	if(!hd) hd = 1;
 	
-	var wStart = -w;
-	var wEnd = w;
-	var hStart = h;
-	var hEnd = -h;
+	var wStart = -w + wo;
+	var wEnd = w + wo;
+	var hStart = h + ho;
+	var hEnd = -h + ho;
 	var uStart = 0;
 	var uEnd = 1;
 	var vStart = 1;

@@ -66,17 +66,17 @@ J3D.Loader.parseJSONScene = function(jscene, jmeshes, engine) {
 
 		jscene.transforms[i] = t;
 	}
-	
-	var findByName = function(n) {
+
+	var findByUID = function(n) {
 		for (var i = 0; i < jscene.transforms.length; i++) {
-			if(jscene.transforms[i].name == n) return jscene.transforms[i];
+			if(jscene.transforms[i].uid == n) return jscene.transforms[i];
 		}
 	}
 	
 	for(var i = 0; i < jscene.transforms.length; i++) {
 		var t = jscene.transforms[i];
-		if (t.parent) {
-			t.parent = findByName(t.parent);
+		if (t.parent != null) {
+			t.parent = findByUID(t.parent);
 			t.parent.add(t);
 		} else {
 			engine.scene.add(t);

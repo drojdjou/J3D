@@ -25,9 +25,12 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 		var p = that.src && isPOT(that.src.width, that.src.height);
 		
 		gl.bindTexture(gl.TEXTURE_2D, that.tex);
-		if(that.flip) gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
 		
-		if(that.src) gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, that.src);
+		console.log("Unflip texture " + source + " : " + that.flip);
+		
+		gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, that.flip);
+		
+		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, that.src);
 		
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, that.magFilter);
 		

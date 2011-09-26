@@ -84,7 +84,7 @@ void main(void) {
 </script>
 
 <script>
-	var engine, sun;
+	var engine, sun, paperShader;
 	var properties, gui;
 	var a = 0;
 	
@@ -127,8 +127,8 @@ void main(void) {
 		engine = new J3D.Engine();
 		gl.disable(gl.CULL_FACE);
 		
-		engine.setClearColor(new J3D.Color(.1, .1, .1, 1));
-		engine.scene.ambient = new J3D.Color(.8, .8, .8, 1);
+		engine.setClearColor(new J3D.Color(0.1, 0.1, 0.1, 1));
+		engine.scene.ambient = new J3D.Color(0.8, 0.8, 0.8, 1);
 
 		var camera = new J3D.Transform();
 		camera.camera = new J3D.Camera({ far: 10000 });
@@ -138,30 +138,12 @@ void main(void) {
 
 		var v = document.getElementById("paperVertex").firstChild.nodeValue;
 		var f = document.getElementById("paperFragment").firstChild.nodeValue;
-		var pr = new J3D.Shader("Paper", v, f);
-		pr.colorTexture = new J3D.Texture("models/textures/firetruck1.jpg");
+		paperShader = new J3D.Shader("Paper", v, f);
+		paperShader.uColorSampler = new J3D.Texture("models/textures/firetruck1.jpg");
+		paperShader.uBounds = [-400, 800];
 
-		pr.setup = function(mesh, shader, camera) {
-			gl.uniform2fv(shader.uniforms.uBounds, [-400, 800]);
-			
-			if (properties.animate) {
-				a += 0.02;
-				properties.bendAngle = Math.sin(a) * Math.PI * 2;
-				gl.uniform1f(shader.uniforms.uBendAngle, properties.bendAngle);
-				
-			}
-			else {
-				gl.uniform1f(shader.uniforms.uBendAngle, properties.bendAngle);
-			}
-			
-			gl.uniform1f(shader.uniforms.uOffset, properties.offset);
-			gl.uniform1f(shader.uniforms.uBendAxisAngle, properties.bendAxisAngle);
-			
-			J3D.ShaderUtil.setTexture(shader, 0, "uColorSampler", this.colorTexture.tex);
-		}
-		
 		photo = new J3D.Transform();
-		photo.renderer = pr;
+		photo.renderer = paperShader;
 		photo.geometry = J3D.Primitive.Plane(800, 534, 80, 53);
 		engine.scene.add(photo);
 		
@@ -169,6 +151,17 @@ void main(void) {
 	}
 
 	function draw() {
+		if (properties.animate) {
+			a += 0.02;
+			properties.bendAngle = Math.sin(a) * Math.PI * 2;
+			paperShader.uBendAngle =  properties.bendAngle;	
+		} else {
+			paperShader.uBendAngle = properties.bendAngle;
+		}
+			
+		paperShader.uOffset = properties.offset;
+		paperShader.uBendAxisAngle = properties.bendAxisAngle;
+		
 		engine.render();
 		photo.rotation.x = properties.rotationX;
 		photo.rotation.y = properties.rotationY;

@@ -1,24 +1,35 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class TransformExportData
 {
 	private Transform t;
+	private TransformExportData p;
+	private int uid;
+	
+	public static int uidc;
 
-	public TransformExportData (Transform t)
+	public TransformExportData (Transform t, TransformExportData p)
 	{
+		uid = uidc++;
 		this.t = t;
+		this.p = p;
+	}
+	
+	public int UID {
+		get { return uid; }
 	}
 
 	public string Name {
 		get { return NamesUtil.CleanLc (t.name); }
 	}
 
-	public string Parent {
-		get { return NamesUtil.CleanLc (t.parent.name); }
+	public int Parent {
+		get { return p.UID; }
 	}
 
 	public bool HasParent {
-		get { return t.parent != null; }
+		get { return p != null; }
 	}
 
 	public string MeshName {

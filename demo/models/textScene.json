@@ -27,7 +27,7 @@
 	
 	"grey": { 
 		"type": "Gouraud",
-		"color": { "r":0.5074627, "g":0.5074627, "b":0.5074627, "a":1 },
+		"color": { "r":1, "g":1, "b":1, "a":1 },
 		"specularIntensity": 80.71642,
 		"textureTile": [  ],
 		"textureOffset": [  ]
@@ -98,28 +98,16 @@
 "transforms": [
 	
 	{
-		"name": "camera",
-		"position": [ 0,0,-0.5 ],
-		"rotation": [ 0,3.141592,0 ],
-		"camera": "camera"
-	},
-	
-	{
-		"name": "sun",
-		"position": [ 0,0,0.01425409 ],
-		"rotation": [ -0.8351003,-3.136525,0.2129833 ],
-		"light": "sun"
-	},
-	
-	{
-		"name": "root",
+		"uid": 0,
+                "name": "root",
 		"position": [ 0,0,2 ],
 		"rotation": [ 0,0,0 ]
 	},
 	
 	{
-		"name": "ring1",
-		"parent": "root",
+		"uid": 1,
+                "name": "ring",
+		"parent": 0,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "redlight",
@@ -127,8 +115,9 @@
 	},
 	
 	{
-		"name": "ring2",
-		"parent": "ring1",
+		"uid": 2,
+                "name": "ring",
+		"parent": 1,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "orange",
@@ -136,8 +125,9 @@
 	},
 	
 	{
-		"name": "ring3",
-		"parent": "ring2",
+		"uid": 3,
+                "name": "ring",
+		"parent": 2,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "yellow",
@@ -145,8 +135,9 @@
 	},
 	
 	{
-		"name": "ring4",
-		"parent": "ring3",
+		"uid": 4,
+                "name": "ring",
+		"parent": 3,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "light_green",
@@ -154,8 +145,9 @@
 	},
 	
 	{
-		"name": "ring5",
-		"parent": "ring4",
+		"uid": 5,
+                "name": "ring",
+		"parent": 4,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "green",
@@ -163,8 +155,9 @@
 	},
 	
 	{
-		"name": "ring6",
-		"parent": "ring5",
+		"uid": 6,
+                "name": "ring",
+		"parent": 5,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "blue",
@@ -172,8 +165,9 @@
 	},
 	
 	{
-		"name": "ring7",
-		"parent": "ring6",
+		"uid": 7,
+                "name": "ring",
+		"parent": 6,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "violet",
@@ -181,12 +175,29 @@
 	},
 	
 	{
-		"name": "text",
-		"parent": "root",
+		"uid": 8,
+                "name": "text",
+		"parent": 0,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "grey",
 		"mesh": "text"
+	},
+	
+	{
+		"uid": 9,
+                "name": "sun",
+		"position": [ 0,0,0.01425409 ],
+		"rotation": [ -0.8351003,-3.136525,0.2129833 ],
+		"light": "sun"
+	},
+	
+	{
+		"uid": 10,
+                "name": "camera",
+		"position": [ 0,0,-0.5 ],
+		"rotation": [ 0,3.141592,0 ],
+		"camera": "camera"
 	}
 
 ]

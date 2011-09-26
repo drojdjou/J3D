@@ -99,8 +99,8 @@
 		
 		J3D.LightmapAtlas = lightmaps;
 		
-		J3D.Loader.loadJSON(path + "bunker.js", function(jsmeshes) { 
-			J3D.Loader.loadJSON(path + "bunkerScene.js", function(jsscene) { 
+		J3D.Loader.loadJSON(path + "bunker.json", function(jsmeshes) { 
+			J3D.Loader.loadJSON(path + "bunkerScene.json", function(jsscene) { 
 				jsscene.path = path;
 				J3D.Loader.parseJSONScene(jsscene, jsmeshes, engine);
 				fps = engine.scene.find("fps");
@@ -108,9 +108,7 @@
 				draw();
 			})
 		});
-		
-		
-		
+
 		document.onmousemove = onMouseMove;
 		document.onkeydown = onKeyDown;
 		document.onkeyup = onKeyUp;

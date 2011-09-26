@@ -49,9 +49,10 @@ $cameras:{
 "transforms": [
 $transforms:{	
 	{
-		"name": "$it.name$",
+		"uid": $it.UID$,
+                "name": "$it.name$",
 		$if(it.HasParent)$
-		"parent": "$it.Parent$",$endif$
+		"parent": $it.Parent$,$endif$
 		"position": [ $it.Position; separator=","$ ],
 		"rotation": [ $it.Rotation; separator=","$ ],
 		$if(it.HasLight)$

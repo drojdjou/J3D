@@ -62,20 +62,20 @@
 
 		engine = new J3D.Engine();
 		
-		J3D.Loader.loadJSON("models/text.js", function(jsmeshes) { 
-			J3D.Loader.loadJSON("models/textScene.js", function(jsscene) { 
+		J3D.Loader.loadJSON("models/text.json", function(jsmeshes) { 
+			J3D.Loader.loadJSON("models/textScene.json", function(jsscene) { 
 				jsonScene = jsscene;
 				J3D.Loader.parseJSONScene(jsscene, jsmeshes, engine);
 				
 				root = engine.scene.find("root");
 				
-				rings[0] = engine.scene.find("root/ring1");
-				rings[1] = engine.scene.find("root/ring1/ring2");
-				rings[2] = engine.scene.find("root/ring1/ring2/ring3");
-				rings[3] = engine.scene.find("root/ring1/ring2/ring3/ring4");
-				rings[4] = engine.scene.find("root/ring1/ring2/ring3/ring4/ring5");
-				rings[5] = engine.scene.find("root/ring1/ring2/ring3/ring4/ring5/ring6");
-				rings[6] = engine.scene.find("root/ring1/ring2/ring3/ring4/ring5/ring6/ring7");
+				rings[0] = engine.scene.find("root/ring");
+				rings[1] = engine.scene.find("root/ring/ring");
+				rings[2] = engine.scene.find("root/ring/ring/ring");
+				rings[3] = engine.scene.find("root/ring/ring/ring/ring");
+				rings[4] = engine.scene.find("root/ring/ring/ring/ring/ring");
+				rings[5] = engine.scene.find("root/ring/ring/ring/ring/ring/ring");
+				rings[6] = engine.scene.find("root/ring/ring/ring/ring/ring/ring/ring");
 				
 				draw();
 			})

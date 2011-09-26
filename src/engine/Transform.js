@@ -1,6 +1,7 @@
-J3D.Transform = function(n){
+J3D.Transform = function(n, u){
 	var that = this;
 	
+	this.uid = u || 0;
 	this.name = n;
 	
 	var children = [];
