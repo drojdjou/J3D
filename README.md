@@ -8,6 +8,7 @@ It was created by [Bartek Drozdz](http://www.everyday3d.com/)
 ## Tutorials
 
 [How to create a cube](https://github.com/drojdjou/J3D/wiki/How-to-create-a-cube)
+[Unity exporter tutorial](https://github.com/drojdjou/J3D/wiki/Unity-exporter-tutorial)
 
 ## Examples
 
