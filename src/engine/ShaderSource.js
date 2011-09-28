@@ -116,8 +116,8 @@ J3D.ShaderSource.DepthFragment = [
 ""].join("\n");
 
 J3D.ShaderSource.GouraudVertex = [
-	"uniform float uSpecularIntensity;",
-	"uniform float uShininess;",
+	"uniform float specularIntensity;",
+	"uniform float shininess;",
 
 	"varying vec3 vLight;",
 	"varying vec2 vTextureCoord;",
@@ -127,35 +127,35 @@ J3D.ShaderSource.GouraudVertex = [
 	"gl_Position = pMatrix * vMatrix * p;",
 	"vTextureCoord = getTextureCoord(aTextureCoord);",
 	"vec3 n = normalize( nMatrix * aVertexNormal );",
-	"vLight = computeLights(p, n, uSpecularIntensity, uShininess);",
+	"vLight = computeLights(p, n, specularIntensity, shininess);",
 	"}",
 
 ""].join("\n");
 
 J3D.ShaderSource.GouraudFragment = [
-	"uniform vec4 uColor;",
-	"uniform sampler2D uColorSampler;",
-	"uniform bool uHasColorSampler;",
+	"uniform vec4 color;",
+	"uniform sampler2D colorTexture;",
+	"uniform bool hasColorTexture;",
 
 	"varying vec3 vLight;",
 	"varying vec2 vTextureCoord;",
 
 	"void main(void) {",
-	"vec4 tc = uColor.rgba;",
-	"if(uHasColorSampler) tc *= texture2D(uColorSampler, vTextureCoord);",
-	"gl_FragColor = vec4(tc.rgb * vLight, uColor.a);",
+	"vec4 tc = color;",
+	"if(hasColorTexture) tc *= texture2D(colorTexture, vTextureCoord);",
+	"gl_FragColor = vec4(tc.rgb * vLight, color.a);",
 	"}",
 ""].join("\n");
 
 J3D.ShaderSource.LightmapVertex = [
-	"uniform vec4 uLightmapAtlas;",
+	"uniform vec4 lightmapAtlas;",
 
 	"varying vec2 vTextureCoord;",
 	"varying vec2 vTextureCoord2;",
 
 	"void main(void) {",
 	"vTextureCoord = getTextureCoord(aTextureCoord);",
-	"vTextureCoord2 = aTextureCoord2 * uLightmapAtlas.xy + uLightmapAtlas.zw;",
+	"vTextureCoord2 = aTextureCoord2 * lightmapAtlas.xy + lightmapAtlas.zw;",
 
 	"gl_Position = mvpMatrix() * vec4(aVertexPosition, 1.0);",
 	"}",
@@ -163,20 +163,20 @@ J3D.ShaderSource.LightmapVertex = [
 ""].join("\n");
 
 J3D.ShaderSource.LightmapFragment = [
-	"uniform vec4 uColor;",
-	"uniform sampler2D uColorSampler;",
-	"uniform sampler2D uLightmapSampler;",
+	"uniform vec4 color;",
+	"uniform sampler2D colorTexture;",
+	"uniform sampler2D lightmapTexture;",
 
 	"varying vec2 vTextureCoord;",
 	"varying vec2 vTextureCoord2;",
 
 	"void main(void) {",
 
-	"vec4 tc = texture2D(uColorSampler, vTextureCoord);",
-	"vec4 lm = texture2D(uLightmapSampler, vTextureCoord2);",
+	"vec4 tc = texture2D(colorTexture, vTextureCoord);",
+	"vec4 lm = texture2D(lightmapTexture, vTextureCoord2);",
 
 	"if(tc.a < 0.1) discard;",
-	"else gl_FragColor = vec4(uColor.rgb * tc.rgb * lm.rgb, 1.0);",
+	"else gl_FragColor = vec4(color.rgb * tc.rgb * lm.rgb, 1.0);",
 	"}",
 ""].join("\n");
 
@@ -215,12 +215,11 @@ J3D.ShaderSource.PhongVertex = [
 ""].join("\n");
 
 J3D.ShaderSource.PhongFragment = [
-	"uniform vec4 uColor;",
-	"uniform sampler2D uColorSampler;",
-	"uniform bool uHasColorSampler;",
-
-	"uniform float uSpecularIntensity;",
-	"uniform float uShininess;",
+	"uniform vec4 color;",
+	"uniform sampler2D colorTexture;",
+	"uniform bool hasColorTexture;",
+	"uniform float specularIntensity;",
+	"uniform float shininess;",
 
 	"varying vec4 vPosition;",
 	"varying vec3 vLight;",
@@ -228,12 +227,10 @@ J3D.ShaderSource.PhongFragment = [
 	"varying vec3 vNormal;",
 
 	"void main(void) {",
-	"vec4 tc = uColor;",
-	"if(uHasColorSampler) tc *= texture2D(uColorSampler, vTextureCoord);",
-
-	"vec3 l = computeLights(vPosition, vNormal, uSpecularIntensity, uShininess);// * brightness(tc.rgb);",
-
-	"gl_FragColor = vec4(tc.rgb * l, uColor.a);",
+	"vec4 tc = color;",
+	"if(hasColorTexture) tc *= texture2D(colorTexture, vTextureCoord);",
+	"vec3 l = computeLights(vPosition, vNormal, specularIntensity, shininess);",
+	"gl_FragColor = vec4(tc.rgb * l, color.a);",
 	"}",
 ""].join("\n");
 

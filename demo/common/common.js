@@ -1,6 +1,6 @@
 function setLabels(title, desc, madeBy) {
 	
-	var mb = (madeBy != null) ? madeBy : true;
+	var mb = madeBy || true;
 	
 	document.write("<div id='header'>" + title + "</div>");
 	

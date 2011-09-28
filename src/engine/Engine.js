@@ -18,7 +18,8 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
 		gl.viewportHeight = cv.height;
 	} 
 	catch (e) {
-		this.webglEnabled = false;
+		j3dlog("ERROR. Getting webgl context failed!");
+		return;
 	}
 	
 	this.setClearColor(J3D.Color.black);

@@ -55,16 +55,16 @@ varying vec4 vPosition;
 varying vec2 vTextureCoord;
 varying vec3 vNormal;
 
-uniform float uBendAngle;
-uniform vec2 uBounds;
-uniform float uOffset;
-uniform float uBendAxisAngle;
+uniform float bendAngle;
+uniform vec2 bounds;
+uniform float bendOffset;
+uniform float bendAxisAngle;
 
 void main(void) {
 	vTextureCoord = getTextureCoord(aTextureCoord);	
     vNormal = nMatrix * aVertexNormal;
 	
-	vec3 p = bend(aVertexPosition, uBendAngle, uBounds, uOffset, uBendAxisAngle);
+	vec3 p = bend(aVertexPosition, bendAngle, bounds, bendOffset, bendAxisAngle);
 
 	vPosition = mMatrix * vec4(p, 1.0);
     gl_Position = pMatrix * vMatrix * vPosition;
@@ -72,14 +72,14 @@ void main(void) {
 </script>
 
 <script id="paperFragment" type="x-shader/x-filter">
-uniform sampler2D uColorSampler;
+uniform sampler2D colorTexture;
 
 varying vec4 vPosition;
 varying vec2 vTextureCoord;
 varying vec3 vNormal;
 
 void main(void) {
-	gl_FragColor = texture2D(uColorSampler, vTextureCoord);
+	gl_FragColor = texture2D(colorTexture, vTextureCoord);
 }
 </script>
 
@@ -112,14 +112,14 @@ void main(void) {
 		gui.domElement.style.zIndex = 200;
 		document.body.appendChild( gui.domElement );
 		
-		gui.add(properties, 'bendAngle').min(Math.PI * -2).max(Math.PI * 2).listen();
-		
 		gui.add(properties, 'animate').onChange(function(n) {
 		   if(n) a = Math.asin(properties.bendAngle / (Math.PI * 2));
 		});
 		
+		gui.add(properties, 'bendAngle').min(Math.PI * -2).max(Math.PI * 2).listen();
 		gui.add(properties, 'offset').min(0).max(1);
 		gui.add(properties, 'bendAxisAngle').min(Math.PI * -0.5).max(Math.PI * 0.5);
+		
 		gui.add(properties, 'rotationX').min(Math.PI * -0.5).max(Math.PI * 0.5);
 		gui.add(properties, 'rotationY').min(Math.PI * -0.5).max(Math.PI * 0.5);
 		gui.add(properties, 'rotationZ').min(Math.PI * -0.5).max(Math.PI * 0.5);
@@ -139,8 +139,8 @@ void main(void) {
 		var v = document.getElementById("paperVertex").firstChild.nodeValue;
 		var f = document.getElementById("paperFragment").firstChild.nodeValue;
 		paperShader = new J3D.Shader("Paper", v, f);
-		paperShader.uColorSampler = new J3D.Texture("models/textures/firetruck1.jpg");
-		paperShader.uBounds = [-400, 800];
+		paperShader.su.colorTexture = new J3D.Texture("models/textures/firetruck1.jpg");
+		paperShader.su.bounds = [-400, 800];
 
 		photo = new J3D.Transform();
 		photo.renderer = paperShader;
@@ -154,13 +154,13 @@ void main(void) {
 		if (properties.animate) {
 			a += 0.02;
 			properties.bendAngle = Math.sin(a) * Math.PI * 2;
-			paperShader.uBendAngle =  properties.bendAngle;	
+			paperShader.bendAngle =  properties.bendAngle;	
 		} else {
-			paperShader.uBendAngle = properties.bendAngle;
+			paperShader.bendAngle = properties.bendAngle;
 		}
 			
-		paperShader.uOffset = properties.offset;
-		paperShader.uBendAxisAngle = properties.bendAxisAngle;
+		paperShader.bendOffset = properties.offset;
+		paperShader.bendAxisAngle = properties.bendAxisAngle;
 		
 		engine.render();
 		photo.rotation.x = properties.rotationX;

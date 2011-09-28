@@ -8,37 +8,6 @@
 <link rel="stylesheet" href="common/common.css"/>
 <script type="text/javascript" src="common/common.js"></script>
 
-<!--script type="text/javascript" src="../lib/glMatrix.js"></script>
-<script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
-<script type="text/javascript" src="../src/J3D.js"></script>
-<script type="text/javascript" src="../src/util/Color.js"></script>
-<script type="text/javascript" src="../src/math/Vector2.js"></script>
-<script type="text/javascript" src="../src/math/Vector3.js"></script>
-<script type="text/javascript" src="../src/math/Matrix44.js"></script>
-<script type="text/javascript" src="../src/engine/Engine.js"></script>
-<script type="text/javascript" src="../src/engine/Camera.js"></script>
-<script type="text/javascript" src="../src/engine/Light.js"></script>
-<script type="text/javascript" src="../src/engine/Geometry.js"></script>
-<script type="text/javascript" src="../src/engine/Mesh.js"></script>
-<script type="text/javascript" src="../src/engine/Scene.js"></script>
-<script type="text/javascript" src="../src/engine/Loader.js"></script>
-<script type="text/javascript" src="../src/engine/ShaderAtlas.js"></script>
-<script type="text/javascript" src="../src/engine/Texture.js"></script>
-<script type="text/javascript" src="../src/engine/Cubemap.js"></script>
-<script type="text/javascript" src="../src/engine/Transform.js"></script>
-<script type="text/javascript" src="../src/engine/Postprocess.js"></script>
-<script type="text/javascript" src="../src/engine/Primitives.js"></script>
-<script type="text/javascript" src="../src/engine/FrameBuffer.js"></script>
-<script type="text/javascript" src="../src/engine/ShaderSource.js"></script>
-<script type="text/javascript" src="../src/engine/Shader.js"></script>
-<script type="text/javascript" src="../src/renderers/Phong.js"></script>
-<script type="text/javascript" src="../src/renderers/Toon.js"></script>
-<script type="text/javascript" src="../src/renderers/Gouraud.js"></script>
-<script type="text/javascript" src="../src/renderers/Reflective.js"></script>
-<script type="text/javascript" src="../src/renderers/Skybox.js"></script>
-<script type="text/javascript" src="../src/util/Time.js"></script>
-<script type="text/javascript" src="../src/util/ShaderUtil.js"></script-->
-
 <script type="text/javascript" src="../build/j3d.js"></script>
 
 
@@ -46,7 +15,7 @@
 <script>
 	var engine, scene;
 	var theta = 0;
-	var redLightMax = .33;
+	var redLightMax = 0.33;
 	
 	function init() {
 		
@@ -68,7 +37,7 @@
 		
 		light1 = new J3D.Transform();
 		light1.light = new J3D.Light(J3D.DIRECT);
-		light1.light.color = new J3D.Color(.33, .33, 0, 1);
+		light1.light.color = new J3D.Color(0.33, 0.33, 0, 1);
 		light1.light.direction = new v3(0, -1, 0).norm();
 		
 		light2 = new J3D.Transform();
@@ -78,7 +47,7 @@
 		
 		light3 = new J3D.Transform();
 		light3.light = new J3D.Light(J3D.POINT);
-		light3.light.color = new J3D.Color(0, 0, .66, 1);
+		light3.light.color = new J3D.Color(0, 0, 0.66, 1);
 		
 		// Get scene and setup ambient light color
 		
@@ -101,25 +70,33 @@
 		
 		// Setup materials
 		
-		moMat = new J3D.Gouraud();
-		moMat.uSpecularIntensity = 1;
-		moMat.uShininess = 32;
-		moMat.uColor = new J3D.Color(.9,.9,.9,1);
+		moMat = J3D.BuiltinShaders.fetch("Gouraud");
+		moMat.su.specularIntensity = 1;
+		moMat.su.shininess = 32;
+		moMat.su.color = new J3D.Color(0.9, 0.9, 0.9, 1);
+		moMat.hasColorTexture = false;
 
 		
-		ctMat = new J3D.Phong();
-		ctMat.uSpecularIntensity = 10;
-		ctMat.uShininess = 32;
-		ctMat.uColorSampler = new J3D.Texture("models/textures/containerbake512.jpg");
+		ctMat = J3D.BuiltinShaders.fetch("Phong");
+		ctMat.su.color = J3D.Color.white;
+		ctMat.su.specularIntensity = 10;
+		ctMat.su.shininess = 32;
+		ctMat.colorTexture = new J3D.Texture("models/textures/containerbake512.jpg");
+		ctMat.hasColorTexture = true;
 		
-		crMat = new J3D.Phong();
-		crMat.uColorSampler = new J3D.Texture("models/textures/crate256.jpg");
+		crMat = J3D.BuiltinShaders.fetch("Phong");
+		crMat.su.color = new J3D.Color(1,1,1,1);//J3D.Color.white;
+		crMat.su.specularIntensity = 0.1;
+		crMat.su.shininess = 0.1;
+		crMat.colorTexture = new J3D.Texture("models/textures/crate256.jpg");
+		crMat.hasColorTexture = true;
 		
-		haMat = new J3D.Gouraud();
-		haMat.uSpecularIntensity = 1;
-		haMat.uShininess = 32;
-		haMat.uColor = new J3D.Color(1,1,1,1);
-		haMat.uColorSampler = new J3D.Texture("models/textures/metalbase.jpg");
+		haMat = J3D.BuiltinShaders.fetch("Gouraud");
+		haMat.su.specularIntensity = 1;
+		haMat.su.shininess = 32;
+		haMat.su.color = new J3D.Color(1,1,1,1);
+		haMat.colorTexture = new J3D.Texture("models/textures/metalbase.jpg");
+		haMat.hasColorTexture = true;
 		
 		// Setup transforms and meshes
 
@@ -130,7 +107,7 @@
 		
 		mo = new J3D.Transform();
 		J3D.Loader.loadJSON("models/monkeyhi.js", function(j) { mo.geometry = new J3D.Mesh(j); } );
-		mo.scale = v3.ONE().mul(.66);
+		mo.scale = v3.ONE().mul(0.66);
 		mo.renderer = moMat;
 
 		cr = new J3D.Transform();
@@ -159,7 +136,7 @@
 		light3.enabled = document.getElementById("blue").checked;
 		
 		if (document.getElementById("ambient").checked) {
-			scene.ambient = new J3D.Color(.1, .1, .1, 1);
+			scene.ambient = new J3D.Color(0.1, 0.1, 0.1, 1);
 		} else {
 			scene.ambient = J3D.Color.black;
 		}
@@ -192,11 +169,11 @@
 		setLabels("001. Lights");
 	</script>
 	<div id="details">
-		Lights: <input type='checkbox' id='red'> Red 
+		Lights: <input type='checkbox' id='red' checked> Red 
 		<input type='checkbox' id='blue' checked> Blue
-		<input type='checkbox' id='yellow'> Yellow
-		<input type='checkbox' id='ambient'> Ambient | 
-		<input type='checkbox' id='anim'> Rotate models  
+		<input type='checkbox' id='yellow' checked> Yellow
+		<input type='checkbox' id='ambient' checked> Ambient | 
+		<input type='checkbox' id='anim' checked> Rotate models  
 	</div>
 
 <script type="text/javascript">

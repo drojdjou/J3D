@@ -1,5 +1,7 @@
 J3D = {};
 
+J3D.debug = true;
+
 J3D.LightmapAtlas = [];
 
 // Read only global settings

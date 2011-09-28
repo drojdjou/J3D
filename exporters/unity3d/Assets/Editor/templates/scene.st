@@ -18,6 +18,7 @@ $materials:{
 		"type": "$it.Type$",
 		"color": { "r":$it.Color.r$, "g":$it.Color.g$, "b":$it.Color.b$, "a":$it.Color.a$ },
 		"specularIntensity": $it.SpecularIntensity$,
+                "shininess": $it.Shininess$,
 		"textureTile": [ $it.TextureScale; separator=","$ ],
 		"textureOffset": [ $it.TextureOffset; separator=","$ ],
 		$it.Textures; separator=",\n"$

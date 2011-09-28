@@ -26,11 +26,16 @@ J3D.Loader.parseJSONScene = function(jscene, jmeshes, engine) {
 	
 	for(var ms in jscene.materials) {
 		var m = jscene.materials[ms];
-		m = J3D.Loader.fromObject(J3D[m.type], m);
-		m.uColor = J3D.Loader.fromObject(J3D.Color, m.color);
+		m = J3D.Loader.fetchShader(m.type, m);
+		m.color = J3D.Loader.fromObject(J3D.Color, m.color);
 		if(m.textureTile) m.textureTile = J3D.Loader.v2FromArray(m.textureTile);
 		if(m.textureOffset) m.textureOffset = J3D.Loader.v2FromArray(m.textureOffset);
-		if(m.colorTexture) m.uColorSampler = jscene.textures[m.colorTexture];
+		
+		if (m.colorTexture) {
+			m.colorTexture = jscene.textures[m.colorTexture];
+			m.hasColorTexture = true;
+		}
+		
 		jscene.materials[ms] = m;
 	}
 	
@@ -84,6 +89,12 @@ J3D.Loader.parseJSONScene = function(jscene, jmeshes, engine) {
 	}
 }
 
+J3D.Loader.fetchShader = function(type, obj){
+	var t = J3D.BuiltinShaders.fetch(type);
+	for(var p in obj) t[p] = obj[p];
+	return t;
+}
+
 J3D.Loader.fromObject = function(type, obj){
 	var t = new type();
 	for(var p in obj) t[p] = obj[p];
@@ -132,6 +143,5 @@ J3D.Loader.parseGLSL = function(source, isFilter){
 	
 	fs = buf;
 	
-	if(isFilter) return new J3D.Filter("Filter" + Math.round(Math.random() * 1000), fs, vs);
-	else return new J3D.Shader("Shader" + Math.round(Math.random() * 1000), vs, fs);
+	return new J3D.Shader("Shader" + Math.round(Math.random() * 1000), vs, fs);
 }

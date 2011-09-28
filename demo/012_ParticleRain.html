@@ -106,7 +106,7 @@
 		
 		J3D.Loader.loadJSON("models/elephant.js", function(j) {  elephant.geometry = new J3D.Mesh(j); } );		
 		
-		elephant.renderer = new J3D.Phong();
+		elephant.renderer = new J3D.BuiltinShaders.fetch("Phong");
 		
 		sun = new J3D.Transform();
 		sun.light = new J3D.Light(J3D.DIRECT);

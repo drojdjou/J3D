@@ -2,36 +2,30 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 	var that = this;
 	this.tex = gl.createTexture();
 	
-	this.wrapMode = gl.REPEAT;
-	this.magFilter = gl.LINEAR;
-	this.minFilter = gl.LINEAR_MIPMAP_NEAREST;
+	if(!params) params = {};
+	this.loaded = false;
+	this.isVideo = false;
 
-	if (params) {
-		this.onLoad = params.onLoad;
-		this.mipmap = (params.mipmap != null) ? params.mipmap : true;
-		this.flip = (params.flip != null) ? params.flip : true;
-	} else {
-		this.mipmap = true;
-		this.flip = true;
-	}
+	this.onLoad = params.onLoad;
+	this.mipmap = (params.mipmap != null) ? params.mipmap : true;
+	this.flip = (params.flip != null) ? params.flip : true;
+	this.wrapMode = params.wrapMode || gl.REPEAT;
+	this.magFilter = params.magFilter || gl.LINEAR;
+	this.minFilter = params.minFilter || gl.LINEAR_MIPMAP_NEAREST;
+
 	
 	var isPOT = function(x, y){
 	    return x > 0 && y > 0 && (x & (x - 1)) == 0 && (y & (y - 1)) == 0;
 	}
 		
 	var setupTexture = function(){
-		// console.log(that.src.width + " x " + that.src.height + " isPOT: " + isPOT(that.src.width, that.src.height));
+		//j3dlog(that.src.width + " x " + that.src.height + " isPOT: " + isPOT(that.src.width, that.src.height));
 		
 		var p = that.src && isPOT(that.src.width, that.src.height);
 		
 		gl.bindTexture(gl.TEXTURE_2D, that.tex);
-		
-		console.log("Unflip texture " + source + " : " + that.flip);
-		
 		gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, that.flip);
-		
 		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, that.src);
-		
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, that.magFilter);
 		
 		if(p) gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, that.minFilter);
@@ -40,7 +34,8 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 		if (p) {
 			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, that.wrapMode);
 			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, that.wrapMode);
-		} else { // Non-POT textures can only be clamped to edge
+		} else {
+			if(that.wrapMode != gl.CLAMP_TO_EDGE) j3dlog("WARNING! Texture: " + source + " : only CLAMP_TO_EDGE wrapMode is supported for non-power-of-2 textures.");
 			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
 			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 		}
@@ -49,21 +44,66 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 		gl.bindTexture(gl.TEXTURE_2D, null);
 		
 		if(that.onLoad) that.onLoad.call();
+		
+		that.loaded = true;
 	}
 	
-	var load = function(src){
+	var loadImage = function(src){
 		that.src = new Image();
     	that.src.onload = function() {
 			setupTexture();
     	}
 		that.src.src = src;
 	}
+	
+	var loadVideo = function(src){
+		that.isVideo = true;
+		that.src = document.createElement('video');
+	    that.src.src = src;  
+		that.src.preload = 'auto';
+		that.src.addEventListener( "canplaythrough", function() { 
+			that.src.play();
+			//j3dlog("Video " + src + " can play through");
+			//document.body.appendChild(that.src);
+			setupTexture();
+			
+		});
+		
+		that.src.load();
+	}
 
 	if (typeof(source) == "string") {
-		load(source);
+		var ext = source.substring(source.lastIndexOf(".") + 1).toLowerCase();
+		
+		//j3dlog("Extension: " + ext);
+		
+		switch(ext) {
+			case "jpg":
+			case "png":
+			case "gif":
+				loadImage(source);
+				break;
+			case "mp4":
+			case "webm":
+			case "ogv":
+				loadVideo(source);
+				break;
+		}
+		
+	} else if(!!source.getContext) {
+		that.src = source;
+		setupTexture();
 	}
 }
 
+J3D.Texture.prototype.update = function() {
+	if(!this.loaded || !this.isVideo) return;
+	gl.bindTexture(gl.TEXTURE_2D, this.tex);
+	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, this.src);
+	gl.bindTexture(gl.TEXTURE_2D, null);
+}
+
 J3D.Texture.prototype.toUniform = function(){
+	this.update();
 	return this.tex;
 }

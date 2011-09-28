@@ -1,7 +1,7 @@
 <html> 
  
 <head> 
-<title>007 | Texture tile and offset | J3D</title> 
+<title>007 | Canvas Texture | J3D</title> 
 
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
 
@@ -54,41 +54,57 @@
 	function init() {
 		if(!checkWebGL()) return;
 		
-		var texpath = "models/textures/checkerboard.png";
+		canvas = document.createElement("canvas");
+		canvas.width = 256;
+		canvas.height = 256;
+		var ctx = canvas.getContext("2d");
+		
+		ctx.fillStyle = "#87b95a";//"#ffa144";
+		ctx.fillRect(0,0,128,128);
+		ctx.fillRect(128,128,128,128);
+		
+		ctx.fillStyle = "#1f5a7c";
+		ctx.fillRect(128,0,128,128);
+		ctx.fillRect(0,128,128,128);
 		
 		engine = new J3D.Engine();
 		engine.setClearColor(J3D.Color.white);		
-		engine.scene.ambient = new J3D.Color(.75, .75, .75, 1);
+		engine.scene.ambient = new J3D.Color(0.75, 0.75, 0.75, 1);
+		
+		var canvasTexture = new J3D.Texture(canvas);
 		
 		sun = new J3D.Transform();
 		sun.light = new J3D.Light(J3D.DIRECT);
-		sun.light.color = new J3D.Color(.75, .75, .75, 1);
+		sun.light.color = new J3D.Color(0.75, 0.75, 0.75, 1);
 		sun.light.direction = new v3(0, -1, 0).norm();
 		
 		cube1 = new J3D.Transform();	
 		cube1.position.x = -2;
-		cube1.renderer = new J3D.Gouraud();
+		cube1.renderer = J3D.BuiltinShaders.fetch("Gouraud");
 		cube1.renderer.textureTile = new v2(0.5, 0.5);
-		cube1.renderer.uColorSampler = new J3D.Texture(texpath);
+		cube1.renderer.su.colorTexture = canvasTexture;
+		cube1.renderer.hasColorTexture = true;
 		cube1.textureOffset = new v2(0.66, 0.66);
 		
 		cube2 = new J3D.Transform();	
 		cube2.position.x = 0;
-		cube2.renderer = new J3D.Phong();
-		cube2.renderer.uColorSampler = new J3D.Texture(texpath);
+		cube2.renderer = J3D.BuiltinShaders.fetch("Phong");
+		cube2.renderer.su.colorTexture = canvasTexture;
+		cube2.renderer.hasColorTexture = true;
 		
 		/*
 		 *  There are two ways to specify tile and offset values: per renderer and per object
 		 *  If settings are specified per object they override whatever was set per renderer.
 		 */
 		
-		cube2.renderer.textureTile = new v2(4, 4); // <- per renderer (will be used by all object that share this renderer)
+		cube2.renderer.textureTile = new v2(4, 4); // <- per renderer (will be used by all objects that share this renderer)
 		cube2.textureTile = new v2(2, 2); // <- comment out to use renderers settings above
 		
 		cube3 = new J3D.Transform();	
 		cube3.position.x = 2;
-		cube3.renderer = new J3D.Gouraud();
-		cube3.renderer.uColorSampler = new J3D.Texture(texpath);
+		cube3.renderer = J3D.BuiltinShaders.fetch("Gouraud");
+		cube3.renderer.su.colorTexture = canvasTexture;
+		cube3.renderer.hasColorTexture = true;
 		
 		cubemesh = J3D.Primitive.Cube(1, 1, 1); 
 		cube1.geometry = cubemesh;
@@ -101,7 +117,6 @@
 		engine.camera = camera;
 
 		engine.scene.add(camera, sun, cube1, cube2, cube3);
-
 		draw();
 	}
 	
@@ -132,7 +147,7 @@
 <body onload="init();">
 	
 	<script>
-		setLabels("007. Texture tile, offset and animation");
+		setLabels("007. Canvas texture", "Texture with tile, offset and animation");
 	</script>
 	
 <script type="text/javascript">

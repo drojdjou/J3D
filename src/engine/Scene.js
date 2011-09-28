@@ -7,13 +7,15 @@ J3D.Scene = function() {
 	this.skybox;
 	
 	this.add = function() {
+		var fa;
 		for (var i = 0; i < arguments.length; i++) {
 			var t = arguments[i];
+			if(!fa) fa = t;
 			children.push(t);
 			t.parent = null;
 			that.numChildren = children.length;
 		}
-		return this;
+		return fa;
 	}
 	
 	this.childAt = function(i){
@@ -22,7 +24,7 @@ J3D.Scene = function() {
 
 	this.addSkybox = function(cubemap) {
 		this.skybox = new J3D.Transform();
-		this.skybox.renderer = new J3D.Skybox();
+		this.skybox.renderer = new J3D.BuiltinShaders.fetch("Skybox");
 		this.skybox.renderer.uCubemap = cubemap;
 		this.skybox.geometry = J3D.Primitive.Cube(1, 1, 1).flip();
 	}

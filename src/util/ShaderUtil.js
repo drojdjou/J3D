@@ -65,7 +65,7 @@ J3D.ShaderUtil.setUniform = function(name, dst, src) {
 	if(!n) return;
 
 	var v = src[name];
-	if(v.toUniform) v = v.toUniform();
+	if(v.toUniform) v = v.toUniform(n.type);
 
 	switch (n.type) {
 		case gl.BYTE:

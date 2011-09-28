@@ -5,6 +5,7 @@ echo "[Compiling JS source files]"
 java \
 -jar build/compiler.jar \
 --js_output_file ../build/j3dt.js \
+--js ../src/util/Logger.js \
 --js ../src/J3D.js \
 --js ../src/math/Vector3.js \
 --js ../src/math/Vector2.js \
@@ -26,16 +27,11 @@ java \
 --js ../src/engine/Primitives.js \
 --js ../src/engine/Shader.js \
 --js ../src/engine/ShaderSource.js \
---js ../src/renderers/Phong.js \
---js ../src/renderers/Gouraud.js \
---js ../src/renderers/Reflective.js \
---js ../src/renderers/Skybox.js \
---js ../src/renderers/Lightmap.js \
---js ../src/renderers/Toon.js \
 --js ../src/util/Color.js \
 --js ../src/util/Time.js \
 --js ../src/util/ParticleUtil.js \
 --js ../src/util/ShaderUtil.js \
+--js ../src/engine/BuiltinShaders.js \
 --js ../lib/requestAnimationFrame.js \
 --warning_level QUIET
 

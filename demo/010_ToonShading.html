@@ -76,7 +76,7 @@
 		
 		J3D.Loader.loadJSON("models/elephant.js", function(j) {  elephant.geometry = new J3D.Mesh(j); } );		
 		
-		elephant.renderer = new J3D.Toon();
+		elephant.renderer = J3D.BuiltinShaders.fetch("Toon");
 		elephant.renderer.uColorSampler = ramp1;
 		
 		var camera = new J3D.Transform();

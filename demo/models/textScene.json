@@ -12,7 +12,8 @@
 	"violet": { 
 		"type": "Phong",
 		"color": { "r":0.6074271, "g":0, "b":1, "a":1 },
-		"specularIntensity": 31.54149,
+		"specularIntensity": 0,
+                "shininess": 0,
 		"textureTile": [  ],
 		"textureOffset": [  ]
 	},
@@ -20,7 +21,8 @@
 	"yellow": { 
 		"type": "Phong",
 		"color": { "r":1, "g":1, "b":0, "a":1 },
-		"specularIntensity": 29.65015,
+		"specularIntensity": 0,
+                "shininess": 0,
 		"textureTile": [  ],
 		"textureOffset": [  ]
 	},
@@ -28,7 +30,8 @@
 	"grey": { 
 		"type": "Gouraud",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
-		"specularIntensity": 80.71642,
+		"specularIntensity": 1,
+                "shininess": 1,
 		"textureTile": [  ],
 		"textureOffset": [  ]
 	},
@@ -36,7 +39,8 @@
 	"green": { 
 		"type": "Phong",
 		"color": { "r":0, "g":1, "b":0, "a":1 },
-		"specularIntensity": 76.93373,
+		"specularIntensity": 0,
+                "shininess": 0,
 		"textureTile": [  ],
 		"textureOffset": [  ]
 	},
@@ -44,7 +48,8 @@
 	"light_green": { 
 		"type": "Phong",
 		"color": { "r":0.7078295, "g":1, "b":0, "a":1 },
-		"specularIntensity": 31.54149,
+		"specularIntensity": 0,
+                "shininess": 0,
 		"textureTile": [  ],
 		"textureOffset": [  ]
 	},
@@ -52,7 +57,8 @@
 	"orange": { 
 		"type": "Phong",
 		"color": { "r":1, "g":0.4980392, "b":0, "a":1 },
-		"specularIntensity": 27.7588,
+		"specularIntensity": 0,
+                "shininess": 0,
 		"textureTile": [  ],
 		"textureOffset": [  ]
 	},
@@ -61,6 +67,7 @@
 		"type": "Phong",
 		"color": { "r":1, "g":0, "b":0, "a":1 },
 		"specularIntensity": 0,
+                "shininess": 0,
 		"textureTile": [  ],
 		"textureOffset": [  ]
 	},
@@ -68,7 +75,8 @@
 	"blue": { 
 		"type": "Phong",
 		"color": { "r":0, "g":0.4980392, "b":1, "a":1 },
-		"specularIntensity": 8.845374,
+		"specularIntensity": 0.1487512,
+                "shininess": 0.7192537,
 		"textureTile": [  ],
 		"textureOffset": [  ]
 	}
@@ -98,30 +106,18 @@
 "transforms": [
 	
 	{
-		"uid": 0,
-                "name": "root",
-		"position": [ 0,0,2 ],
-		"rotation": [ 0,0,0 ]
-	},
-	
-	{
 		"uid": 1,
-                "name": "ring",
-		"parent": 0,
-		"position": [ 0,0,0 ],
-		"rotation": [ 0,0,0 ],
-		"renderer": "redlight",
-		"mesh": "ring1"
+                "name": "sun",
+		"position": [ 0,0,0.01425409 ],
+		"rotation": [ -0.8351003,-3.136525,0.2129833 ],
+		"light": "sun"
 	},
 	
 	{
 		"uid": 2,
-                "name": "ring",
-		"parent": 1,
-		"position": [ 0,0,0 ],
-		"rotation": [ 0,0,0 ],
-		"renderer": "orange",
-		"mesh": "ring2"
+                "name": "root",
+		"position": [ 0,0,2 ],
+		"rotation": [ 0,0,0 ]
 	},
 	
 	{
@@ -130,8 +126,8 @@
 		"parent": 2,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
-		"renderer": "yellow",
-		"mesh": "ring3"
+		"renderer": "redlight",
+		"mesh": "ring1"
 	},
 	
 	{
@@ -140,8 +136,8 @@
 		"parent": 3,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
-		"renderer": "light_green",
-		"mesh": "ring4"
+		"renderer": "orange",
+		"mesh": "ring2"
 	},
 	
 	{
@@ -150,8 +146,8 @@
 		"parent": 4,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
-		"renderer": "green",
-		"mesh": "ring5"
+		"renderer": "yellow",
+		"mesh": "ring3"
 	},
 	
 	{
@@ -160,8 +156,8 @@
 		"parent": 5,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
-		"renderer": "blue",
-		"mesh": "ring6"
+		"renderer": "light_green",
+		"mesh": "ring4"
 	},
 	
 	{
@@ -170,14 +166,34 @@
 		"parent": 6,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
+		"renderer": "green",
+		"mesh": "ring5"
+	},
+	
+	{
+		"uid": 8,
+                "name": "ring",
+		"parent": 7,
+		"position": [ 0,0,0 ],
+		"rotation": [ 0,0,0 ],
+		"renderer": "blue",
+		"mesh": "ring6"
+	},
+	
+	{
+		"uid": 9,
+                "name": "ring",
+		"parent": 8,
+		"position": [ 0,0,0 ],
+		"rotation": [ 0,0,0 ],
 		"renderer": "violet",
 		"mesh": "ring7"
 	},
 	
 	{
-		"uid": 8,
+		"uid": 10,
                 "name": "text",
-		"parent": 0,
+		"parent": 2,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "grey",
@@ -185,15 +201,7 @@
 	},
 	
 	{
-		"uid": 9,
-                "name": "sun",
-		"position": [ 0,0,0.01425409 ],
-		"rotation": [ -0.8351003,-3.136525,0.2129833 ],
-		"light": "sun"
-	},
-	
-	{
-		"uid": 10,
+		"uid": 11,
                 "name": "camera",
 		"position": [ 0,0,-0.5 ],
 		"rotation": [ 0,3.141592,0 ],

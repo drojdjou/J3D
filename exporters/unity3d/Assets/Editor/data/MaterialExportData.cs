@@ -55,9 +55,20 @@ public class MaterialExportData
 		}
 	}
 	
+	public string Shininess {
+		get {
+			return (m.HasProperty ("_Shininess")) ? (m.GetFloat ("_Shininess")).ToString (ExporterProps.LN) : "0";
+		}
+	}
+	
 	public string SpecularIntensity {
 		get {
-			return (m.HasProperty("_Shininess")) ? (m.GetFloat ("_Shininess")*128).ToString (ExporterProps.LN) : "0";
+			if (!m.HasProperty ("_SpecColor")) {
+				return "0";
+			} else {
+				Color sc = m.GetColor ("_SpecColor");
+				return (sc.r * sc.g * sc.b).ToString (ExporterProps.LN);
+			}
 		}
 	}
 }

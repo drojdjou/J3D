@@ -17,6 +17,8 @@ J3D.Postprocess.prototype.render = function() {
 J3D.Postprocess.prototype.renderEffect = function(texture) {
 	this.program = engine.shaderAtlas.getFilter(this.filter);
 	
+	this.filter.setup(this.program);
+	
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 	gl.useProgram(this.program);
 	

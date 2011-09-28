@@ -86,7 +86,7 @@
 		
 		J3D.Loader.loadJSON("models/monkeyhi.js", function(j) {  cube.geometry = new J3D.Mesh(j); } );		
 		
-		cube.renderer = new J3D.Phong();
+		cube.renderer = J3D.BuiltinShaders.fetch("Phong");
 		cube.renderer.specularIntensity = 10;
 		cube.renderer.shininess = 32;
 		

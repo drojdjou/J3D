@@ -13,8 +13,9 @@ J3D.Color = function(r, g, b, a){
 		return [that.r, that.g, that.b];
 	}
 	
-	this.toUniform = function(){
-		return this.rgba();
+	this.toUniform = function(type){
+		if(type == gl.FLOAT_VEC3) return this.rgb();
+		else return this.rgba();
 	}
 }
 
