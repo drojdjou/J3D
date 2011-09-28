@@ -38,7 +38,12 @@
 <script type="text/javascript" src="../build/j3d.js"></script>
 
 
-<script id="particleVertexShader" type="x-shader/x-vertex"> 
+<script id="particleShader" type="x-shader"> 
+	//#name ParticleShader
+	//#include CommonInclude
+	
+	//#vertex
+	//#include VertexInclude
 	varying vec4 vColor;
 	varying float eyeDist;
 	
@@ -51,9 +56,8 @@
 		gl_Position = pMatrix * vMatrix * worldPos;
 		gl_PointSize = 2.0 * (1.0 - eyeDist);
 	}
-</script>
-
-<script id="particleFragmentShader" type="x-shader/x-fragment"> 
+	
+	//#fragment
 	uniform vec4 uColor;
 	
 	varying vec4 vColor;
@@ -81,9 +85,8 @@
 
 		stars = new J3D.Transform();	
 		
-		var v = document.getElementById("particleVertexShader").firstChild.nodeValue;
-		var f = document.getElementById("particleFragmentShader").firstChild.nodeValue;
-		stars.renderer = new J3D.Shader("StaticParticle", v, f);
+		var shsrc = document.getElementById("particleShader").firstChild.nodeValue;
+		stars.renderer = new J3D.ShaderUtil.parseGLSL(shsrc);
 		stars.renderer.drawMode = gl.POINTS;
 			
 		var a = getParticleAmount();

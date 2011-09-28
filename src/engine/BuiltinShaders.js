@@ -11,21 +11,21 @@ J3D.BuiltinShaders = (function() {
 		}
 	}
 	
-	var p = new J3D.Shader("Phong", J3D.ShaderSource.PhongVertex, J3D.ShaderSource.PhongFragment);
+	var p = J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Phong);
 	p.su.color = J3D.Color.white;
     //p.su.specularIntensity = 0;
     //p.su.shininess = 0;
 	p.hasColorTexture = false;
 	shaders.Phong = p;
 	
-	var g = new J3D.Shader("Gouraud", J3D.ShaderSource.GouraudVertex, J3D.ShaderSource.GouraudFragment);
+	var g = J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Gouraud);
 	g.su.color = J3D.Color.white;
 	//g.su.specularIntensity = 0;
 	//g.su.shininess = 0;
 	g.hasColorTexture = false;
 	shaders.Gouraud = g;
 	
-	var l = new J3D.Shader("Lightmap", J3D.ShaderSource.LightmapVertex, J3D.ShaderSource.LightmapFragment);
+	var l =  J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Lightmap);
 	l.setup = function(shader, transform) {
 	    for (var s in shader.uniforms) {
 			if (s == "lightmapTexture") {
@@ -39,9 +39,9 @@ J3D.BuiltinShaders = (function() {
 	}
 	shaders.Lightmap = l;
 	
-	shaders.Toon = new J3D.Shader("Toon", J3D.ShaderSource.ToonVertex, J3D.ShaderSource.ToonFragment);
-	shaders.Reflective = new J3D.Shader("Reflective", J3D.ShaderSource.ReflectiveVertex, J3D.ShaderSource.ReflectiveFragment);
-	shaders.Skybox = new J3D.Shader("Skybox", J3D.ShaderSource.SkyboxVertex, J3D.ShaderSource.SkyboxFragment);
+	shaders.Toon =  J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Toon);
+	shaders.Reflective =  J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Reflective);
+	shaders.Skybox =  J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Skybox);
 
 	return { shaders:shaders, fetch:fetch };
 }());

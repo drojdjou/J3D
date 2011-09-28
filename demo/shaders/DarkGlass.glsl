@@ -1,4 +1,10 @@
-//# DarkGlassVertex
+//#name DarkGlass
+//#author bartekd
+
+//#include CommonInclude
+
+//#vertex
+//#include VertexInclude
 varying vec2 vTexCoord;
 varying vec3 vNormal;
 varying vec3 tr;
@@ -17,7 +23,7 @@ void main(void) {
 	vNormal = normalize(nMatrix * aVertexNormal);	
 	vec3 incident = normalize((mp * mMatrix).xyz - uEyePosition);
 	
-	//t = reflect(incident, vNormal);	
+	// t = reflect(incident, vNormal);	
 	tr = refract(incident, vNormal, chromaticDispertion.x);
 	tg = refract(incident, vNormal, chromaticDispertion.y);
 	tb = refract(incident, vNormal, chromaticDispertion.z);
@@ -28,7 +34,7 @@ void main(void) {
 	vTexCoord = aTextureCoord;
 }
 
-//# DarkGlassFragment
+//#fragment
 uniform samplerCube uCubemap;
 uniform sampler2D uColorTexture;
 

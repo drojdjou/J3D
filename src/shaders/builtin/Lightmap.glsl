@@ -1,4 +1,10 @@
-//# LightmapVertex
+//#name Lightmap
+//#author bartekd
+
+//#include CommonInclude
+
+//#vertex
+//#include VertexInclude
 uniform vec4 lightmapAtlas;
 
 varying vec2 vTextureCoord;
@@ -11,7 +17,7 @@ void main(void) {
 	gl_Position = mvpMatrix() * vec4(aVertexPosition, 1.0);
 }
 
-//# LightmapFragment
+//#fragment
 uniform vec4 color;
 uniform sampler2D colorTexture;
 uniform sampler2D lightmapTexture;

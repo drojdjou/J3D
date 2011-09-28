@@ -44,7 +44,16 @@
 
 
 
-<script id="basicFilter" type="x-shader/x-filter">
+<script id="filter" type="x-shader">
+	//#name BasicFilter
+	//#author bartekd
+	
+	//#include CommonFilterInclude
+	
+	//#vertex
+	//#include BasicFilterVertex
+	
+	//#fragment
 	uniform sampler2D uTexture;
 	
 	varying vec2 vTextureCoord;
@@ -98,7 +107,7 @@
 		engine.scene.add(camera, cube, sun);
 
 		post = new J3D.Postprocess(engine);
-		post.filter = new J3D.Shader("BasicFilter", J3D.ShaderSource.BasicFilterVertex, document.getElementById("basicFilter").firstChild.nodeValue);
+		post.filter = new J3D.ShaderUtil.parseGLSL(document.getElementById("filter").firstChild.nodeValue);
 
 		draw();
 	}

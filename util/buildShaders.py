@@ -8,18 +8,17 @@ isw = False
 jsf.write("// File generated with util/buildShaders.py. Do not edit //\n\n")
 jsf.write("J3D.ShaderSource = {};\n\n")
 
-for infile in glob.glob( "../src/shaders/*.glsl" ):
-	
+for infile in glob.glob( "../src/shaders/*/*.glsl" ):
 	glsl = open(infile, 'r')
 	
-	for line in glsl:
-		
-		if line.strip().startswith("//# "):
+	for line in glsl:		
+		if line.strip().startswith("//#name "):
 			if isw:
 				jsf.write("\"\"].join(\"\\n\");\n\n")
-			jsf.write("J3D.ShaderSource." + line[4:len(line)].strip() + " = [\n")
+			jsf.write("J3D.ShaderSource." + line[7:len(line)].strip() + " = [\n")
+			jsf.write(	"\t\"" + line.strip() + "\",\n",)
 			isw = True
-		elif line.strip().startswith("//"):
+		elif line.strip().startswith("// "):
 			jsf.write("") # Don't copy comments
 		elif line.strip() == "":
 			jsf.write("\n")
@@ -30,5 +29,6 @@ for infile in glob.glob( "../src/shaders/*.glsl" ):
 	if isw:
 		jsf.write("\"\"].join(\"\\n\");\n\n")
 	isw = False
+
 jsf.close()
 

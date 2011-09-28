@@ -1,6 +1,6 @@
-J3D.Shader = function(n, v, f) {
+J3D.Shader = function(n, v, f, m) {
 	if(!n) throw new Error("You must specify a name for custom shaders");
-	if(!v || !f) throw new Error("You must pass a vertex and fragment shader source for custom shaders");
+	if(v == null || f == null) throw new Error("You must pass a vertex and fragment shader source for custom shaders");
 	
 	this.name = n;
 	this.drawMode = 0x0004;// <- gl.TRIANGLES, but since it can be called before J3D.Engine and gl are initialized, let's use the value directly
@@ -11,6 +11,8 @@ J3D.Shader = function(n, v, f) {
 	this.reloadStaticUniforms = true;
 	this.su = {};
 	this.loadedStaticTextures = {};
+	
+	this.metaData = m || {};
 }
 
 J3D.Shader.prototype.vertSource = function() {

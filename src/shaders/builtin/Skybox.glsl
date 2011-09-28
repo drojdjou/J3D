@@ -1,4 +1,10 @@
-//# SkyboxVertex
+//#name Skybox
+//#author bartekd
+
+//#include CommonInclude
+
+//#vertex
+//#include VertexInclude
 uniform float mid;
 
 varying vec3 vVertexPosition;
@@ -8,7 +14,7 @@ void main(void) {
 	vVertexPosition = aVertexPosition;	
 }
 
-//# SkyboxFragment
+//#fragment
 uniform samplerCube uCubemap;
 
 varying vec3 vVertexPosition;

@@ -1,4 +1,10 @@
-//# GoldHeadVertex
+//#name GoldHead
+//#author bartekd
+
+//#include CommonInclude
+
+//#vertex
+//#include VertexInclude
 varying vec2 vTexCoord;
 varying vec4 vPosition;
 varying vec3 vNormal;
@@ -15,7 +21,7 @@ void main(void) {
 	vDir = (1.0 + dot(incident, vNormal)) / 2.0;
 }
 
-//# GoldHeadFragment
+//#fragment
 uniform samplerCube uCubemap;
 uniform sampler2D uColorTexture;
 

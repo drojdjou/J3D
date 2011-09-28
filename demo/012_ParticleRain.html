@@ -48,12 +48,16 @@
 
 <script type="text/javascript" src="../build/j3d.js"></script>
 
-<script id="rainVertex" type="x-shader/x-vertex">
+<script id="rain" type="x-shader">
+	//#name Rain
+	//#author bartekd
+	
+	//#include CommonFilterInclude
+	
+	//#vertex
 	attribute vec4 aParticle;
 	uniform sampler2D uTexture;	
-	uniform float uTime;
-	
-	
+
 	varying vec4 vParticle;
 	varying float illum;
 
@@ -77,9 +81,8 @@
 		
 		vParticle = pt;
 	}
-</script>
-
-<script id="rainFragment" type="x-shader/x-filter">
+	
+	//#fragment
 	varying vec4 vParticle;
 	varying float illum;
 
@@ -87,6 +90,7 @@
 		float a = (0.2 + illum * 0.8) * sin(uTime * vParticle.w + vParticle.w);
 		gl_FragColor = vec4(a,a,a,  1.0);
 	}
+
 </script>
 
 <script>
@@ -123,10 +127,7 @@
 		post = new J3D.Postprocess(engine);
 		post.drawMode = gl.POINTS;
 		
-		post.filter = new J3D.Shader("RainFilter", 
-			document.getElementById("rainVertex").firstChild.nodeValue, 
-			document.getElementById("rainFragment").firstChild.nodeValue
-		);
+		post.filter = new J3D.ShaderUtil.parseGLSL(document.getElementById("rain").firstChild.nodeValue);
 		
 		var cd = [];
 		for(var i = 0; i < 50000; i++) {

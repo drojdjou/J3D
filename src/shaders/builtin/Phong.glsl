@@ -1,4 +1,11 @@
-//# PhongVertex
+//#name Phong
+//#description Classic phong shader
+//#author bartekd
+
+//#include CommonInclude
+
+//#vertex
+//#include VertexInclude
 varying vec4 vPosition;
 varying vec3 vLight;
 varying vec2 vTextureCoord;
@@ -12,7 +19,7 @@ void main(void) {
     gl_PointSize = 5.0;
 }
 
-//# PhongFragment
+//#fragment
 uniform vec4 color;
 uniform sampler2D colorTexture;
 uniform bool hasColorTexture;

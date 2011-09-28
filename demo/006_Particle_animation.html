@@ -45,7 +45,12 @@
 
 
 
-<script id="particleVertexShader" type="x-shader/x-vertex"> 
+<script id="particleShader" type="x-shader/x-vertex"> 
+	//#name ParticleShader
+	//#include CommonInclude
+	
+	//#vertex
+	//#include VertexInclude
 	attribute vec2 aVertexAnimation;
 	
 	varying vec4 vColor;
@@ -75,9 +80,8 @@
 		
 		
 	}
-</script>
 
-<script id="particleFragmentShader" type="x-shader/x-fragment"> 
+	//#fragment
 	uniform vec4 uColor;
 	uniform sampler2D uParticleTex;
 	
@@ -108,9 +112,8 @@
 
 		stars = new J3D.Transform();	
 		
-		var v = document.getElementById("particleVertexShader").firstChild.nodeValue;
-		var f = document.getElementById("particleFragmentShader").firstChild.nodeValue;
-		stars.renderer = new J3D.Shader("ParticleStream", v, f);
+		var shsrc = document.getElementById("particleShader").firstChild.nodeValue;
+		stars.renderer = new J3D.ShaderUtil.parseGLSL(shsrc);
 		stars.renderer.drawMode = gl.POINTS;
 		stars.renderer.uColor = [0.8, 0.3, 0.2, 1];
 		stars.renderer.uParticleTex = new J3D.Texture("models/textures/smoke.png");

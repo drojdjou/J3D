@@ -139,3 +139,68 @@ J3D.ShaderUtil.setUniform = function(name, dst, src) {
 			return "WARNING! Unknown uniform type ( 0x" + n.type.toString(16) + " )";
 	}
 }
+
+J3D.ShaderUtil.parseGLSL = function(source){
+	var vs = "";
+	var fs = "";
+	
+	var ls = source.split("\n");
+	var buf = "";
+	var meta = {};
+	meta.includes = [];
+	meta.vertexIncludes = [];
+	meta.fragmentIncludes = [];
+	var section = 0;
+	
+	var checkMetaData = function(tag, line) {
+		var p = line.indexOf(tag);
+		
+		if(p > -1) {
+			var d = line.substring(p + tag.length + 1);
+//			j3dlog("Tag: " + tag + " (" + section + ") Value: " + d);
+			return d;
+		}
+		
+		return null;
+	}
+	
+	for(var i = 0; i < ls.length; i++) {
+		if(ls[i].indexOf("//#") > -1) {
+			if (ls[i].indexOf("fragment") > -1) {
+				vs = buf;
+				buf = "";
+				section++;
+			} else if (ls[i].indexOf("vertex") > -1) {
+				section++;
+			} else {	
+				meta.name = meta.name || checkMetaData("name", ls[i]);
+//				meta.author = meta.author || checkMetaData("author", ls[i]);
+//				meta.description = meta.description || checkMetaData("description", ls[i]);
+				
+				var inc = checkMetaData("include", ls[i]);
+				if(inc) {
+					switch(section){
+						case 0:
+							meta.includes.push(inc); 
+							break;
+						case 1:
+							meta.vertexIncludes.push(inc); 
+							break;
+						case 2:
+							meta.fragmentIncludes.push(inc); 
+							break;
+					}
+				}
+			}
+		} else {
+			var l = ls[i];
+			if(l.indexOf("//") > -1) l = l.substring(0, l.indexOf("//"));
+			buf += l;
+		}
+	}
+	
+	fs = buf;
+
+	var n = meta.name || "Shader" + Math.round(Math.random() * 1000);
+	return new J3D.Shader(n, vs, fs, meta);
+}

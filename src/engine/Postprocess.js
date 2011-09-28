@@ -15,7 +15,7 @@ J3D.Postprocess.prototype.render = function() {
 }
 	
 J3D.Postprocess.prototype.renderEffect = function(texture) {
-	this.program = engine.shaderAtlas.getFilter(this.filter);
+	this.program = engine.shaderAtlas.getShader(this.filter);
 	
 	this.filter.setup(this.program);
 	

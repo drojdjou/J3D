@@ -1,4 +1,10 @@
-//# Normal2ColorVertex
+//#name Normal2Color
+//#author bartekd
+
+//#include CommonInclude
+
+//#vertex
+//#include VertexInclude
 varying vec3 vColor;
 
 void main(void) {
@@ -6,7 +12,7 @@ void main(void) {
 	vColor = normalize( aVertexNormal / 2.0 + vec3(0.5) );	
 }
 
-//# Normal2ColorFragment
+//#fragment
 varying vec3 vColor;
 
 void main(void) {

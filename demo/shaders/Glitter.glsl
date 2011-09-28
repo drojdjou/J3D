@@ -1,4 +1,10 @@
-//# GlitterVertex
+//#name Glitter
+//#author bartekd
+
+//#include CommonInclude
+
+//#vertex
+//#include VertexInclude
 varying float vLight;
 varying vec2 vTextureCoord;
 varying float vTime;
@@ -33,7 +39,7 @@ void main(void) {
 	vTime = (sin(uTime * 2.0 + aVertexNormal.x +  aTextureCoord.y) + 1.0);
 }
 
-//# GlitterFragment
+//#fragment
 uniform sampler2D uColorSampler;
 uniform sampler2D uParticle;
 

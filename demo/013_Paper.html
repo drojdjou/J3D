@@ -50,37 +50,42 @@
 <script type="text/javascript" src="../build/j3d.js"></script>
 
 
-<script id="paperVertex" type="x-shader/x-vertex">
-varying vec4 vPosition;
-varying vec2 vTextureCoord;
-varying vec3 vNormal;
-
-uniform float bendAngle;
-uniform vec2 bounds;
-uniform float bendOffset;
-uniform float bendAxisAngle;
-
-void main(void) {
-	vTextureCoord = getTextureCoord(aTextureCoord);	
-    vNormal = nMatrix * aVertexNormal;
+<script id="paper" type="x-shader">
+	//#name Paper
+	//#include CommonInclude
 	
-	vec3 p = bend(aVertexPosition, bendAngle, bounds, bendOffset, bendAxisAngle);
-
-	vPosition = mMatrix * vec4(p, 1.0);
-    gl_Position = pMatrix * vMatrix * vPosition;
-}
-</script>
-
-<script id="paperFragment" type="x-shader/x-filter">
-uniform sampler2D colorTexture;
-
-varying vec4 vPosition;
-varying vec2 vTextureCoord;
-varying vec3 vNormal;
-
-void main(void) {
-	gl_FragColor = texture2D(colorTexture, vTextureCoord);
-}
+	//#vertex
+	//#include VertexInclude
+	//#include Modifiers
+	varying vec4 vPosition;
+	varying vec2 vTextureCoord;
+	varying vec3 vNormal;
+	
+	uniform float bendAngle;
+	uniform vec2 bounds;
+	uniform float bendOffset;
+	uniform float bendAxisAngle;
+	
+	void main(void) {
+		vTextureCoord = getTextureCoord(aTextureCoord);	
+	    vNormal = nMatrix * aVertexNormal;
+		
+		vec3 p = bend(aVertexPosition, bendAngle, bounds, bendOffset, bendAxisAngle);
+	
+		vPosition = mMatrix * vec4(p, 1.0);
+	    gl_Position = pMatrix * vMatrix * vPosition;
+	}
+	
+	//#fragment
+	uniform sampler2D colorTexture;
+	
+	varying vec4 vPosition;
+	varying vec2 vTextureCoord;
+	varying vec3 vNormal;
+	
+	void main(void) {
+		gl_FragColor = texture2D(colorTexture, vTextureCoord);
+	}
 </script>
 
 <script>
@@ -136,9 +141,8 @@ void main(void) {
 		engine.camera = camera;
 		engine.scene.add(camera);
 
-		var v = document.getElementById("paperVertex").firstChild.nodeValue;
-		var f = document.getElementById("paperFragment").firstChild.nodeValue;
-		paperShader = new J3D.Shader("Paper", v, f);
+		var shsrc = document.getElementById("paper").firstChild.nodeValue;
+		paperShader = new J3D.ShaderUtil.parseGLSL(shsrc);
 		paperShader.su.colorTexture = new J3D.Texture("models/textures/firetruck1.jpg");
 		paperShader.su.bounds = [-400, 800];
 

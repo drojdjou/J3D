@@ -1,6 +1,12 @@
-// Based on Cg tutorial: http://http.developer.nvidia.com/CgTutorial/cg_tutorial_chapter07.html
+//#name Reflective
+//#description Based on Cg tutorial: http://http.developer.nvidia.com/CgTutorial/cg_tutorial_chapter07.html
+//#author bartekd
 
-//# ReflectiveVertex
+//#include CommonInclude
+
+//#vertex
+//#include VertexInclude
+
 varying vec3 vNormal;
 varying vec3 refVec;
 
@@ -11,7 +17,7 @@ void main(void) {
 	refVec = reflect(incident, vNormal);	
 }
 
-//# ReflectiveFragment
+//#fragment
 uniform samplerCube uCubemap;
 
 varying vec3 refVec;

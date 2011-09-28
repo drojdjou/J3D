@@ -1,4 +1,10 @@
-//# ToonVertex
+//#name Toon
+//#author bartekd
+
+//#include CommonInclude
+
+//#vertex
+//#include VertexInclude
 varying float vLight;
 varying vec2 vTextureCoord;
 
@@ -27,7 +33,7 @@ void main(void) {
 	vLight = lightIntensity(p, n);
 }
 
-//# ToonFragment
+//#fragment
 uniform vec4 uColor;
 uniform sampler2D uColorSampler;
 

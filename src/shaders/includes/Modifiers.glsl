@@ -1,10 +1,4 @@
-//# VertexInclude
-attribute vec3 aVertexPosition;
-attribute vec3 aVertexNormal;
-attribute vec2 aTextureCoord;
-attribute vec2 aTextureCoord2;
-attribute vec4 aVertexColor;
-
+//#name Modifiers
 vec3 bend(vec3 ip, float ba, vec2 b, float o, float a) {
 	vec3 op = ip;
 	

@@ -109,39 +109,15 @@ J3D.Loader.v3FromArray = function(arr){
 	return new v3(arr[0], arr[1], arr[2]);
 }
 
-J3D.Loader.loadGLSL = function(path, onLoadedFunc, isFilter){
+J3D.Loader.loadGLSL = function(path, onLoadedFunc){
 	var request = new XMLHttpRequest();
 	request.open("GET", path);
 	
 	request.onreadystatechange = function(){
 		if (request.readyState == 4) {
-			onLoadedFunc.call(null, J3D.Loader.parseGLSL(request.responseText, isFilter));
+			onLoadedFunc.call(null, J3D.ShaderUtil.parseGLSL(request.responseText));
 		}
 	}
 	
 	request.send();
-}
-
-J3D.Loader.parseGLSL = function(source, isFilter){
-	var vs = "";
-	var fs = "";
-	
-	var ls = source.split("\n");
-	var buf = "";
-	for(var i = 0; i < ls.length; i++) {
-		if(ls[i].indexOf("//#") > -1) {
-			if(ls[i].indexOf("Fragment") > -1) {
-				vs = buf;
-				buf = "";
-			}
-		} else {
-			var l = ls[i];
-			if(l.indexOf("//") > -1) l = l.substring(0, l.indexOf("//"));
-			buf += l;
-		}
-	}
-	
-	fs = buf;
-	
-	return new J3D.Shader("Shader" + Math.round(Math.random() * 1000), vs, fs);
 }

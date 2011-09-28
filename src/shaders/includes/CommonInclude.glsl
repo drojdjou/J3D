@@ -1,4 +1,4 @@
-//# CommonInclude
+//#name CommonInclude
 #ifdef GL_ES
 precision highp float;
 #endif

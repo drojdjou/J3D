@@ -1,4 +1,10 @@
-//# GouraudVertex
+//#name Gouraud
+//#author bartekd
+
+//#include CommonInclude
+
+//#vertex
+//#include VertexInclude
 uniform float specularIntensity;
 uniform float shininess;
 	
@@ -13,7 +19,7 @@ void main(void) {
 	vLight = computeLights(p, n, specularIntensity, shininess);
 }
 
-//# GouraudFragment
+//#fragment
 uniform vec4 color;
 uniform sampler2D colorTexture;
 uniform bool hasColorTexture;

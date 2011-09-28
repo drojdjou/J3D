@@ -1,6 +1,11 @@
-// Based on Cg tutorial: http://http.developer.nvidia.com/CgTutorial/cg_tutorial_chapter07.html
+//#name Glass
+//#description Based on Cg tutorial: http://http.developer.nvidia.com/CgTutorial/cg_tutorial_chapter07.html
+//#author bartekd
 
-//# GlassVertex
+//#include CommonInclude
+
+//#vertex
+//#include VertexInclude
 varying vec3 vNormal;
 varying vec3 t;
 varying vec3 tr;
@@ -27,7 +32,7 @@ void main(void) {
 	rfac = bias + scale * pow(1.0 + dot(incident, vNormal), power);
 }
 
-//# GlassFragment
+//#fragment
 uniform samplerCube uCubemap;
 
 varying vec3 vNormal;

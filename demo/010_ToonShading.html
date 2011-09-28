@@ -87,7 +87,7 @@
 		engine.scene.add(camera, elephant, sun);
 		
 		post = new J3D.Postprocess(engine);
-		post.filter = new J3D.Shader("VignetteFilter", J3D.ShaderSource.BasicFilterVertex, J3D.ShaderSource.Vignette);
+		post.filter = new J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Vignette);
 
 		draw();
 	}
@@ -99,6 +99,7 @@
 		
 		elephant.rotation.y -= Math.PI * J3D.Time.deltaTime / 6000;
 		post.render();
+		//engine.render();
 		requestAnimationFrame(draw);
 	}
 	

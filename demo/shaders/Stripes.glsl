@@ -1,4 +1,10 @@
-//# StripesVertex
+//#name Stripes
+//#author bartekd
+
+//#include CommonInclude
+
+//#vertex
+//#include VertexInclude
 varying vec3 vLight;
 varying vec2 vTextureCoord;
 varying vec3 vPosition;
@@ -13,7 +19,7 @@ void main(void) {
 	vPosition = p.xyz;
 }
 
-//# StripesFragment
+//#fragment
 uniform sampler2D uColorSampler;
 
 varying vec3 vLight;
