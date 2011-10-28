@@ -1,4 +1,5 @@
 //#name BasicFilterVertex
+//#description A basic vertex shader for filters that use a full screen quad and have all the logic in fragment shader
 attribute vec2 aVertexPosition;
 attribute vec2 aTextureCoord;
 

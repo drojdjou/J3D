@@ -42,6 +42,8 @@ J3D.BuiltinShaders = (function() {
 	shaders.Toon =  J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Toon);
 	shaders.Reflective =  J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Reflective);
 	shaders.Skybox =  J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Skybox);
+	
+	shaders.Normal2Color = J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Normal2Color);
 
 	return { shaders:shaders, fetch:fetch };
 }());

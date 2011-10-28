@@ -1,4 +1,5 @@
 //#name CommonInclude
+//#description Collection of common uniforms, functions and structs to include in shaders (both fragment and vertex)
 #ifdef GL_ES
 precision highp float;
 #endif

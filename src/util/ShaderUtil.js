@@ -141,12 +141,13 @@ J3D.ShaderUtil.setUniform = function(name, dst, src) {
 }
 
 J3D.ShaderUtil.parseGLSL = function(source){
+	var ls = source.split("\n");
+	
 	var vs = "";
 	var fs = "";
-	
-	var ls = source.split("\n");
-	var buf = "";
+
 	var meta = {};
+	meta.common = "";
 	meta.includes = [];
 	meta.vertexIncludes = [];
 	meta.fragmentIncludes = [];
@@ -166,11 +167,9 @@ J3D.ShaderUtil.parseGLSL = function(source){
 	
 	for(var i = 0; i < ls.length; i++) {
 		if(ls[i].indexOf("//#") > -1) {
-			if (ls[i].indexOf("fragment") > -1) {
-				vs = buf;
-				buf = "";
+			if (ls[i].indexOf("//#fragment") > -1) {
 				section++;
-			} else if (ls[i].indexOf("vertex") > -1) {
+			} else if (ls[i].indexOf("//#vertex") > -1) {
 				section++;
 			} else {	
 				meta.name = meta.name || checkMetaData("name", ls[i]);
@@ -195,12 +194,20 @@ J3D.ShaderUtil.parseGLSL = function(source){
 		} else {
 			var l = ls[i];
 			if(l.indexOf("//") > -1) l = l.substring(0, l.indexOf("//"));
-			buf += l;
+			switch(section){
+				case 0:
+					meta.common += l + "\n";
+					break;
+				case 1:
+					vs += l + "\n";
+					break;
+				case 2:
+					fs += l + "\n";
+					break;
+			}
 		}
 	}
 	
-	fs = buf;
-
 	var n = meta.name || "Shader" + Math.round(Math.random() * 1000);
 	return new J3D.Shader(n, vs, fs, meta);
 }

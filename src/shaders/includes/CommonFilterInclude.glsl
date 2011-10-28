@@ -1,4 +1,5 @@
 //#name CommonFilterInclude
+//#description Common uniforms and function for filters
 #ifdef GL_ES
 precision highp float;
 #endif

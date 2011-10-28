@@ -1,12 +1,11 @@
 //#name Vignette
 //#author bartekd
 
-//#include CommonFilterInclude
-
 //#vertex
 //#include BasicFilterVertex
  
 //#fragment
+//#include CommonFilterInclude
 uniform sampler2D uTexture;
 varying vec2 vTextureCoord;
 

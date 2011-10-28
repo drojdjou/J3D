@@ -278,12 +278,11 @@ J3D.ShaderSource.Vignette = [
 	"//#name Vignette",
 	"//#author bartekd",
 
-	"//#include CommonFilterInclude",
-
 	"//#vertex",
 	"//#include BasicFilterVertex",
 
 	"//#fragment",
+	"//#include CommonFilterInclude",
 	"uniform sampler2D uTexture;",
 	"varying vec2 vTextureCoord;",
 
@@ -297,6 +296,7 @@ J3D.ShaderSource.Vignette = [
 
 J3D.ShaderSource.BasicFilterVertex = [
 	"//#name BasicFilterVertex",
+	"//#description A basic vertex shader for filters that use a full screen quad and have all the logic in fragment shader",
 	"attribute vec2 aVertexPosition;",
 	"attribute vec2 aTextureCoord;",
 
@@ -311,6 +311,7 @@ J3D.ShaderSource.BasicFilterVertex = [
 
 J3D.ShaderSource.CommonFilterInclude = [
 	"//#name CommonFilterInclude",
+	"//#description Common uniforms and function for filters",
 	"#ifdef GL_ES",
 	"precision highp float;",
 	"#endif",
@@ -327,6 +328,7 @@ J3D.ShaderSource.CommonFilterInclude = [
 
 J3D.ShaderSource.CommonInclude = [
 	"//#name CommonInclude",
+	"//#description Collection of common uniforms, functions and structs to include in shaders (both fragment and vertex)",
 	"#ifdef GL_ES",
 	"precision highp float;",
 	"#endif",
@@ -400,6 +402,8 @@ J3D.ShaderSource.CommonInclude = [
 
 J3D.ShaderSource.Modifiers = [
 	"//#name Modifiers",
+	"//#description A collection of modifier functions for geometry (only bend for now)",
+
 	"vec3 bend(vec3 ip, float ba, vec2 b, float o, float a) {",
 	"vec3 op = ip;",
 
@@ -423,6 +427,7 @@ J3D.ShaderSource.Modifiers = [
 
 J3D.ShaderSource.VertexInclude = [
 	"//#name VertexInclude",
+	"//#description Common attributes for a mesh - include this in a vertex shader so you don't rewrite this over and over again",
 	"attribute vec3 aVertexPosition;",
 	"attribute vec3 aVertexNormal;",
 	"attribute vec2 aTextureCoord;",

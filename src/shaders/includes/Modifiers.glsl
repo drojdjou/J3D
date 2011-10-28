@@ -1,4 +1,6 @@
 //#name Modifiers
+//#description A collection of modifier functions for geometry (only bend for now)
+
 vec3 bend(vec3 ip, float ba, vec2 b, float o, float a) {
 	vec3 op = ip;
 	

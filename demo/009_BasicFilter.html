@@ -79,7 +79,7 @@
 	function init() {
 		if(!checkWebGL()) return;
 		
-		engine = new J3D.Engine();
+		engine = new J3D.Engine(null, { resolution: 1 });
 
 		engine.setClearColor(J3D.Color.black);
 		
