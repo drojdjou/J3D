@@ -5,6 +5,7 @@
 
 //#vertex
 //#include VertexInclude
+//#include Lights
 varying vec3 vLight;
 varying vec2 vTextureCoord;
 varying vec3 vPosition;

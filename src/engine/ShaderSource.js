@@ -36,6 +36,7 @@ J3D.ShaderSource.Gouraud = [
 
 	"//#vertex",
 	"//#include VertexInclude",
+	"//#include Lights",
 	"uniform float specularIntensity;",
 	"uniform float shininess;",
 
@@ -149,6 +150,7 @@ J3D.ShaderSource.Phong = [
 	"}",
 
 	"//#fragment",
+	"//#include Lights",
 	"uniform vec4 color;",
 	"uniform sampler2D colorTexture;",
 	"uniform bool hasColorTexture;",
@@ -233,24 +235,9 @@ J3D.ShaderSource.Toon = [
 
 	"//#vertex",
 	"//#include VertexInclude",
+	"//#include Lights",
 	"varying float vLight;",
 	"varying vec2 vTextureCoord;",
-
-	"float cli(vec4 p, vec3 n, lightSource light){",
-	"vec3 ld;",
-	"if(light.type == 0) return 0.0;",
-	"else if(light.type == 1) ld = -light.direction;",
-	"else if(light.type == 2) ld = normalize(light.position - p.xyz);",
-	"return max(dot(n, ld), 0.0);",
-	"}",
-
-	"float lightIntensity(vec4 p, vec3 n) {",
-	"float s = cli(p, n, uLight[0]);",
-	"s += cli(p, n, uLight[1]);",
-	"s += cli(p, n, uLight[2]);",
-	"s += cli(p, n, uLight[3]);",
-	"return s;",
-	"}",
 
 	"void main(void) {",
 	"vec4 p = mMatrix * vec4(aVertexPosition, 1.0);",
@@ -258,7 +245,7 @@ J3D.ShaderSource.Toon = [
 	"gl_PointSize = 10.0;",
 	"vTextureCoord = getTextureCoord(aTextureCoord);",
 	"vec3 n = normalize( nMatrix * aVertexNormal );",
-	"vLight = lightIntensity(p, n);",
+	"vLight = computeLights(p, n, 0.0, 0.0).x;",
 	"}",
 
 	"//#fragment",
@@ -333,21 +320,12 @@ J3D.ShaderSource.CommonInclude = [
 	"precision highp float;",
 	"#endif",
 
-	"struct lightSource {",
-	"int type;",
-	"vec3 direction;",
-	"vec3 color;",
-	"vec3 position;",
-	"};",
-
 	"uniform float uTime;",
 	"uniform mat4 mMatrix;",
 	"uniform mat4 vMatrix;",
 	"uniform mat3 nMatrix;",
 	"uniform mat4 pMatrix;",
 	"uniform vec3 uEyePosition;",
-	"uniform lightSource uLight[4];",
-	"uniform vec3 uAmbientColor;",
 	"uniform vec4 uTileOffset;",
 
 	"mat4 mvpMatrix() {",
@@ -366,12 +344,79 @@ J3D.ShaderSource.CommonInclude = [
 	"return c.r * 0.2126 + c.g * 0.7152 + c.b * 0.0722;",
 	"}",
 
-	"vec3 computeLight(vec4 p, vec3 n, float si, float sh, lightSource light){",
+	"vec2 getTextureCoord(vec2 uv) {",
+	"return uv * uTileOffset.xy + uTileOffset.zw;",
+	"}",
+""].join("\n");
+
+J3D.ShaderSource.Lights = [
+	"//#name Lights",
+	"//#description Collection of light equations with the necessary",
+	"//#description Requires CommonInclude",
+
+	"struct lightSource {",
+	"int type;",
+	"vec3 direction;",
+	"vec3 color;",
+	"vec3 position;",
+	"float intensity;",
+	"};",
+
+	"uniform lightSource uLight[4];",
+
+	"const float C1 = 0.429043;",
+	"const float C2 = 0.511664;",
+	"const float C3 = 0.743125;",
+	"const float C4 = 0.886227;",
+	"const float C5 = 0.247708;",
+
+	"//const vec3 L00  = vec3( 0.871297,  0.875222,  0.864470);",
+	"//const vec3 L1m1 = vec3( 0.175058,  0.245335,  0.312891);",
+	"//const vec3 L10  = vec3( 0.034675,  0.036107,  0.037362);",
+	"//const vec3 L11  = vec3(-0.004629, -0.029448, -0.048028);",
+	"//const vec3 L2m2 = vec3(-0.120535, -0.121160, -0.117507);",
+	"//const vec3 L2m1 = vec3( 0.003242,  0.003624,  0.007511);",
+	"//const vec3 L20  = vec3(-0.028667, -0.024926, -0.020998);",
+	"//const vec3 L21  = vec3(-0.077539, -0.086325, -0.091591);",
+	"//const vec3 L22  = vec3(-0.161784, -0.191783, -0.219152);",
+
+	"const vec3 L00  = vec3( 0.078908,  0.043710,  0.054161);",
+	"const vec3 L1m1 = vec3( 0.039499,  0.034989,  0.060488);",
+	"const vec3 L10  = vec3(-0.033974, -0.018236, -0.026940);",
+	"const vec3 L11  = vec3(-0.029213, -0.005562,  0.000944);",
+	"const vec3 L2m2 = vec3(-0.011141, -0.005090, -0.012231);",
+	"const vec3 L2m1 = vec3(-0.026240, -0.022401, -0.047479);",
+	"const vec3 L20  = vec3(-0.015570, -0.009471, -0.014733);",
+	"const vec3 L21  = vec3( 0.056014,  0.021444,  0.013915);",
+	"const vec3 L22  = vec3( 0.021205, -0.005432, -0.030374);",
+
+	"vec3 sphericalHarmonics(vec3 n, lightSource ls) {",
+
+	"vec3 c =  C1 * L22 * (n.x * n.x - n.y * n.y) +",
+	"C3 * L20 * n.z * n.z +",
+	"C4 * L00 -",
+	"C5 * L20 +",
+	"2.0 * C1 * L2m2 * n.x * n.y +",
+	"2.0 * C1 * L21  * n.x * n.z +",
+	"2.0 * C1 * L2m1 * n.y * n.z +",
+	"2.0 * C2 * L11  * n.x +",
+	"2.0 * C2 * L1m1 * n.y +",
+	"2.0 * C2 * L10  * n.z;",
+
+	"c *= ls.intensity;",
+	"return c;",
+	"}",
+
+	"vec3 hemisphere(vec4 p, vec3 n, lightSource ls) {",
+	"vec3 lv = normalize(ls.position - p.xyz);",
+	"return ls.color * (dot(n, lv) * 0.5 + 0.5);",
+	"}",
+
+	"vec3 phong(vec4 p, vec3 n, float si, float sh, lightSource ls){",
 	"vec3 ld;",
 
-	"if(light.type == 0) return vec3(0);",
-	"else if(light.type == 1) ld = -light.direction;",
-	"else if(light.type == 2) ld = normalize(light.position - p.xyz);",
+	"if(ls.type == 1) ld = -ls.direction;",
+	"else if(ls.type == 2) ld = normalize(ls.position - p.xyz);",
 
 	"float dif = max(dot(n, ld), 0.0);",
 
@@ -383,21 +428,34 @@ J3D.ShaderSource.CommonInclude = [
 	"spec = pow(max(dot(refd, eyed), 0.0), sh) * si;",
 	"};",
 
-	"return light.color * dif + light.color * spec;",
+	"return ls.color * dif + ls.color * spec;",
+	"}",
+
+	"vec3 singleLight(vec4 p, vec3 n, float si, float sh, lightSource ls) {",
+	"if(ls.type == 0) {",
+	"return ls.color;",
+	"} else if(ls.type == 1 || ls.type == 2) {",
+	"return phong(p, n, si, sh, ls);",
+	"} else if(ls.type == 3) {",
+	"return hemisphere(p, n, ls);",
+	"} else if(ls.type == 4) {",
+	"return sphericalHarmonics(n, ls);",
+	"} else {",
+	"return vec3(0);",
+	"}",
 	"}",
 
 	"vec3 computeLights(vec4 p, vec3 n, float si, float sh) {",
-	"vec3 s = uAmbientColor;",
-	"s += computeLight(p, n, si, sh, uLight[0]);",
-	"s += computeLight(p, n, si, sh, uLight[1]);",
-	"s += computeLight(p, n, si, sh, uLight[2]);",
-	"s += computeLight(p, n, si, sh, uLight[3]);",
+	"vec3 s = vec3(0);",
+	"s += singleLight(p, n, si, sh, uLight[0]);",
+	"s += singleLight(p, n, si, sh, uLight[1]);",
+	"s += singleLight(p, n, si, sh, uLight[2]);",
+	"s += singleLight(p, n, si, sh, uLight[3]);",
 	"return s;",
 	"}",
 
-	"vec2 getTextureCoord(vec2 uv) {",
-	"return uv * uTileOffset.xy + uTileOffset.zw;",
-	"}",
+
+
 ""].join("\n");
 
 J3D.ShaderSource.Modifiers = [

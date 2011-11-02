@@ -5,6 +5,7 @@
 
 //#vertex
 //#include VertexInclude
+//#include Lights
 uniform float specularIntensity;
 uniform float shininess;
 	
