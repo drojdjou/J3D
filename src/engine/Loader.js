@@ -16,7 +16,12 @@ J3D.Loader.loadJSON = function(path, onLoadedFunc){
 
 J3D.Loader.parseJSONScene = function(jscene, jmeshes, engine) {
 	
-	engine.scene.ambient = J3D.Loader.fromObject(J3D.Color, jscene.ambient);
+	var ambient = new J3D.Transform();
+	ambient.light = new J3D.Light(J3D.AMBIENT);
+	ambient.light.color = J3D.Loader.fromObject(J3D.Color, jscene.ambient);
+	engine.scene.add(ambient);
+	
+	
 	engine.setClearColor( J3D.Loader.fromObject(J3D.Color, jscene.background) );
 	
 	for(var txs in jscene.textures) {

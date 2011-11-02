@@ -68,7 +68,7 @@
 		
 		sun = new J3D.Transform();
 		sun.light = new J3D.Light(J3D.DIRECT);
-		sun.light.color = new J3D.Color(.9, .8, .7, 1);
+		sun.light.color = new J3D.Color(1.0); // Toon shader uses only one channel for light calculations: r
 		sun.light.direction = new v3(-1, 0, -1).norm();
 		
 		elephant = new J3D.Transform();

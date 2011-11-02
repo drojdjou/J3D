@@ -127,10 +127,7 @@ J3D.Engine.prototype.renderObject = function(t) {
 		
 	if(s.uniforms.nMatrix) 
 		gl.uniformMatrix3fv(s.uniforms.nMatrix.location, false, t.normalMatrix);
-			
-	if(s.uniforms.uAmbientColor) 
-		gl.uniform3fv(s.uniforms.uAmbientColor.location, this.scene.ambient.rgb());
-		
+
 	if(s.uniforms.uEyePosition) 
 		gl.uniform3fv(s.uniforms.uEyePosition.location, this.camera.worldPosition.xyz());
 			

@@ -45,7 +45,16 @@
 
 
 
-<script id="plasmaShader" type="x-shader/x-filter">
+<script id="effect" type="x-shader/x-filter">
+	//#name PlasmaEffect
+	//#author bartekd
+	
+	//#include CommonFilterInclude
+	
+	//#vertex
+	//#include BasicFilterVertex
+	
+	//#fragment
 	uniform sampler2D uTexture;	
 	varying vec2 vTextureCoord;
 
@@ -83,7 +92,7 @@
 		ctex = texture;
 
 		post = new J3D.Postprocess();
-		post.filter = new J3D.Shader("PlasmaFilter", J3D.ShaderSource.BasicFilterVertex, document.getElementById("plasmaShader").firstChild.nodeValue);
+		post.filter = new J3D.ShaderUtil.parseGLSL(document.getElementById("effect").firstChild.nodeValue);
 		post.render = function() {
 			J3D.Time.tick();
 			this.renderEffect(ctex.tex);

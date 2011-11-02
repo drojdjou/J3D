@@ -55,7 +55,10 @@
 		
 		engine = new J3D.Engine();	
 		engine.setClearColor(J3D.Color.white);
-		engine.scene.ambient = new J3D.Color(0.5, 0.5, 0.5, 1);
+		
+		ambient = new J3D.Transform();
+		ambient.light = new J3D.Light(J3D.AMBIENT);
+		ambient.light.color = new J3D.Color(0.5, 0.5, 0.5, 1);
 		
 		light = new J3D.Transform();
 		light.light = new J3D.Light(J3D.DIRECT);
@@ -84,7 +87,7 @@
 		camera.position.z = 4;
 		engine.camera = camera;
 
-		engine.scene.add(camera, cube, light);
+		engine.scene.add(camera, cube, light, ambient);
 		draw();
 	}
 	

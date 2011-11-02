@@ -29,19 +29,24 @@
 
 		camera = new J3D.Transform();
 		camera.camera = new J3D.Camera();
-		camera.position.z = -4;
+		camera.position.z = -3;
 		camera.rotation.y = Math.PI;
 		engine.camera = camera;
 		
 		// Setup lights
 		
+		light0 = new J3D.Transform();
+		light0.light = new J3D.Light(J3D.AMBIENT);
+		light0.light.color = J3D.Color.black;
+		
 		light1 = new J3D.Transform();
-		light1.light = new J3D.Light(J3D.DIRECT);
+		light1.light = new J3D.Light(J3D.SPHERICAL_HARMONICS);
 		light1.light.color = new J3D.Color(0.33, 0.33, 0, 1);
 		light1.light.direction = new v3(0, -1, 0).norm();
+		light1.light.intensity = 2.5;
 		
 		light2 = new J3D.Transform();
-		light2.light = new J3D.Light(J3D.POINT);
+		light2.light = new J3D.Light(J3D.HEMISPHERE);
 		light2.light.color = new J3D.Color(redLightMax, 0, 0, 1);
 		light2.position = new v3(10, 0, 0);
 		
@@ -57,6 +62,8 @@
 		// Add lights and camera
 		
 		scene.add(camera);
+		
+		scene.add(light0);
 		scene.add(light1);
 		scene.add(light2);
 		scene.add(light3);
@@ -136,9 +143,9 @@
 		light3.enabled = document.getElementById("blue").checked;
 		
 		if (document.getElementById("ambient").checked) {
-			scene.ambient = new J3D.Color(0.1, 0.1, 0.1, 1);
+			light0.light.color = new J3D.Color(0.1, 0.1, 0.1, 1);
 		} else {
-			scene.ambient = J3D.Color.black;
+			light0.light.color = J3D.Color.black;
 		}
 		
 		if (document.getElementById("anim").checked) {
@@ -151,7 +158,7 @@
 			mo.rotation.y -= J3D.Time.deltaTime / 7000;
 		}
 		
-		light2.light.color.r = redLightMax * (Math.sin(theta) + 1) / 2;
+		light2.light.color.r = redLightMax * (Math.sin(theta/3) + 1) / 2;
 		light3.position.x = Math.cos(theta/6) * 3;
 		light3.position.z = Math.sin(theta/6) * 3;
 		

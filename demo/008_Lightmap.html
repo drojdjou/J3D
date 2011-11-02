@@ -48,11 +48,16 @@
 <script type="text/javascript" src="../build/j3d.js"></script>
 
 
-<script id="basicFilter" type="x-shader/x-filter">
-	#ifdef GL_ES
-	precision highp float;
-	#endif
+<script id="filter" type="x-shader/x-filter">
+	//#name BasicFilter
+	//#author bartekd
 	
+	//#include CommonFilterInclude
+	
+	//#vertex
+	//#include BasicFilterVertex
+	
+	//#fragment
 	uniform sampler2D uTexture;
 	
 	varying vec2 vTextureCoord;
@@ -86,7 +91,7 @@
 		var path = "models/008/";
 		
 		post = new J3D.Postprocess(engine);
-		post.filter = new J3D.Shader("BasicFilter", J3D.ShaderSource.BasicFilterVertex, document.getElementById("basicFilter").firstChild.nodeValue);
+		post.filter = new J3D.ShaderUtil.parseGLSL(document.getElementById("filter").firstChild.nodeValue);
 		
 		lightmaps = [];
 		nolightmaps = [];

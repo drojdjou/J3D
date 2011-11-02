@@ -20,6 +20,7 @@ void main(void) {
 }
 
 //#fragment
+//#include Lights
 uniform vec4 color;
 uniform sampler2D colorTexture;
 uniform bool hasColorTexture;

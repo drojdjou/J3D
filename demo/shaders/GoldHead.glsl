@@ -22,6 +22,7 @@ void main(void) {
 }
 
 //#fragment
+//#include Lights
 uniform samplerCube uCubemap;
 uniform sampler2D uColorTexture;
 
