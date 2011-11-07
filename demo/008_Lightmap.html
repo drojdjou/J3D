@@ -69,8 +69,12 @@
 		vec4 a = texture2D(uTexture, vTextureCoord + m1 * 0.5);
 		vec4 b = texture2D(uTexture, vTextureCoord + m1);
 		vec4 c = texture2D(uTexture, vTextureCoord + m1 * 1.5);
+		
+		float n = 1.0;//whiteNoise(vTextureCoord, 4.0);
+		
+		vec3 cl = vec3(a.r, b.g, c.b) * n;
 
-		gl_FragColor = vec4(a.r, b.g, c.b, 1.0);
+		gl_FragColor = vec4(cl, 1.0);
 		
 	}
 </script>
