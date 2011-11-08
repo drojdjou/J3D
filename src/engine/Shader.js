@@ -43,8 +43,7 @@ J3D.Shader.prototype.setup = function(shader, transform) {
 		
 		if (this[s] != null) {
 			t++;
-            j3dlogOnce("Shader " + this.name + " has uniform: " + s);
-			J3D.ShaderUtil.setUniform(s, shader, this);
+            J3D.ShaderUtil.setUniform(s, shader, this);
 		}
 	}
 	this.reloadStaticUniforms = false;
