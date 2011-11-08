@@ -12,6 +12,16 @@ J3D.ShaderUtil.setTextureCube = function(shader, id, uniformName, texture){
 	gl.uniform1i(shader.uniforms[uniformName].location, id);
 }
 
+J3D.ShaderUtil.setAttributes = function(shader, geometry) {
+	for(var i = 0; i < geometry.arrays.length; i++) {
+		var vbo = geometry.arrays[i];
+		if(shader.attributes[vbo.name] != null) {
+			gl.bindBuffer(gl.ARRAY_BUFFER, vbo.buffer);
+			gl.vertexAttribPointer(shader.attributes[vbo.name], vbo.itemSize, gl.FLOAT, false, 0, 0);
+		}
+	}
+}
+
 J3D.ShaderUtil.setLights = function(shader, lights) {
 	for (var i = 0; i < J3D.SHADER_MAX_LIGHTS; i++) {
 		var l = lights[i];

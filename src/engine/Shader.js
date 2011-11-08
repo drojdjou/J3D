@@ -27,7 +27,9 @@ J3D.Shader.prototype.setup = function(shader, transform) {
 	if(this.reloadStaticUniforms) {
 		this.loadedStaticTextures = {};
 	}
-	
+
+    this.uTime = J3D.Time.time;
+
 	var t = 0;
 	for(var s in shader.uniforms) {	
 		if (this.reloadStaticUniforms && this.su[s] != null && this[s] == null && this.su[s].loaded == null) {
@@ -41,6 +43,7 @@ J3D.Shader.prototype.setup = function(shader, transform) {
 		
 		if (this[s] != null) {
 			t++;
+            j3dlogOnce("Shader " + this.name + " has uniform: " + s);
 			J3D.ShaderUtil.setUniform(s, shader, this);
 		}
 	}

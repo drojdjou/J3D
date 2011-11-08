@@ -1,0 +1,163 @@
+<html> 
+ 
+<head> 
+<title>016 | Triangle Blur | J3D</title>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
+
+<link rel="stylesheet" href="common/common.css"/>
+<script type="text/javascript" src="common/common.js"></script>
+
+<script type="text/javascript" src="../build/j3d.js"></script>
+<script type="text/javascript" src="js/Blur.js"></script>
+<script type="text/javascript" src="js/dat.gui.js"></script>
+
+<script id="filter" type="x-shader">
+	//#name BlurFilter
+	//#author bartekd
+	
+    //#include CommonFilterInclude
+
+	//#vertex
+	//#include BasicFilterVertex
+	
+	//#fragment
+
+    #ifndef ITE
+    #define ITE 8.0
+    #endif
+
+	uniform sampler2D uTexture;
+    uniform vec2 delta;
+    uniform float amount;
+	
+	varying vec2 vTextureCoord;
+
+    float random(vec3 scale, float seed) {
+        return fract(sin(dot(gl_FragCoord.xyz + seed, scale)) * 675.5453 + seed);
+    }
+
+	void main(void) {
+        float offset = random(vec3(24.6546, 13.4905, 210.8789), 2.0);
+        vec4 c = vec4(0.0);
+        float ws = 0.0;
+
+
+
+		for(float t = -ITE; t <= ITE; t++) {
+            float p = (t + offset - 0.5) / 16.0;
+            float w = 1.0 - abs(p);
+            c += texture2D(uTexture, vTextureCoord + delta * p) * w;
+            ws += w;
+        }
+
+    
+		gl_FragColor = vec4(c.rgb / ws, 1.0);
+		
+	}
+</script>
+
+<script>
+	
+	var engine, cube, pp, sun;
+	var filter, post;
+
+	function init() {
+		if(!checkWebGL()) return;
+
+        properties = { delta: 0.05, }
+
+		//DAT.GUI.autoPlace = false;
+
+		gui = new DAT.GUI();
+		gui.domElement.style.position = 'absolute';
+		gui.domElement.style.bottom = '0px';
+		gui.domElement.style.left = '0px';
+		gui.domElement.style.zIndex = 200;
+		document.body.appendChild( gui.domElement );
+
+		gui.add(properties, 'delta').min( 0.0 ).max( 0.15 );
+
+		engine = new J3D.Engine(null, { resolution: 1 });
+
+		engine.setClearColor(J3D.Color.black);
+		
+		sun = new J3D.Transform();
+		sun.light = new J3D.Light(J3D.DIRECT);
+		sun.light.color = new J3D.Color(.9, .8, .7, 1);
+		sun.light.direction = new v3(-1, 0, -1).norm();
+		
+		engine.scene.ambient = new J3D.Color(.1, .12, .14, 1);
+		
+		cube = new J3D.Transform();
+		cube.rotation = new v3(0, Math.PI, 0); // All rotations are in radians
+		
+		J3D.Loader.loadJSON("models/monkeyhi.js", function(j) {  cube.geometry = new J3D.Mesh(j); } );
+		
+		cube.renderer = J3D.BuiltinShaders.fetch("Phong");
+		cube.renderer.specularIntensity = 10;
+		cube.renderer.shininess = 32;
+		
+		var camera = new J3D.Transform();
+		camera.camera = new J3D.Camera();
+		camera.position.z = 4;
+		engine.camera = camera;
+		
+		engine.scene.add(camera, cube, sun);
+
+		post = new J3D.BoxBlur(engine);
+		post.filter = new J3D.ShaderUtil.parseGLSL(document.getElementById("filter").firstChild.nodeValue);
+
+		draw();
+	}
+	
+	function draw() {
+		requestAnimationFrame(draw);
+
+        post.delta = [properties.delta, properties.delta];
+		
+		cube.rotation.x += Math.PI * J3D.Time.deltaTime / 12000;
+		cube.rotation.y -= Math.PI * J3D.Time.deltaTime / 6000;
+		
+		post.render();
+	}
+	
+</script>
+
+</head> 
+
+<body onload="init();">
+	
+	<script>
+		setLabels("016. Triangle blur", "Algorithm based on <a href='https://github.com/evanw/glfx.js/blob/master/src/filters/blur/triangleblur.js'>glfx.js triangle blur</a>");
+	</script>
+	
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-24294554-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+	
+</body> 
+
+</html> 
+
+
+
+
+
+
+
+
+
+
+
+

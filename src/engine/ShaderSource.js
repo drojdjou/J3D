@@ -2,6 +2,28 @@
 
 J3D.ShaderSource = {};
 
+J3D.ShaderSource.CopyFilter = [
+	"//#name CopyFilter",
+	"//#description All this shader does is to render a texture (typically a render texture) pixel-to-pixel.",
+	"//#description It is useful in effects like Persistence",
+	"//#author bartekd",
+
+	"//#include CommonFilterInclude",
+
+	"//#vertex",
+	"//#include BasicFilterVertex",
+
+	"//#fragment",
+	"uniform sampler2D uTexture;",
+
+	"varying vec2 vTextureCoord;",
+
+	"void main(void) {",
+	"vec4 p = texture2D(uTexture, vTextureCoord);",
+	"gl_FragColor = vec4(p.rgb, 1.0);",
+	"}",
+""].join("\n");
+
 J3D.ShaderSource.Depth = [
 	"//#name Depth",
 	"//#author bartekd",
@@ -245,7 +267,7 @@ J3D.ShaderSource.Toon = [
 	"gl_PointSize = 10.0;",
 	"vTextureCoord = getTextureCoord(aTextureCoord);",
 	"vec3 n = normalize( nMatrix * aVertexNormal );",
-	"vLight = computeLights(p, n, 0.0, 0.0).x;",
+	"vLight = computeLights(p, n, 0.0, 0.0).r;",
 	"}",
 
 	"//#fragment",

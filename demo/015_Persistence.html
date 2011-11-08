@@ -1,47 +1,14 @@
 <html> 
  
 <head> 
-<title>000 | Hello Cube | J3D</title> 
+<title>015 | Persistence | J3D</title>
 
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
 
 <link rel="stylesheet" href="common/common.css"/>
 <script type="text/javascript" src="common/common.js"></script>
-
-<!--
-<script type="text/javascript" src="../lib/glMatrix.js"></script>
-<script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
-<script type="text/javascript" src="../src/J3D.js"></script>
-<script type="text/javascript" src="../src/util/Color.js"></script>
-<script type="text/javascript" src="../src/math/Vector2.js"></script>
-<script type="text/javascript" src="../src/math/Vector3.js"></script>
-<script type="text/javascript" src="../src/math/Matrix44.js"></script>
-<script type="text/javascript" src="../src/engine/Engine.js"></script>
-<script type="text/javascript" src="../src/engine/Camera.js"></script>
-<script type="text/javascript" src="../src/engine/Light.js"></script>
-<script type="text/javascript" src="../src/engine/Geometry.js"></script>
-<script type="text/javascript" src="../src/engine/Mesh.js"></script>
-<script type="text/javascript" src="../src/engine/Scene.js"></script>
-<script type="text/javascript" src="../src/engine/Loader.js"></script>
-<script type="text/javascript" src="../src/engine/ShaderAtlas.js"></script>
-<script type="text/javascript" src="../src/engine/Texture.js"></script>
-<script type="text/javascript" src="../src/engine/Cubemap.js"></script>
-<script type="text/javascript" src="../src/engine/Transform.js"></script>
-<script type="text/javascript" src="../src/engine/Postprocess.js"></script>
-<script type="text/javascript" src="../src/engine/Primitives.js"></script>
-<script type="text/javascript" src="../src/engine/FrameBuffer.js"></script>
-<script type="text/javascript" src="../src/engine/ShaderSource.js"></script>
-<script type="text/javascript" src="../src/renderers/Phong.js"></script>
-<script type="text/javascript" src="../src/renderers/Toon.js"></script>
-<script type="text/javascript" src="../src/renderers/Gouraud.js"></script>
-<script type="text/javascript" src="../src/renderers/Reflective.js"></script>
-<script type="text/javascript" src="../src/renderers/Skybox.js"></script>
-<script type="text/javascript" src="../src/engine/Shader.js"></script>
-<script type="text/javascript" src="../src/util/Time.js"></script>
-<script type="text/javascript" src="../src/util/ShaderUtil.js"></script>
--->
-	
 <script type="text/javascript" src="../build/j3d.js"></script>
+<script type="text/javascript" src="js/Persistence.js"></script>
 
 <script id="blendFilter" type="x-shader/x-filter">
 	//#name BlendFilter
@@ -60,112 +27,13 @@
 
 	void main(void) {
 		vec4 n = texture2D(uNewTexture, vTextureCoord);
-		vec4 o = texture2D(uOldTexture, vTextureCoord);
-		//gl_FragColor = vec4(mix(n.rgb, o.rgb, 0.5), 1.0);
-		gl_FragColor = vec4(n.rgb, 1.0);
-	}
-</script>
-
-<script id="copyFilter" type="x-shader/x-filter">
-	//#name CopyFilter
-	//#author bartekd
-	
-	//#include CommonFilterInclude
-	
-	//#vertex
-	//#include BasicFilterVertex
-	
-	//#fragment
-	uniform sampler2D uTexture;
-
-	varying vec2 vTextureCoord;
-
-	void main(void) {
-		vec4 p = texture2D(uTexture, vTextureCoord);
-		gl_FragColor = vec4(p.rgb, 1.0);
+		vec4 o = texture2D(uOldTexture, vTextureCoord + vec2( sin(uTime) * 0.001, cos(uTime) * 0.001 ));
+		gl_FragColor = vec4(mix(n.rgb, o.rgb, 0.96), 1.0);
 	}
 </script>
 
 <script>
-	
-J3D.Persistence = function(engine) {
-	this.engine = engine;
-	
-	this.blendWithA = false;
-	
-	this.fboN = new J3D.FrameBuffer();
-	this.fboA = new J3D.FrameBuffer();
-	this.fboB = new J3D.FrameBuffer();
-	
-	this.geometry = J3D.Primitive.FullScreenQuad();
-	this.blendFilter = null;
-	this.copyFilter = null;
-}
 
-J3D.Persistence.prototype.render = function() {
-	this.fboN.bind();
-	this.engine.render();
-	this.fboN.unbind();
-	this.renderEffect(this.fboN.texture);
-}
-	
-J3D.Persistence.prototype.renderEffect = function(ntex) {
-	if(this.blendWithA) this.fboA.bind();
-	else this.fboB.bind();
-	
-	var program = engine.shaderAtlas.getShader(this.blendFilter);
-	
-	this.blendFilter.setup(program);
-	
-	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-	gl.useProgram(program);
-
-	J3D.ShaderUtil.setTexture(program, 0, "uNewTexture", ntex);
-	
-	if(this.blendWithA) J3D.ShaderUtil.setTexture(program, 0, "uOldTexture", this.fboB.texture);
-	else J3D.ShaderUtil.setTexture(program, 0, "uOldTexture", this.fboA.texture);
-
-	for(var i = 0; i < this.geometry.arrays.length; i++) {
-		var vbo = this.geometry.arrays[i];	
-		if(program.attributes[vbo.name] != null) {
-			gl.bindBuffer(gl.ARRAY_BUFFER, vbo.buffer);
-			gl.vertexAttribPointer(program.attributes[vbo.name], vbo.itemSize, gl.FLOAT, false, 0, 0);
-		}
-	}
-
-	gl.drawArrays(gl.TRIANGLES, 0, this.geometry.size);
-	
-	if(this.blendWithA) this.fboA.unbind();
-	else this.fboB.unbind();
-	
-	/////////////
-	
-	var program = engine.shaderAtlas.getShader(this.copyFilter);
-	
-	this.copyFilter.setup(program);
-	
-	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-	gl.useProgram(program);
-
-	if(this.blendWithA) J3D.ShaderUtil.setTexture(program, 0, "uTexture", this.fboA.texture);
-	else J3D.ShaderUtil.setTexture(program, 0, "uTexture", this.fboB.texture);
-
-	for(var i = 0; i < this.geometry.arrays.length; i++) {
-		var vbo = this.geometry.arrays[i];	
-		if(program.attributes[vbo.name] != null) {
-			gl.bindBuffer(gl.ARRAY_BUFFER, vbo.buffer);
-			gl.vertexAttribPointer(program.attributes[vbo.name], vbo.itemSize, gl.FLOAT, false, 0, 0);
-		}
-	}
-
-	gl.drawArrays(gl.TRIANGLES, 0, this.geometry.size);
-	
-	this.blendWithA = !this.blendWithA;
-}
-
-
-
-	
 	var engine, cube, light, post;
 	
 	window.onload = function() {
@@ -177,11 +45,11 @@ J3D.Persistence.prototype.renderEffect = function(ntex) {
 		
 		ambient = new J3D.Transform();
 		ambient.light = new J3D.Light(J3D.AMBIENT);
-		ambient.light.color = new J3D.Color(0.5, 0.5, 0.5, 1);
-		
+		ambient.light.color = new J3D.Color(0.4, 0.4, 0.4, 1);
+
 		light = new J3D.Transform();
 		light.light = new J3D.Light(J3D.DIRECT);
-		light.light.color = new J3D.Color(0.5, 0.5, 0.5, 1);
+		light.light.color = new J3D.Color(0.8, 0.8, 0.8, 1);
 		light.light.direction = new v3(1, 0, 1).norm();
 		
 		cube = new J3D.Transform();
@@ -192,11 +60,10 @@ J3D.Persistence.prototype.renderEffect = function(ntex) {
 		
 		post = new J3D.Persistence(engine);
 		post.blendFilter = new J3D.ShaderUtil.parseGLSL(document.getElementById("blendFilter").firstChild.nodeValue);
-		post.copyFilter = new J3D.ShaderUtil.parseGLSL(document.getElementById("copyFilter").firstChild.nodeValue);
-		
+
 		camera = new J3D.Transform();
 		camera.camera = new J3D.Camera();
-		camera.position.z = 4;
+		camera.position.z = 6;
 		engine.camera = camera;
 
 		engine.scene.add(camera, cube, light, ambient);
@@ -205,8 +72,9 @@ J3D.Persistence.prototype.renderEffect = function(ntex) {
 	
 	function draw() {
 		requestAnimationFrame(draw);
-		cube.rotation.x += Math.PI * J3D.Time.deltaTime / 6000;
-		cube.rotation.y += Math.PI/2 * J3D.Time.deltaTime / 3000;
+		cube.rotation.x += Math.PI * J3D.Time.deltaTime / 1800;
+		cube.rotation.y += Math.PI/2 * J3D.Time.deltaTime / 900;
+        cube.position.x = Math.sin(J3D.Time.time / 2) * 3;
 		post.render();
 	}
 	
@@ -216,7 +84,7 @@ J3D.Persistence.prototype.renderEffect = function(ntex) {
 
 <body>
 	<script>
-		setLabels("000. Hello cube", "Check <a href='https://github.com/drojdjou/J3D/wiki/How-to-create-a-cube'>here for a quick tutorial</a> on how to build this");
+		setLabels("015. Persistence", "A damoe of post processing effect with J3D, based on <a href='http://www.youtube.com/watch?v=rfQ8rKGTVlg#t=31m42s'>this video</a>");
 	</script>
 	
 <script type="text/javascript">

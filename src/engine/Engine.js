@@ -113,9 +113,6 @@ J3D.Engine.prototype.renderObject = function(t) {
 	gl.useProgram(s);
 	
 	// Setup standard uniforms and attributes
-	if(s.uniforms.uTime) 
-		gl.uniform1f(s.uniforms.uTime.location, J3D.Time.time);	
-		
 	if(s.uniforms.pMatrix)
 		gl.uniformMatrix4fv(s.uniforms.pMatrix.location, false, this.camera.camera.projectionMat.toArray() );
 		
@@ -136,14 +133,8 @@ J3D.Engine.prototype.renderObject = function(t) {
 	
 	J3D.ShaderUtil.setLights(s, this._lights);
 
-	for(var i = 0; i < t.geometry.arrays.length; i++) {
-		var vbo = t.geometry.arrays[i];	
-		if(s.attributes[vbo.name] != null) {
-			gl.bindBuffer(gl.ARRAY_BUFFER, vbo.buffer);
-			gl.vertexAttribPointer(s.attributes[vbo.name], vbo.itemSize, gl.FLOAT, false, 0, 0);
-		}
-	}
-		
+    J3D.ShaderUtil.setAttributes(s, t.geometry);
+
 	// Setup renderers custom uniforms and attributes
 	t.renderer.setup(s, t);
 
