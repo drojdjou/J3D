@@ -45,7 +45,6 @@ It was created by [Bartek Drozdz](http://www.everyday3d.com/)
 (http://www.everyday3d.com/j3d/demo/013_Paper.html)
 [![Head](http://www.everyday3d.com/j3d/thumbs/015_head.jpg)]
 (http://www.everyday3d.com/j3d/demo/014_Head.html)
-
 [![Persistence](http://www.everyday3d.com/j3d/thumbs/016_persistence.jpg)]
 (http://www.everyday3d.com/j3d/demo/015_Persistence.html.html)
 [![Blur](http://www.everyday3d.com/j3d/thumbs/017_blur.jpg)]
