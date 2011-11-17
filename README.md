@@ -11,6 +11,8 @@ It was created by [Bartek Drozdz](http://www.everyday3d.com/)
 
 [Unity exporter tutorial](https://github.com/drojdjou/J3D/wiki/Unity-exporter-tutorial)
 
+[Shaders tutorial in .net magazine](http://www.netmagazine.com/tutorials/create-amazing-webgl-effects-shaders)
+
 ## Examples
 
 [![Hello Cube](http://www.everyday3d.com/j3d/thumbs/001_hellocube.jpg)]
@@ -43,3 +45,8 @@ It was created by [Bartek Drozdz](http://www.everyday3d.com/)
 (http://www.everyday3d.com/j3d/demo/013_Paper.html)
 [![Head](http://www.everyday3d.com/j3d/thumbs/015_head.jpg)]
 (http://www.everyday3d.com/j3d/demo/014_Head.html)
+
+[![Persistence](http://www.everyday3d.com/j3d/thumbs/016_persistence.jpg)]
+(http://www.everyday3d.com/j3d/demo/015_Persistence.html.html)
+[![Blur](http://www.everyday3d.com/j3d/thumbs/017_blur.jpg)]
+(http://www.everyday3d.com/j3d/demo/016_BlurFilter.html)
