@@ -46,6 +46,6 @@ It was created by [Bartek Drozdz](http://www.everyday3d.com/)
 [![Head](http://www.everyday3d.com/j3d/thumbs/015_head.jpg)]
 (http://www.everyday3d.com/j3d/demo/014_Head.html)
 [![Persistence](http://www.everyday3d.com/j3d/thumbs/016_persistence.jpg)]
-(http://www.everyday3d.com/j3d/demo/015_Persistence.html.html)
+(http://www.everyday3d.com/j3d/demo/015_Persistence.html)
 [![Blur](http://www.everyday3d.com/j3d/thumbs/017_blur.jpg)]
 (http://www.everyday3d.com/j3d/demo/016_BlurFilter.html)
