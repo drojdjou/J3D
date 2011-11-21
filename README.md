@@ -49,3 +49,5 @@ It was created by [Bartek Drozdz](http://www.everyday3d.com/)
 (http://www.everyday3d.com/j3d/demo/015_Persistence.html)
 [![Blur](http://www.everyday3d.com/j3d/thumbs/017_blur.jpg)]
 (http://www.everyday3d.com/j3d/demo/016_BlurFilter.html)
+[![Scene management](http://www.everyday3d.com/j3d/thumbs/018_sceneman.jpg)]
+(http://www.everyday3d.com/j3d/demo/017_SceneManagement.html)
