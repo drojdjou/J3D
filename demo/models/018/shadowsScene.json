@@ -1,0 +1,155 @@
+{
+	
+"path" : "",
+"ambient": { "r":0.4552239, "g":0.4552239, "b":0.4552239, "a":1 },
+"background": { "r":0, "g":0, "b":0, "a":1 },
+
+"textures": {
+},
+	
+"materials": {
+	
+	"red": { 
+		"type": "Phong",
+		"color": { "r":0.6567164, "g":0, "b":0, "a":1 },
+		"specularIntensity": 0,
+                "shininess": 0,
+		"textureTile": [  ],
+		"textureOffset": [  ]
+	},
+	
+	"green": { 
+		"type": "Phong",
+		"color": { "r":0, "g":1, "b":0, "a":1 },
+		"specularIntensity": 0,
+                "shininess": 0,
+		"textureTile": [  ],
+		"textureOffset": [  ]
+	},
+	
+	"orange": { 
+		"type": "Phong",
+		"color": { "r":1, "g":0.4980392, "b":0, "a":1 },
+		"specularIntensity": 0,
+                "shininess": 0,
+		"textureTile": [  ],
+		"textureOffset": [  ]
+	},
+	
+	"blue": { 
+		"type": "Phong",
+		"color": { "r":0, "g":0.4980392, "b":1, "a":1 },
+		"specularIntensity": 0.1487512,
+                "shininess": 0.7192537,
+		"textureTile": [  ],
+		"textureOffset": [  ]
+	}
+
+},
+
+"lights": {
+	
+	"lamp": { 
+		"type": 2,
+		"color": { "r":1, "g":1, "b":1, "a":1 }
+	}
+
+},
+
+"cameras": {
+	
+	"camera": { 
+		"fov": 60,
+		"near": 0.3,
+		"far": 1000
+	}
+
+},
+
+"transforms": [
+	
+	{
+		"uid": 1,
+                "name": "lamproot",
+		"position": [ 0,3.665249,0 ],
+		"rotation": [ 0,0,0 ]
+	},
+	
+	{
+		"uid": 2,
+                "name": "lamp",
+		"parent": 1,
+		"position": [ -2.768155,0.9737492,0 ],
+		"rotation": [ 0,0,0 ],
+		"light": "lamp"
+	},
+	
+	{
+		"uid": 3,
+                "name": "root",
+		"position": [ 0,0,0 ],
+		"rotation": [ 0,0,0 ]
+	},
+	
+	{
+		"uid": 4,
+                "name": "cube",
+		"parent": 3,
+		"position": [ 0.07531476,2.518983,-0.2936109 ],
+		"rotation": [ 0,-0.9320629,0 ],
+		"renderer": "green",
+		"mesh": "cube"
+	},
+	
+	{
+		"uid": 5,
+                "name": "cylinder",
+		"parent": 3,
+		"position": [ 0.9405405,3,1.178782 ],
+		"rotation": [ 0,-0.9320629,0 ],
+		"renderer": "red",
+		"mesh": "cylinder"
+	},
+	
+	{
+		"uid": 6,
+                "name": "ground",
+		"parent": 3,
+		"position": [ 0,2,0.9309711 ],
+		"rotation": [ 0,0,0 ],
+		"renderer": "blue",
+		"mesh": "plane"
+	},
+	
+	{
+		"uid": 7,
+                "name": "sphere",
+		"parent": 3,
+		"position": [ -0.8062445,3.004292,1.54646 ],
+		"rotation": [ 0,-0.9320629,0 ],
+		"renderer": "orange",
+		"mesh": "sphere"
+	},
+	
+	{
+		"uid": 8,
+                "name": "camroot",
+		"position": [ 0,0,0 ],
+		"rotation": [ 0,0,0 ]
+	},
+	
+	{
+		"uid": 9,
+                "name": "camera",
+		"parent": 8,
+		"position": [ 0,4.710828,5.270513 ],
+		"rotation": [ -0.4761901,0,0 ],
+		"camera": "camera"
+	}
+
+]
+}
+
+
+
+
