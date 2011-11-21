@@ -13,6 +13,8 @@ J3D.Shader = function(n, v, f, m) {
 	this.loadedStaticTextures = {};
 	
 	this.metaData = m || {};
+
+    this.cloneCount = 0;
 }
 
 J3D.Shader.prototype.vertSource = function() {
@@ -47,14 +49,17 @@ J3D.Shader.prototype.setup = function(shader, transform) {
 		}
 	}
 	this.reloadStaticUniforms = false;
-	j3dlogOnce("Shader " + this.name + " has " + t + " dynamic uniforms");
+	//j3dlogOnce("Shader " + this.name + " has " + t + " dynamic uniforms");
 }
 
 J3D.Shader.prototype.clone = function() {
-	var c = new J3D.Shader(this.name + Math.random(), this._vertSource, this._fragSource);
+    this.cloneCount++;
+    var n = this.name + "_" + this.cloneCount;
+
+	var c = new J3D.Shader(n, this._vertSource, this._fragSource);
 	
 	for(s in this) {
-		if (typeof this[s] !== "function" && this.hasOwnProperty(s)) {
+		if (typeof this[s] !== "function" && this.hasOwnProperty(s) && s != "name") {
 			c[s] = this[s];
 		}
 	}
@@ -72,6 +77,8 @@ J3D.Shader.prototype.clone = function() {
 	}
 	
 	c.reloadStaticUniforms = true;
+
+    //j3dlog(this.name + " cloned to " + c.name);
 	
 	return c;
 }

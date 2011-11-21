@@ -10,7 +10,7 @@
 
 <script type="text/javascript" src="../build/j3d.js"></script>
 <script type="text/javascript" src="js/Blur.js"></script>
-<script type="text/javascript" src="js/dat.gui.js"></script>
+<script type="text/javascript" src="js/dat.gui.min.js"></script>
 
 <script id="filter" type="x-shader">
 	//#name BlurFilter
@@ -65,18 +65,19 @@
 	function init() {
 		if(!checkWebGL()) return;
 
-        properties = { delta: 0.05, }
+        properties = { delta: 0.05 }
 
 		//DAT.GUI.autoPlace = false;
 
-		gui = new DAT.GUI();
-		gui.domElement.style.position = 'absolute';
-		gui.domElement.style.bottom = '0px';
-		gui.domElement.style.left = '0px';
-		gui.domElement.style.zIndex = 200;
-		document.body.appendChild( gui.domElement );
+		gui = new dat.GUI({ autoPlace: false });
+
 
 		gui.add(properties, 'delta').min( 0.0 ).max( 0.15 );
+
+        gui.domElement.style.position = 'fixed';
+		gui.domElement.style.right = '140px';
+		gui.domElement.style.zIndex = 200;
+        document.body.appendChild( gui.domElement );
 
 		engine = new J3D.Engine(null, { resolution: 1 });
 
