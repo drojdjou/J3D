@@ -2,7 +2,7 @@
 
 J3D is a [WebGL](http://www.khronos.org/registry/webgl/specs/latest/) engine written in Javascript. 
 It allows to render GPU accelerated graphics in your browser. 
-Currently works in [Chrome](http://www.google.com/chrome/) and [Firefox 4](http://www.mozilla.com/en-US/firefox/) on desktop. Some demos also run in [Firefox on Android](http://www.mozilla.com/en-US/m/beta). 
+Currently works in [Chrome](http://www.google.com/chrome/), [Firefox 4](http://www.mozilla.com/en-US/firefox/) and [Opera 12 Alpha](http://www.opera.com/browser/next/) on desktop. Some demos also run in [Firefox on Android](http://www.mozilla.com/en-US/m/beta). 
 It was created by [Bartek Drozdz](http://www.everyday3d.com/)
 
 ## Tutorials
