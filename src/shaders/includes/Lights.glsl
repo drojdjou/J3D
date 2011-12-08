@@ -1,5 +1,5 @@
 //#name Lights
-//#description Collection of light equations with the necessary 
+//#description Collection of light equations
 //#description Requires CommonInclude
 
 struct lightSource {
@@ -61,12 +61,12 @@ vec3 hemisphere(vec4 p, vec3 n, lightSource ls) {
 	vec3 lv = normalize(ls.position - p.xyz);
 	return ls.color * (dot(n, lv) * 0.5 + 0.5);
 }
- 
+
 vec3 phong(vec4 p, vec3 n, float si, float sh, lightSource ls){
     vec3 ld;
 	
 	if(ls.type == 1) ld = -ls.direction;
-    else if(ls.type == 2) ld = normalize(ls.position - p.xyz);
+    else ld = normalize(ls.position - p.xyz);
     
     float dif = max(dot(n, ld), 0.0);
 	
@@ -85,12 +85,12 @@ vec3 singleLight(vec4 p, vec3 n, float si, float sh, lightSource ls) {
 	if(ls.type == 0) {
 		// Ambient
 		return ls.color;
-	} else if(ls.type == 1 || ls.type == 2) {
-		// Directional / Point
+	} else if(ls.type < 4) {
+		// Directional / Point / Spotlight
 		return phong(p, n, si, sh, ls);
-	} else if(ls.type == 3) {
-		return hemisphere(p, n, ls);
 	} else if(ls.type == 4) {
+		return hemisphere(p, n, ls);
+	} else if(ls.type == 5) {
 		return sphericalHarmonics(n, ls);
 	} else {
 		return vec3(0);

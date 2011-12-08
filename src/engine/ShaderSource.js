@@ -373,7 +373,7 @@ J3D.ShaderSource.CommonInclude = [
 
 J3D.ShaderSource.Lights = [
 	"//#name Lights",
-	"//#description Collection of light equations with the necessary",
+	"//#description Collection of light equations",
 	"//#description Requires CommonInclude",
 
 	"struct lightSource {",
@@ -438,7 +438,7 @@ J3D.ShaderSource.Lights = [
 	"vec3 ld;",
 
 	"if(ls.type == 1) ld = -ls.direction;",
-	"else if(ls.type == 2) ld = normalize(ls.position - p.xyz);",
+	"else ld = normalize(ls.position - p.xyz);",
 
 	"float dif = max(dot(n, ld), 0.0);",
 
@@ -456,11 +456,11 @@ J3D.ShaderSource.Lights = [
 	"vec3 singleLight(vec4 p, vec3 n, float si, float sh, lightSource ls) {",
 	"if(ls.type == 0) {",
 	"return ls.color;",
-	"} else if(ls.type == 1 || ls.type == 2) {",
+	"} else if(ls.type < 4) {",
 	"return phong(p, n, si, sh, ls);",
-	"} else if(ls.type == 3) {",
-	"return hemisphere(p, n, ls);",
 	"} else if(ls.type == 4) {",
+	"return hemisphere(p, n, ls);",
+	"} else if(ls.type == 5) {",
 	"return sphericalHarmonics(n, ls);",
 	"} else {",
 	"return vec3(0);",

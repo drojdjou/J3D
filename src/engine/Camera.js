@@ -7,6 +7,8 @@ J3D.ORTHO = 1;
 
 
 J3D.Camera = function(params){
+    that = this;
+
 	if(!params) params = {};
 	
 	if(!params.type) params.type = J3D.PERSPECTIVE;
@@ -32,7 +34,7 @@ J3D.Camera = function(params){
 	if(params.type == J3D.PERSPECTIVE) 
 		this.projectionMat.perspective(params.fov, params.aspect, params.near, params.far);
 	else 
-		this.projectionMat.ortho(params.left, params.right, params.top, params.bottom, params.near, params.far);	
+		this.projectionMat.ortho(params.left, params.right, params.top, params.bottom, params.near, params.far);
 }
 
 

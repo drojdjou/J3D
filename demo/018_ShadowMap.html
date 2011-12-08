@@ -14,7 +14,8 @@
 <script>
 	var mx = 0, my = 0;
 	var jsonScene;
-	var camroot, lamproot;
+	var camroot;
+    var lamp;
 	var rings = [];
 	var sx = 0.0006;
 	
@@ -28,7 +29,15 @@
 				jsonScene = jsscene;
 				J3D.Loader.parseJSONScene(jsscene, jsmeshes, engine);
 				camroot = engine.scene.find("camroot");
-				lamproot = engine.scene.find("lamproot");
+
+                var l = engine.scene.find("lamproot");
+                engine.scene.remove(l);
+
+                lamp = new J3D.Transform();
+                lamp.position = l.position;
+                lamp.light = new J3D.Light(J3D.SPOTLIGHT);
+                engine.scene.add(lamp);
+
 				draw();
 			})
 		});
@@ -44,7 +53,7 @@
 	function draw() {
 		requestAnimationFrame(draw);
 
-		lamproot.rotation.y += J3D.Time.deltaTime * sx;
+		//lamproot.rotation.y += J3D.Time.deltaTime * sx;
 
 		engine.render();
 	}

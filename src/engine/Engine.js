@@ -1,6 +1,8 @@
 var gl;
 
-J3D.Engine = function(canvas, j3dSettings, webglSettings) {	
+J3D.Engine = function(canvas, j3dSettings, webglSettings) {
+    var that = this;
+
 	var cv = (canvas) ? canvas : document.createElement("canvas");
 	
 	if (!canvas) {
@@ -10,7 +12,7 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
 		cv.style.width = "100%";
 		cv.style.height = "100%";
 		document.body.appendChild(cv);
-	}
+    }
 
 	try {
 		gl = cv.getContext("experimental-webgl", webglSettings);
