@@ -39,17 +39,27 @@
     uniform float shininess;
     
 	void main(void) {
+
         float si = specularIntensity * (1.0 - texture2D(specTexture, vTextureCoord).r);
         float df = computeLights(vPosition, vNormal, si, shininess).r;
+
+        df = max(0.0, df);
+
 		vec4 d = texture2D(dayTexture, vTextureCoord);
         vec4 n = texture2D(nightTexture, vTextureCoord);
-		gl_FragColor = vec4(d.rgb * df + n.rgb * (1.0 - df), 1.0);
+        vec4 c = vec4(d.rgb * df + n.rgb * (1.0 - df), 1.0);
+
+		gl_FragColor = c;
 	}
 </script>
 
 <script>
 	var engine, scene, earth, camera, root, sun;
 	var mx = 0, my = 0;
+    var isHovered = false;
+    var bsrX = 0, csrX = 0, bsrY = 0, csrY = 0;
+    var isDown = false;
+    var dx = 0, dy = 0;
 
 	window.onload = function() {
 		if(!checkWebGL()) return;
@@ -84,11 +94,15 @@
         earth.renderer.shininess = 10;
 //      earth.renderer.drawMode = gl.LINES;
 
-		earth.geometry = J3D.Primitive.Sphere(30, 60, 60);
+		earth.geometry = J3D.Primitive.Sphere(30, 40, 40);
+
+        earth.collider = J3D.Collider.Sphere(30);
 
 		engine.scene.add(earth);
 
 		document.onmousemove = onMouseMove;
+        document.onmousedown = onMouseDown;
+        document.onmouseup = onMouseUp;
 		
 		draw();
 	}
@@ -101,14 +115,46 @@
     }
 
 	function onMouseMove(e) {
-		mx = ( e.clientX / window.innerWidth  ) * 2 - 1;
-		my = ( e.clientY / window.innerHeight ) * 2 - 1;
+		mx = e.clientX;
+		my = e.clientY;
+
+        if(isDown) {
+            csrX = -( ((mx / window.innerWidth) * 2 - 1) - dx ) * 1;
+            csrY = -( ((my / window.innerHeight) * 2 - 1) - dy ) * 1;
+
+        }
 	}
 
+    function onMouseDown(e) {
+        if(isHovered) {
+            isDown = true;
+            dx = (e.clientX / window.innerWidth) * 2 - 1;
+            dy = (e.clientY / window.innerHeight) * 2 - 1;
+        }
+    }
+
+    function onMouseUp(e) {
+        if(isDown) {
+            bsrX += csrX;
+            csrX = 0;
+            bsrY += csrY;
+            csrY = 0;
+        }
+        isDown = false;
+    }
+
 	function draw() {
-		root.rotation.x += my * J3D.Time.deltaTime / 5000;
-		earth.rotation.y += J3D.Time.deltaTime / 4000;
-		engine.render();
+
+        var r = J3D.Ray.fromMousePosition(mx, my, camera);
+        isHovered = J3D.Intersection.raySphere(r, earth) > 0;
+
+        document.body.style.cursor = (isHovered) ? "move" : "auto";
+        
+		root.rotation.y = bsrX + csrX;
+        root.rotation.x = bsrY + csrY;
+
+		if(!isDown) earth.rotation.y += J3D.Time.deltaTime * 0.0001;
+        engine.render();
         requestAnimationFrame(draw);
 	}
 	
@@ -118,7 +164,7 @@
 
 <body>
 	<script>
-		setLabels("018. Globe", "Sphere primitive and multiple textures.<br>Earth textures source: <a href='http://www.shadedrelief.com/natural3/pages/textures.html'>shadedrelief.com</a>");
+		setLabels("018. Globe", "Sphere primitive, multi-texture, mouse interaction.<br>Click and drag the globe to rotate.<br>Earth textures from <a href='http://www.shadedrelief.com/natural3/pages/textures.html'>shadedrelief.com</a>");
 	</script>
 	
 <script type="text/javascript">

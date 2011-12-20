@@ -10,6 +10,12 @@ v3.prototype.set = function(x, y, z){
 	this.z = z || 0;
 };
 
+v3.prototype.fromArray = function(a){
+    this.x = a[0];
+    this.y = a[1];
+    this.z = a[2];
+}
+
 v3.prototype.magSq = function() { return this.x * this.x + this.y * this.y + this.z * this.z; };
 
 v3.prototype.mag = function() { return Math.sqrt( this.magSq() ); };

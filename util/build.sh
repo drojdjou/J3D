@@ -27,10 +27,13 @@ java \
 --js ../src/engine/Primitives.js \
 --js ../src/engine/Shader.js \
 --js ../src/engine/ShaderSource.js \
+--js ../src/engine/Ray.js \
+--js ../src/engine/Collider.js \
 --js ../src/util/Color.js \
 --js ../src/util/Time.js \
 --js ../src/util/ParticleUtil.js \
 --js ../src/util/ShaderUtil.js \
+--js ../src/util/Intersection.js \
 --js ../src/engine/BuiltinShaders.js \
 --js ../lib/requestAnimationFrame.js \
 --warning_level QUIET

@@ -30,6 +30,7 @@ J3D.Transform = function(n, u) {
     this.geometry;
     this.camera;
     this.light;
+    this.collider;
 
     // Texture tile and offset.
     // Can also be specified in the renderer, but this will override
@@ -81,6 +82,7 @@ J3D.Transform.prototype.clone = function() {
     c.mesh = this.mesh;
     c.camera = this.camera;
     c.light = this.light;
+    c.collider = this.collider;
 
     return c;
 }
