@@ -8,6 +8,7 @@ struct lightSource {
 	vec3 color;
 	vec3 position;
 	float intensity;
+	float angleFalloff;
 };
 
 uniform lightSource uLight[4];
@@ -57,9 +58,20 @@ vec3 sphericalHarmonics(vec3 n, lightSource ls) {
     return c;
 }
 
-vec3 hemisphere(vec4 p, vec3 n, lightSource ls) {
+vec3 hemisphere(vec4 p, vec3 n, float si, float sh, lightSource ls) {
 	vec3 lv = normalize(ls.position - p.xyz);
-	return ls.color * (dot(n, lv) * 0.5 + 0.5);
+    float dif = (dot(n, lv) * 0.5 + 0.5);
+    dif = smoothstep(ls.angleFalloff, 1.0-ls.angleFalloff, dif);
+
+	float spec = 0.0;
+
+    if(si > 0.0) {
+    	vec3 eyed = normalize(uEyePosition - p.xyz);
+    	vec3 refd = reflect(-lv, n);
+    	spec = pow(max(dot(refd, eyed), 0.0), sh) * si;
+    };
+
+    return ls.color * dif + ls.color * spec;
 }
 
 vec3 phong(vec4 p, vec3 n, float si, float sh, lightSource ls){
@@ -89,7 +101,7 @@ vec3 singleLight(vec4 p, vec3 n, float si, float sh, lightSource ls) {
 		// Directional / Point / Spotlight
 		return phong(p, n, si, sh, ls);
 	} else if(ls.type == 4) {
-		return hemisphere(p, n, ls);
+		return hemisphere(p, n, si, sh, ls);
 	} else if(ls.type == 5) {
 		return sphericalHarmonics(n, ls);
 	} else {

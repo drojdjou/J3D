@@ -1,0 +1,140 @@
+<html> 
+ 
+<head> 
+<title>018 | Globe | J3D</title>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
+
+<link rel="stylesheet" href="common/common.css"/>
+<script type="text/javascript" src="common/common.js"></script>
+
+<script type="text/javascript" src="../build/j3d.js"></script>
+
+<script id="EarthShader" type="x-shader">
+	//#name EarthShader
+	//#include CommonInclude
+    
+    varying vec4 vPosition;
+    varying vec3 vLight;
+    varying vec2 vTextureCoord;
+    varying vec3 vNormal;
+
+	//#vertex
+	//#include VertexInclude
+
+	void main(void) {
+        vTextureCoord = getTextureCoord(aTextureCoord);
+        vNormal = nMatrix * aVertexNormal;
+        vPosition = mMatrix * vec4(aVertexPosition, 1.0);
+        gl_Position = pMatrix * vMatrix * vPosition;
+	}
+	
+	//#fragment
+    //#include Lights
+
+    uniform sampler2D dayTexture;
+    uniform sampler2D nightTexture;
+    uniform sampler2D specTexture;
+    uniform float specularIntensity;
+    uniform float shininess;
+    
+	void main(void) {
+        float si = specularIntensity * (1.0 - texture2D(specTexture, vTextureCoord).r);
+        float df = computeLights(vPosition, vNormal, si, shininess).r;
+		vec4 d = texture2D(dayTexture, vTextureCoord);
+        vec4 n = texture2D(nightTexture, vTextureCoord);
+		gl_FragColor = vec4(d.rgb * df + n.rgb * (1.0 - df), 1.0);
+	}
+</script>
+
+<script>
+	var engine, scene, earth, camera, root, sun;
+	var mx = 0, my = 0;
+
+	window.onload = function() {
+		if(!checkWebGL()) return;
+		
+		engine = new J3D.Engine();
+
+        root = new J3D.Transform();
+        engine.scene.add(root);
+
+		camera = new J3D.Transform();
+		camera.camera = new J3D.Camera();
+		camera.position.z = 100;
+		engine.camera = camera;	
+		root.add(camera);
+
+        sun = new J3D.Transform();
+		sun.light = new J3D.Light(J3D.HEMISPHERE);
+		sun.light.color = new J3D.Color(1, 1, 1, 1);
+		sun.position = new v3(-1000, 0, 0);
+        sun.light.direction = new v3(1, 0, 0);
+        sun.light.angleFalloff = 0.35;
+        engine.scene.add(sun);
+
+
+		earth = new J3D.Transform();
+
+		earth.renderer = new J3D.ShaderUtil.parseGLSL( document.getElementById("EarthShader").firstChild.nodeValue );
+        earth.renderer.dayTexture = new J3D.Texture("models/textures/earth-cloud.jpg");
+        earth.renderer.nightTexture = new J3D.Texture("models/textures/earth-night.jpg");
+        earth.renderer.specTexture = new J3D.Texture("models/textures/earth-spec.jpg");
+        earth.renderer.specularIntensity = 1.1;
+        earth.renderer.shininess = 10;
+//      earth.renderer.drawMode = gl.LINES;
+
+		earth.geometry = J3D.Primitive.Sphere(30, 60, 60);
+
+		engine.scene.add(earth);
+
+		document.onmousemove = onMouseMove;
+		
+		draw();
+	}
+
+    window.onscroll = function(e) {
+        var z= camera.position.z + window.pageYOffset * 0.25;
+        z = Math.min(500, z);
+        z = Math.max(50, z);
+        camera.position.z = z;
+    }
+
+	function onMouseMove(e) {
+		mx = ( e.clientX / window.innerWidth  ) * 2 - 1;
+		my = ( e.clientY / window.innerHeight ) * 2 - 1;
+	}
+
+	function draw() {
+		root.rotation.x += my * J3D.Time.deltaTime / 5000;
+		earth.rotation.y += J3D.Time.deltaTime / 4000;
+		engine.render();
+        requestAnimationFrame(draw);
+	}
+	
+</script>
+
+</head> 
+
+<body>
+	<script>
+		setLabels("018. Globe", "Sphere primitive and multiple textures.<br>Earth textures source: <a href='http://www.shadedrelief.com/natural3/pages/textures.html'>shadedrelief.com</a>");
+	</script>
+	
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-24294554-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</body> 
+
+</html> 

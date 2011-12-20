@@ -7,13 +7,15 @@ J3D.ShaderAtlas = function(){
 J3D.ShaderAtlas.prototype.compileShaderSource = function(name, src, type, meta){
 	var isrc;
 	
-	var ci = meta.common || "";
+	var ci = "";
 	if(meta.includes && meta.includes.length > 0) {
 		for(var i = 0; i < meta.includes.length; i++) {
 //			j3dlog("Adding common include: " + meta.includes[i]);
 			ci += J3D.ShaderSource[meta.includes[i]];
 		}
 	}
+
+    ci += meta.common || "";
 	
 	if (type == gl.VERTEX_SHADER) {
 		var vi = "";

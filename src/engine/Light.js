@@ -4,6 +4,7 @@ J3D.Light = function(t){
 	this.direction = v3.ZERO();
 	this.color = J3D.Color.white;
 	this.intensity = 1.0;
+    this.angleFalloff = 0.0;
 
 }
 

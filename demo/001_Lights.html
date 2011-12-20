@@ -45,10 +45,10 @@
 		light1.light.direction = new v3(0, -1, 0).norm();
 		light1.light.intensity = 2.5;
 		
-		light2 = new J3D.Transform();
-		light2.light = new J3D.Light(J3D.HEMISPHERE);
-		light2.light.color = new J3D.Color(redLightMax, 0, 0, 1);
-		light2.position = new v3(10, 0, 0);
+		sun = new J3D.Transform();
+		sun.light = new J3D.Light(J3D.HEMISPHERE);
+		sun.light.color = new J3D.Color(redLightMax, 0, 0, 1);
+		sun.position = new v3(10, 0, 0);
 		
 		light3 = new J3D.Transform();
 		light3.light = new J3D.Light(J3D.POINT);
@@ -65,7 +65,7 @@
 		
 		scene.add(light0);
 		scene.add(light1);
-		scene.add(light2);
+		scene.add(sun);
 		scene.add(light3);
 		
 		buildScene();
@@ -139,7 +139,7 @@
 		requestAnimationFrame(draw);
 		
 		light1.enabled = document.getElementById("yellow").checked;
-		light2.enabled = document.getElementById("red").checked;
+		sun.enabled = document.getElementById("red").checked;
 		light3.enabled = document.getElementById("blue").checked;
 		
 		if (document.getElementById("ambient").checked) {
@@ -158,7 +158,7 @@
 			mo.rotation.y -= J3D.Time.deltaTime / 7000;
 		}
 		
-		light2.light.color.r = redLightMax * (Math.sin(theta/3) + 1) / 2;
+		sun.light.color.r = redLightMax * (Math.sin(theta/3) + 1) / 2;
 		light3.position.x = Math.cos(theta/6) * 3;
 		light3.position.z = Math.sin(theta/6) * 3;
 		

@@ -30,7 +30,8 @@ J3D.ShaderUtil.setLights = function(shader, lights) {
 			gl.uniform3fv(shader.uniforms["uLight[" + i + "].direction"].location, 	lights[i].light.direction.xyz());
 			gl.uniform3fv(shader.uniforms["uLight[" + i + "].color"].location, 		lights[i].light.color.rgb());
 			gl.uniform3fv(shader.uniforms["uLight[" + i + "].position"].location, 	lights[i].worldPosition.xyz());	
-			gl.uniform1f(shader.uniforms["uLight[" + i + "].intensity"].location, 	lights[i].light.intensity);			
+			gl.uniform1f(shader.uniforms["uLight[" + i + "].intensity"].location, 	lights[i].light.intensity);
+            gl.uniform1f(shader.uniforms["uLight[" + i + "].angleFalloff"].location, 	lights[i].light.angleFalloff);
 		} else if(shader.uniforms["uLight[" + i + "].type"]) {
 			gl.uniform1i(shader.uniforms["uLight[" + i + "].type"].location, J3D.NONE);
 		} else {

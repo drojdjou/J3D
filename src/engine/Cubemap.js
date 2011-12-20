@@ -34,11 +34,17 @@ J3D.Cubemap = function(faces){
 	}
 	
 	var load = function(name, src){
-		that.faceImages[name] = new Image();
-    	that.faceImages[name].onload = function() {
-			onFace();
-    	}
-		that.faceImages[name] .src = src;
+
+        if (typeof(src) == "string") {
+            that.faceImages[name] = new Image();
+            that.faceImages[name].onload = function() {
+                onFace();
+            }
+            that.faceImages[name].src = src;
+        } else if(!!src.getContext) {
+            that.faceImages[name] = src;
+            onFace();
+        }
 	}
 	
 	
