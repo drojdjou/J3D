@@ -25,7 +25,9 @@ J3D.ShaderUtil.setAttributes = function(shader, geometry) {
 J3D.ShaderUtil.setLights = function(shader, lights) {
 	for (var i = 0; i < J3D.SHADER_MAX_LIGHTS; i++) {
 		var l = lights[i];
+
 		if(l && shader.uniforms["uLight[" + i + "].type"]){
+            j3dlog(lights[i].light.type);
 			gl.uniform1i(shader.uniforms["uLight[" + i + "].type"].location, 		lights[i].light.type);
 			gl.uniform3fv(shader.uniforms["uLight[" + i + "].direction"].location, 	lights[i].light.direction.xyz());
 			gl.uniform3fv(shader.uniforms["uLight[" + i + "].color"].location, 		lights[i].light.color.rgb());
@@ -35,7 +37,7 @@ J3D.ShaderUtil.setLights = function(shader, lights) {
 		} else if(shader.uniforms["uLight[" + i + "].type"]) {
 			gl.uniform1i(shader.uniforms["uLight[" + i + "].type"].location, J3D.NONE);
 		} else {
-			//console.log("Light not set " + i);
+			j3dlog("Light not set " + i);
 		}
 	}
 }

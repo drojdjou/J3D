@@ -465,7 +465,7 @@ J3D.ShaderSource.Lights = [
 	"vec3 singleLight(vec4 p, vec3 n, float si, float sh, lightSource ls) {",
 	"if(ls.type == 0) {",
 	"return ls.color;",
-	"} else if(ls.type < 4) {",
+	"} else if(ls.type > 0 && ls.type < 4) {",
 	"return phong(p, n, si, sh, ls);",
 	"} else if(ls.type == 4) {",
 	"return hemisphere(p, n, si, sh, ls);",

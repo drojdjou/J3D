@@ -97,7 +97,7 @@ vec3 singleLight(vec4 p, vec3 n, float si, float sh, lightSource ls) {
 	if(ls.type == 0) {
 		// Ambient
 		return ls.color;
-	} else if(ls.type < 4) {
+	} else if(ls.type > 0 && ls.type < 4) {
 		// Directional / Point / Spotlight
 		return phong(p, n, si, sh, ls);
 	} else if(ls.type == 4) {
