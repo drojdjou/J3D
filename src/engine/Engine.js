@@ -33,7 +33,7 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
 	this.scene = new J3D.Scene();
 	this.camera; // it is a J3D.Transform
 	
-	this.canvas = cv;
+	this.outCanvas = cv;
 	
 	this._opaqueMeshes = [];
 	this._transparentMeshes = [];

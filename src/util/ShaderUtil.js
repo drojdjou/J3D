@@ -27,7 +27,6 @@ J3D.ShaderUtil.setLights = function(shader, lights) {
 		var l = lights[i];
 
 		if(l && shader.uniforms["uLight[" + i + "].type"]){
-            j3dlog(lights[i].light.type);
 			gl.uniform1i(shader.uniforms["uLight[" + i + "].type"].location, 		lights[i].light.type);
 			gl.uniform3fv(shader.uniforms["uLight[" + i + "].direction"].location, 	lights[i].light.direction.xyz());
 			gl.uniform3fv(shader.uniforms["uLight[" + i + "].color"].location, 		lights[i].light.color.rgb());
