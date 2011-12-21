@@ -1,186 +1,189 @@
-<html> 
- 
-<head> 
-<title>018 | Globe | J3D</title>
+<html>
 
-<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
+<head>
+    <title>018 | Globe | J3D</title>
 
-<link rel="stylesheet" href="common/common.css"/>
-<script type="text/javascript" src="common/common.js"></script>
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 
-<script type="text/javascript" src="../build/j3d.js"></script>
+    <link rel="stylesheet" href="common/common.css"/>
+    <script type="text/javascript" src="common/common.js"></script>
 
-<script id="EarthShader" type="x-shader">
-	//#name EarthShader
-	//#include CommonInclude
-    
-    varying vec4 vPosition;
-    varying vec3 vLight;
-    varying vec2 vTextureCoord;
-    varying vec3 vNormal;
+    <script type="text/javascript" src="../build/j3d.js"></script>
 
-	//#vertex
-	//#include VertexInclude
+    <script id="EarthShader" type="x-shader">
+        //#name EarthShader
+        //#include CommonInclude
 
-	void main(void) {
+        varying vec4 vPosition;
+        varying vec3 vLight;
+        varying vec2 vTextureCoord;
+        varying vec3 vNormal;
+
+        //#vertex
+        //#include VertexInclude
+
+        void main(void) {
         vTextureCoord = getTextureCoord(aTextureCoord);
         vNormal = nMatrix * aVertexNormal;
         vPosition = mMatrix * vec4(aVertexPosition, 1.0);
         gl_Position = pMatrix * vMatrix * vPosition;
-	}
-	
-	//#fragment
-    //#include Lights
+        }
 
-    uniform sampler2D dayTexture;
-    uniform sampler2D nightTexture;
-    uniform sampler2D specTexture;
-    uniform float specularIntensity;
-    uniform float shininess;
-    
-	void main(void) {
+        //#fragment
+        //#include Lights
+
+        uniform sampler2D dayTexture;
+        uniform sampler2D nightTexture;
+        uniform sampler2D specTexture;
+        uniform float specularIntensity;
+        uniform float shininess;
+
+        void main(void) {
 
         float si = specularIntensity * (1.0 - texture2D(specTexture, vTextureCoord).r);
         float df = computeLights(vPosition, vNormal, si, shininess).r;
 
         df = max(0.0, df);
 
-		vec4 d = texture2D(dayTexture, vTextureCoord);
+        vec4 d = texture2D(dayTexture, vTextureCoord);
         vec4 n = texture2D(nightTexture, vTextureCoord);
         vec4 c = vec4(d.rgb * df + n.rgb * (1.0 - df), 1.0);
 
-		gl_FragColor = c;
-	}
-</script>
+        gl_FragColor = c;
+        }
+    </script>
 
-<script>
-	var engine, scene, earth, camera, root, sun;
-	var mx = 0, my = 0;
-    var isHovered = false;
-    var bsrX = 0, csrX = 0, bsrY = 0, csrY = 0;
-    var isDown = false;
-    var dx = 0, dy = 0;
+    <script>
+        var engine, scene, earth, camera, root, sun;
+        var mx = 0, my = 0;
+        var isHovered = false;
+        var bsrX = 0, csrX = 0, bsrY = 0, csrY = 0;
+        var isDown = false;
+        var dx = 0, dy = 0;
 
-	window.onload = function() {
-		if(!checkWebGL()) return;
-		
-		engine = new J3D.Engine();
+        window.onload = function() {
+            if (!checkWebGL()) return;
 
-        root = new J3D.Transform();
-        engine.scene.add(root);
+            engine = new J3D.Engine();
 
-		camera = new J3D.Transform();
-		camera.camera = new J3D.Camera();
-		camera.position.z = 100;
-		engine.camera = camera;	
-		root.add(camera);
+            root = new J3D.Transform();
+            engine.scene.add(root);
 
-        sun = new J3D.Transform();
-		sun.light = new J3D.Light(J3D.HEMISPHERE);
-		sun.light.color = new J3D.Color(1, 1, 1, 1);
-		sun.position = new v3(-1000, 0, 0);
-        sun.light.direction = new v3(1, 0, 0);
-        sun.light.angleFalloff = 0.35;
-        engine.scene.add(sun);
+            camera = new J3D.Transform();
+            camera.camera = new J3D.Camera();
+            camera.position.z = 100;
+            engine.camera = camera;
+            root.add(camera);
+
+            sun = new J3D.Transform();
+            sun.light = new J3D.Light(J3D.HEMISPHERE);
+            sun.light.color = new J3D.Color(1, 1, 1, 1);
+            sun.position = new v3(-1000, 0, 0);
+            sun.light.direction = new v3(1, 0, 0);
+            sun.light.angleFalloff = 0.35;
+            engine.scene.add(sun);
 
 
-		earth = new J3D.Transform();
+            earth = new J3D.Transform();
 
-		earth.renderer = new J3D.ShaderUtil.parseGLSL( document.getElementById("EarthShader").firstChild.nodeValue );
-        earth.renderer.dayTexture = new J3D.Texture("models/textures/earth-cloud.jpg");
-        earth.renderer.nightTexture = new J3D.Texture("models/textures/earth-night.jpg");
-        earth.renderer.specTexture = new J3D.Texture("models/textures/earth-spec.jpg");
-        earth.renderer.specularIntensity = 1.1;
-        earth.renderer.shininess = 10;
+            earth.renderer = new J3D.ShaderUtil.parseGLSL(document.getElementById("EarthShader").firstChild.nodeValue);
+            earth.renderer.dayTexture = new J3D.Texture("models/textures/earth-cloud.jpg");
+            earth.renderer.nightTexture = new J3D.Texture("models/textures/earth-night.jpg");
+            earth.renderer.specTexture = new J3D.Texture("models/textures/earth-spec.jpg");
+            earth.renderer.specularIntensity = 1.1;
+            earth.renderer.shininess = 10;
 //      earth.renderer.drawMode = gl.LINES;
 
-		earth.geometry = J3D.Primitive.Sphere(30, 40, 40);
+            earth.geometry = J3D.Primitive.Sphere(30, 40, 40);
 
-        earth.collider = J3D.Collider.Sphere(30);
+            earth.collider = J3D.Collider.Sphere(30);
 
-		engine.scene.add(earth);
+            engine.scene.add(earth);
 
-		document.onmousemove = onMouseMove;
-        document.onmousedown = onMouseDown;
-        document.onmouseup = onMouseUp;
-		
-		draw();
-	}
+            document.onmousemove = onMouseMove;
+            document.onmousedown = onMouseDown;
+            document.onmouseup = onMouseUp;
 
-    window.onscroll = function(e) {
-        var z= camera.position.z + window.pageYOffset * 0.25;
-        z = Math.min(500, z);
-        z = Math.max(50, z);
-        camera.position.z = z;
-    }
-
-	function onMouseMove(e) {
-		mx = e.clientX;
-		my = e.clientY;
-
-        if(isDown) {
-            csrX = -( ((mx / window.innerWidth) * 2 - 1) - dx ) * 1;
-            csrY = -( ((my / window.innerHeight) * 2 - 1) - dy ) * 1;
-
+            draw();
         }
-	}
 
-    function onMouseDown(e) {
-        if(isHovered) {
-            isDown = true;
-            dx = (e.clientX / window.innerWidth) * 2 - 1;
-            dy = (e.clientY / window.innerHeight) * 2 - 1;
+        window.onscroll = function(e) {
+            var z = camera.position.z + window.pageYOffset * 0.25;
+            z = Math.min(500, z);
+            z = Math.max(50, z);
+            camera.position.z = z;
         }
-    }
 
-    function onMouseUp(e) {
-        if(isDown) {
-            bsrX += csrX;
-            csrX = 0;
-            bsrY += csrY;
-            csrY = 0;
+        function onMouseMove(e) {
+            mx = e.clientX;
+            my = e.clientY;
+
+            if (isDown) {
+                csrX = -( ((mx / window.innerWidth) * 2 - 1) - dx ) * 1;
+                csrY = -( ((my / window.innerHeight) * 2 - 1) - dy ) * 1;
+
+            }
         }
-        isDown = false;
-    }
 
-	function draw() {
+        function onMouseDown(e) {
+            if (isHovered) {
+                isDown = true;
+                dx = (e.clientX / window.innerWidth) * 2 - 1;
+                dy = (e.clientY / window.innerHeight) * 2 - 1;
+            }
+        }
 
-        var r = J3D.Ray.fromMousePosition(mx, my, camera);
-        isHovered = J3D.Intersection.raySphere(r, earth) > 0;
+        function onMouseUp(e) {
+            if (isDown) {
+                bsrX += csrX;
+                csrX = 0;
+                bsrY += csrY;
+                csrY = 0;
+            }
+            isDown = false;
+        }
 
-        document.body.style.cursor = (isHovered) ? "move" : "auto";
-        
-		root.rotation.y = bsrX + csrX;
-        root.rotation.x = bsrY + csrY;
+        function draw() {
 
-		if(!isDown) earth.rotation.y += J3D.Time.deltaTime * 0.0001;
-        engine.render();
-        requestAnimationFrame(draw);
-	}
-	
-</script>
+            var r = J3D.Ray.fromMousePosition(mx, my, camera);
+            isHovered = J3D.Intersection.raySphere(r, earth) > 0;
 
-</head> 
+            document.body.style.cursor = (isHovered) ? "move" : "auto";
+
+            root.rotation.y = bsrX + csrX;
+            root.rotation.x = bsrY + csrY;
+
+            if (!isDown) earth.rotation.y += J3D.Time.deltaTime * 0.0001;
+            engine.render();
+            requestAnimationFrame(draw);
+        }
+
+    </script>
+
+</head>
 
 <body>
-	<script>
-		setLabels("018. Globe", "Sphere primitive, multi-texture, mouse interaction.<br>Click and drag the globe to rotate.<br>Earth textures from <a href='http://www.shadedrelief.com/natural3/pages/textures.html'>shadedrelief.com</a>");
-	</script>
-	
+<script>
+    setLabels("018. Globe", "Sphere primitive, multi-texture, mouse interaction.<br>Click and drag the globe to rotate.<br>Earth textures from <a href='http://www.shadedrelief.com/natural3/pages/textures.html'>shadedrelief.com</a>");
+</script>
+
 <script type="text/javascript">
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-24294554-1']);
-  _gaq.push(['_trackPageview']);
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-24294554-1']);
+    _gaq.push(['_trackPageview']);
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+    (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+    })();
 
 </script>
 
-</body> 
+</body>
 
 </html> 
