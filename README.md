@@ -51,3 +51,5 @@ It was created by [Bartek Drozdz](http://www.everyday3d.com/)
 (http://www.everyday3d.com/j3d/demo/016_BlurFilter.html)
 [![Scene management](http://www.everyday3d.com/j3d/thumbs/018_sceneman.jpg)]
 (http://www.everyday3d.com/j3d/demo/017_SceneManagement.html)
+[![Globe](http://www.everyday3d.com/j3d/thumbs/019_sphere.png)]
+(http://www.everyday3d.com/j3d/demo/018_Sphere.html)
