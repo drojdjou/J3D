@@ -135,7 +135,7 @@ J3D.Primitive.Sphere = function(radius, segmentsWidth, segmentsHeight) {
                 c.vertices.push(vt1.x, vt1.y, vt1.z, vt2.x, vt2.y, vt2.z, vt3.x, vt3.y, vt3.z, vt4.x, vt4.y, vt4.z);
                 c.uv1.push( uv1[0],uv1[1],  uv2[0],uv2[1], uv3[0],uv3[1], uv4[0],uv4[1] );
                 c.normals.push( n1.x, n1.y, n1.z, n2.x, n2.y, n2.z, n3.x, n3.y, n3.z, n4.x, n4.y, n4.z );
-                c.tris.push(p, p + 1, p + 2, p, p + 2, p + 3);
+                c.tris.push( p + 0, p + 1, p + 2,  p + 0, p + 2, p + 3 );
             }
         }
 

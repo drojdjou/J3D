@@ -36,7 +36,7 @@ J3D.ShaderUtil.setLights = function(shader, lights) {
 		} else if(shader.uniforms["uLight[" + i + "].type"]) {
 			gl.uniform1i(shader.uniforms["uLight[" + i + "].type"].location, J3D.NONE);
 		} else {
-			j3dlog("Light not set " + i);
+//			j3dlog("Light not set " + i);
 		}
 	}
 }

@@ -11,15 +11,15 @@
  */
 J3D.Mesh = function(source) {
     that = this;
-    
+
     J3D.Geometry.call(this);
 
     this.hasUV1 = false;
     this.boundingBox;
 
     var calculateBoundingBox = function(vertices) {
-        
-         var b = {
+
+        var b = {
             minX:Number.MAX_VALUE, maxX:Number.MIN_VALUE,
             minY:Number.MAX_VALUE, maxY:Number.MIN_VALUE,
             minZ:Number.MAX_VALUE, maxZ:Number.MIN_VALUE
@@ -44,7 +44,6 @@ J3D.Mesh = function(source) {
             case "vertices":
                 this.vertexPositionBuffer = this.addArray("aVertexPosition", new Float32Array(source[attr]), 3);
                 calculateBoundingBox(source[attr]);
-                j3dlog(this.boundingBox);
                 break;
             case "colors":
                 if (source[attr].length > 0) this.addArray("aVertexColor", new Float32Array(source[attr]), 4);
@@ -73,24 +72,19 @@ J3D.Mesh = function(source) {
     }
 
     this.flip = function() {
-        var tv = [];
-        var vertices = this.vertexPositionBuffer.data;
-        for (var i = 0; i < vertices.length; i += 3) {
-            tv.push(vertices[i], vertices[i + 2], vertices[i + 1]);
-        }
-        vertices = new Float32Array(tv);
 
-        var tn = [];
-        var normals = this.vertexNormalBuffer.data;
-        for (var i = 0; i < normals.length; i += 3) {
-            var v = new v3(normals[i], normals[i + 1], normals[i + 2])
-            v.neg();
-            tn = tn.concat(v.xyz());
-        }
-        normals = new Float32Array(tn);
+        var tv = [], tn = [];
+        var v = this.vertexPositionBuffer.data;
+        var n = this.vertexNormalBuffer.data;
+        var i;
 
-        this.replaceArray(this.vertexPositionBuffer, vertices);
-        this.replaceArray(this.vertexNormalBuffer, normals);
+        for (i = 0; i < v.length; i += 3) {
+            tv.push(v[i], v[i + 2], v[i + 1]);
+            tn.push(-n[i], -n[i + 1], -n[i + 2]);
+        }
+
+        this.replaceArray(this.vertexPositionBuffer, new Float32Array(tv));
+        this.replaceArray(this.vertexNormalBuffer, new Float32Array(tn));
 
         return this;
     }

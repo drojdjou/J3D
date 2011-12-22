@@ -1,100 +1,128 @@
-<html> 
- 
-<head> 
-<title>003 | Cubemaps, skybox, reflective material | J3D</title> 
+<html>
 
-<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
+<head>
+    <title>003 | Reflections | J3D</title>
 
-<link rel="stylesheet" href="common/common.css"/>
-<script type="text/javascript" src="common/common.js"></script>
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 
-<script type="text/javascript" src="../build/j3d.js"></script>
+    <link rel="stylesheet" href="common/common.css"/>
+    <script type="text/javascript" src="common/common.js"></script>
+
+    <script type="text/javascript" src="../build/j3d.js"></script>
 
 
+    <script>
+        var engine, scene;
+        var root, monkey, camera, reflective, normal2color;
+        var mx = 0, my = 0;
+        var nmx = 0, nmy = 0;
+        var isMouseDown = false;
 
-<script>
-	var engine, scene;
-	var root, monkey, camera;
-	var mx, my = 0;
-	var isMouseDown = false;
-	
-	function init() {
-		if(!checkWebGL()) return;
-		
-		engine = new J3D.Engine();
-		engine.setClearColor(J3D.Color.white);
+        function init() {
+            if (!checkWebGL()) return;
 
-		camera = new J3D.Transform();
-		camera.camera = new J3D.Camera({far: 100});
-		camera.position.z = 5;	
-		engine.camera = camera;	
-		
-		root = new J3D.Transform();
-		root.add(camera);
-		engine.scene.add(root);
+            engine = new J3D.Engine();
+            engine.setClearColor(J3D.Color.white);
 
-		cubemap = new J3D.Cubemap({
-			left: "models/textures/skybox/left.jpg",
-			right: "models/textures/skybox/right.jpg",
-			up: "models/textures/skybox/up.jpg",
-			down: "models/textures/skybox/down.jpg",
-			back: "models/textures/skybox/back.jpg",
-			front: "models/textures/skybox/front.jpg"
-		});
+            camera = new J3D.Transform();
+            camera.camera = new J3D.Camera({far: 100});
+            camera.position.z = 4;
+            engine.camera = camera;
 
-		engine.scene.addSkybox(cubemap);
-		
-		monkey = new J3D.Transform();	
-		monkey.renderer = J3D.BuiltinShaders.fetch("Reflective");
-		monkey.renderer.uCubemap = cubemap;
-		J3D.Loader.loadJSON("models/monkeyhi.js", function(j) { monkey.geometry = new J3D.Mesh(j); } );
-		engine.scene.add(monkey);
+            root = new J3D.Transform();
+            root.add(camera);
+            engine.scene.add(root);
 
-		document.onmousemove = onMouseMove;
-	
-		draw();
-	}
-	
-	function onMouseMove(e) {
-		mx = ( e.clientX / window.innerWidth  ) * 2 - 1;
-		my = ( e.clientY / window.innerHeight ) * 2 - 1;
-	}
-	
-	function draw() {
-		requestAnimationFrame(draw);
-		
-		if (!isNaN(mx) && !isNaN(my)) {
-			// Rotate the root to which camera is attached 
-			root.rotation.x += my * J3D.Time.deltaTime / 1000;
-			root.rotation.y += mx * J3D.Time.deltaTime / 2000;
-		}
-		
-		engine.render();
-	}
-	
-</script>
+            cubemap = new J3D.Cubemap({
+                left: "models/textures/skybox/left.jpg",
+                right: "models/textures/skybox/right.jpg",
+                up: "models/textures/skybox/up.jpg",
+                down: "models/textures/skybox/down.jpg",
+                back: "models/textures/skybox/back.jpg",
+                front: "models/textures/skybox/front.jpg"
+            });
 
-</head> 
+            engine.scene.addSkybox(cubemap);
+
+            monkey = new J3D.Transform();
+
+            reflective = J3D.BuiltinShaders.fetch("Reflective");
+            reflective.uCubemap = cubemap;
+
+            normal2color = J3D.BuiltinShaders.fetch("Normal2Color");
+
+            monkey.renderer = normal2color;
+
+            J3D.Loader.loadJSON("models/monkeyhi.js", function(j) {
+                monkey.geometry = new J3D.Mesh(j);
+                monkey.collider = J3D.Collider.Mesh(monkey.geometry);
+            });
+
+//            monkey.geometry = J3D.Primitive.Cube(1, 1, 1);
+//            monkey.collider = J3D.Collider.Mesh(monkey.geometry);
+//            monkey.rotation = v3.random();
+
+            engine.scene.add(monkey);
+
+            document.onmousemove = onMouseMove;
+
+            draw();
+        }
+
+        function onMouseMove(e) {
+            mx = e.clientX;
+            my = e.clientY;
+            nmx = ( e.clientX / window.innerWidth  ) * 2 - 1;
+            nmy = ( e.clientY / window.innerHeight ) * 2 - 1;
+        }
+
+        function draw() {
+            var mh = false;
+
+            if (monkey.collider) {
+                var r = J3D.Ray.fromMousePosition(mx, my, camera);
+                var bh = J3D.Intersection.rayBox(r, monkey);
+                mh = (bh) ? J3D.Intersection.rayMesh(r, monkey) : false;
+                monkey.renderer = (mh) ? normal2color : reflective;
+            }
+
+
+            root.rotation.x += nmy * J3D.Time.deltaTime / 1000;
+            root.rotation.y += nmx * J3D.Time.deltaTime / 2000;
+//            monkey.rotation.x += J3D.Time.deltaTime / 4000;
+//            monkey.rotation.y += J3D.Time.deltaTime / 6000;
+
+
+            engine.render();
+            requestAnimationFrame(draw);
+        }
+
+    </script>
+
+</head>
 
 <body onload="init();">
-	<script>
-		setLabels("003. Cubemaps", "Example of a skybox and a reflective material<br>Cubemap by <a href='http://www.ataricommunity.com/forums/showthread.php?t=506748'>Jockum Skoglund</a>");
-	</script>
+<script>
+    setLabels("003. Reflections", "A skybox, a reflective material and a mesh collider<br>Cubemap by <a href='http://www.ataricommunity.com/forums/showthread.php?t=506748'>Jockum Skoglund</a>");
+</script>
 
 <script type="text/javascript">
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-24294554-1']);
-  _gaq.push(['_trackPageview']);
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-24294554-1']);
+    _gaq.push(['_trackPageview']);
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+    (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+    })();
 
 </script>
 
-</body> 
+</body>
 
 </html> 
