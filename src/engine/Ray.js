@@ -10,18 +10,17 @@ J3D.Ray._mt = mat4.create();
 J3D.Ray._nt = mat3.create();
 
 J3D.Ray.fromMousePosition = function(mouseX, mouseY, camera) {
-	var r = new J3D.Ray();
-
     var mx = (mouseX / window.innerWidth) * 2 - 1;
     var my = (1 - mouseY / window.innerHeight) * 2 - 1;
-	var ra = [mx, my, -1];
+	var ra = [mx, my, 0];
 
     mat4.inverse(camera.camera.projectionMat.toArray(), J3D.Ray._mt);
-	mat4.multiply(camera.globalMatrix, J3D.Ray._mt, J3D.Ray._mt);
-	mat4.multiplyVec3(J3D.Ray._mt, ra);
-	
-	r.origin.fromArray(ra);
+    mat4.multiplyVec3(J3D.Ray._mt, ra);
 
+    mat4.multiplyVec3(camera.globalMatrix, ra);
+
+    var r = new J3D.Ray();
+    r.origin.fromArray(ra);
     r.direction = r.origin.sub(camera.worldPosition).norm();
 
 	return r;

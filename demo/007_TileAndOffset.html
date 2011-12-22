@@ -73,7 +73,7 @@
             cube3.collider = cubecollider;
 
             camera = new J3D.Transform();
-            camera.camera = new J3D.Camera({ fov:30 });
+            camera.camera = new J3D.Camera({ fov:30, near:6 });
 
             camera.position.x = 2;
             camera.position.y = 2;
