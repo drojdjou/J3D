@@ -13,7 +13,7 @@
 
     <script>
         var engine, scene;
-        var root, monkey, camera, reflective, normal2color;
+        var root, monkey, camera, reflective;
         var mx = 0, my = 0;
         var nmx = 0, nmy = 0;
         var isMouseDown = false;
@@ -46,21 +46,12 @@
 
             monkey = new J3D.Transform();
 
-            reflective = J3D.BuiltinShaders.fetch("Reflective");
-            reflective.uCubemap = cubemap;
-
-            normal2color = J3D.BuiltinShaders.fetch("Normal2Color");
-
-            monkey.renderer = normal2color;
+            monkey.renderer = J3D.BuiltinShaders.fetch("Reflective");
+            monkey.renderer.uCubemap = cubemap;
 
             J3D.Loader.loadJSON("models/monkeyhi.js", function(j) {
                 monkey.geometry = new J3D.Mesh(j);
-                monkey.collider = J3D.Collider.Mesh(monkey.geometry);
             });
-
-//            monkey.geometry = J3D.Primitive.Cube(1, 1, 1);
-//            monkey.collider = J3D.Collider.Mesh(monkey.geometry);
-//            monkey.rotation = v3.random();
 
             engine.scene.add(monkey);
 
@@ -79,19 +70,8 @@
         function draw() {
             var mh = false;
 
-            if (monkey.collider) {
-                var r = J3D.Ray.fromMousePosition(mx, my, camera);
-                var bh = J3D.Intersection.rayBox(r, monkey);
-                mh = (bh) ? J3D.Intersection.rayMesh(r, monkey) : false;
-                monkey.renderer = (mh) ? normal2color : reflective;
-            }
-
-
             root.rotation.x += nmy * J3D.Time.deltaTime / 1000;
             root.rotation.y += nmx * J3D.Time.deltaTime / 2000;
-//            monkey.rotation.x += J3D.Time.deltaTime / 4000;
-//            monkey.rotation.y += J3D.Time.deltaTime / 6000;
-
 
             engine.render();
             requestAnimationFrame(draw);
@@ -103,7 +83,7 @@
 
 <body onload="init();">
 <script>
-    setLabels("003. Reflections", "A skybox, a reflective material and a mesh collider<br>Cubemap by <a href='http://www.ataricommunity.com/forums/showthread.php?t=506748'>Jockum Skoglund</a>");
+    setLabels("003. Reflections", "A skybox and a reflective material<br>Cubemap by <a href='http://www.ataricommunity.com/forums/showthread.php?t=506748'>Jockum Skoglund</a>");
 </script>
 
 <script type="text/javascript">

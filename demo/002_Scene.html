@@ -8,54 +8,12 @@
 <link rel="stylesheet" href="common/common.css"/>
 <script type="text/javascript" src="common/common.js"></script>
 
-<!--
-<script type="text/javascript" src="common/common.js"></script>
-<script type="text/javascript" src="../lib/glMatrix.js"></script>
-<script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
-<script type="text/javascript" src="../src/J3D.js"></script>
-<script type="text/javascript" src="../src/util/Color.js"></script>
-<script type="text/javascript" src="../src/math/Vector2.js"></script>
-<script type="text/javascript" src="../src/math/Vector3.js"></script>
-<script type="text/javascript" src="../src/math/Matrix44.js"></script>
-<script type="text/javascript" src="../src/engine/Engine.js"></script>
-<script type="text/javascript" src="../src/engine/Camera.js"></script>
-<script type="text/javascript" src="../src/engine/Light.js"></script>
-<script type="text/javascript" src="../src/engine/Geometry.js"></script>
-<script type="text/javascript" src="../src/engine/Mesh.js"></script>
-<script type="text/javascript" src="../src/engine/Scene.js"></script>
-<script type="text/javascript" src="../src/engine/Loader.js"></script>
-<script type="text/javascript" src="../src/engine/Filter.js"></script>
-<script type="text/javascript" src="../src/engine/ShaderAtlas.js"></script>
-<script type="text/javascript" src="../src/engine/EffectAtlas.js"></script>
-<script type="text/javascript" src="../src/engine/Texture.js"></script>
-<script type="text/javascript" src="../src/engine/Cubemap.js"></script>
-<script type="text/javascript" src="../src/engine/Transform.js"></script>
-<script type="text/javascript" src="../src/engine/Postprocess.js"></script>
-<script type="text/javascript" src="../src/engine/Primitives.js"></script>
-<script type="text/javascript" src="../src/engine/FrameBuffer.js"></script>
-<script type="text/javascript" src="../src/effects/EffectSource.js"></script>
-<script type="text/javascript" src="../src/renderers/ShaderSource.js"></script>
-<script type="text/javascript" src="../src/renderers/Phong.js"></script>
-<script type="text/javascript" src="../src/renderers/Toon.js"></script>
-<script type="text/javascript" src="../src/renderers/Depth.js"></script>
-<script type="text/javascript" src="../src/renderers/Gouraud.js"></script>
-<script type="text/javascript" src="../src/renderers/Normal2Color.js"></script>
-<script type="text/javascript" src="../src/renderers/Reflective.js"></script>
-<script type="text/javascript" src="../src/renderers/Glass.js"></script>
-<script type="text/javascript" src="../src/renderers/Skybox.js"></script>
-<script type="text/javascript" src="../src/renderers/Shader.js"></script>
-<script type="text/javascript" src="../src/util/Time.js"></script>
-<script type="text/javascript" src="../src/util/ShaderUtil.js"></script>
-<script type="text/javascript" src="../src/engine/BuiltinShaders.js"></script>
--->
-
 <script type="text/javascript" src="../build/j3d.js"></script>
 
-
 <script>
-	var mx, my = 0;
+	var mx = 0, my = 0;
 	var jsonScene;
-	var root;
+	var root, camera, whiteMat;
 	var rings = [];
 	
 	function init() {
@@ -69,7 +27,10 @@
 				J3D.Loader.parseJSONScene(jsscene, jsmeshes, engine);
 				
 				root = engine.scene.find("root");
-				
+                camera = engine.scene.find("camera");
+
+                j3dlog(camera.camera);
+
 				rings[0] = engine.scene.find("root/ring");
 				rings[1] = engine.scene.find("root/ring/ring");
 				rings[2] = engine.scene.find("root/ring/ring/ring");
@@ -77,30 +38,62 @@
 				rings[4] = engine.scene.find("root/ring/ring/ring/ring/ring");
 				rings[5] = engine.scene.find("root/ring/ring/ring/ring/ring/ring");
 				rings[6] = engine.scene.find("root/ring/ring/ring/ring/ring/ring/ring");
-				
+
+                rings[0].collider = J3D.Collider.Mesh(rings[0].geometry);
+                rings[1].collider = J3D.Collider.Mesh(rings[1].geometry);
+                rings[2].collider = J3D.Collider.Mesh(rings[2].geometry);
+                rings[3].collider = J3D.Collider.Mesh(rings[3].geometry);
+                rings[4].collider = J3D.Collider.Mesh(rings[4].geometry);
+                rings[5].collider = J3D.Collider.Mesh(rings[5].geometry);
+                rings[6].collider = J3D.Collider.Mesh(rings[6].geometry);
+
+                rings[0].originalRenderer = rings[0].renderer;
+                rings[1].originalRenderer = rings[1].renderer;
+                rings[2].originalRenderer = rings[2].renderer;
+                rings[3].originalRenderer = rings[3].renderer;
+                rings[4].originalRenderer = rings[4].renderer;
+                rings[5].originalRenderer = rings[5].renderer;
+                rings[6].originalRenderer = rings[6].renderer;
+
 				draw();
 			})
 		});
+
+        whiteMat = J3D.BuiltinShaders.fetch("Phong");
+		whiteMat.su.color = J3D.Color.white;
 
 		document.onmousemove = onMouseMove;
 	}
 	
 	function onMouseMove(e) {
-		mx = ( e.clientX / window.innerWidth  ) * 2 - 1;
-		my = ( e.clientY / window.innerHeight ) * 2 - 1;
+		mx = e.clientX;
+		my = e.clientY;
 	}
 	
 	function draw() {
-		requestAnimationFrame(draw);
-		
-		if(!mx) mx = 0;
-		if(!my) my = 0;
-		
-		var sx = mx * J3D.Time.deltaTime / 1000;
-		var sy = my * J3D.Time.deltaTime / 1000;
+		var sx = (( mx / window.innerWidth  ) * 2 - 1) * J3D.Time.deltaTime / 1000;
+		var sy = (( my / window.innerHeight ) * 2 - 1) * J3D.Time.deltaTime / 1000;
 
-		root.rotation.y += sx;
-		
+        var r = J3D.Ray.fromMousePosition(mx, my, camera);
+
+        var rh0 = J3D.Intersection.rayMesh(r, rings[0]);
+        var rh1 = J3D.Intersection.rayMesh(r, rings[1]);
+        var rh2 = J3D.Intersection.rayMesh(r, rings[2]);
+        var rh3 = J3D.Intersection.rayMesh(r, rings[3]);
+        var rh4 = J3D.Intersection.rayMesh(r, rings[4]);
+        var rh5 = J3D.Intersection.rayMesh(r, rings[5]);
+        var rh6 = J3D.Intersection.rayMesh(r, rings[6]);
+
+        rings[0].renderer = (rh0) ? whiteMat : rings[0].originalRenderer;
+		rings[1].renderer = (rh1) ? whiteMat : rings[1].originalRenderer;
+        rings[2].renderer = (rh2) ? whiteMat : rings[2].originalRenderer;
+        rings[3].renderer = (rh3) ? whiteMat : rings[3].originalRenderer;
+        rings[4].renderer = (rh4) ? whiteMat : rings[4].originalRenderer;
+        rings[5].renderer = (rh5) ? whiteMat : rings[5].originalRenderer;
+        rings[6].renderer = (rh6) ? whiteMat : rings[6].originalRenderer;
+
+        root.rotation.y += sx;
+
 		rings[0].rotation.y += sx;
 		rings[1].rotation.y -= sx * 0.1;
 		rings[2].rotation.y -= sx * 0.12;
@@ -108,7 +101,7 @@
 		rings[4].rotation.y -= sx * 0.16;
 		rings[5].rotation.y -= sx * 0.18;
 		rings[6].rotation.y -= sx * 0.2;
-		
+
 		rings[0].rotation.x += sy;
 		rings[1].rotation.x -= sy * 0.1;
 		rings[2].rotation.x -= sy * 0.12;
@@ -118,6 +111,7 @@
 		rings[6].rotation.x -= sy * 0.2;
 		
 		engine.render();
+        requestAnimationFrame(draw);
 	}
 		
 </script>
