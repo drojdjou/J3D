@@ -12,9 +12,12 @@
 
     <script>
 
-        var engine, sun, cube1, cube2, cube3, camera;
+        var engine, sun, cube1, cube2, cube3, camera, cubemesh;
         var outTexture, overTexture;
         var mx = 0, my = 0;
+
+        var isInside = true;
+        var cs = 5;
 
         function init() {
             if (!checkWebGL()) return;
@@ -34,8 +37,9 @@
             sun.light.color = new J3D.Color(0.75, 0.75, 0.75, 1);
             sun.light.direction = new v3(0, -1, 0).norm();
 
+
             cube1 = new J3D.Transform();
-            cube1.position.x = -2;
+            cube1.position.x = -2 * cs;
             cube1.renderer = J3D.BuiltinShaders.fetch("Gouraud");
             cube1.renderer.textureTile = new v2(0.5, 0.5);
             cube1.renderer.colorTexture = outTexture;
@@ -43,7 +47,7 @@
             cube1.textureOffset = new v2(0.66, 0.66);
 
             cube2 = new J3D.Transform();
-            cube2.position.x = 0;
+            cube2.position.x = 0 * cs;
             cube2.renderer = J3D.BuiltinShaders.fetch("Phong");
             cube2.renderer.colorTexture = outTexture;
             cube2.renderer.hasColorTexture = true;
@@ -57,30 +61,26 @@
             cube2.textureTile = new v2(2, 2); // <- comment out to use renderers settings above
 
             cube3 = new J3D.Transform();
-            cube3.position.x = 2;
+            cube3.position.x = 2 * cs;
             cube3.renderer = J3D.BuiltinShaders.fetch("Gouraud");
             cube3.renderer.colorTexture = outTexture;
             cube3.renderer.hasColorTexture = true;
 
-            var cubemesh = J3D.Primitive.Cube(1, 1, 1);
+            cubemesh = J3D.Primitive.Cube(cs, cs, cs);
             cube1.geometry = cubemesh;
             cube2.geometry = cubemesh;
             cube3.geometry = cubemesh;
 
-            var cubecollider = J3D.Collider.Box(cubemesh.boundingBox);
+            var cubecollider = J3D.Collider.Mesh(cubemesh);
             cube1.collider = cubecollider;
             cube2.collider = cubecollider;
             cube3.collider = cubecollider;
 
             camera = new J3D.Transform();
-            camera.camera = new J3D.Camera({ fov:30, near:6 });
+            camera.camera = new J3D.Camera({ fov:30, near:1 });
 
-            camera.position.x = 2;
-            camera.position.y = 2;
-            camera.position.z = 8;
-
-            camera.rotation.x = Math.PI * -0.075;
-            camera.rotation.y = Math.PI * 0.075;
+            camera.position = new v3(2 * cs, 2 * cs, 8 * cs);
+            camera.rotation = new v3(Math.PI * -0.075, Math.PI * 0.075, 0);
 
             engine.camera = camera;
 
@@ -113,6 +113,10 @@
             my = e.clientY;
         }
 
+        function setDebug(s) {
+            document.getElementById("details").innerHTML = s;
+        }
+
         function draw() {
             cube1.rotation.x += Math.PI * J3D.Time.deltaTime / 12000;
             cube1.rotation.y -= Math.PI * J3D.Time.deltaTime / 6000;
@@ -130,9 +134,9 @@
 
             var r = J3D.Ray.fromMousePosition(mx, my, camera);
 
-            var c1h = J3D.Intersection.rayBox(r, cube1);
-            var c2h = J3D.Intersection.rayBox(r, cube2);
-            var c3h = J3D.Intersection.rayBox(r, cube3);
+            var c1h = J3D.Intersection.rayMesh(r, cube1);
+            var c2h = J3D.Intersection.rayMesh(r, cube2);
+            var c3h = J3D.Intersection.rayMesh(r, cube3);
 
             cube1.renderer.colorTexture = (c1h) ? overTexture : outTexture;
             cube2.renderer.colorTexture = (c2h) ? overTexture : outTexture;

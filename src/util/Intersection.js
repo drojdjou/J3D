@@ -22,10 +22,6 @@ J3D.Intersection.rayMesh = function(r, t) {
         var p1 = new v3( v[ i1 ], v[ i1+1 ], v[ i1+2 ] );
         var p2 = new v3( v[ i2 ], v[ i2+1 ], v[ i2+2 ] );
 
-//        j3dlogOnce("p0: " + p0.x + " , " + p0.y + " , " + p0.z);
-//        j3dlogOnce("p1: " + p1.x + " , " + p1.y + " , " + p1.z);
-//        j3dlogOnce("p2: " + p2.x + " , " + p2.y + " , " + p2.z);
-
         c = c || J3D.Intersection.rayTriangle(r, p0, p1, p2);
         if(c) break;
     }
@@ -35,17 +31,23 @@ J3D.Intersection.rayMesh = function(r, t) {
 
 J3D.Intersection.rayTriangle = function(r, p0, p1, p2) {
 
-    var e1 = v3.sub( p1, p0 );
-    var e2 = v3.sub( p2, p1 );
-    var n = v3.cross( e1, e2 );
+    var e1 = v3.sub( p0, p1 );
+    var e2 = v3.sub( p0, p2 );
+    var n = v3.cross( e2, e1 );
 
     var dot = v3.dot( n, r.localDirection );
-    if ( !( dot < 0 ) ) return false;
+    if ( !( dot < 0 ) ) {
+//        j3dlogOnce("dot < 0");
+        return false;
+    }
 
     var d = v3.dot( n, p0 );
     var t = d - v3.dot( n, r.localOrigin );
 
-    if ( !( t <= 0 ) ) return false;
+    if ( !( t <= 0 ) ) {
+//        j3dlogOnce("!(t <= 0)");
+        return false;
+    }
 
     t = t / dot;
 
@@ -105,22 +107,34 @@ J3D.Intersection.rayTriangle = function(r, p0, p1, p2) {
     }
 
     var temp = u1 * v2 - v1 * u2;
-    if( !(temp != 0) ) return false;
+    if( !(temp != 0) ) {
+//        j3dlogOnce("!(temp != 0)");
+        return false;
+    }
     //console.log("temp: " + temp);
     temp = 1 / temp;
 
     var alpha = ( u0 * v2 - v0 * u2 ) * temp;
-    if( !(alpha >= 0) ) return false;
+    if( !(alpha >= 0) ) {
+//        j3dlogOnce("!(alpha >= 0)");
+        return false;
+    }
     //console.log("alpha: " + alpha);
 
     var beta = ( u1 * v0 - v1 * u0 ) * temp;
-    if( !(beta >= 0) ) return false;
+    if( !(beta >= 0) ) {
+//        j3dlogOnce("!(beta >= 0)");
+        return false;
+    }
     //console.log("beta: " + beta);
 
     var gamma = 1 - alpha - beta;
-    if( !(gamma >= 0) ) return false;
+    if( !(gamma >= 0) ) {
+//        j3dlogOnce("!(gamma >= 0)");
+        return false;
+    }
     //console.log("gamma: " + gamma);
-    
+
     return t;
 
 }

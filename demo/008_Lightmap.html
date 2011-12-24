@@ -8,43 +8,6 @@
 <link rel="stylesheet" href="common/common.css"/>
 <script type="text/javascript" src="common/common.js"></script>
 
-<!--
-<script type="text/javascript" src="../lib/glMatrix.js"></script>
-<script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
-<script type="text/javascript" src="../src/J3D.js"></script>
-<script type="text/javascript" src="../src/util/Color.js"></script>
-<script type="text/javascript" src="../src/math/Vector2.js"></script>
-<script type="text/javascript" src="../src/math/Vector3.js"></script>
-<script type="text/javascript" src="../src/math/Matrix44.js"></script>
-<script type="text/javascript" src="../src/engine/Engine.js"></script>
-<script type="text/javascript" src="../src/engine/Camera.js"></script>
-<script type="text/javascript" src="../src/engine/Light.js"></script>
-<script type="text/javascript" src="../src/engine/Mesh.js"></script>
-<script type="text/javascript" src="../src/engine/Scene.js"></script>
-<script type="text/javascript" src="../src/engine/Loader.js"></script>
-<script type="text/javascript" src="../src/engine/Filter.js"></script>
-<script type="text/javascript" src="../src/engine/ShaderAtlas.js"></script>
-<script type="text/javascript" src="../src/engine/EffectAtlas.js"></script>
-<script type="text/javascript" src="../src/engine/Texture.js"></script>
-<script type="text/javascript" src="../src/engine/Cubemap.js"></script>
-<script type="text/javascript" src="../src/engine/Transform.js"></script>
-<script type="text/javascript" src="../src/engine/Postprocess.js"></script>
-<script type="text/javascript" src="../src/engine/FrameBuffer.js"></script>
-<script type="text/javascript" src="../src/effects/EffectSource.js"></script>
-<script type="text/javascript" src="../src/renderers/ShaderSource.js"></script>
-<script type="text/javascript" src="../src/renderers/Phong.js"></script>
-<script type="text/javascript" src="../src/renderers/Toon.js"></script>
-<script type="text/javascript" src="../src/renderers/Gouraud.js"></script>
-<script type="text/javascript" src="../src/renderers/Normal2Color.js"></script>
-<script type="text/javascript" src="../src/renderers/Reflective.js"></script>
-<script type="text/javascript" src="../src/renderers/Glass.js"></script>
-<script type="text/javascript" src="../src/renderers/Skybox.js"></script>
-<script type="text/javascript" src="../src/renderers/Shader.js"></script>
-<script type="text/javascript" src="../src/renderers/Lightmap.js"></script>
-<script type="text/javascript" src="../src/util/Time.js"></script>
-<script type="text/javascript" src="../src/util/ShaderUtil.js"></script>
--->
-
 <script type="text/javascript" src="../build/j3d.js"></script>
 
 
@@ -80,8 +43,13 @@
 </script>
 
 <script>
+
+    function setDebug(s) {
+        document.getElementById("details").innerHTML = s;
+    }
+
 	var mx = 0, my = 0;	
-	var fps, eye;
+	var fps, eye, walls;
 	var lightmaps, nolightmaps;
 	var showmaps = true;
 	var moveLeft = 0, moveForward = 0;
@@ -114,6 +82,10 @@
 				J3D.Loader.parseJSONScene(jsscene, jsmeshes, engine);
 				fps = engine.scene.find("fps");
 				eye = engine.scene.find("fps/eye");
+
+                walls = engine.scene.find("bunker/walls");
+                walls.collider = J3D.Collider.Mesh(walls.geometry);
+
 				draw();
 			})
 		});
@@ -127,19 +99,19 @@
 		switch(e.keyCode) {
 			case 37:
 			case 65:
-				moveLeft = -0.04;
+				moveLeft = 0.04;
 				break;
 			case 39:
 			case 68:
-				moveLeft = 0.04;
+				moveLeft = -0.04;
 				break;
 			case 38:
 			case 87:
-				moveForward = -0.04;
+				moveForward = 0.04;
 				break;
 			case 40:
 			case 83:
-				moveForward = 0.04;
+				moveForward = -0.04;
 				break;
 		}
 	}
@@ -167,23 +139,47 @@
 	}
 
 	function draw() {
-		requestAnimationFrame(draw);
-		
 		J3D.LightmapAtlas = (document.getElementById("toglm").checked) ? nolightmaps : lightmaps;
-		
-		fps.position = fps.position.add( fps.forward().mul(moveForward).add( fps.left().mul(moveLeft) ));
-		
-		// Poor man's collision detection ;) 
-		fps.position.x = Math.min(3.5, fps.position.x);
-		fps.position.x = Math.max(-3.5, fps.position.x);		
-		fps.position.z = Math.min(2.4, fps.position.z);
-		fps.position.z = Math.max(-2.4, fps.position.z);
-		
-		fps.rotation.y = -mx * Math.PI * 2;
+
+        fps.rotation.y = -mx * Math.PI * 2;
 		eye.rotation.x = -my * Math.PI * .25;
-		
+
+        var skin = 0.5;
+
+        var rf = new J3D.Ray(fps.position.add(eye.position), v3.FORWARD());
+        var hf = J3D.Intersection.rayMesh(rf, walls);
+        hf -= skin;
+        hf = Math.max(0, hf);
+
+        var rb = new J3D.Ray(fps.position.add(eye.position), v3.FORWARD().neg());
+        var hb = J3D.Intersection.rayMesh(rb, walls);
+        hb -= skin;
+        hb = Math.max(0, hb);
+
+        var rl = new J3D.Ray(fps.position.add(eye.position), v3.RIGHT().neg());
+        var hl = J3D.Intersection.rayMesh(rl, walls);
+        hl -= skin;
+        hl = Math.max(0, hl);
+
+        var rr = new J3D.Ray(fps.position.add(eye.position), v3.RIGHT());
+        var hr = J3D.Intersection.rayMesh(rr, walls);
+        hr -= skin;
+        hr = Math.max(0, hr);
+
+		var m = fps.forward().mul(moveForward).add( fps.left().mul(moveLeft) );
+
+        m.x = Math.min(m.x, hr);
+        m.x = Math.max(m.x, -hl);
+
+        m.z = Math.min(m.z, hb);
+        m.z = Math.max(m.z, -hf);
+
+        fps.position = fps.position.add(m);
+
 		if(document.getElementById("dizzy").checked) post.render();
 		else engine.render();
+
+        requestAnimationFrame(draw);
 	}
 		
 </script>
@@ -195,7 +191,7 @@
 		setLabels("008. Lightmapped scene");
 	</script>
 		<div id="details">
-		Lightmapped scene built with Cinema4D/Unity3D.<br>Cursor keys/WASD to move, mouse to look around.<br><br>
+		Lightmapped scene built with Cinema4D/Unity3D.<br>Cursor keys/WASD to move, mouse to look around.<br>
 		<input type='checkbox' id='toglm'> Toggle lightmaps
 		<input type='checkbox' id='dizzy'> Make me dizzy
 	</div>

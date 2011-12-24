@@ -80,7 +80,7 @@ J3D.Mesh = function(source) {
 
         for (i = 0; i < v.length; i += 3) {
             tv.push(v[i], v[i + 2], v[i + 1]);
-            tn.push(-n[i], -n[i + 1], -n[i + 2]);
+            tn.push(n[i], n[i + 1], n[i + 2]);
         }
 
         this.replaceArray(this.vertexPositionBuffer, new Float32Array(tv));

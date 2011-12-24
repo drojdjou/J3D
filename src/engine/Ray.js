@@ -1,6 +1,6 @@
-J3D.Ray = function() {
-	this.origin = new v3();
-	this.direction = new v3();
+J3D.Ray = function(o, d) {
+	this.origin = o || new v3();
+	this.direction = d || new v3();
 	
 	this.localOrigin = new v3();
 	this.localDirection = new v3();

@@ -90,14 +90,14 @@ J3D.Transform.prototype.clone = function() {
 J3D.Transform.prototype.forward = function() {
     // TODO: optimize
     var tm = mat4.create();
-    var tv = mat4.multiplyVec3(mat3.toMat4(this.normalMatrix, tm), [0,0,1]);
+    var tv = mat4.multiplyVec3(mat3.toMat4(this.normalMatrix, tm), [0,0,-1]);
     return new v3(tv[0], tv[1], tv[2]).norm();
 }
 
 J3D.Transform.prototype.left = function() {
     // TODO: optimize
     var tm = mat4.create();
-    var tv = mat4.multiplyVec3(mat3.toMat4(this.normalMatrix, tm), [1,0,0]);
+    var tv = mat4.multiplyVec3(mat3.toMat4(this.normalMatrix, tm), [-1,0,0]);
     return new v3(tv[0], tv[1], tv[2]).norm();
 }
 
