@@ -20,7 +20,11 @@ J3D.Loader.parseJSONScene = function(jscene, jmeshes, engine) {
 	ambient.light = new J3D.Light(J3D.AMBIENT);
 	ambient.light.color = J3D.Loader.fromObject(J3D.Color, jscene.ambient);
 	engine.scene.add(ambient);
-	
+
+    for(var i in jmeshes) {
+        jmeshes[i] = new J3D.Mesh(jmeshes[i]);
+        j3dlog("Creating mesh " + i);
+    }
 	
 	engine.setClearColor( J3D.Loader.fromObject(J3D.Color, jscene.background) );
 	
@@ -57,6 +61,33 @@ J3D.Loader.parseJSONScene = function(jscene, jmeshes, engine) {
 		cm = new J3D.Camera({fov:cm.fov, near:cm.near, far:cm.far});
 		jscene.cameras[cms] = cm;
 	}
+
+     var addCollider = function(t) {
+        var cd = t.collider;
+        switch(cd.type) {
+            case "box":
+                var s = J3D.Loader.v3FromArray(cd.size);
+                var c = J3D.Loader.v3FromArray(cd.center);
+                t.collider = J3D.Collider.Box({
+                    minX: c.x + s.x * -0.5,
+                    maxX: c.x + s.x * 0.5,
+                    minY: c.y + s.y * -0.5,
+                    maxY: c.y + s.y * 0.5,
+                    minZ: c.z + s.z * -0.5,
+                    maxZ: c.z + s.z * 0.5
+                });
+                break;
+            case "sphere":
+                var c = J3D.Loader.v3FromArray(cd.center);
+                t.collider = J3D.Collider.Sphere(cd.radius, c);
+                break;
+            case "mesh":
+                t.collider = J3D.Collider.Mesh( jmeshes[cd.mesh] );
+                break;
+        }
+
+
+    }
 	
 	for(var i = 0; i < jscene.transforms.length; i++) {
 		var t = jscene.transforms[i];
@@ -65,8 +96,12 @@ J3D.Loader.parseJSONScene = function(jscene, jmeshes, engine) {
 		t.rotation = J3D.Loader.v3FromArray(t.rotation);
 		
 		if(t.renderer) t.renderer = jscene.materials[t.renderer];
-		if(t.mesh) t.geometry = new J3D.Mesh(jmeshes[t.mesh]);
+		if(t.mesh) t.geometry = jmeshes[t.mesh];
 		if(t.light) t.light = jscene.lights[t.light];
+
+        if(t.collider) {
+            addCollider(t);
+        }
 		
 		if (t.camera) {
 			//jscene.cameras[t.camera].transform = t;

@@ -2,7 +2,7 @@ J3D.Intersection = {};
 
 J3D.Intersection.rayMesh = function(r, t) {
     if (!t.collider || !t.collider.mesh || !t.collider.mesh.vertexPositionBuffer) {
-        j3dlog("Warning! Attempt to test Ray/Mesh intersection against transform that has no mesh collider or no vertex data.")
+        j3dlog("Intersection test failed. " + t.name + " has no mesh collider or no vertex data.");
         return false;
     }
 
@@ -141,7 +141,7 @@ J3D.Intersection.rayTriangle = function(r, p0, p1, p2) {
 
 J3D.Intersection.raySphere = function(r, t) {
     if (!t.collider || !t.collider.radius) {
-//      j3dlog("Warning! Attempt to test Ray/Sphere intersection against transform that has no collider or it's not a sphere.")
+        j3dlog("Intersection test failed. " + t.name + " has no mesh collider or it's not sphere.");
         return false;
     }
 
@@ -165,7 +165,7 @@ J3D.Intersection.raySphere = function(r, t) {
 
 J3D.Intersection.rayBox = function(r, t) {
     if (!t.collider || !t.collider.box) {
-        j3dlog("Warning! Attempt to test Ray/Box intersection against transform that has no collider or it's not a box.")
+        j3dlog("Intersection test failed. " + t.name + " has no mesh collider or it's not box.");
         return false;
     }
 

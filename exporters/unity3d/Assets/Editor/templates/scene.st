@@ -51,11 +51,23 @@ $cameras:{
 $transforms:{	
 	{
 		"uid": $it.UID$,
-                "name": "$it.name$",
+        "name": "$it.name$",
 		$if(it.HasParent)$
 		"parent": $it.Parent$,$endif$
 		"position": [ $it.Position; separator=","$ ],
 		"rotation": [ $it.Rotation; separator=","$ ],
+		$if(it.HasCollider)$
+		"collider": {
+		    "type": "$it.Collider.Type$",
+		    $if(it.Collider.HasCenter)$
+		    "center": [ $it.Collider.Center; separator=","$ ],$endif$
+		    $if(it.Collider.HasSize)$
+		    "size": [ $it.Collider.Size; separator=","$ ],$endif$
+		    $if(it.Collider.HasRadius)$
+		    "radius": $it.Collider.Radius$,$endif$
+		    $if(it.Collider.HasMesh)$
+		    "mesh": "$it.Collider.MeshName$",$endif$
+		},$endif$
 		$if(it.HasLight)$
 		"light": "$it.LightName$",$endif$
 		$if(it.HasCamera)$

@@ -5,6 +5,7 @@ public class TransformExportData
 {
 	private Transform t;
 	private TransformExportData p;
+	private ColliderExportData c;
 	private int uid;
 	
 	public static int uidc;
@@ -14,6 +15,7 @@ public class TransformExportData
 		uid = uidc++;
 		this.t = t;
 		this.p = p;
+		this.c = new ColliderExportData(t);
 	}
 	
 	public int UID {
@@ -79,6 +81,14 @@ public class TransformExportData
 
 	public bool HasCamera {
 		get { return t.gameObject.camera != null; }
+	}
+	
+	public bool HasCollider {
+		get { return c != null && c.Type != ""; }
+	}
+	
+	public ColliderExportData Collider {
+		get { return c; }
 	}
 
 	public string[] Position {

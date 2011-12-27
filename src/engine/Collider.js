@@ -13,10 +13,9 @@ J3D.Collider.Sphere = function(radius, center) {
     return c;
 }
 
-J3D.Collider.Box = function(box, center) {
+J3D.Collider.Box = function(box) {
     var c = new J3D.Collider();
     c.box = box;
-    c.center = center || v3.ZERO();
     return c;
 }
 
