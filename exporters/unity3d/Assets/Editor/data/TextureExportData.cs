@@ -1,11 +1,12 @@
 using System;
+using System.IO;
 using UnityEngine;
 using UnityEditor;
 
 public class TextureExportData
 {
 	private Texture t;
-	
+
 	public TextureExportData (Texture t)
 	{
 		this.t = t;
@@ -32,7 +33,10 @@ public class TextureExportData
 	}
 	
 	public string FileName {
-		get { return Name + ".png"; }
+		get { 
+			if(Format == TextureImporterFormat.ARGB32) return Name + ".png";
+			else return Name + ".jpg"; 
+		}
 	}
 	
 	public bool IsImage 
@@ -40,9 +44,27 @@ public class TextureExportData
 		get { return t is Texture2D; }
 	}
 	
-	public byte[] pngData
+	private byte[] getBytes(float quality)
 	{
-		get { return t2d.EncodeToPNG (); }
+		if(Format == TextureImporterFormat.ARGB32) {
+			return t2d.EncodeToPNG (); 
+		} else {
+			JPGEncoder j = new JPGEncoder(t2d, quality);
+			return j.GetBytes();
+		}
+	}
+	
+	public void Save(string path, float jpegQuality) {
+		if (IsImage) {
+			if (Format != TextureImporterFormat.ARGB32 && Format != TextureImporterFormat.RGB24) {
+				Report.error ("Texture not exported. '" + Name + "' has wrong format: " + Format.ToString () + ", should be ARGB32 or RGB24");
+			} else if (!asset.isReadable) {
+				Report.error ("Texture not exported. '" + Name + "' not marked as readable.");
+			} else {
+				File.WriteAllBytes (path + FileName, getBytes(jpegQuality));
+				Report.log ("Exporting texture " + Name + " to " + path + FileName);
+			}
+		}
 	}
 }
 

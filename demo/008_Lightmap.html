@@ -43,11 +43,6 @@
 </script>
 
 <script>
-
-    function setDebug(s) {
-        document.getElementById("details").innerHTML = s;
-    }
-
 	var mx = 0, my = 0;	
 	var fps, eye, walls;
 	var lightmaps, nolightmaps;
@@ -64,28 +59,17 @@
 		
 		post = new J3D.Postprocess(engine);
 		post.filter = new J3D.ShaderUtil.parseGLSL(document.getElementById("filter").firstChild.nodeValue);
-		
-		lightmaps = [];
-		nolightmaps = [];
-		
-		lightmaps.push( new J3D.Texture(path + "lightmap0.jpg") );
-		lightmaps.push( new J3D.Texture(path + "lightmap1.jpg") );
-		
-		nolightmaps.push( new J3D.Texture(path + "white.png") );
-		nolightmaps.push( new J3D.Texture(path + "white.png") );
-		
-		J3D.LightmapAtlas = lightmaps;
-		
+
 		J3D.Loader.loadJSON(path + "bunker.json", function(jsmeshes) { 
-			J3D.Loader.loadJSON(path + "bunkerScene.json", function(jsscene) { 
+			J3D.Loader.loadJSON(path + "bunkerScene.json", function(jsscene) {
+
+                // Set the path variable of the scene, so that it can find texture files
 				jsscene.path = path;
+
 				J3D.Loader.parseJSONScene(jsscene, jsmeshes, engine);
 				fps = engine.scene.find("fps");
 				eye = engine.scene.find("fps/eye");
-
                 walls = engine.scene.find("bunker/walls");
-                walls.collider = J3D.Collider.Mesh(walls.geometry);
-
 				draw();
 			})
 		});
@@ -139,8 +123,6 @@
 	}
 
 	function draw() {
-		J3D.LightmapAtlas = (document.getElementById("toglm").checked) ? nolightmaps : lightmaps;
-
         fps.rotation.y = -mx * Math.PI * 2;
 		eye.rotation.x = -my * Math.PI * .25;
 
@@ -192,7 +174,6 @@
 	</script>
 		<div id="details">
 		Lightmapped scene built with Cinema4D/Unity3D.<br>Cursor keys/WASD to move, mouse to look around.<br>
-		<input type='checkbox' id='toglm'> Toggle lightmaps
 		<input type='checkbox' id='dizzy'> Make me dizzy
 	</div>
 	

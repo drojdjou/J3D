@@ -2,7 +2,7 @@
 	
 "path" : "",
 "ambient": { "r":0.1492537, "g":0.1492537, "b":0.1492537, "a":1 },
-"background": { "r":0, "g":0, "b":0, "a":1 },
+"background": { "r":0.1916647, "g":0.3019664, "b":0.4745098, "a":1 },
 
 "textures": {
 	
@@ -55,6 +55,12 @@
 	}
 
 },
+
+"lightmaps": [
+
+	"lightmap0.jpg"
+
+],
 	
 "materials": {
 	
@@ -62,6 +68,7 @@
 		"type": "Lightmap",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
 		"specularIntensity": 0,
+                "shininess": 0,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "brownwood"
@@ -71,6 +78,7 @@
 		"type": "Lightmap",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
 		"specularIntensity": 0,
+                "shininess": 0,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0.5 ],
 		"colorTexture": "floor_panel"
@@ -80,6 +88,7 @@
 		"type": "Lightmap",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
 		"specularIntensity": 0,
+                "shininess": 0,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "floor"
@@ -89,15 +98,17 @@
 		"type": "Lightmap",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
 		"specularIntensity": 0,
+                "shininess": 0,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "concrete_wall_bicol"
 	},
 	
 	"white": { 
-		"type": "Lightmap",
+		"type": "Selflit",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
 		"specularIntensity": 0,
+                "shininess": 0,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "white"
@@ -107,6 +118,7 @@
 		"type": "Lightmap",
 		"color": { "r":0.6567164, "g":0, "b":0, "a":1 },
 		"specularIntensity": 0,
+                "shininess": 0,
 		"textureTile": [  ],
 		"textureOffset": [  ]
 	},
@@ -115,6 +127,7 @@
 		"type": "Lightmap",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
 		"specularIntensity": 0,
+                "shininess": 0,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "base"
@@ -124,6 +137,7 @@
 		"type": "Lightmap",
 		"color": { "r":0, "g":0, "b":0, "a":1 },
 		"specularIntensity": 0,
+                "shininess": 0,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "white"
@@ -133,6 +147,7 @@
 		"type": "Lightmap",
 		"color": { "r":0.5671642, "g":0.5671642, "b":0.5671642, "a":1 },
 		"specularIntensity": 0,
+                "shininess": 0,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "white"
@@ -142,6 +157,7 @@
 		"type": "Lightmap",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
 		"specularIntensity": 0,
+                "shininess": 0,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "bareplankslight"
@@ -151,6 +167,7 @@
 		"type": "Lightmap",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
 		"specularIntensity": 0,
+                "shininess": 0,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "roughwood"
@@ -160,6 +177,7 @@
 		"type": "Lightmap",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
 		"specularIntensity": 0,
+                "shininess": 0,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "files"
@@ -169,6 +187,7 @@
 		"type": "Lightmap",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
 		"specularIntensity": 0,
+                "shininess": 0,
 		"textureTile": [ 2,2 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "beamed_planks"
@@ -178,6 +197,7 @@
 		"type": "Lightmap",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
 		"specularIntensity": 0,
+                "shininess": 0,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "rust"
@@ -187,6 +207,7 @@
 		"type": "Lightmap",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
 		"specularIntensity": 0,
+                "shininess": 0,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "cabinetfront"
@@ -221,655 +242,712 @@
 "transforms": [
 	
 	{
-		"uid": 0,
-                "name": "bunker",
+		"uid": 1,
+        "name": "bunker",
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ]
 	},
 	
 	{
-		"uid": 1,
-                "name": "beams",
-		"parent": 0,
+		"uid": 2,
+        "name": "beams",
+		"parent": 1,
 		"position": [ 0.0377121,-3.482743,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "roughwood",
 		"mesh": "beams",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.136719,0.136719,0.591751,0.839798 ]
-	},
-	
-	{
-		"uid": 2,
-                "name": "ceiling",
-		"parent": 0,
-		"position": [ 0.07015259,2.798332,-0.0000000763 ],
-		"rotation": [ 0,0,0 ],
-		"renderer": "planks",
-		"mesh": "ceiling",
-		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.291016,0.291016,0.301109,0.837242 ]
+		"lightmapTileOffset": [ 0.136719,0.136719,0.844681,0.042923 ]
 	},
 	
 	{
 		"uid": 3,
-                "name": "chair2",
-		"parent": 0,
+        "name": "ceiling",
+		"parent": 1,
+		"position": [ 0.07015259,2.798332,-0.0000000763 ],
+		"rotation": [ 0,0,0 ],
+		"collider": {
+		    "type": "mesh",
+		    "mesh": "ceiling"
+		},
+		"renderer": "planks",
+		"mesh": "ceiling",
+		"lightmapIndex": 0,
+		"lightmapTileOffset": [ 0.291016,0.291016,0.597008,0.837242 ]
+	},
+	
+	{
+		"uid": 4,
+        "name": "chair2",
+		"parent": 1,
 		"position": [ -2.41186,-0.001667518,1.659862 ],
 		"rotation": [ 0,-0.1675269,0 ],
 		"renderer": "wood",
 		"mesh": "chair",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.117188,0.117188,0.0810852,0.124054 ]
-	},
-	
-	{
-		"uid": 4,
-                "name": "chair",
-		"parent": 0,
-		"position": [ 2.689911,-0.0016675,1.11077 ],
-		"rotation": [ 0,1.371702,0 ],
-		"renderer": "wood",
-		"mesh": "chair",
-		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.117188,0.117188,0.542999,0.0469055 ]
+		"lightmapTileOffset": [ 0.117188,0.117188,0.844757,0.124054 ]
 	},
 	
 	{
 		"uid": 5,
-                "name": "crate2",
-		"parent": 0,
-		"position": [ -2.57758,0.01867372,-2.072275 ],
-		"rotation": [ 0,-2.520497,0 ]
+        "name": "chair",
+		"parent": 1,
+		"position": [ 2.22396,-0.0016675,1.002911 ],
+		"rotation": [ 0,1.371702,0 ],
+		"renderer": "wood",
+		"mesh": "chair",
+		"lightmapIndex": 0,
+		"lightmapTileOffset": [ 0.117188,0.117188,0.0810852,0.120148 ]
 	},
 	
 	{
 		"uid": 6,
-                "name": "cratewood2",
-		"parent": 5,
-		"position": [ 0,0,0 ],
-		"rotation": [ 0,0,0 ],
-		"renderer": "planks_light",
-		"mesh": "crate",
-		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.15918,0.15918,0.744984,0.0467415 ]
+        "name": "crate",
+		"parent": 1,
+		"position": [ -1.394453,0.018674,-2.389863 ],
+		"rotation": [ 0,3.135777,0 ]
 	},
 	
 	{
 		"uid": 7,
-                "name": "wickets2",
-		"parent": 5,
-		"position": [ -0.2499574,0.4273163,0.2176546 ],
-		"rotation": [ 0,-3.141593,0 ],
-		"renderer": "base",
-		"mesh": "wickets",
+        "name": "cratewood",
+		"parent": 6,
+		"position": [ 0,0,0 ],
+		"rotation": [ 0,0,0 ],
+		"renderer": "planks_light",
+		"mesh": "crate",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0400391,0.0400391,0.438808,0.797207 ]
+		"lightmapTileOffset": [ 0.15918,0.15918,0.597523,0.679554 ]
 	},
 	
 	{
 		"uid": 8,
-                "name": "crate",
-		"parent": 0,
-		"position": [ -1.394453,0.01867372,-2.389863 ],
-		"rotation": [ 0,3.135776,0 ]
+        "name": "wickets",
+		"parent": 6,
+		"position": [ -0.2499574,0.4273163,0.2176546 ],
+		"rotation": [ 0,3.141593,0 ],
+		"renderer": "base",
+		"mesh": "wickets",
+		"lightmapIndex": 0,
+		"lightmapTileOffset": [ 0.040039,0.040039,0.943691,0.842129 ]
 	},
 	
 	{
 		"uid": 9,
-                "name": "cratewood",
-		"parent": 8,
-		"position": [ 0,0,0 ],
-		"rotation": [ 0,0,0 ],
-		"renderer": "planks_light",
-		"mesh": "crate",
-		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.15918,0.15918,0.786976,0.841663 ]
+        "name": "crate",
+		"parent": 1,
+		"position": [ 3.226325,0.018674,-2.389863 ],
+		"rotation": [ 0,3.135777,0 ]
 	},
 	
 	{
 		"uid": 10,
-                "name": "wickets",
-		"parent": 8,
-		"position": [ -0.2499574,0.4273163,0.2176546 ],
-		"rotation": [ 0,-3.141593,0 ],
-		"renderer": "base",
-		"mesh": "wickets",
+        "name": "cratewood",
+		"parent": 9,
+		"position": [ 0,0,0 ],
+		"rotation": [ 0,0,0 ],
+		"collider": {
+		    "type": "box",
+		    "center": [ 0,0.2000001,-0.0004974752 ],
+		    "size": [ 0.9999999,0.4400001,0.6409951 ]
+		},
+		"renderer": "planks_light",
+		"mesh": "crate",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0400391,0.0400391,0.944668,0.856777 ]
+		"lightmapTileOffset": [ 0.15918,0.15918,0.28307,0.119984 ]
 	},
 	
 	{
 		"uid": 11,
-                "name": "crate3",
-		"parent": 0,
-		"position": [ -2.012595,0.4682586,-2.302448 ],
-		"rotation": [ 0,-2.810816,0 ]
+        "name": "wickets",
+		"parent": 9,
+		"position": [ -0.2499574,0.4273163,0.2176546 ],
+		"rotation": [ 0,3.141593,0 ],
+		"renderer": "base",
+		"mesh": "wickets",
+		"lightmapIndex": 0,
+		"lightmapTileOffset": [ 0.040039,0.040039,0.943691,0.883144 ]
 	},
 	
 	{
 		"uid": 12,
-                "name": "cratewood3",
-		"parent": 11,
+        "name": "crate2",
+		"parent": 1,
+		"position": [ -2.57758,0.018674,-2.072275 ],
+		"rotation": [ 0,-2.520497,0 ]
+	},
+	
+	{
+		"uid": 13,
+        "name": "cratewood2",
+		"parent": 12,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "planks_light",
 		"mesh": "crate",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.15918,0.15918,0.28307,0.12389 ]
-	},
-	
-	{
-		"uid": 13,
-                "name": "wickets3",
-		"parent": 11,
-		"position": [ -0.2499574,0.4273163,0.2176546 ],
-		"rotation": [ 0,-3.141593,0 ],
-		"renderer": "base",
-		"mesh": "wickets",
-		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0400391,0.0400391,0.597988,0.151699 ]
+		"lightmapTileOffset": [ 0.15918,0.15918,0.401234,0.62682 ]
 	},
 	
 	{
 		"uid": 14,
-                "name": "filecabinet2",
-		"parent": 0,
-		"position": [ 3.772444,0.08982849,2.047704 ],
-		"rotation": [ 0,1.570796,0 ]
+        "name": "wickets2",
+		"parent": 12,
+		"position": [ -0.2499574,0.4273163,0.2176546 ],
+		"rotation": [ 0,3.141593,0 ],
+		"renderer": "base",
+		"mesh": "wickets",
+		"lightmapIndex": 0,
+		"lightmapTileOffset": [ 0.040039,0.040039,0.943691,0.801113 ]
 	},
 	
 	{
 		"uid": 15,
-                "name": "bottom",
-		"parent": 14,
-		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
-		"renderer": "base",
-		"mesh": "bottom",
-		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0234375,0.0234375,0.519928,0.0853577 ]
+        "name": "crate3",
+		"parent": 1,
+		"position": [ -2.012595,0.468259,-2.302448 ],
+		"rotation": [ 0,-2.810817,0 ]
 	},
 	
 	{
 		"uid": 16,
-                "name": "front1",
-		"parent": 14,
-		"position": [ 0.25,0,-0.3 ],
+        "name": "cratewood3",
+		"parent": 15,
+		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
-		"renderer": "cabinet_front",
-		"mesh": "front1",
+		"renderer": "planks_light",
+		"mesh": "crate",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0410156,0.0410156,0.944664,0.931969 ]
+		"lightmapTileOffset": [ 0.15918,0.15918,0.756702,0.679554 ]
 	},
 	
 	{
 		"uid": 17,
-                "name": "fronts",
-		"parent": 14,
-		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
-		"renderer": "cabinet_front",
-		"mesh": "fronts",
+        "name": "wickets3",
+		"parent": 15,
+		"position": [ -0.2499574,0.4273163,0.2176546 ],
+		"rotation": [ 0,3.141593,0 ],
+		"renderer": "base",
+		"mesh": "wickets",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.202148,0.202148,0.663761,-0.000301361 ]
+		"lightmapTileOffset": [ 0.040039,0.040039,0.943691,0.760098 ]
 	},
 	
 	{
 		"uid": 18,
-                "name": "handles",
-		"parent": 14,
-		"position": [ 0.06619179,0.1408208,-0.312975 ],
-		"rotation": [ 0,0,0 ],
-		"renderer": "darkgrey",
-		"mesh": "handles",
-		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0146484,0.0146484,0.986759,0.969181 ]
+        "name": "filecabinet1",
+		"parent": 1,
+		"position": [ 3.766136,0.082369,0.851461 ],
+		"rotation": [ 0,1.570796,0 ]
 	},
 	
 	{
 		"uid": 19,
-                "name": "labelholders",
-		"parent": 14,
-		"position": [ 0,2.263455,-0.2949442 ],
+        "name": "bottom",
+		"parent": 18,
+		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
-		"renderer": "darkgrey",
-		"mesh": "labelholders",
+		"renderer": "base",
+		"mesh": "bottom",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0117188,0.0117188,0.900833,0.0736847 ]
+		"lightmapTileOffset": [ 0.023438,0.023438,0.982819,0.029694 ]
 	},
 	
 	{
 		"uid": 20,
-                "name": "sides",
-		"parent": 14,
-		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
-		"renderer": "base",
-		"mesh": "sides",
-		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0869141,0.0869141,0.569485,0.775539 ]
-	},
-	
-	{
-		"uid": 21,
-                "name": "filecabinet3",
-		"parent": 0,
-		"position": [ 3.76823,0.08982849,1.519595 ],
-		"rotation": [ 0,1.570796,0 ]
-	},
-	
-	{
-		"uid": 22,
-                "name": "bottom",
-		"parent": 21,
-		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
-		"renderer": "base",
-		"mesh": "bottom",
-		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0234375,0.0234375,0.440826,0.101959 ]
-	},
-	
-	{
-		"uid": 23,
-                "name": "front1",
-		"parent": 21,
-		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
-		"renderer": "cabinet_front",
-		"mesh": "front1",
-		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0410156,0.0410156,0.944664,0.897789 ]
-	},
-	
-	{
-		"uid": 24,
-                "name": "fronts",
-		"parent": 21,
-		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
-		"renderer": "cabinet_front",
-		"mesh": "fronts",
-		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.202148,0.202148,-0.000301361,0.0768471 ]
-	},
-	
-	{
-		"uid": 25,
-                "name": "handles",
-		"parent": 21,
-		"position": [ 0.06619179,0.1408208,-0.312975 ],
-		"rotation": [ 0,0,0 ],
-		"renderer": "darkgrey",
-		"mesh": "handles",
-		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0146484,0.0146484,0.986759,0.953556 ]
-	},
-	
-	{
-		"uid": 26,
-                "name": "labelholders",
-		"parent": 21,
-		"position": [ 0,2.263455,-0.2949442 ],
-		"rotation": [ 0,0,0 ],
-		"renderer": "darkgrey",
-		"mesh": "labelholders",
-		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0117188,0.0117188,0.986771,0.912552 ]
-	},
-	
-	{
-		"uid": 27,
-                "name": "sides",
-		"parent": 21,
-		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
-		"renderer": "base",
-		"mesh": "sides",
-		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0869141,0.0869141,0.913235,0.131008 ]
-	},
-	
-	{
-		"uid": 28,
-                "name": "filecabinet4",
-		"parent": 0,
-		"position": [ 3.764724,0.08982849,0.3267901 ],
-		"rotation": [ 0,1.570796,0 ]
-	},
-	
-	{
-		"uid": 29,
-                "name": "bottom",
-		"parent": 28,
-		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
-		"renderer": "base",
-		"mesh": "bottom",
-		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0234375,0.0234375,0.503326,0.109772 ]
-	},
-	
-	{
-		"uid": 30,
-                "name": "front1",
-		"parent": 28,
-		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
-		"renderer": "cabinet_front",
-		"mesh": "front1",
-		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0410156,0.0410156,0.597984,0.117516 ]
-	},
-	
-	{
-		"uid": 31,
-                "name": "fronts",
-		"parent": 28,
-		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
-		"renderer": "cabinet_front",
-		"mesh": "fronts",
-		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.202148,0.202148,0.201847,0.0768471 ]
-	},
-	
-	{
-		"uid": 32,
-                "name": "handles",
-		"parent": 28,
-		"position": [ 0.06619179,0.1408208,-0.312975 ],
-		"rotation": [ 0,0,0 ],
-		"renderer": "darkgrey",
-		"mesh": "handles",
-		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0146484,0.0146484,0.986759,0.937931 ]
-	},
-	
-	{
-		"uid": 33,
-                "name": "labelholders",
-		"parent": 28,
-		"position": [ 0,2.263455,-0.2949442 ],
-		"rotation": [ 0,0,0 ],
-		"renderer": "darkgrey",
-		"mesh": "labelholders",
-		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0117188,0.0117188,0.52095,0.109818 ]
-	},
-	
-	{
-		"uid": 34,
-                "name": "sides",
-		"parent": 28,
-		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
-		"renderer": "base",
-		"mesh": "sides",
-		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0869141,0.0869141,0.847805,0.779446 ]
-	},
-	
-	{
-		"uid": 35,
-                "name": "filecabinet1",
-		"parent": 0,
-		"position": [ 3.766136,0.08236891,0.8514609 ],
-		"rotation": [ 0,1.570796,0 ]
-	},
-	
-	{
-		"uid": 36,
-                "name": "bottom",
-		"parent": 35,
-		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
-		"renderer": "base",
-		"mesh": "bottom",
-		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0234375,0.0234375,0.440826,0.0775452 ]
-	},
-	
-	{
-		"uid": 37,
-                "name": "drawer",
-		"parent": 35,
+        "name": "drawer",
+		"parent": 18,
 		"position": [ 0.2360419,2.009173,-0.5699123 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
 		"mesh": "drawer",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0253906,0.0253906,0.708397,0.0990219 ]
+		"lightmapTileOffset": [ 0.025391,0.025391,0.808006,0.103905 ]
 	},
 	
 	{
-		"uid": 38,
-                "name": "drawerbottom",
-		"parent": 37,
+		"uid": 21,
+        "name": "drawerbottom",
+		"parent": 20,
 		"position": [ 0,0.007493896,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
 		"mesh": "drawerbottom",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0283203,0.0283203,0.503307,0.0824089 ]
+		"lightmapTileOffset": [ 0.02832,0.02832,0.9828,0.000378 ]
 	},
 	
 	{
-		"uid": 39,
-                "name": "files",
-		"parent": 37,
+		"uid": 22,
+        "name": "files",
+		"parent": 20,
 		"position": [ -0.01546959,0.005193481,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "files",
 		"mesh": "files",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0283203,0.0283203,0.0413933,0.162487 ]
+		"lightmapTileOffset": [ 0.02832,0.02832,0.965221,0.966198 ]
 	},
 	
 	{
-		"uid": 40,
-                "name": "front",
-		"parent": 37,
+		"uid": 23,
+        "name": "front",
+		"parent": 20,
 		"position": [ 0,0,-0.01002502 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "cabinet_front",
 		"mesh": "front",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0410156,0.0410156,0.944664,0.966148 ]
+		"lightmapTileOffset": [ 0.041016,0.041016,0.901695,0.889 ]
 	},
 	
 	{
-		"uid": 41,
-                "name": "handle",
-		"parent": 37,
+		"uid": 24,
+        "name": "handle",
+		"parent": 20,
 		"position": [ -0.2348501,0.1112711,-0.04534904 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
 		"mesh": "handle",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.00585938,0.00585938,0.905739,0.0561295 ]
+		"lightmapTileOffset": [ 0.005859,0.005859,0.983864,0.962379 ]
 	},
 	
 	{
-		"uid": 42,
-                "name": "labelholder",
-		"parent": 37,
+		"uid": 25,
+        "name": "labelholder",
+		"parent": 20,
 		"position": [ -0.2360419,0.2542819,-0.01157303 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
 		"mesh": "labelholder",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.00488281,0.00488281,0.537579,0.0756645 ]
+		"lightmapTileOffset": [ 0.004883,0.004883,0.99461,0.987774 ]
 	},
 	
 	{
-		"uid": 43,
-                "name": "front1",
-		"parent": 35,
+		"uid": 26,
+        "name": "front1",
+		"parent": 18,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "black",
 		"mesh": "front1",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0205078,0.0205078,0.913494,0.0902519 ]
+		"lightmapTileOffset": [ 0.020508,0.020508,0.959393,0.924236 ]
 	},
 	
 	{
-		"uid": 44,
-                "name": "fronts",
-		"parent": 35,
+		"uid": 27,
+        "name": "fronts",
+		"parent": 18,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "cabinet_front",
 		"mesh": "fronts",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.202148,0.202148,0.461613,-0.000301361 ]
+		"lightmapTileOffset": [ 0.202148,0.202148,0.763371,-0.000301 ]
 	},
 	
 	{
-		"uid": 45,
-                "name": "handles",
-		"parent": 35,
+		"uid": 28,
+        "name": "handles",
+		"parent": 18,
 		"position": [ 0.06619179,0.1408208,-0.312975 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
 		"mesh": "handles",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0146484,0.0146484,0.986759,0.984806 ]
+		"lightmapTileOffset": [ 0.014648,0.014648,0.984806,0.94672 ]
 	},
 	
 	{
-		"uid": 46,
-                "name": "labelholders",
-		"parent": 35,
+		"uid": 29,
+        "name": "labelholders",
+		"parent": 18,
 		"position": [ 0,2.263455,-0.2949442 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
 		"mesh": "labelholders",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0117188,0.0117188,0.986771,0.925247 ]
+		"lightmapTileOffset": [ 0.011719,0.011719,0.982864,0.078567 ]
 	},
 	
 	{
-		"uid": 47,
-                "name": "sides",
-		"parent": 35,
+		"uid": 30,
+        "name": "sides",
+		"parent": 18,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
 		"mesh": "sides",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0869141,0.0869141,0.913235,0.0274925 ]
+		"lightmapTileOffset": [ 0.086914,0.086914,0.081203,0.23843 ]
+	},
+	
+	{
+		"uid": 31,
+        "name": "filecabinet2",
+		"parent": 1,
+		"position": [ 3.772444,0.089828,2.047704 ],
+		"rotation": [ 0,1.570796,0 ]
+	},
+	
+	{
+		"uid": 32,
+        "name": "bottom",
+		"parent": 31,
+		"position": [ 0.25,0,-0.3 ],
+		"rotation": [ 0,0,0 ],
+		"renderer": "base",
+		"mesh": "bottom",
+		"lightmapIndex": 0,
+		"lightmapTileOffset": [ 0.023438,0.023438,0.96524,0.941803 ]
+	},
+	
+	{
+		"uid": 33,
+        "name": "front1",
+		"parent": 31,
+		"position": [ 0.25,0,-0.3 ],
+		"rotation": [ 0,0,0 ],
+		"renderer": "cabinet_front",
+		"mesh": "front1",
+		"lightmapIndex": 0,
+		"lightmapTileOffset": [ 0.041016,0.041016,0.901695,0.85482 ]
+	},
+	
+	{
+		"uid": 34,
+        "name": "fronts",
+		"parent": 31,
+		"position": [ 0.25,0,-0.3 ],
+		"rotation": [ 0,0,0 ],
+		"renderer": "cabinet_front",
+		"mesh": "fronts",
+		"lightmapIndex": 0,
+		"lightmapTileOffset": [ 0.202148,0.202148,-0.000301,0.076847 ]
+	},
+	
+	{
+		"uid": 35,
+        "name": "handles",
+		"parent": 31,
+		"position": [ 0.06619179,0.1408208,-0.312975 ],
+		"rotation": [ 0,0,0 ],
+		"renderer": "darkgrey",
+		"mesh": "handles",
+		"lightmapIndex": 0,
+		"lightmapTileOffset": [ 0.014648,0.014648,0.984806,0.931095 ]
+	},
+	
+	{
+		"uid": 36,
+        "name": "labelholders",
+		"parent": 31,
+		"position": [ 0,2.263455,-0.2949442 ],
+		"rotation": [ 0,0,0 ],
+		"renderer": "darkgrey",
+		"mesh": "labelholders",
+		"lightmapIndex": 0,
+		"lightmapTileOffset": [ 0.011719,0.011719,0.442825,0.11763 ]
+	},
+	
+	{
+		"uid": 37,
+        "name": "sides",
+		"parent": 31,
+		"position": [ 0.25,0,-0.3 ],
+		"rotation": [ 0,0,0 ],
+		"renderer": "base",
+		"mesh": "sides",
+		"lightmapIndex": 0,
+		"lightmapTileOffset": [ 0.086914,0.086914,0.543118,0.264797 ]
+	},
+	
+	{
+		"uid": 38,
+        "name": "filecabinet3",
+		"parent": 1,
+		"position": [ 3.76823,0.089828,1.519595 ],
+		"rotation": [ 0,1.570796,0 ]
+	},
+	
+	{
+		"uid": 39,
+        "name": "bottom",
+		"parent": 38,
+		"position": [ 0.25,0,-0.3 ],
+		"rotation": [ 0,0,0 ],
+		"renderer": "base",
+		"mesh": "bottom",
+		"lightmapIndex": 0,
+		"lightmapTileOffset": [ 0.023438,0.023438,0.44278,0.077545 ]
+	},
+	
+	{
+		"uid": 40,
+        "name": "front1",
+		"parent": 38,
+		"position": [ 0.25,0,-0.3 ],
+		"rotation": [ 0,0,0 ],
+		"renderer": "cabinet_front",
+		"mesh": "front1",
+		"lightmapIndex": 0,
+		"lightmapTileOffset": [ 0.041016,0.041016,0.937828,0.185875 ]
+	},
+	
+	{
+		"uid": 41,
+        "name": "fronts",
+		"parent": 38,
+		"position": [ 0.25,0,-0.3 ],
+		"rotation": [ 0,0,0 ],
+		"renderer": "cabinet_front",
+		"mesh": "fronts",
+		"lightmapIndex": 0,
+		"lightmapTileOffset": [ 0.202148,0.202148,0.201847,0.076847 ]
+	},
+	
+	{
+		"uid": 42,
+        "name": "handles",
+		"parent": 38,
+		"position": [ 0.06619179,0.1408208,-0.312975 ],
+		"rotation": [ 0,0,0 ],
+		"renderer": "darkgrey",
+		"mesh": "handles",
+		"lightmapIndex": 0,
+		"lightmapTileOffset": [ 0.014648,0.014648,0.442814,0.101994 ]
+	},
+	
+	{
+		"uid": 43,
+        "name": "labelholders",
+		"parent": 38,
+		"position": [ 0,2.263455,-0.2949442 ],
+		"rotation": [ 0,0,0 ],
+		"renderer": "darkgrey",
+		"mesh": "labelholders",
+		"lightmapIndex": 0,
+		"lightmapTileOffset": [ 0.011719,0.011719,0.984818,0.902786 ]
+	},
+	
+	{
+		"uid": 44,
+        "name": "sides",
+		"parent": 38,
+		"position": [ 0.25,0,-0.3 ],
+		"rotation": [ 0,0,0 ],
+		"renderer": "base",
+		"mesh": "sides",
+		"lightmapIndex": 0,
+		"lightmapTileOffset": [ 0.086914,0.086914,0.283352,0.278469 ]
+	},
+	
+	{
+		"uid": 45,
+        "name": "filecabinet4",
+		"parent": 1,
+		"position": [ 3.764724,0.089828,0.32679 ],
+		"rotation": [ 0,1.570796,0 ]
+	},
+	
+	{
+		"uid": 46,
+        "name": "bottom",
+		"parent": 45,
+		"position": [ 0.25,0,-0.3 ],
+		"rotation": [ 0,0,0 ],
+		"renderer": "base",
+		"mesh": "bottom",
+		"lightmapIndex": 0,
+		"lightmapTileOffset": [ 0.023438,0.023438,0.982819,0.054108 ]
+	},
+	
+	{
+		"uid": 47,
+        "name": "front1",
+		"parent": 45,
+		"position": [ 0.25,0,-0.3 ],
+		"rotation": [ 0,0,0 ],
+		"renderer": "cabinet_front",
+		"mesh": "front1",
+		"lightmapIndex": 0,
+		"lightmapTileOffset": [ 0.041016,0.041016,0.937828,0.220055 ]
 	},
 	
 	{
 		"uid": 48,
-                "name": "floor",
-		"parent": 0,
-		"position": [ 0.07015259,-6.350833,0 ],
+        "name": "fronts",
+		"parent": 45,
+		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
-		"renderer": "floor",
-		"mesh": "floor",
+		"renderer": "cabinet_front",
+		"mesh": "fronts",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.304688,0.304688,-0.000701904,0.777618 ]
+		"lightmapTileOffset": [ 0.202148,0.202148,0.461613,0.221378 ]
 	},
 	
 	{
 		"uid": 49,
-                "name": "floorhole",
-		"parent": 0,
-		"position": [ 0.07015259,-0.3028809,0 ],
+        "name": "handles",
+		"parent": 45,
+		"position": [ 0.06619179,0.1408208,-0.312975 ],
 		"rotation": [ 0,0,0 ],
-		"renderer": "planks",
-		"mesh": "floorhole",
+		"renderer": "darkgrey",
+		"mesh": "handles",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.196289,0.196289,0.591518,0.885464 ]
+		"lightmapTileOffset": [ 0.014648,0.014648,0.984806,0.91547 ]
 	},
 	
 	{
 		"uid": 50,
-                "name": "floorpanel",
-		"parent": 0,
-		"position": [ 0.07015259,-0.00166748,0 ],
+        "name": "labelholders",
+		"parent": 45,
+		"position": [ 0,2.263455,-0.2949442 ],
 		"rotation": [ 0,0,0 ],
-		"renderer": "floorpanel",
-		"mesh": "floorpanel",
+		"renderer": "darkgrey",
+		"mesh": "labelholders",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.136719,0.136719,0.301712,0.802689 ]
+		"lightmapTileOffset": [ 0.011719,0.011719,0.981888,0.091263 ]
 	},
 	
 	{
 		"uid": 51,
-                "name": "fluorlight",
-		"parent": 0,
+        "name": "sides",
+		"parent": 45,
+		"position": [ 0.25,0,-0.3 ],
+		"rotation": [ 0,0,0 ],
+		"renderer": "base",
+		"mesh": "sides",
+		"lightmapIndex": 0,
+		"lightmapTileOffset": [ 0.086914,0.086914,0.844875,0.242336 ]
+	},
+	
+	{
+		"uid": 52,
+        "name": "floor",
+		"parent": 1,
+		"position": [ 0.07015259,-6.350833,0 ],
+		"rotation": [ 0,0,0 ],
+		"collider": {
+		    "type": "mesh",
+		    "mesh": "floor"
+		},
+		"renderer": "floor",
+		"mesh": "floor",
+		"lightmapIndex": 0,
+		"lightmapTileOffset": [ 0.304688,0.304688,0.461212,-0.000701904 ]
+	},
+	
+	{
+		"uid": 53,
+        "name": "floorhole",
+		"parent": 1,
+		"position": [ 0.07015259,-0.3028809,0 ],
+		"rotation": [ 0,0,0 ],
+		"collider": {
+		    "type": "mesh",
+		    "mesh": "floorhole"
+		},
+		"renderer": "planks",
+		"mesh": "floorhole",
+		"lightmapIndex": 0,
+		"lightmapTileOffset": [ 0.196289,0.196289,0.541714,0.334682 ]
+	},
+	
+	{
+		"uid": 54,
+        "name": "floorpanel",
+		"parent": 1,
+		"position": [ 0.07015259,-0.00166748,0 ],
+		"rotation": [ 0,0,0 ],
+		"collider": {
+		    "type": "mesh",
+		    "mesh": "floorpanel"
+		},
+		"renderer": "floorpanel",
+		"mesh": "floorpanel",
+		"lightmapIndex": 0,
+		"lightmapTileOffset": [ 0.136719,0.136719,0.844681,0.0888214 ]
+	},
+	
+	{
+		"uid": 55,
+        "name": "fluorlight",
+		"parent": 1,
 		"position": [ 1.560203,2.375764,-0.9507746 ],
 		"rotation": [ 0,0,0 ]
 	},
 	
 	{
-		"uid": 52,
-                "name": "fluor",
-		"parent": 51,
+		"uid": 56,
+        "name": "fluor",
+		"parent": 55,
 		"position": [ -0.02336147,-0.0416385,0.03023542 ],
 		"rotation": [ 0.0000000596,0,0 ],
 		"renderer": "white",
 		"mesh": "fluor",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0185547,0.0185547,0.640064,0.11272 ]
+		"lightmapTileOffset": [ 0.0185547,0.0185547,0.805103,0.0756111 ]
 	},
 	
 	{
-		"uid": 53,
-                "name": "fluor2",
-		"parent": 51,
+		"uid": 57,
+        "name": "fluor2",
+		"parent": 55,
 		"position": [ -0.02336147,-0.0416385,-0.0301246 ],
 		"rotation": [ 0.0000000596,0,0 ],
 		"renderer": "white",
 		"mesh": "fluor_2",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0185547,0.0185547,0.440845,0.126392 ]
+		"lightmapTileOffset": [ 0.0185547,0.0185547,0.824635,0.0756111 ]
 	},
 	
 	{
-		"uid": 54,
-                "name": "holder",
-		"parent": 51,
+		"uid": 58,
+        "name": "holder",
+		"parent": 55,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
 		"mesh": "holder",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0947266,0.0947266,0.902462,0.000118256 ]
+		"lightmapTileOffset": [ 0.0947266,0.0947266,0.0811729,0.299923 ]
 	},
 	
 	{
-		"uid": 55,
-                "name": "light",
-		"parent": 51,
+		"uid": 59,
+        "name": "light",
+		"parent": 55,
 		"position": [ -0.02425194,-0.3356099,-0.0005105734 ],
 		"rotation": [ 0,0,0 ],
 		"light": "light"
 	},
 	
 	{
-		"uid": 56,
-                "name": "top",
-		"parent": 51,
+		"uid": 60,
+        "name": "top",
+		"parent": 55,
 		"position": [ 0.45,1.027377,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
 		"mesh": "toppart",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.03125,0.03125,0.503296,0.0755615 ]
+		"lightmapTileOffset": [ 0.03125,0.03125,0.96521,0.99353 ]
 	},
 	
 	{
-		"uid": 57,
-                "name": "largepipes",
-		"parent": 0,
+		"uid": 61,
+        "name": "largepipes",
+		"parent": 1,
 		"position": [ 0.02321442,2.337654,-1.935869 ],
 		"rotation": [ 0,-1.570796,1.570796 ],
+		"collider": {
+		    "type": "mesh",
+		    "mesh": "largepipes"
+		},
 		"renderer": "base",
 		"mesh": "largepipes",
 		"lightmapIndex": 0,
@@ -877,82 +955,94 @@
 	},
 	
 	{
-		"uid": 58,
-                "name": "pipe",
-		"parent": 0,
+		"uid": 62,
+        "name": "pipe",
+		"parent": 1,
 		"position": [ -3.801011,1.400015,1.891272 ],
 		"rotation": [ 0,0,0 ],
+		"collider": {
+		    "type": "mesh",
+		    "mesh": "pipe"
+		},
 		"renderer": "base",
 		"mesh": "pipe",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0654297,0.0654297,0.59203,0.823475 ]
+		"lightmapTileOffset": [ 0.0654297,0.0654297,0.103748,0.283436 ]
 	},
 	
 	{
-		"uid": 59,
-                "name": "pipeending",
-		"parent": 0,
+		"uid": 63,
+        "name": "pipeending",
+		"parent": 1,
 		"position": [ -0.005020904,2.336824,-1.936106 ],
 		"rotation": [ 0,0,0 ],
+		"collider": {
+		    "type": "mesh",
+		    "mesh": "pipeending"
+		},
 		"renderer": "rust",
 		"mesh": "pipeending",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0576172,0.0576172,0.93581,0.0725288 ]
+		"lightmapTileOffset": [ 0.0576172,0.0576172,0.379169,0.277607 ]
 	},
 	
 	{
-		"uid": 60,
-                "name": "pipeholder",
-		"parent": 0,
+		"uid": 64,
+        "name": "pipeholder",
+		"parent": 1,
 		"position": [ 0.05540344,2.497553,-1.936754 ],
 		"rotation": [ 0,0,0 ],
+		"collider": {
+		    "type": "mesh",
+		    "mesh": "pipeholder"
+		},
 		"renderer": "base",
 		"mesh": "pipeholder",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0263672,0.0263672,0.705463,0.0755806 ]
+		"lightmapTileOffset": [ 0.0263672,0.0263672,0.805073,0.0804634 ]
 	},
 	
 	{
-		"uid": 61,
-                "name": "desk",
-		"parent": 0,
+		"uid": 65,
+        "name": "desk",
+		"parent": 1,
 		"position": [ -2.262847,-0.0016675,1.185786 ],
 		"rotation": [ 0,-0.3045448,0 ]
 	},
 	
 	{
-		"uid": 62,
-                "name": "lamp",
-		"parent": 61,
+		"uid": 66,
+        "name": "lamp",
+		"parent": 65,
 		"position": [ -0.4605259,0.8137751,0.2702942 ],
 		"rotation": [ 0,0.9535775,0 ]
 	},
 	
 	{
-		"uid": 63,
-                "name": "base",
-		"parent": 62,
+		"uid": 67,
+        "name": "base",
+		"parent": 66,
 		"position": [ 0,-0.0002431488,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "red",
 		"mesh": "base",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0761719,0.0761719,0.479683,0.760933 ]
+		"lightmapTileOffset": [ 0.0761719,0.0761719,0.887886,0.923042 ]
 	},
 	
 	{
-		"uid": 64,
-                "name": "lamplight",
-		"parent": 62,
+		"uid": 68,
+        "name": "lamplight",
+		"parent": 66,
 		"position": [ 0.01885286,0.2885832,0.1991458 ],
 		"rotation": [ -0.7753192,-1.795006,-1.664385 ],
 		"light": "lamplight"
 	},
 	
 	{
-		"uid": 65,
-                "name": "stem",
-		"parent": 62,
+		"uid": 69,
+        "name": "stem",
+		"parent": 66,
 		"position": [ -0.009898948,0.01331375,-0.0006131363 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
@@ -962,64 +1052,68 @@
 	},
 	
 	{
-		"uid": 66,
-                "name": "topinterior",
-		"parent": 62,
+		"uid": 70,
+        "name": "topinterior",
+		"parent": 66,
 		"position": [ -0.0006007031,0.399937,0.1621105 ],
 		"rotation": [ -0.2734099,-0.3037378,0.1247429 ],
 		"renderer": "white",
 		"mesh": "top",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.00976562,0.00976562,0.734825,0.0756454 ]
+		"lightmapTileOffset": [ 0.00976562,0.00976562,0.983849,0.968224 ]
 	},
 	
 	{
-		"uid": 67,
-                "name": "topexterior",
-		"parent": 62,
+		"uid": 71,
+        "name": "topexterior",
+		"parent": 66,
 		"position": [ -0.0006007031,0.399937,0.1621105 ],
 		"rotation": [ -0.2734099,-0.3037376,0.1247429 ],
 		"renderer": "red",
 		"mesh": "topint",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0107422,0.0107422,0.904743,0.0619698 ]
+		"lightmapTileOffset": [ 0.0107422,0.0107422,0.0678291,0.15279 ]
 	},
 	
 	{
-		"uid": 68,
-                "name": "table",
-		"parent": 61,
+		"uid": 72,
+        "name": "table",
+		"parent": 65,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "wood",
 		"mesh": "table",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.114258,0.114258,0.73344,0.753948 ]
+		"lightmapTileOffset": [ 0.114258,0.114258,0.664104,0.221722 ]
 	},
 	
 	{
-		"uid": 69,
-                "name": "walls",
-		"parent": 0,
+		"uid": 73,
+        "name": "walls",
+		"parent": 1,
 		"position": [ 0.4991992,-5.299922,0.09999999 ],
 		"rotation": [ 0,0,0 ],
+		"collider": {
+		    "type": "mesh",
+		    "mesh": "walls"
+		},
 		"renderer": "wall",
 		"mesh": "walls",
-		"lightmapIndex": 1,
-		"lightmapTileOffset": [ 0.604492,0.604492,-0.00187302,-0.00187302 ]
+		"lightmapIndex": 0,
+		"lightmapTileOffset": [ 0.604492,0.604492,-0.00187302,0.481525 ]
 	},
 	
 	{
-		"uid": 70,
-                "name": "fps",
+		"uid": 74,
+        "name": "fps",
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ]
 	},
 	
 	{
-		"uid": 71,
-                "name": "eye",
-		"parent": 70,
+		"uid": 75,
+        "name": "eye",
+		"parent": 74,
 		"position": [ 0,1.177749,0 ],
 		"rotation": [ 0,0,0 ],
 		"camera": "eye"

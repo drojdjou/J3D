@@ -29,7 +29,8 @@ void main(void) {
 	
 	vec4 tc = texture2D(colorTexture, vTextureCoord);
 	vec4 lm = texture2D(lightmapTexture, vTextureCoord2);
+    vec3 lmc = lm.rgb * lm.a;
 
 	if(tc.a < 0.1) discard;
-	else gl_FragColor = vec4(color.rgb * tc.rgb * lm.rgb, 1.0);
+	else gl_FragColor = vec4(color.rgb * tc.rgb * lmc, 1.0);
 }

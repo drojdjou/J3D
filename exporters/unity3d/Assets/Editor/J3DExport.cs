@@ -17,6 +17,8 @@ public class J3DExport : ScriptableWizard
 	public Extension extenstion;
 	public Transform[] transforms;
 	
+	public float jpegQuality = 75.0f;
+	
 	public bool useConsole = true;
 	//public ReportLevel level = ReportLevel.Warning;
 	public bool generateReport = false;
@@ -24,6 +26,7 @@ public class J3DExport : ScriptableWizard
 	private List<TransformExportData> tex;
 	private List<LightExportData> lgx;
 	private List<CameraExportData> cmx;
+	private List<LightmapExportData> led;
 	
 	private Hashtable mex;
 	private Hashtable mtx;
@@ -58,22 +61,24 @@ public class J3DExport : ScriptableWizard
 		
 		Report.log ("Exporting to: " + meshesPath + " " + scenePath);
 
-		//led = new LightmapExportData ();
-		
 		tex = new List<TransformExportData> ();
 		lgx = new List<LightExportData> ();
 		cmx = new List<CameraExportData> ();
+		led = new List<LightmapExportData> ();
 		
 		mex = new Hashtable ();
 		mtx = new Hashtable ();
 		txx = new Hashtable ();
-
-		for (var i = 0; i < transforms.Length; i++) {
+		
+		int i;
+		
+		for (i = 0; i < transforms.Length; i++) {
 			RecurseTransform (transforms[i], null);
 		}
 		
-		// Some textures might have been marked as readable for exporting, apply those changes now.
-		AssetDatabase.Refresh ();
+		for(i = 0; i < LightmapSettings.lightmaps.Length; i++) {
+			led.Add( new LightmapExportData(i) );
+		}
 
 		StringTemplate mt = FileExport.LoadTemplate ("model");
 		mt.SetAttribute ("prefix", prefix + "Meshes");
@@ -97,22 +102,20 @@ public class J3DExport : ScriptableWizard
 		st.SetAttribute ("textures", txx.Values);
 		st.SetAttribute ("lights", lgx);
 		st.SetAttribute ("cameras", cmx);
+		st.SetAttribute ("lightmaps", led);
 		FileExport.SaveContentsAsFile (FileExport.CleanJSON (st), scenePath);
 		
 		foreach (TextureExportData t in txx.Values) {
-			if (t.IsImage) {
-				if (t.Format != TextureImporterFormat.ARGB32 && t.Format != TextureImporterFormat.RGB24) {
-					Report.error ("Texture not exported. '" + t.Name + "' has wrong format: " + t.Format.ToString () + ", should be ARGB32 or RGB24");
-				} else if (!t.asset.isReadable) {
-					Report.error ("Texture not exported. '" + t.Name + "' not marked as readable.");
-				} else {
-					File.WriteAllBytes (texturePath + t.FileName, t.pngData);
-					Report.log ("Exporting texture " + t.Name + " to " + texturePath + t.FileName);
-				}
-			}
+			t.Save(texturePath, jpegQuality);
+		}
+		
+		foreach (LightmapExportData d in led) {
+			d.Save(texturePath, jpegQuality);
 		}
 		
 		Report.log ("Exported " + tex.Count + " transforms");
+		Report.log ("Exported " + txx.Values.Count + " textures");
+		Report.log ("Exported " + led.Count + " lightmaps");
 
 		FileExport.lastExportPath = meshesPath;
 		

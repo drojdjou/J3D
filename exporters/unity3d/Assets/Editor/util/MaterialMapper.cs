@@ -8,12 +8,11 @@ public class MaterialMapper
 		if (t.gameObject.isStatic && i < 255 && i > -1)
 			return "Lightmap";
 		
-		switch (m.shader.name) {
-		case "VertexLit":
-			return "Gouraud";
-		default:
-			return "Phong";
-		}
+		if(m.shader.name.IndexOf("Self-Illumin") > -1) return "Selflit";
+
+		if(m.shader.name == "VertexLit") return "Gouraud";
+		
+		return "Phong";
 	}
 	
 	public static string GetJ3DTextureName (string t)

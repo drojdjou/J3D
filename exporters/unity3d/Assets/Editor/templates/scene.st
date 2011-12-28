@@ -11,6 +11,12 @@ $textures:{
 	},
 }$
 },
+
+"lightmaps": [
+$lightmaps:{
+	"$it.FileName$",
+}$
+],
 	
 "materials": {
 $materials:{	

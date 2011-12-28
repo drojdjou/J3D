@@ -23,7 +23,6 @@ J3D.Loader.parseJSONScene = function(jscene, jmeshes, engine) {
 
     for(var i in jmeshes) {
         jmeshes[i] = new J3D.Mesh(jmeshes[i]);
-        j3dlog("Creating mesh " + i);
     }
 	
 	engine.setClearColor( J3D.Loader.fromObject(J3D.Color, jscene.background) );
@@ -32,6 +31,14 @@ J3D.Loader.parseJSONScene = function(jscene, jmeshes, engine) {
 		var tx = new J3D.Texture( jscene.path + jscene.textures[txs].file );
 		jscene.textures[txs] = tx;
 	}
+
+    if(jscene.lightmaps) {
+        J3D.LightmapAtlas = [];
+        for(var i = 0; i < jscene.lightmaps.length; i++) {
+            var tx = new J3D.Texture( jscene.path + jscene.lightmaps[i] );
+            J3D.LightmapAtlas.push(tx);
+        }
+    }
 	
 	for(var ms in jscene.materials) {
 		var m = jscene.materials[ms];

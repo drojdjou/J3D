@@ -10,7 +10,7 @@ J3D.BuiltinShaders = (function() {
 			return shaders[n].clone();
 		}
 	}
-	
+
 	var p = J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Phong);
 	p.su.color = J3D.Color.white;
     //p.su.specularIntensity = 0;
@@ -44,6 +44,8 @@ J3D.BuiltinShaders = (function() {
 	shaders.Skybox =  J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Skybox);
 	
 	shaders.Normal2Color = J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Normal2Color);
+
+    shaders.Selflit = J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Selflit);
 
 	return { shaders:shaders, fetch:fetch };
 }());
