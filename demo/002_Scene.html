@@ -37,21 +37,10 @@
 				rings[5] = engine.scene.find("root/ring/ring/ring/ring/ring/ring");
 				rings[6] = engine.scene.find("root/ring/ring/ring/ring/ring/ring/ring");
 
-                rings[0].collider = J3D.Collider.Mesh(rings[0].geometry);
-                rings[1].collider = J3D.Collider.Mesh(rings[1].geometry);
-                rings[2].collider = J3D.Collider.Mesh(rings[2].geometry);
-                rings[3].collider = J3D.Collider.Mesh(rings[3].geometry);
-                rings[4].collider = J3D.Collider.Mesh(rings[4].geometry);
-                rings[5].collider = J3D.Collider.Mesh(rings[5].geometry);
-                rings[6].collider = J3D.Collider.Mesh(rings[6].geometry);
-
-                rings[0].originalRenderer = rings[0].renderer;
-                rings[1].originalRenderer = rings[1].renderer;
-                rings[2].originalRenderer = rings[2].renderer;
-                rings[3].originalRenderer = rings[3].renderer;
-                rings[4].originalRenderer = rings[4].renderer;
-                rings[5].originalRenderer = rings[5].renderer;
-                rings[6].originalRenderer = rings[6].renderer;
+                for(var i = 0; i < 7; i++) {
+                    rings[i].collider = J3D.Collider.Mesh(rings[i].geometry);
+                    rings[i].originalRenderer = rings[i].renderer;
+                }
 
 				draw();
 			})
@@ -69,45 +58,26 @@
 	}
 	
 	function draw() {
-		var sx = (( mx / window.innerWidth  ) * 2 - 1) * J3D.Time.deltaTime / 1000;
-		var sy = (( my / window.innerHeight ) * 2 - 1) * J3D.Time.deltaTime / 1000;
+		var sx = (( mx / window.innerWidth  ) * 2 - 1) * 0.25;
+		var sy = (( my / window.innerHeight ) * 2 - 1) * -0.25;
 
         var r = J3D.Ray.fromMousePosition(mx, my, camera);
 
-        var rh0 = J3D.Intersection.rayMesh(r, rings[0]);
-        var rh1 = J3D.Intersection.rayMesh(r, rings[1]);
-        var rh2 = J3D.Intersection.rayMesh(r, rings[2]);
-        var rh3 = J3D.Intersection.rayMesh(r, rings[3]);
-        var rh4 = J3D.Intersection.rayMesh(r, rings[4]);
-        var rh5 = J3D.Intersection.rayMesh(r, rings[5]);
-        var rh6 = J3D.Intersection.rayMesh(r, rings[6]);
+        for(var i = 0; i < 7; i++) {
+            var h = J3D.Intersection.rayTest(r, rings[i]);
+            rings[i].renderer = (h) ? whiteMat : rings[i].originalRenderer;
 
-        rings[0].renderer = (rh0) ? whiteMat : rings[0].originalRenderer;
-		rings[1].renderer = (rh1) ? whiteMat : rings[1].originalRenderer;
-        rings[2].renderer = (rh2) ? whiteMat : rings[2].originalRenderer;
-        rings[3].renderer = (rh3) ? whiteMat : rings[3].originalRenderer;
-        rings[4].renderer = (rh4) ? whiteMat : rings[4].originalRenderer;
-        rings[5].renderer = (rh5) ? whiteMat : rings[5].originalRenderer;
-        rings[6].renderer = (rh6) ? whiteMat : rings[6].originalRenderer;
+            if(i == 0) {
+                rings[i].rotation.y = sx;
+                rings[i].rotation.x = sy;
+            } else {
+                rings[i].rotation.y = sx + (sx * i * 0.02);
+                rings[i].rotation.x = sy + (sy * i * 0.02);
+            }
+        }
 
-        root.rotation.y += sx;
+        root.rotation.y = sx;
 
-		rings[0].rotation.y += sx;
-		rings[1].rotation.y -= sx * 0.1;
-		rings[2].rotation.y -= sx * 0.12;
-		rings[3].rotation.y -= sx * 0.14;
-		rings[4].rotation.y -= sx * 0.16;
-		rings[5].rotation.y -= sx * 0.18;
-		rings[6].rotation.y -= sx * 0.2;
-
-		rings[0].rotation.x += sy;
-		rings[1].rotation.x -= sy * 0.1;
-		rings[2].rotation.x -= sy * 0.12;
-		rings[3].rotation.x -= sy * 0.14;
-		rings[4].rotation.x -= sy * 0.16;
-		rings[5].rotation.x -= sy * 0.18;
-		rings[6].rotation.x -= sy * 0.2;
-		
 		engine.render();
         requestAnimationFrame(draw);
 	}

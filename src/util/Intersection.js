@@ -1,12 +1,37 @@
 J3D.Intersection = {};
 
-J3D.Intersection.rayMesh = function(r, t) {
-    if (!t.collider || !t.collider.mesh || !t.collider.mesh.vertexPositionBuffer) {
-        j3dlog("Intersection test failed. " + t.name + " has no mesh collider or no vertex data.");
+J3D.Intersection.rayTest = function(r, t) {
+    if(!t.collider) {
+        j3dlog("Intersection test failed. " + t.name + " has no collider.");
         return false;
     }
 
-    r.makeLocal(t);
+    switch(t.collider.type) {
+        case J3D.Collider.SPHERE:
+            return J3D.Intersection.raySphere(r, t);
+        case J3D.Collider.BOX:
+            return J3D.Intersection.rayBox(r, t);
+        case J3D.Collider.MESH:
+            return J3D.Intersection.rayMesh(r, t);
+        default:
+            j3dlog("Unrecognized collider type");
+            return false;
+    }
+}
+
+J3D.Intersection.rayMesh = function(r, t) {
+    if (!t.collider.mesh || !t.collider.mesh.vertexPositionBuffer) {
+        j3dlog("Intersection test failed. " + t.name + " has no mesh defined or no vertex data in the mesh.");
+        return false;
+    }
+
+    if(t.collider.box) {
+        if(!J3D.Intersection.rayBox(r, t)) {
+            return false;
+        }
+    } else {
+        r.makeLocal(t);
+    }
 
     var v = t.collider.mesh.vertexPositionBuffer.data;
     var d = t.collider.mesh.elements.data;
@@ -140,8 +165,8 @@ J3D.Intersection.rayTriangle = function(r, p0, p1, p2) {
 }
 
 J3D.Intersection.raySphere = function(r, t) {
-    if (!t.collider || !t.collider.radius) {
-        j3dlog("Intersection test failed. " + t.name + " has no mesh collider or it's not sphere.");
+    if (!t.collider.radius) {
+        j3dlog("Intersection test failed. " + t.name + " has no radius defined.");
         return false;
     }
 
@@ -164,8 +189,8 @@ J3D.Intersection.raySphere = function(r, t) {
 };
 
 J3D.Intersection.rayBox = function(r, t) {
-    if (!t.collider || !t.collider.box) {
-        j3dlog("Intersection test failed. " + t.name + " has no mesh collider or it's not box.");
+    if (!t.collider.box) {
+        j3dlog("Intersection test failed. " + t.name + " has no box defined.");
         return false;
     }
 
@@ -231,7 +256,7 @@ J3D.Intersection.rayBox = function(r, t) {
 
     }
 
-    if (ins) return false;
+    if (ins) return -1;
 
     var which = 0;
     var td = xt;

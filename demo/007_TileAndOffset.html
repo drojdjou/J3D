@@ -134,9 +134,9 @@
 
             var r = J3D.Ray.fromMousePosition(mx, my, camera);
 
-            var c1h = J3D.Intersection.rayMesh(r, cube1);
-            var c2h = J3D.Intersection.rayMesh(r, cube2);
-            var c3h = J3D.Intersection.rayMesh(r, cube3);
+            var c1h = J3D.Intersection.rayTest (r, cube1);
+            var c2h = J3D.Intersection.rayTest (r, cube2);
+            var c3h = J3D.Intersection.rayTest (r, cube3);
 
             cube1.renderer.colorTexture = (c1h) ? overTexture : outTexture;
             cube2.renderer.colorTexture = (c2h) ? overTexture : outTexture;
