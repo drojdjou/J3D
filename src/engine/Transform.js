@@ -50,11 +50,14 @@ J3D.Transform = function(n, u) {
 		return fa;
     }
 
+    this.contains = function(t) {
+        return children.indexOf(t) > -1;
+    }
+
     this.remove = function(t, any) {
-        if (children.indexOf(t) > -1) {
+        if (that.contains(t)) {
             children.splice(children.indexOf(t), 1);
             that.numChildren = children.length;
-            console.log("Fih");
             return true;
         } else if (any) {
             for (var i = 0; i < children.length; i++) {
@@ -85,6 +88,14 @@ J3D.Transform.prototype.clone = function() {
     c.collider = this.collider;
 
     return c;
+}
+
+J3D.Transform.prototype.transformDirection = function(d) {
+    // TODO: optimize
+    var tm = mat4.create();
+    var tv = vec3.create();
+    tv = mat4.multiplyVec3(mat3.toMat4(this.normalMatrix, tm), d.xyz(), tv);
+    return new v3(tv[0], tv[1], tv[2]).norm();
 }
 
 J3D.Transform.prototype.forward = function() {

@@ -44,7 +44,7 @@
 
 <script>
 	var mx = 0, my = 0;	
-	var fps, eye, walls;
+	var fps, eye, walls, headlight;
 	var lightmaps, nolightmaps;
 	var showmaps = true;
 	var moveLeft = 0, moveForward = 0;
@@ -70,14 +70,35 @@
 				fps = engine.scene.find("fps");
 				eye = engine.scene.find("fps/eye");
                 walls = engine.scene.find("bunker/walls");
+
+                var hl = new J3D.Light(J3D.SPOTLIGHT);
+                hl.direction = v3.FORWARD();
+                hl.angle = Math.PI / 16;
+                hl.angleFalloff = Math.PI / 32;
+                hl.intensity = 0.5;
+
+                headlight = new J3D.Transform();
+                headlight.light = hl;
+
+                eye.add(headlight);
+
 				draw();
 			})
 		});
 
 		document.onmousemove = onMouseMove;
+        document.onmousedown = onMouseDown;
 		document.onkeydown = onKeyDown;
 		document.onkeyup = onKeyUp;
 	}
+
+    function onMouseDown(e) {
+        if(eye.contains(headlight)) {
+            eye.remove(headlight);
+        } else {
+            eye.add(headlight);
+        }
+    }
 	
 	function onKeyDown(e) {
 		switch(e.keyCode) {
@@ -158,8 +179,9 @@
 
         fps.position = fps.position.add(m);
 
-		if(document.getElementById("dizzy").checked) post.render();
-		else engine.render();
+		//if(document.getElementById("dizzy").checked) post.render();
+		//else
+            engine.render();
 
         requestAnimationFrame(draw);
 	}

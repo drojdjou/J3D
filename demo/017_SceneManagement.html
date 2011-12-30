@@ -67,7 +67,7 @@
             sun = new J3D.Transform();
             sun.light = new J3D.Light(J3D.DIRECT);
             sun.light.color = new J3D.Color(0.75, 0.75, 0.75, 1);
-            sun.light.direction = new v3(0, -1, 0).norm();
+            sun.rotation.y = Math.PI / 2;
 
             camera = new J3D.Transform();
             camera.camera = new J3D.Camera({ fov:30 });
@@ -75,7 +75,7 @@
             engine.camera = camera;
 
             camroot = new J3D.Transform();
-            camroot.add(camera);
+            camroot.add(camera, sun);
 
             post = new J3D.Persistence(engine);
 		    post.blendFilter = new J3D.ShaderUtil.parseGLSL(document.getElementById("blendFilter").firstChild.nodeValue);
@@ -118,7 +118,7 @@
         }
 
         function populateScene() {
-            engine.scene.add(camroot, sun, ambient);
+            engine.scene.add(camroot, ambient);
             addCube(null, 0, 0);
         }
 

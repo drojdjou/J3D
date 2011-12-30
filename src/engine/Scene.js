@@ -22,8 +22,12 @@ J3D.Scene = function() {
         return children[i];
     }
 
+    this.contains = function(t) {
+        return children.indexOf(t) > -1;
+    }
+
     this.remove = function(t, any) {
-        if (children.indexOf(t) > -1) {
+        if (that.contains(t)) {
             children.splice(children.indexOf(t), 1);
             that.numChildren = children.length;
             return true;

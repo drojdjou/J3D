@@ -6,6 +6,9 @@
 
 "textures": {
 },
+
+"lightmaps": [
+],
 	
 "materials": {
 	
@@ -30,7 +33,7 @@
 	"grey": { 
 		"type": "Gouraud",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
-		"specularIntensity": 1,
+		"specularIntensity": 0.999,
                 "shininess": 1,
 		"textureTile": [  ],
 		"textureOffset": [  ]
@@ -75,8 +78,8 @@
 	"blue": { 
 		"type": "Phong",
 		"color": { "r":0, "g":0.4980392, "b":1, "a":1 },
-		"specularIntensity": 0.1487512,
-                "shininess": 0.7192537,
+		"specularIntensity": 0.5293209,
+                "shininess": 1,
 		"textureTile": [  ],
 		"textureOffset": [  ]
 	}
@@ -87,8 +90,7 @@
 	
 	"sun": { 
 		"type": 1,
-		"color": { "r":1, "g":1, "b":1, "a":1 },
-		"direction": [ -0.1517519,0.7256743,0.6710949 ]
+		"color": { "r":1, "g":1, "b":1, "a":1 }
 	}
 
 },
@@ -107,93 +109,113 @@
 	
 	{
 		"uid": 1,
-                "name": "sun",
-		"position": [ 0,0,0.01425409 ],
-		"rotation": [ -0.8351003,-3.136525,0.2129833 ],
-		"light": "sun"
-	},
-	
-	{
-		"uid": 2,
-                "name": "root",
+        "name": "root",
 		"position": [ 0,0,2 ],
 		"rotation": [ 0,0,0 ]
 	},
 	
 	{
-		"uid": 3,
-                "name": "ring",
-		"parent": 2,
+		"uid": 2,
+        "name": "ring",
+		"parent": 1,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
+		"collider": {
+		    "type": "mesh",
+		    "mesh": "ring1"
+		},
 		"renderer": "redlight",
 		"mesh": "ring1"
 	},
 	
 	{
-		"uid": 4,
-                "name": "ring",
-		"parent": 3,
+		"uid": 3,
+        "name": "ring",
+		"parent": 2,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
+		"collider": {
+		    "type": "mesh",
+		    "mesh": "ring2"
+		},
 		"renderer": "orange",
 		"mesh": "ring2"
 	},
 	
 	{
-		"uid": 5,
-                "name": "ring",
-		"parent": 4,
+		"uid": 4,
+        "name": "ring",
+		"parent": 3,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
+		"collider": {
+		    "type": "mesh",
+		    "mesh": "ring3"
+		},
 		"renderer": "yellow",
 		"mesh": "ring3"
 	},
 	
 	{
-		"uid": 6,
-                "name": "ring",
-		"parent": 5,
+		"uid": 5,
+        "name": "ring",
+		"parent": 4,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
+		"collider": {
+		    "type": "mesh",
+		    "mesh": "ring4"
+		},
 		"renderer": "light_green",
 		"mesh": "ring4"
 	},
 	
 	{
-		"uid": 7,
-                "name": "ring",
-		"parent": 6,
+		"uid": 6,
+        "name": "ring",
+		"parent": 5,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
+		"collider": {
+		    "type": "mesh",
+		    "mesh": "ring5"
+		},
 		"renderer": "green",
 		"mesh": "ring5"
 	},
 	
 	{
-		"uid": 8,
-                "name": "ring",
-		"parent": 7,
+		"uid": 7,
+        "name": "ring",
+		"parent": 6,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
+		"collider": {
+		    "type": "mesh",
+		    "mesh": "ring6"
+		},
 		"renderer": "blue",
 		"mesh": "ring6"
 	},
 	
 	{
-		"uid": 9,
-                "name": "ring",
-		"parent": 8,
+		"uid": 8,
+        "name": "ring",
+		"parent": 7,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
+		"collider": {
+		    "type": "mesh",
+		    "mesh": "ring7"
+		},
 		"renderer": "violet",
 		"mesh": "ring7"
 	},
 	
 	{
-		"uid": 10,
-                "name": "text",
-		"parent": 2,
+		"uid": 9,
+        "name": "text",
+		"parent": 1,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "grey",
@@ -201,8 +223,16 @@
 	},
 	
 	{
+		"uid": 10,
+        "name": "sun",
+		"position": [ 0,0,0 ],
+		"rotation": [ -0.8351003,-3.136525,0.2129833 ],
+		"light": "sun"
+	},
+	
+	{
 		"uid": 11,
-                "name": "camera",
+        "name": "camera",
 		"position": [ 0,0,-0.5 ],
 		"rotation": [ 0,3.141592,0 ],
 		"camera": "camera"

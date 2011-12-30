@@ -37,8 +37,6 @@ $lights:{
 	"$it.Name$": { 
 		"type": $it.Type$,
 		"color": { "r":$it.Color.r$, "g":$it.Color.g$, "b":$it.Color.b$, "a":$it.Color.a$ },
-		$if(it.IsDirectional)$
-		"direction": [ $it.Direction; separator=","$ ],$endif$
 	},
 }$
 },

@@ -38,7 +38,6 @@
 				rings[6] = engine.scene.find("root/ring/ring/ring/ring/ring/ring/ring");
 
                 for(var i = 0; i < 7; i++) {
-                    rings[i].collider = J3D.Collider.Mesh(rings[i].geometry);
                     rings[i].originalRenderer = rings[i].renderer;
                 }
 
@@ -66,14 +65,8 @@
         for(var i = 0; i < 7; i++) {
             var h = J3D.Intersection.rayTest(r, rings[i]);
             rings[i].renderer = (h) ? whiteMat : rings[i].originalRenderer;
-
-            if(i == 0) {
-                rings[i].rotation.y = sx;
-                rings[i].rotation.x = sy;
-            } else {
-                rings[i].rotation.y = sx + (sx * i * 0.02);
-                rings[i].rotation.x = sy + (sy * i * 0.02);
-            }
+            rings[i].rotation.y = sx + (sx * i * 0.02);
+            rings[i].rotation.x = sy + (sy * i * 0.02);
         }
 
         root.rotation.y = sx;

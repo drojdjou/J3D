@@ -89,6 +89,9 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 			case "ogv":
 				loadVideo(source);
 				break;
+            default:
+                j3dlog("Unsupported texture format: " + ext + " in " + source);
+                break;
 		}
 		
 	} else if(!!source.getContext) {

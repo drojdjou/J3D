@@ -63,7 +63,7 @@
 		light = new J3D.Transform();
 		light.light = new J3D.Light(J3D.DIRECT);
 		light.light.color = new J3D.Color(0.5, 0.5, 0.5, 1);
-		light.light.direction = new v3(1, 0, 1).norm();
+		light.rotation = new v3(-Math.PI, 0, Math.PI);
 		
 		cube = new J3D.Transform();
 		cube.geometry = J3D.Primitive.Cube(1, 1, 1);		

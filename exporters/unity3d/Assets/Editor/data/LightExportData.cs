@@ -19,9 +19,11 @@ public class LightExportData
 		get {
 			if (lg.type == LightType.Directional)
 				return "1";
-			else
+			else if (lg.type == LightType.Point)
 				return "2";
-			// Spot light not supported yet, exported as point
+			else // Spotlight
+				return "3";
+			
 		
 		}
 	}
@@ -37,7 +39,7 @@ public class LightExportData
 	public string[] Direction {
 		get {
 			//Vector3 p = t.TransformDirection (t.forward);
-			Vector3 p = t.forward;
+			Vector3 p = -t.forward;
 			return new string[] { p.x.ToString (ExporterProps.LN), p.y.ToString (ExporterProps.LN), (-p.z).ToString (ExporterProps.LN) };
 		}
 	}

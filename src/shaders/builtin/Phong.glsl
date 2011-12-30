@@ -7,7 +7,6 @@
 //#vertex
 //#include VertexInclude
 varying vec4 vPosition;
-varying vec3 vLight;
 varying vec2 vTextureCoord;
 varying vec3 vNormal;
 

@@ -1,11 +1,10 @@
 J3D.Light = function(t){
 
 	this.type = (t != null) ? t : J3D.NONE;
-	this.direction = v3.ZERO();
 	this.color = J3D.Color.white;
 	this.intensity = 1.0;
     this.angleFalloff = 0.0;
-
+    this.angle = 0.0;
 }
 
 J3D.NONE = -1; // For shader internal use

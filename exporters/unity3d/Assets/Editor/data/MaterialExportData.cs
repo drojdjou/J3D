@@ -67,7 +67,7 @@ public class MaterialExportData
 				return "0";
 			} else {
 				Color sc = m.GetColor ("_SpecColor");
-				return (sc.r * sc.g * sc.b).ToString (ExporterProps.LN);
+				return ( (sc.r + sc.g + sc.b) * 0.333f ).ToString (ExporterProps.LN);
 			}
 		}
 	}

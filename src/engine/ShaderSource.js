@@ -93,37 +93,46 @@ J3D.ShaderSource.Lightmap = [
 	"//#author bartekd",
 
 	"//#include CommonInclude",
+	"varying vec2 vTextureCoord;",
+	"varying vec2 vTextureCoord2;",
+	"varying vec4 vPosition;",
+	"varying vec3 vNormal;",
 
 	"//#vertex",
 	"//#include VertexInclude",
 	"uniform vec4 lightmapAtlas;",
 
-	"varying vec2 vTextureCoord;",
-	"varying vec2 vTextureCoord2;",
-
 	"void main(void) {",
+
 	"vTextureCoord = getTextureCoord(aTextureCoord);",
 	"vTextureCoord2 = aTextureCoord2 * lightmapAtlas.xy + lightmapAtlas.zw;",
 
-	"gl_Position = mvpMatrix() * vec4(aVertexPosition, 1.0);",
+	"vNormal = nMatrix * aVertexNormal;",
+	"vPosition = mMatrix * vec4(aVertexPosition, 1.0);",
+	"gl_Position = pMatrix * vMatrix * vPosition;",
+	"gl_PointSize = 5.0;",
 	"}",
 
 	"//#fragment",
+	"//#include Lights",
 	"uniform vec4 color;",
 	"uniform sampler2D colorTexture;",
 	"uniform sampler2D lightmapTexture;",
-
-	"varying vec2 vTextureCoord;",
-	"varying vec2 vTextureCoord2;",
+	"uniform float specularIntensity;",
+	"uniform float shininess;",
 
 	"void main(void) {",
 
 	"vec4 tc = texture2D(colorTexture, vTextureCoord);",
 	"vec4 lm = texture2D(lightmapTexture, vTextureCoord2);",
+
+	"float si = specularIntensity * tc.r;",
+
+	"vec3 ltc = computeLights(vPosition, vNormal, si, shininess);",
 	"vec3 lmc = lm.rgb * lm.a;",
 
 	"if(tc.a < 0.1) discard;",
-	"else gl_FragColor = vec4(color.rgb * tc.rgb * lmc, 1.0);",
+	"else gl_FragColor = vec4(color.rgb * tc.rgb * (ltc + lmc), 1.0);",
 	"}",
 ""].join("\n");
 
@@ -160,7 +169,6 @@ J3D.ShaderSource.Phong = [
 	"//#vertex",
 	"//#include VertexInclude",
 	"varying vec4 vPosition;",
-	"varying vec3 vLight;",
 	"varying vec2 vTextureCoord;",
 	"varying vec3 vNormal;",
 
@@ -407,11 +415,14 @@ J3D.ShaderSource.Lights = [
 
 	"struct lightSource {",
 	"int type;",
-	"vec3 direction;",
-	"vec3 color;",
-	"vec3 position;",
-	"float intensity;",
-	"float angleFalloff;",
+
+	"vec3 direction;     // used by directional and spotlight (global direction of the transfom)",
+	"vec3 position;      // used by point, spotlight (it's the global position of the transform)",
+
+	"vec3 color;         // used by d/p/s and hemisphere",
+	"float intensity;    // used by spherical harmonics & d/p/s",
+	"float angleFalloff; // used by hemisphere and spotlight",
+	"float angle;        // used by spotlight",
 	"};",
 
 	"uniform lightSource uLight[4];",
@@ -488,8 +499,23 @@ J3D.ShaderSource.Lights = [
 	"if(si > 0.0) {",
 	"vec3 eyed = normalize(uEyePosition - p.xyz);",
 	"vec3 refd = reflect(-ld, n);",
-	"spec = pow(max(dot(refd, eyed), 0.0), sh) * si;",
-	"};",
+
+
+	"spec = pow( (dot(refd, eyed) + 1.0) * 0.5, sh * 4.0) * si;",
+	"}",
+
+	"if(ls.type == 3) {",
+	"float dd = dot(ld, -ls.direction);",
+	"float ca = cos(ls.angle);",
+	"float cf = cos(ls.angle + ls.angleFalloff);",
+
+	"float spm = smoothstep(cf, ca, dd);",
+
+	"dif *= spm;",
+	"spec *= spm;",
+	"}",
+
+	"dif *= ls.intensity;",
 
 	"return ls.color * dif + ls.color * spec;",
 	"}",

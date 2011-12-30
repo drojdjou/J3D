@@ -4,11 +4,14 @@
 
 struct lightSource {
 	int type;
-	vec3 direction;
-	vec3 color;
-	vec3 position;
-	float intensity;
-	float angleFalloff;
+
+	vec3 direction;     // used by directional and spotlight (global direction of the transfom)
+	vec3 position;      // used by point, spotlight (it's the global position of the transform)
+
+	vec3 color;         // used by d/p/s and hemisphere
+	float intensity;    // used by spherical harmonics & d/p/s
+	float angleFalloff; // used by hemisphere and spotlight
+	float angle;        // used by spotlight
 };
 
 uniform lightSource uLight[4];
@@ -87,9 +90,26 @@ vec3 phong(vec4 p, vec3 n, float si, float sh, lightSource ls){
     if(si > 0.0) {
     	vec3 eyed = normalize(uEyePosition - p.xyz);
     	vec3 refd = reflect(-ld, n);
-    	spec = pow(max(dot(refd, eyed), 0.0), sh) * si;
-    };
-	
+
+    	// 0  - 1 where 1 = vectors are paralel (max intensity)
+    	// sh = for 0 
+
+    	spec = pow( (dot(refd, eyed) + 1.0) * 0.5, sh * 4.0) * si;
+    }
+
+    if(ls.type == 3) {
+        float dd = dot(ld, -ls.direction);
+        float ca = cos(ls.angle);
+        float cf = cos(ls.angle + ls.angleFalloff);
+
+        float spm = smoothstep(cf, ca, dd);
+
+        dif *= spm;
+        spec *= spm;
+    }
+
+    dif *= ls.intensity;
+
     return ls.color * dif + ls.color * spec;
 }
 

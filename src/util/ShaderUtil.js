@@ -23,16 +23,18 @@ J3D.ShaderUtil.setAttributes = function(shader, geometry) {
 }
 
 J3D.ShaderUtil.setLights = function(shader, lights) {
-	for (var i = 0; i < J3D.SHADER_MAX_LIGHTS; i++) {
+    for (var i = 0; i < J3D.SHADER_MAX_LIGHTS; i++) {
 		var l = lights[i];
 
 		if(l && shader.uniforms["uLight[" + i + "].type"]){
 			gl.uniform1i(shader.uniforms["uLight[" + i + "].type"].location, 		lights[i].light.type);
-			gl.uniform3fv(shader.uniforms["uLight[" + i + "].direction"].location, 	lights[i].light.direction.xyz());
+
+			gl.uniform3fv(shader.uniforms["uLight[" + i + "].direction"].location, 	lights[i].forward().xyz());
 			gl.uniform3fv(shader.uniforms["uLight[" + i + "].color"].location, 		lights[i].light.color.rgb());
 			gl.uniform3fv(shader.uniforms["uLight[" + i + "].position"].location, 	lights[i].worldPosition.xyz());	
 			gl.uniform1f(shader.uniforms["uLight[" + i + "].intensity"].location, 	lights[i].light.intensity);
             gl.uniform1f(shader.uniforms["uLight[" + i + "].angleFalloff"].location, 	lights[i].light.angleFalloff);
+            gl.uniform1f(shader.uniforms["uLight[" + i + "].angle"].location, 	lights[i].light.angle);
 		} else if(shader.uniforms["uLight[" + i + "].type"]) {
 			gl.uniform1i(shader.uniforms["uLight[" + i + "].type"].location, J3D.NONE);
 		} else {

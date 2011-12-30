@@ -117,8 +117,8 @@
 	"red": { 
 		"type": "Lightmap",
 		"color": { "r":0.6567164, "g":0, "b":0, "a":1 },
-		"specularIntensity": 0,
-                "shininess": 0,
+		"specularIntensity": 0.999,
+                "shininess": 0.7227132,
 		"textureTile": [  ],
 		"textureOffset": [  ]
 	},
@@ -126,8 +126,8 @@
 	"base": { 
 		"type": "Lightmap",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
-		"specularIntensity": 0,
-                "shininess": 0,
+		"specularIntensity": 0.999,
+                "shininess": 1,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "base"
@@ -206,8 +206,8 @@
 	"cabinet_front": { 
 		"type": "Lightmap",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
-		"specularIntensity": 0,
-                "shininess": 0,
+		"specularIntensity": 0.6933358,
+                "shininess": 0.5807685,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "cabinetfront"
@@ -216,17 +216,6 @@
 },
 
 "lights": {
-	
-	"light": { 
-		"type": 2,
-		"color": { "r":1, "g":1, "b":1, "a":1 }
-	},
-	
-	"lamplight": { 
-		"type": 2,
-		"color": { "r":0.9621125, "g":1, "b":0.7537314, "a":1 }
-	}
-
 },
 
 "cameras": {
@@ -919,15 +908,6 @@
 	
 	{
 		"uid": 59,
-        "name": "light",
-		"parent": 55,
-		"position": [ -0.02425194,-0.3356099,-0.0005105734 ],
-		"rotation": [ 0,0,0 ],
-		"light": "light"
-	},
-	
-	{
-		"uid": 60,
         "name": "top",
 		"parent": 55,
 		"position": [ 0.45,1.027377,0 ],
@@ -939,7 +919,7 @@
 	},
 	
 	{
-		"uid": 61,
+		"uid": 60,
         "name": "largepipes",
 		"parent": 1,
 		"position": [ 0.02321442,2.337654,-1.935869 ],
@@ -955,7 +935,7 @@
 	},
 	
 	{
-		"uid": 62,
+		"uid": 61,
         "name": "pipe",
 		"parent": 1,
 		"position": [ -3.801011,1.400015,1.891272 ],
@@ -971,7 +951,7 @@
 	},
 	
 	{
-		"uid": 63,
+		"uid": 62,
         "name": "pipeending",
 		"parent": 1,
 		"position": [ -0.005020904,2.336824,-1.936106 ],
@@ -987,7 +967,7 @@
 	},
 	
 	{
-		"uid": 64,
+		"uid": 63,
         "name": "pipeholder",
 		"parent": 1,
 		"position": [ 0.05540344,2.497553,-1.936754 ],
@@ -1003,7 +983,7 @@
 	},
 	
 	{
-		"uid": 65,
+		"uid": 64,
         "name": "desk",
 		"parent": 1,
 		"position": [ -2.262847,-0.0016675,1.185786 ],
@@ -1011,17 +991,17 @@
 	},
 	
 	{
-		"uid": 66,
+		"uid": 65,
         "name": "lamp",
-		"parent": 65,
+		"parent": 64,
 		"position": [ -0.4605259,0.8137751,0.2702942 ],
 		"rotation": [ 0,0.9535775,0 ]
 	},
 	
 	{
-		"uid": 67,
+		"uid": 66,
         "name": "base",
-		"parent": 66,
+		"parent": 65,
 		"position": [ 0,-0.0002431488,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "red",
@@ -1031,18 +1011,9 @@
 	},
 	
 	{
-		"uid": 68,
-        "name": "lamplight",
-		"parent": 66,
-		"position": [ 0.01885286,0.2885832,0.1991458 ],
-		"rotation": [ -0.7753192,-1.795006,-1.664385 ],
-		"light": "lamplight"
-	},
-	
-	{
-		"uid": 69,
+		"uid": 67,
         "name": "stem",
-		"parent": 66,
+		"parent": 65,
 		"position": [ -0.009898948,0.01331375,-0.0006131363 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
@@ -1052,9 +1023,9 @@
 	},
 	
 	{
-		"uid": 70,
+		"uid": 68,
         "name": "topinterior",
-		"parent": 66,
+		"parent": 65,
 		"position": [ -0.0006007031,0.399937,0.1621105 ],
 		"rotation": [ -0.2734099,-0.3037378,0.1247429 ],
 		"renderer": "white",
@@ -1064,9 +1035,9 @@
 	},
 	
 	{
-		"uid": 71,
+		"uid": 69,
         "name": "topexterior",
-		"parent": 66,
+		"parent": 65,
 		"position": [ -0.0006007031,0.399937,0.1621105 ],
 		"rotation": [ -0.2734099,-0.3037376,0.1247429 ],
 		"renderer": "red",
@@ -1076,9 +1047,9 @@
 	},
 	
 	{
-		"uid": 72,
+		"uid": 70,
         "name": "table",
-		"parent": 65,
+		"parent": 64,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "wood",
@@ -1088,7 +1059,7 @@
 	},
 	
 	{
-		"uid": 73,
+		"uid": 71,
         "name": "walls",
 		"parent": 1,
 		"position": [ 0.4991992,-5.299922,0.09999999 ],
@@ -1104,16 +1075,16 @@
 	},
 	
 	{
-		"uid": 74,
+		"uid": 72,
         "name": "fps",
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ]
 	},
 	
 	{
-		"uid": 75,
+		"uid": 73,
         "name": "eye",
-		"parent": 74,
+		"parent": 72,
 		"position": [ 0,1.177749,0 ],
 		"rotation": [ 0,0,0 ],
 		"camera": "eye"
