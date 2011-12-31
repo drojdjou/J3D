@@ -18,6 +18,12 @@ J3D.Scene = function() {
         return fa;
     }
 
+    this.recurse = function(f) {
+        for (var i = 0; i < children.length; i++) {
+            children[i].recurse(f);
+        }
+    }
+
     this.childAt = function(i) {
         return children[i];
     }

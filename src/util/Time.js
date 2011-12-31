@@ -15,6 +15,11 @@ J3D.Time.tick = function() {
 	J3D.Time.time = (tn - J3D.Time.startTime) / 1000.0;
 };
 
+J3D.Time.getTime = function() {
+    J3D.Time.tick();
+    return J3D.Time.deltaTime;
+}
+
 J3D.Time.formatTime = function() {
 	var mil = Math.floor((J3D.Time.time % 1) * 100);
 	var sec = Math.floor(J3D.Time.time) % 60;

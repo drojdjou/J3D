@@ -44,13 +44,23 @@
 
 <script>
 	var mx = 0, my = 0;	
-	var fps, eye, walls, headlight;
+	var fps, eye, walls, bunker, headlight;
 	var lightmaps, nolightmaps;
 	var showmaps = true;
 	var moveLeft = 0, moveForward = 0;
 	var post;
+    var isMoving = 0;
+    var skin = 0.3;
+
+    var fv = v3.FORWARD();
+    var bv = v3.FORWARD().neg();
+    var lv = v3.RIGHT().neg();
+    var rv = v3.RIGHT();
+
+    var START;
 	
 	function init() {
+
 		if(!checkWebGL()) return;
 		
 		engine = new J3D.Engine();
@@ -69,6 +79,8 @@
 				J3D.Loader.parseJSONScene(jsscene, jsmeshes, engine);
 				fps = engine.scene.find("fps");
 				eye = engine.scene.find("fps/eye");
+
+                bunker = engine.scene.find("bunker");
                 walls = engine.scene.find("bunker/walls");
 
                 var hl = new J3D.Light(J3D.SPOTLIGHT);
@@ -119,6 +131,8 @@
 				moveForward = -0.04;
 				break;
 		}
+
+        isMoving++;
 	}
 	
 	function onKeyUp(e) {
@@ -136,6 +150,8 @@
 				moveLeft = 0;
 				break;
 		}
+
+        isMoving--;
 	}
 	
 	function onMouseMove(e) {
@@ -144,43 +160,63 @@
 	}
 
 	function draw() {
+
         fps.rotation.y = -mx * Math.PI * 2;
 		eye.rotation.x = -my * Math.PI * .25;
 
-        var skin = 0.5;
+        if(isMoving > 0) {
 
-        var rf = new J3D.Ray(fps.position.add(eye.position), v3.FORWARD());
-        var hf = J3D.Intersection.rayMesh(rf, walls);
-        hf -= skin;
-        hf = Math.max(0, hf);
+            var rp = fps.position;
 
-        var rb = new J3D.Ray(fps.position.add(eye.position), v3.FORWARD().neg());
-        var hb = J3D.Intersection.rayMesh(rb, walls);
-        hb -= skin;
-        hb = Math.max(0, hb);
+            var rf = new J3D.Ray(rp, fv);
+            var rb = new J3D.Ray(rp, bv);
+            var rl = new J3D.Ray(rp, lv);
+            var rr = new J3D.Ray(rp, rv);
 
-        var rl = new J3D.Ray(fps.position.add(eye.position), v3.RIGHT().neg());
-        var hl = J3D.Intersection.rayMesh(rl, walls);
-        hl -= skin;
-        hl = Math.max(0, hl);
+            var hf = Number.MAX_VALUE, hb = Number.MAX_VALUE, hl = Number.MAX_VALUE, hr = Number.MAX_VALUE;
 
-        var rr = new J3D.Ray(fps.position.add(eye.position), v3.RIGHT());
-        var hr = J3D.Intersection.rayMesh(rr, walls);
-        hr -= skin;
-        hr = Math.max(0, hr);
+            engine.scene.recurse( function(t) {
+                if(!t.collider) return;
 
-		var m = fps.forward().mul(moveForward).add( fps.left().mul(moveLeft) );
+                var hfi = J3D.Intersection.rayTest(rf, t);
+                var hbi = J3D.Intersection.rayTest(rb, t);
+                var hli = J3D.Intersection.rayTest(rl, t);
+                var hri = J3D.Intersection.rayTest(rr, t);
 
-        m.x = Math.min(m.x, hr);
-        m.x = Math.max(m.x, -hl);
+                if(hfi && hfi > -1) hf = Math.min(hf, hfi);
+                if(hbi && hbi > -1) hb = Math.min(hb, hbi);
+                if(hli && hli > -1) hl = Math.min(hl, hli);
+                if(hri && hri > -1) hr = Math.min(hr, hri);
+            });
 
-        m.z = Math.min(m.z, hb);
-        m.z = Math.max(m.z, -hf);
+            hf -= skin;
+            hf = Math.max(0, hf);
 
-        fps.position = fps.position.add(m);
+            hb -= skin;
+            hb = Math.max(0, hb);
 
-		//if(document.getElementById("dizzy").checked) post.render();
-		//else
+            hl -= skin;
+            hl = Math.max(0, hl);
+
+            hr -= skin;
+            hr = Math.max(0, hr);
+
+            var m = fps.forward().mul(moveForward).add( fps.left().mul(moveLeft) );
+
+            m.x = Math.min(m.x, hr);
+            m.x = Math.max(m.x, -hl);
+
+            m.z = Math.min(m.z, hb);
+            m.z = Math.max(m.z, -hf);
+
+            fps.position = fps.position.add(m);
+        }
+
+
+
+		if(document.getElementById("dizzy").checked)
+            post.render();
+		else
             engine.render();
 
         requestAnimationFrame(draw);
@@ -195,7 +231,9 @@
 		setLabels("008. Lightmapped scene");
 	</script>
 		<div id="details">
-		Lightmapped scene built with Cinema4D/Unity3D.<br>Cursor keys/WASD to move, mouse to look around.<br>
+		Lightmapped scene built with Cinema4D/Unity3D.<br>
+        Cursor keys/WASD to move, mouse to look around.<br>
+        Mouse click to toggle head light.<br>
 		<input type='checkbox' id='dizzy'> Make me dizzy
 	</div>
 	

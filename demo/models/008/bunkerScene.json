@@ -232,16 +232,32 @@
 	
 	{
 		"uid": 1,
-        "name": "bunker",
-		"position": [ 0,0,0 ],
+        "name": "fps",
+		"position": [ 0,0.3121786,0 ],
 		"rotation": [ 0,0,0 ]
 	},
 	
 	{
 		"uid": 2,
-        "name": "beams",
+        "name": "eye",
 		"parent": 1,
-		"position": [ 0.0377121,-3.482743,0 ],
+		"position": [ 0,1.00296,0 ],
+		"rotation": [ 0,0,0 ],
+		"camera": "eye"
+	},
+	
+	{
+		"uid": 3,
+        "name": "bunker",
+		"position": [ 0,-1.076647,0 ],
+		"rotation": [ 0,0,0 ]
+	},
+	
+	{
+		"uid": 4,
+        "name": "beams",
+		"parent": 3,
+		"position": [ 0.0377121,-2.400239,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "roughwood",
 		"mesh": "beams",
@@ -250,15 +266,24 @@
 	},
 	
 	{
-		"uid": 3,
-        "name": "ceiling",
-		"parent": 1,
-		"position": [ 0.07015259,2.798332,-0.0000000763 ],
+		"uid": 5,
+        "name": "cabinetscol",
+		"parent": 3,
+		"position": [ 3.773383,2.382045,1.175504 ],
 		"rotation": [ 0,0,0 ],
 		"collider": {
-		    "type": "mesh",
-		    "mesh": "ceiling"
-		},
+		    "type": "box",
+		    "center": [ 0,0,0 ],
+		    "size": [ 0.64,2.62,2.26 ]
+		}
+	},
+	
+	{
+		"uid": 6,
+        "name": "ceiling",
+		"parent": 3,
+		"position": [ 0.07015259,3.880836,-0.0000000763 ],
+		"rotation": [ 0,0,0 ],
 		"renderer": "planks",
 		"mesh": "ceiling",
 		"lightmapIndex": 0,
@@ -266,11 +291,16 @@
 	},
 	
 	{
-		"uid": 4,
+		"uid": 7,
         "name": "chair2",
-		"parent": 1,
-		"position": [ -2.41186,-0.001667518,1.659862 ],
+		"parent": 3,
+		"position": [ -2.41186,1.080836,1.659862 ],
 		"rotation": [ 0,-0.1675269,0 ],
+		"collider": {
+		    "type": "box",
+		    "center": [ 0.0004411787,0.5522448,-0.02168265 ],
+		    "size": [ 0.5298353,1.10449,0.5910035 ]
+		},
 		"renderer": "wood",
 		"mesh": "chair",
 		"lightmapIndex": 0,
@@ -278,11 +308,16 @@
 	},
 	
 	{
-		"uid": 5,
+		"uid": 8,
         "name": "chair",
-		"parent": 1,
-		"position": [ 2.22396,-0.0016675,1.002911 ],
+		"parent": 3,
+		"position": [ 2.22396,1.080836,1.002911 ],
 		"rotation": [ 0,1.371702,0 ],
+		"collider": {
+		    "type": "box",
+		    "center": [ 0.0004411787,0.5522448,-0.02168265 ],
+		    "size": [ 0.5298353,1.10449,0.5910035 ]
+		},
 		"renderer": "wood",
 		"mesh": "chair",
 		"lightmapIndex": 0,
@@ -290,42 +325,10 @@
 	},
 	
 	{
-		"uid": 6,
-        "name": "crate",
-		"parent": 1,
-		"position": [ -1.394453,0.018674,-2.389863 ],
-		"rotation": [ 0,3.135777,0 ]
-	},
-	
-	{
-		"uid": 7,
-        "name": "cratewood",
-		"parent": 6,
-		"position": [ 0,0,0 ],
-		"rotation": [ 0,0,0 ],
-		"renderer": "planks_light",
-		"mesh": "crate",
-		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.15918,0.15918,0.597523,0.679554 ]
-	},
-	
-	{
-		"uid": 8,
-        "name": "wickets",
-		"parent": 6,
-		"position": [ -0.2499574,0.4273163,0.2176546 ],
-		"rotation": [ 0,3.141593,0 ],
-		"renderer": "base",
-		"mesh": "wickets",
-		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.040039,0.040039,0.943691,0.842129 ]
-	},
-	
-	{
 		"uid": 9,
         "name": "crate",
-		"parent": 1,
-		"position": [ 3.226325,0.018674,-2.389863 ],
+		"parent": 3,
+		"position": [ 3.226325,1.101177,-2.389863 ],
 		"rotation": [ 0,3.135777,0 ]
 	},
 	
@@ -338,7 +341,7 @@
 		"collider": {
 		    "type": "box",
 		    "center": [ 0,0.2000001,-0.0004974752 ],
-		    "size": [ 0.9999999,0.4400001,0.6409951 ]
+		    "size": [ 0.9999999,1,0.6409951 ]
 		},
 		"renderer": "planks_light",
 		"mesh": "crate",
@@ -360,18 +363,60 @@
 	
 	{
 		"uid": 12,
-        "name": "crate2",
-		"parent": 1,
-		"position": [ -2.57758,0.018674,-2.072275 ],
-		"rotation": [ 0,-2.520497,0 ]
+        "name": "crate",
+		"parent": 3,
+		"position": [ -1.394453,1.101177,-2.389863 ],
+		"rotation": [ 0,3.135777,0 ]
 	},
 	
 	{
 		"uid": 13,
-        "name": "cratewood2",
+        "name": "cratewood",
 		"parent": 12,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
+		"collider": {
+		    "type": "box",
+		    "center": [ 0.09,0.2000001,-0.0004974752 ],
+		    "size": [ 1.2,1,0.6409951 ]
+		},
+		"renderer": "planks_light",
+		"mesh": "crate",
+		"lightmapIndex": 0,
+		"lightmapTileOffset": [ 0.15918,0.15918,0.597523,0.679554 ]
+	},
+	
+	{
+		"uid": 14,
+        "name": "wickets",
+		"parent": 12,
+		"position": [ -0.2499574,0.4273163,0.2176546 ],
+		"rotation": [ 0,3.141593,0 ],
+		"renderer": "base",
+		"mesh": "wickets",
+		"lightmapIndex": 0,
+		"lightmapTileOffset": [ 0.040039,0.040039,0.943691,0.842129 ]
+	},
+	
+	{
+		"uid": 15,
+        "name": "crate2",
+		"parent": 3,
+		"position": [ -2.57758,1.101177,-2.072275 ],
+		"rotation": [ 0,-2.520497,0 ]
+	},
+	
+	{
+		"uid": 16,
+        "name": "cratewood2",
+		"parent": 15,
+		"position": [ 0,0,0 ],
+		"rotation": [ 0,0,0 ],
+		"collider": {
+		    "type": "box",
+		    "center": [ -0.09,0.2000001,-0.0004974753 ],
+		    "size": [ 1.2,1,0.6409951 ]
+		},
 		"renderer": "planks_light",
 		"mesh": "crate",
 		"lightmapIndex": 0,
@@ -379,9 +424,9 @@
 	},
 	
 	{
-		"uid": 14,
+		"uid": 17,
         "name": "wickets2",
-		"parent": 12,
+		"parent": 15,
 		"position": [ -0.2499574,0.4273163,0.2176546 ],
 		"rotation": [ 0,3.141593,0 ],
 		"renderer": "base",
@@ -391,17 +436,17 @@
 	},
 	
 	{
-		"uid": 15,
+		"uid": 18,
         "name": "crate3",
-		"parent": 1,
-		"position": [ -2.012595,0.468259,-2.302448 ],
+		"parent": 3,
+		"position": [ -2.012595,1.550762,-2.302448 ],
 		"rotation": [ 0,-2.810817,0 ]
 	},
 	
 	{
-		"uid": 16,
+		"uid": 19,
         "name": "cratewood3",
-		"parent": 15,
+		"parent": 18,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "planks_light",
@@ -411,9 +456,9 @@
 	},
 	
 	{
-		"uid": 17,
+		"uid": 20,
         "name": "wickets3",
-		"parent": 15,
+		"parent": 18,
 		"position": [ -0.2499574,0.4273163,0.2176546 ],
 		"rotation": [ 0,3.141593,0 ],
 		"renderer": "base",
@@ -423,17 +468,17 @@
 	},
 	
 	{
-		"uid": 18,
+		"uid": 21,
         "name": "filecabinet1",
-		"parent": 1,
-		"position": [ 3.766136,0.082369,0.851461 ],
+		"parent": 3,
+		"position": [ 3.766136,1.164872,0.851461 ],
 		"rotation": [ 0,1.570796,0 ]
 	},
 	
 	{
-		"uid": 19,
+		"uid": 22,
         "name": "bottom",
-		"parent": 18,
+		"parent": 21,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
@@ -443,9 +488,9 @@
 	},
 	
 	{
-		"uid": 20,
+		"uid": 23,
         "name": "drawer",
-		"parent": 18,
+		"parent": 21,
 		"position": [ 0.2360419,2.009173,-0.5699123 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
@@ -455,9 +500,9 @@
 	},
 	
 	{
-		"uid": 21,
+		"uid": 24,
         "name": "drawerbottom",
-		"parent": 20,
+		"parent": 23,
 		"position": [ 0,0.007493896,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
@@ -467,9 +512,9 @@
 	},
 	
 	{
-		"uid": 22,
+		"uid": 25,
         "name": "files",
-		"parent": 20,
+		"parent": 23,
 		"position": [ -0.01546959,0.005193481,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "files",
@@ -479,9 +524,9 @@
 	},
 	
 	{
-		"uid": 23,
+		"uid": 26,
         "name": "front",
-		"parent": 20,
+		"parent": 23,
 		"position": [ 0,0,-0.01002502 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "cabinet_front",
@@ -491,9 +536,9 @@
 	},
 	
 	{
-		"uid": 24,
+		"uid": 27,
         "name": "handle",
-		"parent": 20,
+		"parent": 23,
 		"position": [ -0.2348501,0.1112711,-0.04534904 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
@@ -503,9 +548,9 @@
 	},
 	
 	{
-		"uid": 25,
+		"uid": 28,
         "name": "labelholder",
-		"parent": 20,
+		"parent": 23,
 		"position": [ -0.2360419,0.2542819,-0.01157303 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
@@ -515,9 +560,9 @@
 	},
 	
 	{
-		"uid": 26,
+		"uid": 29,
         "name": "front1",
-		"parent": 18,
+		"parent": 21,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "black",
@@ -527,9 +572,9 @@
 	},
 	
 	{
-		"uid": 27,
+		"uid": 30,
         "name": "fronts",
-		"parent": 18,
+		"parent": 21,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "cabinet_front",
@@ -539,9 +584,9 @@
 	},
 	
 	{
-		"uid": 28,
+		"uid": 31,
         "name": "handles",
-		"parent": 18,
+		"parent": 21,
 		"position": [ 0.06619179,0.1408208,-0.312975 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
@@ -551,9 +596,9 @@
 	},
 	
 	{
-		"uid": 29,
+		"uid": 32,
         "name": "labelholders",
-		"parent": 18,
+		"parent": 21,
 		"position": [ 0,2.263455,-0.2949442 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
@@ -563,9 +608,9 @@
 	},
 	
 	{
-		"uid": 30,
+		"uid": 33,
         "name": "sides",
-		"parent": 18,
+		"parent": 21,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
@@ -575,17 +620,17 @@
 	},
 	
 	{
-		"uid": 31,
+		"uid": 34,
         "name": "filecabinet2",
-		"parent": 1,
-		"position": [ 3.772444,0.089828,2.047704 ],
+		"parent": 3,
+		"position": [ 3.772444,1.172331,2.047704 ],
 		"rotation": [ 0,1.570796,0 ]
 	},
 	
 	{
-		"uid": 32,
+		"uid": 35,
         "name": "bottom",
-		"parent": 31,
+		"parent": 34,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
@@ -595,9 +640,9 @@
 	},
 	
 	{
-		"uid": 33,
+		"uid": 36,
         "name": "front1",
-		"parent": 31,
+		"parent": 34,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "cabinet_front",
@@ -607,9 +652,9 @@
 	},
 	
 	{
-		"uid": 34,
+		"uid": 37,
         "name": "fronts",
-		"parent": 31,
+		"parent": 34,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "cabinet_front",
@@ -619,9 +664,9 @@
 	},
 	
 	{
-		"uid": 35,
+		"uid": 38,
         "name": "handles",
-		"parent": 31,
+		"parent": 34,
 		"position": [ 0.06619179,0.1408208,-0.312975 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
@@ -631,9 +676,9 @@
 	},
 	
 	{
-		"uid": 36,
+		"uid": 39,
         "name": "labelholders",
-		"parent": 31,
+		"parent": 34,
 		"position": [ 0,2.263455,-0.2949442 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
@@ -643,9 +688,9 @@
 	},
 	
 	{
-		"uid": 37,
+		"uid": 40,
         "name": "sides",
-		"parent": 31,
+		"parent": 34,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
@@ -655,17 +700,17 @@
 	},
 	
 	{
-		"uid": 38,
+		"uid": 41,
         "name": "filecabinet3",
-		"parent": 1,
-		"position": [ 3.76823,0.089828,1.519595 ],
+		"parent": 3,
+		"position": [ 3.76823,1.172331,1.519595 ],
 		"rotation": [ 0,1.570796,0 ]
 	},
 	
 	{
-		"uid": 39,
+		"uid": 42,
         "name": "bottom",
-		"parent": 38,
+		"parent": 41,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
@@ -675,9 +720,9 @@
 	},
 	
 	{
-		"uid": 40,
+		"uid": 43,
         "name": "front1",
-		"parent": 38,
+		"parent": 41,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "cabinet_front",
@@ -687,9 +732,9 @@
 	},
 	
 	{
-		"uid": 41,
+		"uid": 44,
         "name": "fronts",
-		"parent": 38,
+		"parent": 41,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "cabinet_front",
@@ -699,9 +744,9 @@
 	},
 	
 	{
-		"uid": 42,
+		"uid": 45,
         "name": "handles",
-		"parent": 38,
+		"parent": 41,
 		"position": [ 0.06619179,0.1408208,-0.312975 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
@@ -711,9 +756,9 @@
 	},
 	
 	{
-		"uid": 43,
+		"uid": 46,
         "name": "labelholders",
-		"parent": 38,
+		"parent": 41,
 		"position": [ 0,2.263455,-0.2949442 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
@@ -723,9 +768,9 @@
 	},
 	
 	{
-		"uid": 44,
+		"uid": 47,
         "name": "sides",
-		"parent": 38,
+		"parent": 41,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
@@ -735,17 +780,17 @@
 	},
 	
 	{
-		"uid": 45,
+		"uid": 48,
         "name": "filecabinet4",
-		"parent": 1,
-		"position": [ 3.764724,0.089828,0.32679 ],
+		"parent": 3,
+		"position": [ 3.764724,1.172331,0.32679 ],
 		"rotation": [ 0,1.570796,0 ]
 	},
 	
 	{
-		"uid": 46,
+		"uid": 49,
         "name": "bottom",
-		"parent": 45,
+		"parent": 48,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
@@ -755,9 +800,9 @@
 	},
 	
 	{
-		"uid": 47,
+		"uid": 50,
         "name": "front1",
-		"parent": 45,
+		"parent": 48,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "cabinet_front",
@@ -767,9 +812,9 @@
 	},
 	
 	{
-		"uid": 48,
+		"uid": 51,
         "name": "fronts",
-		"parent": 45,
+		"parent": 48,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "cabinet_front",
@@ -779,9 +824,9 @@
 	},
 	
 	{
-		"uid": 49,
+		"uid": 52,
         "name": "handles",
-		"parent": 45,
+		"parent": 48,
 		"position": [ 0.06619179,0.1408208,-0.312975 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
@@ -791,9 +836,9 @@
 	},
 	
 	{
-		"uid": 50,
+		"uid": 53,
         "name": "labelholders",
-		"parent": 45,
+		"parent": 48,
 		"position": [ 0,2.263455,-0.2949442 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
@@ -803,9 +848,9 @@
 	},
 	
 	{
-		"uid": 51,
+		"uid": 54,
         "name": "sides",
-		"parent": 45,
+		"parent": 48,
 		"position": [ 0.25,0,-0.3 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
@@ -815,10 +860,10 @@
 	},
 	
 	{
-		"uid": 52,
+		"uid": 55,
         "name": "floor",
-		"parent": 1,
-		"position": [ 0.07015259,-6.350833,0 ],
+		"parent": 3,
+		"position": [ 0.07015259,-5.26833,0 ],
 		"rotation": [ 0,0,0 ],
 		"collider": {
 		    "type": "mesh",
@@ -831,15 +876,11 @@
 	},
 	
 	{
-		"uid": 53,
+		"uid": 56,
         "name": "floorhole",
-		"parent": 1,
-		"position": [ 0.07015259,-0.3028809,0 ],
+		"parent": 3,
+		"position": [ 0.07015259,0.7796224,0 ],
 		"rotation": [ 0,0,0 ],
-		"collider": {
-		    "type": "mesh",
-		    "mesh": "floorhole"
-		},
 		"renderer": "planks",
 		"mesh": "floorhole",
 		"lightmapIndex": 0,
@@ -847,10 +888,10 @@
 	},
 	
 	{
-		"uid": 54,
+		"uid": 57,
         "name": "floorpanel",
-		"parent": 1,
-		"position": [ 0.07015259,-0.00166748,0 ],
+		"parent": 3,
+		"position": [ 0.07015259,1.080836,0 ],
 		"rotation": [ 0,0,0 ],
 		"collider": {
 		    "type": "mesh",
@@ -863,17 +904,17 @@
 	},
 	
 	{
-		"uid": 55,
+		"uid": 58,
         "name": "fluorlight",
-		"parent": 1,
-		"position": [ 1.560203,2.375764,-0.9507746 ],
+		"parent": 3,
+		"position": [ 1.560203,3.458267,-0.9507746 ],
 		"rotation": [ 0,0,0 ]
 	},
 	
 	{
-		"uid": 56,
+		"uid": 59,
         "name": "fluor",
-		"parent": 55,
+		"parent": 58,
 		"position": [ -0.02336147,-0.0416385,0.03023542 ],
 		"rotation": [ 0.0000000596,0,0 ],
 		"renderer": "white",
@@ -883,9 +924,9 @@
 	},
 	
 	{
-		"uid": 57,
+		"uid": 60,
         "name": "fluor2",
-		"parent": 55,
+		"parent": 58,
 		"position": [ -0.02336147,-0.0416385,-0.0301246 ],
 		"rotation": [ 0.0000000596,0,0 ],
 		"renderer": "white",
@@ -895,9 +936,9 @@
 	},
 	
 	{
-		"uid": 58,
+		"uid": 61,
         "name": "holder",
-		"parent": 55,
+		"parent": 58,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
@@ -907,9 +948,9 @@
 	},
 	
 	{
-		"uid": 59,
+		"uid": 62,
         "name": "top",
-		"parent": 55,
+		"parent": 58,
 		"position": [ 0.45,1.027377,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "base",
@@ -919,15 +960,11 @@
 	},
 	
 	{
-		"uid": 60,
+		"uid": 63,
         "name": "largepipes",
-		"parent": 1,
-		"position": [ 0.02321442,2.337654,-1.935869 ],
+		"parent": 3,
+		"position": [ 0.02321442,3.420157,-1.935869 ],
 		"rotation": [ 0,-1.570796,1.570796 ],
-		"collider": {
-		    "type": "mesh",
-		    "mesh": "largepipes"
-		},
 		"renderer": "base",
 		"mesh": "largepipes",
 		"lightmapIndex": 0,
@@ -935,14 +972,15 @@
 	},
 	
 	{
-		"uid": 61,
+		"uid": 64,
         "name": "pipe",
-		"parent": 1,
-		"position": [ -3.801011,1.400015,1.891272 ],
+		"parent": 3,
+		"position": [ -3.801011,2.482518,1.891272 ],
 		"rotation": [ 0,0,0 ],
 		"collider": {
-		    "type": "mesh",
-		    "mesh": "pipe"
+		    "type": "box",
+		    "center": [ 0,0,0 ],
+		    "size": [ 0.09999999,2.9,0.2425801 ]
 		},
 		"renderer": "base",
 		"mesh": "pipe",
@@ -951,15 +989,11 @@
 	},
 	
 	{
-		"uid": 62,
+		"uid": 65,
         "name": "pipeending",
-		"parent": 1,
-		"position": [ -0.005020904,2.336824,-1.936106 ],
+		"parent": 3,
+		"position": [ -0.005020904,3.419328,-1.936106 ],
 		"rotation": [ 0,0,0 ],
-		"collider": {
-		    "type": "mesh",
-		    "mesh": "pipeending"
-		},
 		"renderer": "rust",
 		"mesh": "pipeending",
 		"lightmapIndex": 0,
@@ -967,15 +1001,11 @@
 	},
 	
 	{
-		"uid": 63,
+		"uid": 66,
         "name": "pipeholder",
-		"parent": 1,
-		"position": [ 0.05540344,2.497553,-1.936754 ],
+		"parent": 3,
+		"position": [ 0.05540344,3.580057,-1.936754 ],
 		"rotation": [ 0,0,0 ],
-		"collider": {
-		    "type": "mesh",
-		    "mesh": "pipeholder"
-		},
 		"renderer": "base",
 		"mesh": "pipeholder",
 		"lightmapIndex": 0,
@@ -983,25 +1013,25 @@
 	},
 	
 	{
-		"uid": 64,
+		"uid": 67,
         "name": "desk",
-		"parent": 1,
-		"position": [ -2.262847,-0.0016675,1.185786 ],
+		"parent": 3,
+		"position": [ -2.262847,1.080836,1.185786 ],
 		"rotation": [ 0,-0.3045448,0 ]
 	},
 	
 	{
-		"uid": 65,
+		"uid": 68,
         "name": "lamp",
-		"parent": 64,
+		"parent": 67,
 		"position": [ -0.4605259,0.8137751,0.2702942 ],
 		"rotation": [ 0,0.9535775,0 ]
 	},
 	
 	{
-		"uid": 66,
+		"uid": 69,
         "name": "base",
-		"parent": 65,
+		"parent": 68,
 		"position": [ 0,-0.0002431488,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "red",
@@ -1011,9 +1041,9 @@
 	},
 	
 	{
-		"uid": 67,
+		"uid": 70,
         "name": "stem",
-		"parent": 65,
+		"parent": 68,
 		"position": [ -0.009898948,0.01331375,-0.0006131363 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "darkgrey",
@@ -1023,9 +1053,9 @@
 	},
 	
 	{
-		"uid": 68,
+		"uid": 71,
         "name": "topinterior",
-		"parent": 65,
+		"parent": 68,
 		"position": [ -0.0006007031,0.399937,0.1621105 ],
 		"rotation": [ -0.2734099,-0.3037378,0.1247429 ],
 		"renderer": "white",
@@ -1035,9 +1065,9 @@
 	},
 	
 	{
-		"uid": 69,
+		"uid": 72,
         "name": "topexterior",
-		"parent": 65,
+		"parent": 68,
 		"position": [ -0.0006007031,0.399937,0.1621105 ],
 		"rotation": [ -0.2734099,-0.3037376,0.1247429 ],
 		"renderer": "red",
@@ -1047,11 +1077,16 @@
 	},
 	
 	{
-		"uid": 70,
+		"uid": 73,
         "name": "table",
-		"parent": 64,
+		"parent": 67,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
+		"collider": {
+		    "type": "box",
+		    "center": [ -0.0000100732,0.75,-0.0002706051 ],
+		    "size": [ 1.75,1.51,1.03 ]
+		},
 		"renderer": "wood",
 		"mesh": "table",
 		"lightmapIndex": 0,
@@ -1059,10 +1094,10 @@
 	},
 	
 	{
-		"uid": 71,
+		"uid": 74,
         "name": "walls",
-		"parent": 1,
-		"position": [ 0.4991992,-5.299922,0.09999999 ],
+		"parent": 3,
+		"position": [ 0.4991992,-4.217419,0.09999999 ],
 		"rotation": [ 0,0,0 ],
 		"collider": {
 		    "type": "mesh",
@@ -1072,22 +1107,6 @@
 		"mesh": "walls",
 		"lightmapIndex": 0,
 		"lightmapTileOffset": [ 0.604492,0.604492,-0.00187302,0.481525 ]
-	},
-	
-	{
-		"uid": 72,
-        "name": "fps",
-		"position": [ 0,0,0 ],
-		"rotation": [ 0,0,0 ]
-	},
-	
-	{
-		"uid": 73,
-        "name": "eye",
-		"parent": 72,
-		"position": [ 0,1.177749,0 ],
-		"rotation": [ 0,0,0 ],
-		"camera": "eye"
 	}
 
 ]

@@ -44,7 +44,7 @@ J3D.Transform = function(n, u) {
 			var t = arguments[i];
 			if(!fa) fa = t;
 			children.push(t);
-			t.parent = null;
+			t.parent = that;
 			that.numChildren = children.length;
 		}
 		return fa;
@@ -54,10 +54,18 @@ J3D.Transform = function(n, u) {
         return children.indexOf(t) > -1;
     }
 
+    this.recurse = function(f) {
+        f(that);
+        for (var i = 0; i < children.length; i++) {
+            children[i].recurse(f);
+        }
+    }
+
     this.remove = function(t, any) {
         if (that.contains(t)) {
             children.splice(children.indexOf(t), 1);
             that.numChildren = children.length;
+            t.parent = null;
             return true;
         } else if (any) {
             for (var i = 0; i < children.length; i++) {
@@ -70,6 +78,20 @@ J3D.Transform = function(n, u) {
 
     this.childAt = function(i) {
         return children[i];
+    }
+
+    this.path = function() {
+        var pe = [];
+        pe.push(that.name);
+
+        var p = that.parent;
+
+        while(p != null) {
+            pe.push(p.name);
+            p = p.parent;
+        }
+
+        return pe.reverse().join("/");
     }
 }
 

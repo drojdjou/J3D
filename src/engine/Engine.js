@@ -56,8 +56,6 @@ J3D.Engine.prototype.render = function(){
 
 J3D.Engine.prototype.renderScene = function(){
 
-	
-
 	// 3. Clear collecions
 	this._opaqueMeshes.length = 0;
 	this._transparentMeshes.length = 0;
@@ -67,7 +65,7 @@ J3D.Engine.prototype.renderScene = function(){
 	for(var i = 0; i < this.scene.numChildren; i++) {
 		this.updateTransform(this.scene.childAt(i), null);
 	}
-	
+
 	// 5. Calculate camera inverse matrix and it's world position
 	this.camera.updateInverseMat();
 	
@@ -104,16 +102,16 @@ J3D.Engine.prototype.renderScene = function(){
 	}
 
 	// #DEBUG Monitor the amount of shaders created
-	// console.log( this.shaderAtlas.shaderCount );
+	// j3dlog( this.shaderAtlas.shaderCount );
 
 	// gl.flush();
 }
 
 J3D.Engine.prototype.renderObject = function(t) {
-	var s = this.shaderAtlas.getShader(t.renderer);
+    var s = this.shaderAtlas.getShader(t.renderer);
 
 	gl.useProgram(s);
-	
+
 	// Setup standard uniforms and attributes
 	if(s.uniforms.pMatrix)
 		gl.uniformMatrix4fv(s.uniforms.pMatrix.location, false, this.camera.camera.projectionMat.toArray() );
@@ -132,7 +130,8 @@ J3D.Engine.prototype.renderObject = function(t) {
 			
 	if(s.uniforms.uTileOffset) 
 		gl.uniform4fv(s.uniforms.uTileOffset.location, t.getTileOffset());
-	
+
+
 	J3D.ShaderUtil.setLights(s, this._lights);
 
     J3D.ShaderUtil.setAttributes(s, t.geometry);
@@ -144,7 +143,7 @@ J3D.Engine.prototype.renderObject = function(t) {
 	gl.cullFace(cull);
 	
 	var mode = (t.renderer.drawMode != null) ? t.renderer.drawMode : gl.TRIANGLES;
-	
+
 	if (t.geometry.hasElements) {
 		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, t.geometry.elements.buffer);
 		gl.drawElements(mode, t.geometry.elements.size, gl.UNSIGNED_SHORT, 0);

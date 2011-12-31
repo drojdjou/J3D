@@ -28,6 +28,9 @@ J3D.Collider.Box = function(box) {
 J3D.Collider.Mesh = function(mesh) {
     var c = new J3D.Collider();
     c.type = J3D.Collider.MESH;
+    if(!mesh.boundingBox) {
+        mesh.calculateBoundingBox();
+    }
     c.box = mesh.boundingBox;
     c.mesh = mesh;
     return c;

@@ -46,7 +46,7 @@
 
 
 <script>
-	var mx, my = 0;
+	var mx = 0, my = 0;
 	var engine;
 	var path = "../demo/models/014/";
 	
@@ -64,9 +64,7 @@
 	function init(){
 		if (!checkWebGL()) 
 			return;
-			
-		console.log("Starting...");
-		
+
 		engine = new J3D.Engine();
 
 		shadersToLoad = 4;
@@ -210,11 +208,6 @@
 	}
 	
 	function draw() {
-		requestAnimationFrame(draw);
-		
-		if(isNaN(mx)) mx = 0;
-		if(isNaN(my)) my = 0;
-		
 		tgry = mx * Math.PI / 3.0;
 		tgrz = -mx * Math.PI / 15.0;	
 		tgpz = my - 1;
@@ -227,6 +220,9 @@
 		t += 0.1;
 	
 		engine.render();
+        requestAnimationFrame(draw);
+
+
 	}
 		
 </script>

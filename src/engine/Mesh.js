@@ -17,33 +17,33 @@ J3D.Mesh = function(source) {
     this.hasUV1 = false;
     this.boundingBox;
 
-    var calculateBoundingBox = function(vertices) {
+    this.calculateBoundingBox = function() {
+        var v = source["vertices"];
 
         var b = {
-            minX:Number.MAX_VALUE, maxX:Number.MIN_VALUE,
-            minY:Number.MAX_VALUE, maxY:Number.MIN_VALUE,
-            minZ:Number.MAX_VALUE, maxZ:Number.MIN_VALUE
+            minX:Number.MAX_VALUE, maxX:-Number.MIN_VALUE,
+            minY:Number.MAX_VALUE, maxY:-Number.MIN_VALUE,
+            minZ:Number.MAX_VALUE, maxZ:-Number.MIN_VALUE
         };
 
-        for (var i = 0; i < vertices.length; i += 3) {
-            b.minX = Math.min(b.minX, vertices[i + 0]);
-            b.maxX = Math.max(b.maxX, vertices[i + 0]);
+        for (var i = 0; i < v.length; i += 3) {
+            b.minX = Math.min(b.minX, v[i + 0]);
+            b.maxX = Math.max(b.maxX, v[i + 0]);
 
-            b.minY = Math.min(b.minY, vertices[i + 1]);
-            b.maxY = Math.max(b.maxY, vertices[i + 1]);
+            b.minY = Math.min(b.minY, v[i + 1]);
+            b.maxY = Math.max(b.maxY, v[i + 1]);
 
-            b.minZ = Math.min(b.minZ, vertices[i + 2]);
-            b.maxZ = Math.max(b.maxZ, vertices[i + 2]);
+            b.minZ = Math.min(b.minZ, v[i + 2]);
+            b.maxZ = Math.max(b.maxZ, v[i + 2]);
         }
 
-        that.boundingBox = b;
+        this.boundingBox = b;
     }
 
     for (var attr in source) {
         switch (attr) {
             case "vertices":
                 this.vertexPositionBuffer = this.addArray("aVertexPosition", new Float32Array(source[attr]), 3);
-                calculateBoundingBox(source[attr]);
                 break;
             case "colors":
                 if (source[attr].length > 0) this.addArray("aVertexColor", new Float32Array(source[attr]), 4);

@@ -54,7 +54,7 @@ J3D.Shader.prototype.setup = function(shader, transform) {
 
 J3D.Shader.prototype.clone = function() {
     this.cloneCount++;
-    var n = this.name + "_" + this.cloneCount;
+    var n = this.name;// + "_" + this.cloneCount;
 
 	var c = new J3D.Shader(n, this._vertSource, this._fragSource);
 	
