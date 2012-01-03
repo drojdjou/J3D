@@ -18,6 +18,8 @@ public class J3DExport : ScriptableWizard
 	public Transform[] transforms;
 	
 	public float jpegQuality = 75.0f;
+	public float lightmapBrightness = 8.0f;
+	public float lightmapContrast = 1.1f;
 	
 	public bool useConsole = true;
 	//public ReportLevel level = ReportLevel.Warning;
@@ -110,7 +112,7 @@ public class J3DExport : ScriptableWizard
 		}
 		
 		foreach (LightmapExportData d in led) {
-			d.Save(texturePath, jpegQuality);
+			d.Save(texturePath, jpegQuality, lightmapBrightness, lightmapContrast);
 		}
 		
 		Report.log ("Exported " + tex.Count + " transforms");

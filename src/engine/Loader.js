@@ -59,7 +59,6 @@ J3D.Loader.parseJSONScene = function(jscene, jmeshes, engine) {
 		var lg = jscene.lights[lgs];
 		lg = J3D.Loader.fromObject(J3D.Light, lg);
 		lg.color = J3D.Loader.fromObject(J3D.Color, lg.color);
-		if(lg.direction) lg.direction = J3D.Loader.v3FromArray(lg.direction);
 		jscene.lights[lgs] = lg;
 	}
 	

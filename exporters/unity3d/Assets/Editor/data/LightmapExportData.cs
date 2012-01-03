@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class LightmapExportData
 {
-	private const float MULT = 8.0f;
 	private const string NAME_BASE = "lightmap";
 	
 	private int index;
@@ -28,7 +27,7 @@ public class LightmapExportData
 		}
 	}
 	
-	public void Save (string path, float jpegQuality)
+	public void Save (string path, float jpegQuality, float lightmapMult, float lightmapPower)
 	{
 		Texture2D ti = LightmapSettings.lightmaps[index].lightmapFar;
 		Texture2D tf = new Texture2D(ti.width, ti.height, TextureFormat.ARGB32, false);
@@ -41,9 +40,9 @@ public class LightmapExportData
 			float gf = c[j].g / 255f;
 			float bf = c[j].b / 255f;
 			
-			float ur = rf * af * 255f * MULT;
-			float ug = gf * af * 255f * MULT;
-			float ub = bf * af * 255f * MULT;
+			float ur = Mathf.Pow(rf * af, lightmapPower) * 255f * lightmapMult;
+			float ug = Mathf.Pow(gf * af, lightmapPower) * 255f * lightmapMult;
+			float ub = Mathf.Pow(bf * af, lightmapPower) * 255f * lightmapMult;
 			
 			ur = Mathf.Clamp(ur, 0, 255);
 			ug = Mathf.Clamp(ug, 0, 255);

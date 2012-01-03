@@ -216,6 +216,15 @@
 },
 
 "lights": {
+	
+	"eye": { 
+		"type": 3,
+		"color": { "r":1, "g":1, "b":1, "a":1 },
+		"intensity": 0.5,
+		"angle": 0.2508911,
+		"angleFalloff": 0.09817477
+	}
+
 },
 
 "cameras": {
@@ -243,6 +252,7 @@
 		"parent": 1,
 		"position": [ 0,1.00296,0 ],
 		"rotation": [ 0,0,0 ],
+		"light": "eye",
 		"camera": "eye"
 	},
 	

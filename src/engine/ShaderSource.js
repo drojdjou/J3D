@@ -412,6 +412,7 @@ J3D.ShaderSource.Lights = [
 	"//#name Lights",
 	"//#description Collection of light equations",
 	"//#description Requires CommonInclude",
+	"//#description TODO Separate functions for directional, spot, point, hemi/phong models for all, separate dif func from spec",
 
 	"struct lightSource {",
 	"int type;",
@@ -421,7 +422,7 @@ J3D.ShaderSource.Lights = [
 
 	"vec3 color;         // used by d/p/s and hemisphere",
 	"float intensity;    // used by spherical harmonics & d/p/s",
-	"float angleFalloff; // used by hemisphere and spotlight",
+	"float angleFalloff; // used by hemisphere and spotlight (TODO: change to falloff)",
 	"float angle;        // used by spotlight",
 	"};",
 

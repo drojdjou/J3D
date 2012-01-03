@@ -37,6 +37,10 @@ $lights:{
 	"$it.Name$": { 
 		"type": $it.Type$,
 		"color": { "r":$it.Color.r$, "g":$it.Color.g$, "b":$it.Color.b$, "a":$it.Color.a$ },
+		"intensity": $it.Intensity$,
+		$if(it.IsSpot)$
+		"angle": $it.Angle$,
+		"angleFalloff": $it.FalloffAngle$,$endif$
 	},
 }$
 },

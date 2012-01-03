@@ -36,6 +36,22 @@ public class LightExportData
 		get { return lg.color; }
 	}
 	
+	public bool IsSpot {
+		get { return lg.type == LightType.Spot; }
+	}
+	
+	public float Angle {
+		get { return lg.spotAngle / 180.0f * Mathf.PI - FalloffAngle; }
+	}
+	
+	public float Intensity {
+		get { return lg.intensity; }
+	}
+	
+	public float FalloffAngle {
+		get { return Mathf.PI / 32.0f; }
+	}
+	
 	public string[] Direction {
 		get {
 			//Vector3 p = t.TransformDirection (t.forward);

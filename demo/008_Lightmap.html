@@ -44,8 +44,7 @@
 
 <script>
 	var mx = 0, my = 0;	
-	var fps, eye, walls, bunker, headlight;
-	var lightmaps, nolightmaps;
+	var fps, eye, headlight;
 	var showmaps = true;
 	var moveLeft = 0, moveForward = 0;
 	var post;
@@ -80,19 +79,7 @@
 				fps = engine.scene.find("fps");
 				eye = engine.scene.find("fps/eye");
 
-                bunker = engine.scene.find("bunker");
-                walls = engine.scene.find("bunker/walls");
-
-                var hl = new J3D.Light(J3D.SPOTLIGHT);
-                hl.direction = v3.FORWARD();
-                hl.angle = Math.PI / 16;
-                hl.angleFalloff = Math.PI / 32;
-                hl.intensity = 0.5;
-
-                headlight = new J3D.Transform();
-                headlight.light = hl;
-
-                eye.add(headlight);
+                headlight = eye.light;
 
 				draw();
 			})
@@ -105,10 +92,10 @@
 	}
 
     function onMouseDown(e) {
-        if(eye.contains(headlight)) {
-            eye.remove(headlight);
+        if(eye.light) {
+            eye.light = null;
         } else {
-            eye.add(headlight);
+            eye.light = headlight;
         }
     }
 	
@@ -159,13 +146,46 @@
 		my = ( e.clientY / window.innerHeight ) * 2 - 1;
 	}
 
-	function draw() {
+    function move2() {
+        var fv = fps.forward().mul(moveForward).add( fps.left().mul(moveLeft) );
+        var cx = new v3(fv.x, 0, 0).norm();
+        var cz = new v3(0, 0, fv.z).norm();
 
-        fps.rotation.y = -mx * Math.PI * 2;
-		eye.rotation.x = -my * Math.PI * .25;
+        var rf = new J3D.Ray(fps.position, fv);
+        var rx = new J3D.Ray(fps.position, cx);
+        var rz = new J3D.Ray(fps.position, cz);
 
-        if(isMoving > 0) {
+        var fvh = Number.MAX_VALUE, cxh = Number.MAX_VALUE, czh = Number.MAX_VALUE;
 
+        engine.scene.recurse( function(t) {
+            if(!t.collider) return;
+
+            var hfi = J3D.Intersection.rayTest(rf, t);
+            var cxi = J3D.Intersection.rayTest(rx, t);
+            var czi = J3D.Intersection.rayTest(rz, t);
+
+            if(hfi && hfi > -1) fvh = Math.min(fvh, hfi);
+            if(cxi && cxi > -1) cxh = Math.min(cxh, cxi);
+            if(czi && czi > -1) czh = Math.min(czh, czi);
+        });
+
+        fvh -= skin;
+        fvh = Math.max(0, fvh);
+
+        cxh -= skin;
+        cxh = Math.max(0, cxh);
+
+        czh -= skin;
+        czh = Math.max(0, czh);
+
+        if(fvh < fv.mag()) fv.norm().mul(fvh);
+        fv.x = (fv.x > 0) ? Math.min(fv.x, cxh) : Math.max(fv.x, -cxh);
+        fv.z = (fv.z > 0) ? Math.min(fv.z, czh) : Math.max(fv.z, -czh);
+
+        fps.position = fps.position.add(fv);
+    }
+
+    function move() {
             var rp = fps.position;
 
             var rf = new J3D.Ray(rp, fv);
@@ -210,9 +230,14 @@
             m.z = Math.max(m.z, -hf);
 
             fps.position = fps.position.add(m);
-        }
+    }
 
+	function draw() {
 
+        fps.rotation.y = -mx * Math.PI * 2;
+		eye.rotation.x = -my * Math.PI * .25;
+
+        if(isMoving > 0) move2();
 
 		if(document.getElementById("dizzy").checked)
             post.render();
@@ -221,6 +246,8 @@
 
         requestAnimationFrame(draw);
 	}
+
+
 		
 </script>
 
