@@ -54,7 +54,7 @@
     </script>
 
     <script>
-        var engine, scene, earth, camera, root, sun;
+        var engine, scene, earth, camera, root, sun, pin;
         var mx = 0, my = 0;
         var isHovered = false;
         var bsrX = 0, csrX = 0, bsrY = 0, csrY = 0;
@@ -92,7 +92,6 @@
             earth.renderer.specTexture = new J3D.Texture("models/textures/earth-spec.jpg");
             earth.renderer.specularIntensity = 1.1;
             earth.renderer.shininess = 10;
-//      earth.renderer.drawMode = gl.LINES;
 
             earth.geometry = J3D.Primitive.Sphere(30, 40, 40);
 
@@ -151,7 +150,7 @@
             document.body.style.cursor = (isHovered) ? "move" : "auto";
 
             root.rotation.y = bsrX + csrX;
-            root.rotation.x = bsrY + csrY;
+            //root.rotation.x = bsrY + csrY;
 
             if (!isDown) earth.rotation.y += J3D.Time.deltaTime * 0.0001;
             engine.render();

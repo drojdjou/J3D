@@ -5,6 +5,7 @@ echo "[Compiling JS source files]"
 java \
 -jar build/compiler.jar \
 --js_output_file ../build/j3dt.js \
+--js ../lib/gl-matrix.js \
 --js ../src/util/Logger.js \
 --js ../src/J3D.js \
 --js ../src/math/Vector3.js \
@@ -38,8 +39,8 @@ java \
 --js ../lib/requestAnimationFrame.js \
 --warning_level QUIET
 
-echo "[Adding external libraries]"
-cat ./build/info.txt ../lib/glMatrix.js ../build/j3dt.js > ../build/j3d.js
+echo "[Adding info text]"
+cat ./build/info.txt ../build/j3dt.js > ../build/j3d.js
 
 echo "[Clean up]"
 rm -Rf ../build/j3dt.js

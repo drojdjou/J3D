@@ -19,7 +19,7 @@ J3D.Transform = function(n, u) {
     this.matrix = mat4.create();
     // World transformation matrix (concatenated local transforms of all parents and self)
     this.globalMatrix = mat4.create();
-    // Normal matrix (inverse/transpose of view matrix for use with normals)
+    // Normal matrix (inverse/transpose of global matrix for use with normals)
     this.normalMatrix = mat3.create();
 
     this.isStatic = false;

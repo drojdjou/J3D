@@ -160,11 +160,11 @@
         engine.scene.recurse( function(t) {
             if(!t.collider) return;
 
-            var hfi = J3D.Intersection.rayTest(rf, t);
+            //var hfi = J3D.Intersection.rayTest(rf, t);
             var cxi = J3D.Intersection.rayTest(rx, t);
             var czi = J3D.Intersection.rayTest(rz, t);
 
-            if(hfi && hfi > -1) fvh = Math.min(fvh, hfi);
+            //if(hfi && hfi > -1) fvh = Math.min(fvh, hfi);
             if(cxi && cxi > -1) cxh = Math.min(cxh, cxi);
             if(czi && czi > -1) czh = Math.min(czh, czi);
         });
@@ -178,7 +178,7 @@
         czh -= skin;
         czh = Math.max(0, czh);
 
-        if(fvh < fv.mag()) fv.norm().mul(fvh);
+        //if(fvh < fv.mag()) fv.norm().mul(fvh);
         fv.x = (fv.x > 0) ? Math.min(fv.x, cxh) : Math.max(fv.x, -cxh);
         fv.z = (fv.z > 0) ? Math.min(fv.z, czh) : Math.max(fv.z, -czh);
 
