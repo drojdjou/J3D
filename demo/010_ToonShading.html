@@ -67,11 +67,8 @@
 		if(document.getElementById("rb").checked) elephant.renderer.uColorSampler = ramp2;
 		if(document.getElementById("rc").checked) elephant.renderer.uColorSampler = ramp3;
 
-        elephant.renderer.drawMode = gl.LINES;
-
 		elephant.rotation.y -= Math.PI * J3D.Time.deltaTime / 6000;
 		post.render();
-		//engine.render();
 		requestAnimationFrame(draw);
 	}
 	

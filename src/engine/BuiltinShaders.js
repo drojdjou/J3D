@@ -39,7 +39,6 @@ J3D.BuiltinShaders = (function() {
 	}
 	shaders.Lightmap = l;
 	
-	shaders.Toon =  J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Toon);
 	shaders.Reflective =  J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Reflective);
 	shaders.Skybox =  J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Skybox);
 	
