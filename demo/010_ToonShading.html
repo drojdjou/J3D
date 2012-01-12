@@ -9,44 +9,7 @@
 <link rel="stylesheet" href="common/common.css"/>
 <script type="text/javascript" src="common/common.js"></script>
 
-<!--
-<script type="text/javascript" src="../lib/glMatrix.js"></script>
-<script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
-<script type="text/javascript" src="../src/J3D.js"></script>
-<script type="text/javascript" src="../src/util/Color.js"></script>
-<script type="text/javascript" src="../src/math/Vector2.js"></script>
-<script type="text/javascript" src="../src/math/Vector3.js"></script>
-<script type="text/javascript" src="../src/math/Matrix44.js"></script>
-<script type="text/javascript" src="../src/engine/Engine.js"></script>
-<script type="text/javascript" src="../src/engine/Camera.js"></script>
-<script type="text/javascript" src="../src/engine/Light.js"></script>
-<script type="text/javascript" src="../src/engine/Mesh.js"></script>
-<script type="text/javascript" src="../src/engine/Scene.js"></script>
-<script type="text/javascript" src="../src/engine/Loader.js"></script>
-<script type="text/javascript" src="../src/engine/Filter.js"></script>
-<script type="text/javascript" src="../src/engine/ShaderAtlas.js"></script>
-<script type="text/javascript" src="../src/engine/EffectAtlas.js"></script>
-<script type="text/javascript" src="../src/engine/Texture.js"></script>
-<script type="text/javascript" src="../src/engine/Cubemap.js"></script>
-<script type="text/javascript" src="../src/engine/Transform.js"></script>
-<script type="text/javascript" src="../src/engine/Postprocess.js"></script>
-<script type="text/javascript" src="../src/engine/FrameBuffer.js"></script>
-<script type="text/javascript" src="../src/effects/EffectSource.js"></script>
-<script type="text/javascript" src="../src/renderers/ShaderSource.js"></script>
-<script type="text/javascript" src="../src/renderers/Phong.js"></script>
-<script type="text/javascript" src="../src/renderers/Toon.js"></script>
-<script type="text/javascript" src="../src/renderers/Gouraud.js"></script>
-<script type="text/javascript" src="../src/renderers/Normal2Color.js"></script>
-<script type="text/javascript" src="../src/renderers/Reflective.js"></script>
-<script type="text/javascript" src="../src/renderers/Glass.js"></script>
-<script type="text/javascript" src="../src/renderers/Skybox.js"></script>
-<script type="text/javascript" src="../src/renderers/Shader.js"></script>
-<script type="text/javascript" src="../src/util/Time.js"></script>
-<script type="text/javascript" src="../src/util/ShaderUtil.js"></script>
--->
-
 <script type="text/javascript" src="../build/j3d.js"></script>
-
 
 <script>
 	
@@ -54,7 +17,13 @@
 	
 	function init() {
 		if(!checkWebGL()) return;
-		
+
+        J3D.Loader.loadGLSL("../demo/shaders/Toon.glsl", function(s) {
+			setup(s);
+		});
+    }
+
+    function setup(s) {
 		engine = new J3D.Engine();
 		
 		ramp1 = new J3D.Texture("models/textures/toonramp2.png");
@@ -64,20 +33,20 @@
 		ramp3 = new J3D.Texture("models/textures/toonramp3.png");
 		ramp3.wrapMode = gl.CLAMP_TO_EDGE;
 
-		engine.setClearColor(J3D.Color.white);
+		engine.setClearColor( new J3D.Color(0.85, 0.85, 0.85, 1.0) );
 		
 		sun = new J3D.Transform();
 		sun.light = new J3D.Light(J3D.DIRECT);
 		sun.light.color = new J3D.Color(1.0); // Toon shader uses only one channel for light calculations: r
-		//sun.rotation.x = Math.PI;
+//		sun.rotation.x = Math.PI;
         sun.rotation.z = Math.PI;
 		
 		elephant = new J3D.Transform();
 		elephant.rotation = new v3(0, Math.PI, 0);
 		
-		J3D.Loader.loadJSON("models/elephant.js", function(j) {  elephant.geometry = new J3D.Mesh(j); } );		
+		J3D.Loader.loadJSON("models/elephant.js", function(j) {  elephant.geometry = new J3D.Mesh(j); } );
 		
-		elephant.renderer = J3D.BuiltinShaders.fetch("Toon");
+		elephant.renderer = s;
 		elephant.renderer.uColorSampler = ramp1;
 		
 		var camera = new J3D.Transform();
@@ -97,7 +66,9 @@
 		if(document.getElementById("ra").checked) elephant.renderer.uColorSampler = ramp1;
 		if(document.getElementById("rb").checked) elephant.renderer.uColorSampler = ramp2;
 		if(document.getElementById("rc").checked) elephant.renderer.uColorSampler = ramp3;
-		
+
+        elephant.renderer.drawMode = gl.LINES;
+
 		elephant.rotation.y -= Math.PI * J3D.Time.deltaTime / 6000;
 		post.render();
 		//engine.render();

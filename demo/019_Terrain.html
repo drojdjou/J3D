@@ -45,7 +45,7 @@
 
 		engine = new J3D.Engine();
 
-        	J3D.Loader.loadGLSL("../demo/shaders/Terrain.glsl", function(s) {
+        J3D.Loader.loadGLSL("../demo/shaders/Terrain.glsl", function(s) {
 			terShader = s;
 
 			terShader.beachTex = new J3D.Texture("../demo/models/textures/terrain/sand.jpg");
