@@ -8,44 +8,12 @@
 <link rel="stylesheet" href="common/common.css"/>
 <script type="text/javascript" src="common/common.js"></script>
 
-<!--
-<script type="text/javascript" src="../lib/glMatrix.js"></script>
-<script type="text/javascript" src="../lib/requestAnimationFrame.js"></script>
-<script type="text/javascript" src="../src/J3D.js"></script>
-<script type="text/javascript" src="../src/util/Color.js"></script>
-<script type="text/javascript" src="../src/math/Vector2.js"></script>
-<script type="text/javascript" src="../src/math/Vector3.js"></script>
-<script type="text/javascript" src="../src/math/Matrix44.js"></script>
-<script type="text/javascript" src="../src/engine/Engine.js"></script>
-<script type="text/javascript" src="../src/engine/Camera.js"></script>
-<script type="text/javascript" src="../src/engine/Light.js"></script>
-<script type="text/javascript" src="../src/engine/Geometry.js"></script>
-<script type="text/javascript" src="../src/engine/Mesh.js"></script>
-<script type="text/javascript" src="../src/engine/Scene.js"></script>
-<script type="text/javascript" src="../src/engine/Loader.js"></script>
-<script type="text/javascript" src="../src/engine/ShaderAtlas.js"></script>
-<script type="text/javascript" src="../src/engine/Texture.js"></script>
-<script type="text/javascript" src="../src/engine/Cubemap.js"></script>
-<script type="text/javascript" src="../src/engine/Transform.js"></script>
-<script type="text/javascript" src="../src/engine/Postprocess.js"></script>
-<script type="text/javascript" src="../src/engine/Primitives.js"></script>
-<script type="text/javascript" src="../src/engine/FrameBuffer.js"></script>
-<script type="text/javascript" src="../src/engine/ShaderSource.js"></script>
-<script type="text/javascript" src="../src/engine/Shader.js"></script>
-<script type="text/javascript" src="../src/renderers/Phong.js"></script>
-<script type="text/javascript" src="../src/renderers/Gouraud.js"></script>
-<script type="text/javascript" src="../src/renderers/Reflective.js"></script>
-<script type="text/javascript" src="../src/renderers/Skybox.js"></script>
-<script type="text/javascript" src="../src/util/Time.js"></script>
-<script type="text/javascript" src="../src/util/ShaderUtil.js"></script>
--->
-
 <script type="text/javascript" src="../build/j3d.js"></script>
-
+<script type="text/javascript" src="js/dat.gui.min.js"></script>
 
 
 <script id="filter" type="x-shader">
-	//#name BasicFilter
+	//#name Pixelate
 	//#author bartekd
 	
 	//#include CommonFilterInclude
@@ -55,19 +23,40 @@
 	
 	//#fragment
 	uniform sampler2D uTexture;
+    uniform vec2 wsize;
+    uniform float cellsize;
+
+    uniform float roundness;
+    uniform float softness;
 	
 	varying vec2 vTextureCoord;
 
 	void main(void) {
+        vec2 t = vTextureCoord;
+        vec2 tc = vTextureCoord;
 
-		float m1 = sin(uTime * 3.0 + vTextureCoord.y * 16.0) * cos(uTime * 2.0 + vTextureCoord.x * 10.0) * 0.02;
-		
-		vec4 a = texture2D(uTexture, vTextureCoord + m1 * 0.5);
-		vec4 b = texture2D(uTexture, vTextureCoord + m1);
-		vec4 c = texture2D(uTexture, vTextureCoord + m1 * 1.5);
+        float hc = cellsize * 0.5;
 
-		gl_FragColor = vec4(a.r, b.g, c.b, 1.0);
-		
+        t.x *= wsize.x;
+        t.y *= wsize.y;
+
+        tc.x *= wsize.x;
+        tc.y *= wsize.y;
+
+        t.x = t.x - mod(t.x, cellsize) + hc;
+        t.y = t.y - mod(t.y, cellsize) + hc;
+
+        float d = distance(t, tc);
+
+        t.x /= wsize.x;
+        t.y /= wsize.y;
+
+        vec3 col = texture2D(uTexture, t).rgb;
+        vec3 blk = vec3(0.0, 0.0, 0.0);
+
+        float e = smoothstep(hc * (roundness - softness) * col.r, hc * roundness * col.r, d);
+
+        gl_FragColor = vec4(mix(col, blk, e), 1.0);
 	}
 </script>
 
@@ -75,9 +64,30 @@
 	
 	var engine, cube, pp, sun;
 	var filter, post;
+    var props, gui;
 	
 	function init() {
 		if(!checkWebGL()) return;
+
+        props = {
+            cellsize: 16,
+            roundness: 0.9,
+            softness: 0.2,
+            enabled: true
+        }
+
+        gui = new dat.GUI({ autoPlace: false });
+
+		gui.add(props, 'cellsize').min( 1.0 ).max( 100.0 );
+        gui.add(props, 'roundness').min( 0.0 ).max( 5.0 );
+        gui.add(props, 'softness').min( 0.0 ).max( 5.0 );
+        gui.add(props, 'enabled');
+
+
+        gui.domElement.style.position = 'fixed';
+		gui.domElement.style.right = '140px';
+		gui.domElement.style.zIndex = 200;
+        document.body.appendChild( gui.domElement );
 		
 		engine = new J3D.Engine(null, { resolution: 1 });
 
@@ -92,22 +102,23 @@
 		
 		cube = new J3D.Transform();
 		cube.rotation = new v3(0, Math.PI, 0); // All rotations are in radians
-		
-		J3D.Loader.loadJSON("models/monkeyhi.js", function(j) {  cube.geometry = new J3D.Mesh(j); } );		
-		
 		cube.renderer = J3D.BuiltinShaders.fetch("Phong");
 		cube.renderer.specularIntensity = 10;
 		cube.renderer.shininess = 32;
+        engine.scene.add(cube);
+
+        J3D.Loader.loadJSON("models/monkeyhi.js", function(j) {  cube.geometry = new J3D.Mesh(j); } );
 		
 		var camera = new J3D.Transform();
 		camera.camera = new J3D.Camera();
-		camera.position.z = 4;
+		camera.position.z = 3;
 		engine.camera = camera;
 		
-		engine.scene.add(camera, cube, sun);
+		engine.scene.add(camera, sun);
 
 		post = new J3D.Postprocess(engine);
 		post.filter = new J3D.ShaderUtil.parseGLSL(document.getElementById("filter").firstChild.nodeValue);
+        post.filter.wsize = [window.innerWidth, window.innerHeight];
 
 		draw();
 	}
@@ -117,8 +128,13 @@
 		
 		cube.rotation.x += Math.PI * J3D.Time.deltaTime / 12000;
 		cube.rotation.y -= Math.PI * J3D.Time.deltaTime / 6000;
+
+        post.filter.cellsize = props.cellsize;
+        post.filter.roundness = props.roundness;
+        post.filter.softness = props.softness;
 		
-		post.render();
+		if(props.enabled) post.render();
+        else engine.render();
 	}
 	
 </script>

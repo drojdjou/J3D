@@ -62,31 +62,23 @@
 	
 	{
 		"uid": 1,
-        "name": "camroot",
-		"position": [ 0,0,0 ],
-		"rotation": [ 0,0,0 ]
+        "name": "sun",
+		"position": [ 0,3,0 ],
+		"rotation": [ -0.801595,2.339456,2.502631 ],
+		"light": "sun"
 	},
 	
 	{
 		"uid": 2,
-        "name": "camera",
-		"parent": 1,
-		"position": [ 0,3.857413,3.674011 ],
-		"rotation": [ -0.9224564,0,0 ],
-		"camera": "camera"
-	},
-	
-	{
-		"uid": 3,
         "name": "terrain",
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ]
 	},
 	
 	{
-		"uid": 4,
+		"uid": 3,
         "name": "ground",
-		"parent": 3,
+		"parent": 2,
 		"position": [ 0,0,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "orange",
@@ -94,9 +86,9 @@
 	},
 	
 	{
-		"uid": 5,
+		"uid": 4,
         "name": "water",
-		"parent": 3,
+		"parent": 2,
 		"position": [ 0,0.06,0 ],
 		"rotation": [ 0,0,0 ],
 		"renderer": "blue",
@@ -104,11 +96,19 @@
 	},
 	
 	{
+		"uid": 5,
+        "name": "camroot",
+		"position": [ 0,0,0 ],
+		"rotation": [ 0,0,0 ]
+	},
+	
+	{
 		"uid": 6,
-        "name": "sun",
-		"position": [ 0,3,0 ],
-		"rotation": [ -0.801595,2.339456,2.502631 ],
-		"light": "sun"
+        "name": "camera",
+		"parent": 5,
+		"position": [ 0,3.857413,3.674011 ],
+		"rotation": [ -0.9224564,0,0 ],
+		"camera": "camera"
 	}
 
 ]
