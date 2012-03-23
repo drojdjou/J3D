@@ -13,7 +13,7 @@ It was created by [Bartek Drozdz](http://www.everyday3d.com/)
 
 [Shaders tutorial in .net magazine](http://www.netmagazine.com/tutorials/create-amazing-webgl-effects-shaders)
 
-## Examples
+## Demos
 
 [![Hello Cube](http://www.everyday3d.com/j3d/thumbs/001_hellocube.jpg)]
 (http://www.everyday3d.com/j3d/demo/000_HelloCube.html)
