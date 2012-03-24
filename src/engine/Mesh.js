@@ -49,6 +49,7 @@ J3D.Mesh = function(source) {
                 if (source[attr].length > 0) this.addArray("aVertexColor", new Float32Array(source[attr]), 4);
                 break;
             case "normals":
+                j3dlog("Found normals data: " + source[attr].length);
                 if (source[attr].length > 0)
                     this.vertexNormalBuffer = this.addArray("aVertexNormal", new Float32Array(source[attr]), 3);
                 else
@@ -64,6 +65,10 @@ J3D.Mesh = function(source) {
                 break;
             case "tris":
                 if (source[attr].length > 0) this.addElement(new Uint16Array(source[attr]));
+                break;
+            case "tangents":
+                j3dlog("Found tangents data: " + source[attr].length);
+                if (source[attr].length > 0) this.addArray("aVertexTangent", new Float32Array(source[attr]), 4);
                 break;
             default:
                 j3dlog("WARNING! Unknown attribute: " + attr);

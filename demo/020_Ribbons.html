@@ -1,0 +1,185 @@
+<html> 
+ 
+<head> 
+<title>020 | Ribbon | J3D</title>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
+
+<link rel="stylesheet" href="../demo/common/common.css"/>
+<script type="text/javascript" src="../demo/common/common.js"></script>
+
+<script type="text/javascript" src="../build/j3d.js"></script>
+
+<script id="particleShader" type="x-shader">
+	//#name ParticleShader
+	//#include CommonInclude
+
+    varying float z;
+
+	//#vertex
+	attribute vec3 aVertexPosition;
+
+    const float PI = 3.14159265;
+
+	void main(void) {
+		vec4 v = vec4(aVertexPosition, 1.0);
+		gl_Position = pMatrix * vMatrix * mMatrix * v;
+        z = gl_Position.z;
+	}
+
+	//#fragment
+	uniform vec4 color;
+
+	void main(void) {
+        float w = 1.0 - z / 10.0;
+        vec3 c = vec3(1.0, 0.0, 0.0);
+        gl_FragColor = vec4(c.rgb * w, 1.0);
+	}
+</script>
+
+<script>
+	var engine, particleShader, camroot, ribbons;
+	var mx, my = 0;
+    var speed = -0.04;
+
+    function Ribbon(a) {
+        that = this;
+
+        var vertices = [];
+
+        var numPoints = 30, start = 0;
+        var spacing = 0.75;
+
+        var angle =-a - Math.PI * 0.5;
+
+        J3D.Geometry.call(this);
+
+        for (var i = 0; i < numPoints; i ++) {
+            vertices.push(0);
+            vertices.push(start + spacing * i);
+            vertices.push(0);
+
+            vertices.push(0);
+            vertices.push(start + spacing * i);
+            vertices.push(0);
+        }
+
+        var vertAttr = this.addArray("aVertexPosition", new Float32Array(vertices), 3, gl.FLOAT, gl.DYNAMIC_DRAW);
+
+        this.update = function(speed) {
+            var xo = (mx / window.innerWidth) * 2 - 1;
+            var zo = (my / window.innerHeight) * 2 - 1;
+
+            for (var i = 0; i < vertices.length; i += 6) {
+//                vertices[i+1] += speed;
+//                vertices[i+4] += speed;
+//
+//                if(vertices[i+1] >= start + numPoints * spacing) vertices[i+1] = start;
+//                if(vertices[i+1] <= start) vertices[i+1] = start + numPoints * spacing;
+//
+//                if(vertices[i+4] >= start + numPoints * spacing) vertices[i+4] = start;
+//                if(vertices[i+4] <= start) vertices[i+4] = start + numPoints * spacing;
+
+                var yp = (vertices[i+1]) / Math.abs(numPoints * spacing);
+
+                vertices[i+0] = 0.1 * Math.cos(angle) + xo * 8 * (yp * yp * yp);
+                vertices[i+2] = 0.1 * Math.cos(angle) + zo * -8 * (yp * yp * yp);
+
+                vertices[i+3] = -0.1 * Math.cos(-angle) + xo * 8 * (yp * yp * yp);
+                vertices[i+5] = -0.1 * Math.sin(-angle) + zo * -8 * (yp * yp * yp);
+            }
+
+            this.replaceArray(vertAttr, new Float32Array(vertices));
+        }
+    }
+
+    Ribbon.prototype = new J3D.Geometry();
+    Ribbon.prototype.constructor = Ribbon;
+    Ribbon.prototype.supr = J3D.Geometry.prototype;
+
+	function init() {
+		if(!checkWebGL()) return;
+
+		engine = new J3D.Engine();
+
+        gl.disable(gl.CULL_FACE);
+
+		var camera = new J3D.Transform();
+		camera.camera = new J3D.Camera();
+		camera.position.z = 0;
+		engine.camera = camera;
+
+        camroot = new J3D.Transform();
+        camroot.add(camera);
+        engine.scene.add(camroot);
+
+        particleShader = new J3D.ShaderUtil.parseGLSL(document.getElementById("particleShader").firstChild.nodeValue);
+        particleShader.texture = new J3D.Texture("../demo/models/textures/smoke.png");
+
+//        particleShader.drawMode = gl.POINTS;
+//        particleShader.drawMode = gl.LINE_LOOP;
+        particleShader.drawMode = gl.TRIANGLE_STRIP;
+
+		ribbons = new J3D.Transform();
+        ribbons.rotation.x = Math.PI / -2;
+        engine.scene.add(ribbons);
+
+        for(var i = 0; i < Math.PI * 2; i += Math.PI * 0.125) {
+            addRibbon(Math.cos(i), Math.sin(i), i);
+        }
+
+		document.onmousemove = onMouseMove;
+		
+		draw();
+	}
+
+    function addRibbon(x, z, i) {
+        var r = new J3D.Transform();
+        r.position.x = x;
+        r.position.z = z;
+		r.geometry = new Ribbon(i);
+        r.renderer = particleShader.clone();
+        ribbons.add(r);
+    }
+
+	function onMouseMove(e) {
+		mx = e.clientX;
+		my = e.clientY;
+	}
+	
+	function draw() {
+
+        for(var i = 0; i < ribbons.numChildren; i++) {
+            ribbons.childAt(i).geometry.update((speed * (1+my/window.innerHeight)));
+        }
+
+		requestAnimationFrame(draw);
+		engine.render();
+	}
+	
+</script>
+
+</head> 
+
+<body onload="init();">
+	<script>
+		setLabels("020. Ribbons", "Playing with ribbons (in progress)");
+	</script>
+	
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-24294554-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</body> 
+
+</html> 

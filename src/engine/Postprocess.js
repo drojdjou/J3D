@@ -15,14 +15,14 @@ J3D.Postprocess.prototype.render = function() {
 }
 	
 J3D.Postprocess.prototype.renderEffect = function(texture) {
-	this.program = engine.shaderAtlas.getShader(this.filter);
+	this.program = this.engine.shaderAtlas.getShader(this.filter);
 
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 	gl.useProgram(this.program);
+
+    J3D.ShaderUtil.setAttributes(this.program, this.geometry);
 	
-	J3D.ShaderUtil.setTexture(this.program, 0, "uTexture", texture);
-	J3D.ShaderUtil.setAttributes(this.program, this.geometry);
-    
+	this.filter.uTexture = texture;
     this.filter.setup(this.program);
 
 	gl.drawArrays(this.drawMode, 0, this.geometry.size);

@@ -1,0 +1,89 @@
+{
+	
+"path" : "",
+"ambient": { "r":0.2, "g":0.2, "b":0.2, "a":1 },
+"background": { "r":0, "g":0, "b":0, "a":1 },
+
+"textures": {
+	
+	"colour": { 
+		"file": "colour.jpg"
+	},
+	
+	"bump": { 
+		"file": "bump.jpg"
+	}
+
+},
+
+"lightmaps": [
+],
+	
+"materials": {
+	
+	"head": { 
+		"type": "Phong",
+		"color": { "r":1, "g":1, "b":1, "a":1 },
+		"specularIntensity": 0,
+        "shininess": 0,
+		"textureTile": [ 1,1 ],
+		"textureOffset": [ 0,0 ],
+		"colorTexture": "colour",
+		"colorTexture": "colour"
+	}
+
+},
+
+"lights": {
+	
+	"sun": { 
+		"type": 1,
+		"color": { "r":1, "g":1, "b":1, "a":1 },
+		"intensity": 1
+	}
+
+},
+
+"cameras": {
+	
+	"camera": { 
+		"fov": 30,
+		"near": 0.3,
+		"far": 1000
+	}
+
+},
+
+"transforms": [
+	
+	{
+		"uid": 1,
+        "name": "sun",
+		"position": [ 1.637332,0.5853415,-0.0701606 ],
+		"rotation": [ -0.7596644,-0.8865688,-0.5795254 ],
+		"light": "sun"
+	},
+	
+	{
+		"uid": 2,
+        "name": "camera",
+		"position": [ 0,-0.65,6 ],
+		"rotation": [ 0,0,0 ],
+		"camera": "camera"
+	},
+	
+	{
+		"uid": 3,
+        "name": "head",
+		"position": [ 0,0,0 ],
+		"rotation": [ 0,3.141593,0 ],
+		"renderer": "head",
+		"mesh": "head"
+	}
+
+]
+}
+
+
+
+

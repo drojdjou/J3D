@@ -55,3 +55,5 @@ It was created by [Bartek Drozdz](http://www.everyday3d.com/)
 (http://www.everyday3d.com/j3d/demo/018_Sphere.html)
 [![Terrain shader](http://www.everyday3d.com/j3d/thumbs/020_terrain.jpg)]
 (http://www.everyday3d.com/j3d/demo/019_Terrain.html)
+[![Webcam texture (Canary, Opera Labs)](http://www.everyday3d.com/j3d/thumbs/023_webrtc.jpg)]
+(http://www.everyday3d.com/j3d/demo/022_Webcam.html)

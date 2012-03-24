@@ -4,23 +4,21 @@
 
 //#include CommonInclude
 
+varying vec3 refVec;
+
+
 //#vertex
 //#include VertexInclude
 
-varying vec3 vNormal;
-varying vec3 refVec;
-
 void main(void) {
 	gl_Position = mvpMatrix() * vec4(aVertexPosition, 1.0);
-	vNormal = normalize(nMatrix * aVertexNormal);	
+	vec3 normal = normalize(nMatrix * aVertexNormal);
 	vec3 incident = normalize( (vec4(aVertexPosition, 1.0) * mMatrix).xyz - uEyePosition);
-	refVec = reflect(incident, vNormal);	
+	refVec = reflect(incident, normal);
 }
 
 //#fragment
 uniform samplerCube uCubemap;
-
-varying vec3 refVec;
 
 void main(void) {
 	gl_FragColor = textureCube(uCubemap, refVec);

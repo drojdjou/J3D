@@ -108,6 +108,7 @@ public class J3DExport : ScriptableWizard
 		FileExport.SaveContentsAsFile (FileExport.CleanJSON (st), scenePath);
 		
 		foreach (TextureExportData t in txx.Values) {
+			Debug.Log("Saving texture: " + t.Name);
 			t.Save(texturePath, jpegQuality);
 		}
 		
@@ -147,8 +148,10 @@ public class J3DExport : ScriptableWizard
 			
 			foreach (string tn in textures) {
 				TextureExportData tx = new TextureExportData (t.renderer.sharedMaterial.GetTexture (tn));
-				if (!txx.ContainsKey (tx.Name))
+				if (!txx.ContainsKey (tx.Name)) {
+					Debug.Log("Adding texture: " + tx.Name);
 					txx.Add (tx.Name, tx);
+				}
 			}
 			
 		}

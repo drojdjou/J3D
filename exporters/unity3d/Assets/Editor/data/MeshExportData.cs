@@ -66,6 +66,19 @@ public class MeshExportData
 			return vs.ToArray ();
 		}
 	}
+	
+	public string[] Tangents {
+		get {
+			List<string> vs = new List<string> ();
+			foreach (Vector4 v in m.tangents) {
+				vs.Add (v.x.ToString (ExporterProps.SN));
+				vs.Add (v.y.ToString (ExporterProps.SN));
+				vs.Add (v.z.ToString (ExporterProps.SN));
+				vs.Add (v.w.ToString (ExporterProps.SN));
+			}
+			return vs.ToArray ();
+		}
+	}
 
 	public int NumFaces {
 		get { return m.triangles.Length / 3; }

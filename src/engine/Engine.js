@@ -46,10 +46,10 @@ J3D.Engine.prototype.setClearColor = function(c) {
 	gl.clearColor(c.r, c.g, c.b, c.a);
 }
 
-J3D.Engine.prototype.render = function(){
+J3D.Engine.prototype.render = function(dontClear){
 	J3D.Time.tick();
 	
-	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+	if(!dontClear) gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 	
 	if(this.scene.numChildren > 0) this.renderScene();
 }

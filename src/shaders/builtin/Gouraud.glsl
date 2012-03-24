@@ -22,6 +22,7 @@ void main(void) {
 
 //#fragment
 uniform vec4 color;
+uniform vec4 emissive;
 uniform sampler2D colorTexture;
 uniform bool hasColorTexture;
 
@@ -31,5 +32,5 @@ varying vec2 vTextureCoord;
 void main(void) {
 	vec4 tc = color;
 	if(hasColorTexture) tc *= texture2D(colorTexture, vTextureCoord);
-	gl_FragColor = vec4(tc.rgb * vLight, color.a);
+	gl_FragColor = vec4(tc.rgb * vLight + emissive.rgb, color.a);
 }

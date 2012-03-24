@@ -24,9 +24,11 @@ $materials:{
 		"type": "$it.Type$",
 		"color": { "r":$it.Color.r$, "g":$it.Color.g$, "b":$it.Color.b$, "a":$it.Color.a$ },
 		"specularIntensity": $it.SpecularIntensity$,
-                "shininess": $it.Shininess$,
+        "shininess": $it.Shininess$,
 		"textureTile": [ $it.TextureScale; separator=","$ ],
 		"textureOffset": [ $it.TextureOffset; separator=","$ ],
+		$if(it.HasEmissiveColor)$
+		"emissive": { "r":$it.EmissiveColor.r$, "g":$it.EmissiveColor.g$, "b":$it.EmissiveColor.b$, "a":$it.EmissiveColor.a$ },$endif$
 		$it.Textures; separator=",\n"$
 	},
 }$
@@ -64,6 +66,8 @@ $transforms:{
 		"parent": $it.Parent$,$endif$
 		"position": [ $it.Position; separator=","$ ],
 		"rotation": [ $it.Rotation; separator=","$ ],
+		$if(it.HasScale)$
+		"scale": [ $it.Scale; separator=","$ ],$endif$
 		$if(it.HasCollider)$
 		"collider": {
 		    "type": "$it.Collider.Type$",

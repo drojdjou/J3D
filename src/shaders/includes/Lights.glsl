@@ -111,6 +111,7 @@ vec3 phong(vec4 p, vec3 n, float si, float sh, lightSource ls){
     }
 
     dif *= ls.intensity;
+    //spec *= ls.intensity;
 
     return ls.color * dif + ls.color * spec;
 }

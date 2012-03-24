@@ -22,8 +22,24 @@ public class MaterialExportData
 		get { return MaterialMapper.GetJ3DRenderer (m, t); }
 	}
 	
+	public bool HasEmissiveColor {
+		get { 
+			Debug.Log("Checking for emmisive color: " + m.HasProperty ("_Emission"));
+			return m.HasProperty ("_Emission");
+		}
+	}
+	
+	public Color EmissiveColor {
+		get { 
+			return m.GetColor ("_Emission");
+		}
+	}
+	
 	public Color Color {
-		get { return m.color; }
+		get { 
+			if(m.HasProperty ("_Color")) return m.color; 
+			else return Color.white;
+		}
 	}
 	
 	public string[] TextureScale {

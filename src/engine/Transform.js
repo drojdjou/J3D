@@ -104,7 +104,7 @@ J3D.Transform.prototype.clone = function() {
     c.isStatic = this.isStatic;
 
     c.renderer = this.renderer;
-    c.mesh = this.mesh;
+    c.geometry = this.geometry;
     c.camera = this.camera;
     c.light = this.light;
     c.collider = this.collider;

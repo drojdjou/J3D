@@ -98,6 +98,22 @@ public class TransformExportData
 		}
 	}
 	
+	public bool HasScale {
+		get {
+			Vector3 s = t.localScale;
+			bool hs = s.x == 1.0f && s.y == 1.0f && s.z == 1.0f;
+			if(!hs) Debug.Log(t.name + " has scale " + t.localScale.ToString());
+			return !hs;
+		}
+	}
+	
+	public string[] Scale {
+		get {
+			Vector3 s = t.localScale;
+			return new string[] { (s.x).ToString (ExporterProps.LN), (s.y).ToString (ExporterProps.LN), (s.z).ToString (ExporterProps.LN) };
+		}
+	}
+	
 	public string[] Rotation {
 		get {
 			return RotationSwitched;

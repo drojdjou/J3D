@@ -6,7 +6,8 @@ $meshes:{
 		"colors": [],
 		"uv1": [$it.UV1; separator=","$],
 		"uv2": [$it.UV2; separator=","$],
-		"tris": [$it.Triangles; separator=","$]
+		"tris": [$it.Triangles; separator=","$],
+		"tangents": [$it.Tangents; separator=","$]
 	},
 }$
 }

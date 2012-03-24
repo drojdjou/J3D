@@ -25,11 +25,10 @@ J3D.Geometry.prototype.addArray = function(name, data, itemSize, type, usage) {
 	return vbo;
 }
 
-J3D.Geometry.prototype.replaceArray = function(vbo, data, usage) {
-	if(!usage) usage = gl.STATIC_DRAW;
+J3D.Geometry.prototype.replaceArray = function(vbo, data) {
 	vbo.data = data;
 	gl.bindBuffer(gl.ARRAY_BUFFER, vbo.buffer);
-    gl.bufferData(gl.ARRAY_BUFFER, data, usage);
+    gl.bufferData(gl.ARRAY_BUFFER, data, vbo.usage);
 }
 
 J3D.Geometry.prototype.addElement = function(data, type, usage) {
@@ -42,6 +41,7 @@ J3D.Geometry.prototype.addElement = function(data, type, usage) {
 J3D.Geometry.Attribute = function(name, data, itemSize, type, usage, target) {
 	this.name = name;
 	this.data = data;
+    this.usage = usage;
 	
 	this.buffer = gl.createBuffer();
 	gl.bindBuffer(target, this.buffer);

@@ -11,6 +11,7 @@ varying vec2 vTextureCoord;
 
 void main(void) {
     gl_Position = pMatrix * vMatrix * mMatrix * vec4(aVertexPosition, 1.0);
+    gl_PointSize = 1.0;
  	vTextureCoord = getTextureCoord(aTextureCoord);
 }
 

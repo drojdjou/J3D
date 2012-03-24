@@ -51,6 +51,9 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 	
 	var loadImage = function(src){
 		that.src = new Image();
+
+        that.src.crossOrigin = params.cors || "";
+
     	that.src.onload = function() {
 			setupTexture();
     	}
@@ -64,8 +67,6 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 		that.src.preload = 'auto';
 		that.src.addEventListener( "canplaythrough", function() { 
 			that.src.play();
-			//j3dlog("Video " + src + " can play through");
-			//document.body.appendChild(that.src);
 			setupTexture();
 			
 		});
@@ -90,14 +91,24 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 				loadVideo(source);
 				break;
             default:
-                j3dlog("Unsupported texture format: " + ext + " in " + source);
+                // Assume it's a URL to a dynamic image
+                if(params.image) loadImage(source);
+                else if(params.video) loadVideo(source);
+                else j3dlog("Texture format not detected from source path and not specifed in params.")
                 break;
 		}
 		
 	} else if(!!source.getContext) {
 		that.src = source;
 		setupTexture();
-	}
+	} else if(source.src) {
+        /** Experimental support for user stream **/
+        this.isVideo = true;
+        that.src = source;
+        that.src.addEventListener( "canplaythrough", function() {
+            setupTexture();
+        });
+    }
 }
 
 J3D.Texture.prototype.update = function() {

@@ -44,6 +44,9 @@ J3D.Loader.parseJSONScene = function(jscene, jmeshes, engine) {
 		var m = jscene.materials[ms];
 		m = J3D.Loader.fetchShader(m.type, m);
 		m.color = J3D.Loader.fromObject(J3D.Color, m.color);
+
+        if(m.emissive) m.emissive = J3D.Loader.fromObject(J3D.Color, m.emissive);
+
 		if(m.textureTile) m.textureTile = J3D.Loader.v2FromArray(m.textureTile);
 		if(m.textureOffset) m.textureOffset = J3D.Loader.v2FromArray(m.textureOffset);
 		
@@ -100,7 +103,7 @@ J3D.Loader.parseJSONScene = function(jscene, jmeshes, engine) {
 		t = J3D.Loader.fromObject(J3D.Transform, t);
 		t.position = J3D.Loader.v3FromArray(t.position);
 		t.rotation = J3D.Loader.v3FromArray(t.rotation);
-		
+		if(t.scale instanceof Array) t.scale = J3D.Loader.v3FromArray(t.scale);
 		if(t.renderer) t.renderer = jscene.materials[t.renderer];
 		if(t.mesh) t.geometry = jmeshes[t.mesh];
 		if(t.light) t.light = jscene.lights[t.light];

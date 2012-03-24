@@ -56,9 +56,10 @@ public class TextureExportData
 	
 	public void Save(string path, float jpegQuality) {
 		if (IsImage) {
-			if (Format != TextureImporterFormat.ARGB32 && Format != TextureImporterFormat.RGB24) {
-				Report.error ("Texture not exported. '" + Name + "' has wrong format: " + Format.ToString () + ", should be ARGB32 or RGB24");
-			} else if (!asset.isReadable) {
+			//if (Format != TextureImporterFormat.ARGB32 && Format != TextureImporterFormat.RGB24) {
+			//	Report.error ("Texture not exported. '" + Name + "' has wrong format: " + Format.ToString () + ", should be ARGB32 or RGB24");
+			//} else 
+			if (!asset.isReadable) {
 				Report.error ("Texture not exported. '" + Name + "' not marked as readable.");
 			} else {
 				File.WriteAllBytes (path + FileName, getBytes(jpegQuality));

@@ -8,7 +8,7 @@ public class MaterialMapper
 		if (t.gameObject.isStatic && i < 255 && i > -1)
 			return "Lightmap";
 		
-		if(m.shader.name.IndexOf("Self-Illumin") > -1) return "Selflit";
+		if(m.shader.name.IndexOf("Self-Illumin") > -1 || m.shader.name.IndexOf("Unlit") > -1) return "Selflit";
 
 		if(m.shader.name == "VertexLit") return "Gouraud";
 		

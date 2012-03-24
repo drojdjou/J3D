@@ -75,6 +75,7 @@ J3D.ShaderSource.Gouraud = [
 
 	"//#fragment",
 	"uniform vec4 color;",
+	"uniform vec4 emissive;",
 	"uniform sampler2D colorTexture;",
 	"uniform bool hasColorTexture;",
 
@@ -84,7 +85,7 @@ J3D.ShaderSource.Gouraud = [
 	"void main(void) {",
 	"vec4 tc = color;",
 	"if(hasColorTexture) tc *= texture2D(colorTexture, vTextureCoord);",
-	"gl_FragColor = vec4(tc.rgb * vLight, color.a);",
+	"gl_FragColor = vec4(tc.rgb * vLight + emissive.rgb, color.a);",
 	"}",
 ""].join("\n");
 
@@ -208,23 +209,21 @@ J3D.ShaderSource.Reflective = [
 
 	"//#include CommonInclude",
 
+	"varying vec3 refVec;",
+
+
 	"//#vertex",
 	"//#include VertexInclude",
 
-	"varying vec3 vNormal;",
-	"varying vec3 refVec;",
-
 	"void main(void) {",
 	"gl_Position = mvpMatrix() * vec4(aVertexPosition, 1.0);",
-	"vNormal = normalize(nMatrix * aVertexNormal);",
+	"vec3 normal = normalize(nMatrix * aVertexNormal);",
 	"vec3 incident = normalize( (vec4(aVertexPosition, 1.0) * mMatrix).xyz - uEyePosition);",
-	"refVec = reflect(incident, vNormal);",
+	"refVec = reflect(incident, normal);",
 	"}",
 
 	"//#fragment",
 	"uniform samplerCube uCubemap;",
-
-	"varying vec3 refVec;",
 
 	"void main(void) {",
 	"gl_FragColor = textureCube(uCubemap, refVec);",
@@ -245,6 +244,7 @@ J3D.ShaderSource.Selflit = [
 
 	"void main(void) {",
 	"gl_Position = pMatrix * vMatrix * mMatrix * vec4(aVertexPosition, 1.0);",
+	"gl_PointSize = 1.0;",
 	"vTextureCoord = getTextureCoord(aTextureCoord);",
 	"}",
 
@@ -483,6 +483,7 @@ J3D.ShaderSource.Lights = [
 	"}",
 
 	"dif *= ls.intensity;",
+	"//spec *= ls.intensity;",
 
 	"return ls.color * dif + ls.color * spec;",
 	"}",

@@ -35,6 +35,7 @@ java \
 --js ../src/util/ParticleUtil.js \
 --js ../src/util/ShaderUtil.js \
 --js ../src/util/Intersection.js \
+--js ../src/util/MathUtil.js \
 --js ../src/engine/BuiltinShaders.js \
 --js ../lib/requestAnimationFrame.js \
 --warning_level QUIET

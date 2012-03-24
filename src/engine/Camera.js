@@ -28,7 +28,7 @@ J3D.Camera = function(params){
 	
 	this.near = params.near;
 	this.far = params.far;
-
+    this.fov = params.fov;
 	this.projectionMat = new m44();
 	
 	if(params.type == J3D.PERSPECTIVE) 
