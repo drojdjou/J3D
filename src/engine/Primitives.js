@@ -78,69 +78,174 @@ J3D.Primitive.Plane = function(w, h, wd, hd, wo, ho) {
  * Adapted from Three.js & Papervision3d
  */
 J3D.Primitive.Sphere = function(radius, segmentsWidth, segmentsHeight) {
-        var c = J3D.Primitive.getEmpty();
+    var c = J3D.Primitive.getEmpty();
 
-        var vertices = [];
-        var uvs = [];
+    var vertices = [];
+    var uvs = [];
 
-        var radius = radius || 50;
-        var segmentsX = Math.max( 3, Math.floor( segmentsWidth ) || 8 );
-        var segmentsY = Math.max( 3, Math.floor( segmentsHeight ) || 6 );
+    var radius = radius || 50;
+    var segmentsX = Math.max(3, Math.floor(segmentsWidth) || 8);
+    var segmentsY = Math.max(3, Math.floor(segmentsHeight) || 6);
 
-        var phiStart = 0;
-        var phiLength = Math.PI * 2;
+    var phiStart = 0;
+    var phiLength = Math.PI * 2;
 
-        var thetaStart = 0;
-        var thetaLength = Math.PI;
+    var thetaStart = 0;
+    var thetaLength = Math.PI;
 
-        var x, y;
+    var x, y;
 
-        for ( y = 0; y <= segmentsY; y ++ ) {
+    for (y = 0; y <= segmentsY; y ++) {
 
-            for ( x = 0; x <= segmentsX; x ++ ) {
+        for (x = 0; x <= segmentsX; x ++) {
 
-                var u = x / segmentsX;
-                var v = y / segmentsY;
+            var u = x / segmentsX;
+            var v = y / segmentsY;
 
-                var xp = - radius * Math.cos( phiStart + u * phiLength ) * Math.sin( thetaStart + v * thetaLength );
-                var yp = radius * Math.cos( thetaStart + v * thetaLength );
-                var zp = radius * Math.sin( phiStart + u * phiLength ) * Math.sin( thetaStart + v * thetaLength );
+            var xp = - radius * Math.cos(phiStart + u * phiLength) * Math.sin(thetaStart + v * thetaLength);
+            var yp = radius * Math.cos(thetaStart + v * thetaLength);
+            var zp = radius * Math.sin(phiStart + u * phiLength) * Math.sin(thetaStart + v * thetaLength);
 
-                vertices.push( new v3(xp, yp, zp) );
-                uvs.push([u, 1-v]);
-            }
+            vertices.push(new v3(xp, yp, zp));
+            uvs.push([u, 1 - v]);
         }
-
-        for ( y = 0; y <= segmentsY; y ++ ) {
-
-            for ( x = 0; x < segmentsX; x ++ ) {
-
-                var vt1 = vertices[ y * segmentsX + x + 0 ];
-			    var vt2 = vertices[ y * segmentsX + x + 1 ];
-			    var vt3 = vertices[ (y+1) * segmentsX + x + 1 ];
-			    var vt4 = vertices[ (y+1) * segmentsX + x + 0 ];
-
-                var uv1 = uvs[ y * segmentsX + x + 0 ];
-			    var uv2 = uvs[ y * segmentsX + x + 1 ];
-			    var uv3 = uvs[ (y+1) * segmentsX + x + 1 ];
-			    var uv4 = uvs[ (y+1) * segmentsX + x + 0 ];
-
-                var n1 = vt1.cp().norm();
-                var n2 = vt2.cp().norm();
-                var n3 = vt3.cp().norm();
-                var n4 = vt4.cp().norm();
-
-                var p = c.vertices.length / 3;
-
-                c.vertices.push(vt1.x, vt1.y, vt1.z, vt2.x, vt2.y, vt2.z, vt3.x, vt3.y, vt3.z, vt4.x, vt4.y, vt4.z);
-                c.uv1.push( uv1[0],uv1[1],  uv2[0],uv2[1], uv3[0],uv3[1], uv4[0],uv4[1] );
-                c.normals.push( n1.x, n1.y, n1.z, n2.x, n2.y, n2.z, n3.x, n3.y, n3.z, n4.x, n4.y, n4.z );
-                c.tris.push( p + 0, p + 1, p + 2,  p + 0, p + 2, p + 3 );
-            }
-        }
-
-        return new J3D.Mesh(c);
     }
+
+    for (y = 0; y <= segmentsY; y ++) {
+
+        for (x = 0; x < segmentsX; x ++) {
+
+            var vt1 = vertices[ y * segmentsX + x + 0 ];
+            var vt2 = vertices[ y * segmentsX + x + 1 ];
+            var vt3 = vertices[ (y + 1) * segmentsX + x + 1 ];
+            var vt4 = vertices[ (y + 1) * segmentsX + x + 0 ];
+
+            var uv1 = uvs[ y * segmentsX + x + 0 ];
+            var uv2 = uvs[ y * segmentsX + x + 1 ];
+            var uv3 = uvs[ (y + 1) * segmentsX + x + 1 ];
+            var uv4 = uvs[ (y + 1) * segmentsX + x + 0 ];
+
+            var n1 = vt1.cp().norm();
+            var n2 = vt2.cp().norm();
+            var n3 = vt3.cp().norm();
+            var n4 = vt4.cp().norm();
+
+            var p = c.vertices.length / 3;
+
+            c.vertices.push(vt1.x, vt1.y, vt1.z, vt2.x, vt2.y, vt2.z, vt3.x, vt3.y, vt3.z, vt4.x, vt4.y, vt4.z);
+            c.uv1.push(uv1[0], uv1[1], uv2[0], uv2[1], uv3[0], uv3[1], uv4[0], uv4[1]);
+            c.normals.push(n1.x, n1.y, n1.z, n2.x, n2.y, n2.z, n3.x, n3.y, n3.z, n4.x, n4.y, n4.z);
+            c.tris.push(p + 0, p + 1, p + 2, p + 0, p + 2, p + 3);
+        }
+    }
+
+    return new J3D.Mesh(c);
+}
+
+J3D.Primitive.SingleTextureSkybox = function(segmentsWidth, segmentsHeight) {
+    var c = J3D.Primitive.getEmpty();
+
+    var vertices = [];
+    var uvs = [];
+
+    var radius = radius || 50;
+    var segmentsX = Math.max(3, Math.floor(segmentsWidth) || 8);
+    var segmentsY = Math.max(3, Math.floor(segmentsHeight) || 6);
+
+    var phiStart = 0;
+    var phiLength = Math.PI * 2;
+
+    var thetaStart = 0;
+    var thetaLength = Math.PI;
+
+    var x, y;
+
+    for (y = 0; y <= segmentsY; y ++) {
+
+        for (x = 0; x <= segmentsX; x ++) {
+
+            var u = x / segmentsX;
+            var v = y / segmentsY;
+
+            var xp = Math.cos(phiStart + u * phiLength) * Math.sin(thetaStart + v * thetaLength) * -1;
+            var yp = Math.cos(thetaStart + v * thetaLength);
+            var zp = Math.sin(phiStart + u * phiLength) * Math.sin(thetaStart + v * thetaLength);
+
+            var vx = new v3(xp, yp, zp);
+
+            j3dlog("Skybox v 03");
+
+            var ad = Math.max( Math.max(vx.x, vx.y), vx.z );
+            var ad2 = Math.min( Math.min(vx.x, vx.y), vx.z );
+
+            var r, t;
+
+            if(Math.abs(ad2) > ad) {
+                ad = ad2;
+                r = -radius;
+            } else {
+                r = radius;
+            }
+
+            if(ad == vx.x) {
+                t = r / vx.x;
+                vx.x = vx.x * r / vx.x;
+                vx.y *= t;
+                vx.z *= t;
+            } else if(ad == vx.y) {
+                t = r / vx.y;
+                vx.y = r;
+                vx.x *= t;
+                vx.z *= t;
+            } else if(ad == vx.z) {
+                t = r / vx.z;
+                vx.z = r;
+                vx.x *= t;
+                vx.y *= t;
+            }
+
+            vertices.push(vx);
+            uvs.push([u, v]);
+        }
+    }
+
+    for (y = 0; y <= segmentsY; y ++) {
+
+        for (x = 0; x < segmentsX; x ++) {
+
+            var vt1 = vertices[ y * segmentsX + x + 0 ];
+            var vt2 = vertices[ y * segmentsX + x + 1 ];
+            var vt3 = vertices[ (y + 1) * segmentsX + x + 1 ];
+            var vt4 = vertices[ (y + 1) * segmentsX + x + 0 ];
+
+            var uv1 = uvs[ y * segmentsX + x + 0 ];
+            var uv2 = uvs[ y * segmentsX + x + 1 ];
+            var uv3 = uvs[ (y + 1) * segmentsX + x + 1 ];
+            var uv4 = uvs[ (y + 1) * segmentsX + x + 0 ];
+
+            var p = c.vertices.length / 3;
+
+            c.vertices.push(
+                vt1.x, vt1.y, vt1.z,
+                vt2.x, vt2.y, vt2.z,
+                vt3.x, vt3.y, vt3.z,
+                vt4.x, vt4.y, vt4.z
+            );
+
+            c.uv1.push(
+                uv1[0], uv1[1],
+                uv2[0], uv2[1],
+                uv3[0], uv3[1],
+                uv4[0], uv4[1]
+            );
+
+            // 0, 1, 2, 0, 2, 3 (inv: 0, 2, 1, 0, 3, 2)
+            c.tris.push(p + 0, p + 2, p + 1, p + 0, p + 3, p + 2);
+        }
+    }
+
+    return new J3D.Mesh(c);
+}
 
 J3D.Primitive.getEmpty = function(){
 	var g = {};

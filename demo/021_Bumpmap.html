@@ -41,7 +41,9 @@
                 head.renderer.colorMap = new J3D.Texture("models/021/colour.jpg");
                 head.renderer.normalMap = new J3D.Texture("models/021/normal.jpg");
                 head.renderer.specMap = new J3D.Texture("models/021/spec.jpg");
-                head.renderer.shininess = 32;
+                head.renderer.shininess = 4;
+                head.renderer.bumpDensity = 128;
+                head.renderer.bumpSize = 0.15;
 
                 camera = engine.scene.find("camera");
                 sun =  engine.scene.find("camera");

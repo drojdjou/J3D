@@ -49,15 +49,17 @@ J3D.Mesh = function(source) {
                 if (source[attr].length > 0) this.addArray("aVertexColor", new Float32Array(source[attr]), 4);
                 break;
             case "normals":
-                j3dlog("Found normals data: " + source[attr].length);
                 if (source[attr].length > 0)
                     this.vertexNormalBuffer = this.addArray("aVertexNormal", new Float32Array(source[attr]), 3);
                 else
                     this.vertexNormalBuffer = this.addArray("aVertexNormal", new Float32Array(this.size * 3), 3);
                 break;
             case "uv1":
-                if (source[attr].length > 0) this.addArray("aTextureCoord", new Float32Array(source[attr]), 2);
-                else this.addArray("aTextureCoord", new Float32Array(this.size * 2), 2);
+                if (source[attr].length > 0) {
+                    this.textureCoordBuffer = this.addArray("aTextureCoord", new Float32Array(source[attr]), 2);
+                } else {
+                    this.textureCoordBuffer = this.addArray("aTextureCoord", new Float32Array(this.size * 2), 2);
+                }
                 this.hasUV1 = true;
                 break;
             case "uv2":
@@ -78,7 +80,7 @@ J3D.Mesh = function(source) {
 
     this.flip = function() {
 
-        var tv = [], tn = [];
+        var tv = [], tn = [], tu = [];
         var v = this.vertexPositionBuffer.data;
         var n = this.vertexNormalBuffer.data;
         var i;
