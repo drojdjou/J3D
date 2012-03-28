@@ -1,9 +1,14 @@
 ## J3D
 
-J3D is a [WebGL](http://www.khronos.org/registry/webgl/specs/latest/) engine written in Javascript. 
-It allows to render GPU accelerated graphics in your browser. 
-Currently works in [Chrome](http://www.google.com/chrome/), [Firefox 4](http://www.mozilla.com/en-US/firefox/) and [Opera 12 Alpha](http://www.opera.com/browser/next/) on desktop. Some demos also run in [Firefox on Android](http://www.mozilla.com/en-US/m/beta). 
-It was created by [Bartek Drozdz](http://www.everyday3d.com/)
+J3D is a WebGL based 3D engine. I use for my personal experiments and demos and it's a playground rather than a production environment. It consists of a Javascript rendering engine and a C#/Unity3d scene exporter.
+
+If you would like to use it in your projects and experiments or contribute you are more than welcome! J3D currently does not have any kind of documentation beyond the code itself and a few tutorials listed below. Please report bugs in the issues section - I'll do my best to fix them.
+
+Most of the demos should work work in all WebGL enabled browsers, including [Chrome](http://www.google.com/chrome/), [Firefox](http://www.mozilla.com/en-US/firefox/), [Opera 12 Alpha](http://www.opera.com/browser/next/) and Safari (with WebGL enabled) on desktop. Some demos also run in [Firefox on Android](http://www.mozilla.com/en-US/m/beta).
+
+Some demos only run in alpha/nightly builds of selected browsers. If this is the case the supported browsers are specified on the demo's page.
+
+J3D was created by [Bartek Drozdz](http://www.everyday3d.com/). You can contact me via email at bartek(a)everyday3d.com or on Twitter [@bartekd](http://twitter.com/bartekd)
 
 ## Tutorials
 
@@ -13,7 +18,7 @@ It was created by [Bartek Drozdz](http://www.everyday3d.com/)
 
 [Shaders tutorial in .net magazine](http://www.netmagazine.com/tutorials/create-amazing-webgl-effects-shaders)
 
-## Demos
+## Demos & experiments
 
 [![Hello Cube](http://www.everyday3d.com/j3d/thumbs/001_hellocube.jpg)]
 (http://www.everyday3d.com/j3d/demo/000_HelloCube.html)
