@@ -1,12 +1,11 @@
 ## J3D
 
-J3D is a WebGL based 3D engine. I use for my personal experiments and demos and it's a playground rather than a production environment. It consists of a Javascript rendering engine and a C#/Unity3d scene exporter.
+J3D is a WebGL based 3D engine. I use it for my personal experiments and demos. It's a playground rather than a production environment. It consists of a Javascript rendering engine and a C#/Unity3d scene exporter.
 
 If you would like to use it in your projects and experiments or contribute you are more than welcome! J3D currently does not have any kind of documentation beyond the code itself and a few tutorials listed below. Please report bugs in the issues section - I'll do my best to fix them.
 
-Most of the demos should work work in all WebGL enabled browsers, including [Chrome](http://www.google.com/chrome/), [Firefox](http://www.mozilla.com/en-US/firefox/), [Opera 12 Alpha](http://www.opera.com/browser/next/) and Safari (with WebGL enabled) on desktop. Some demos also run in [Firefox on Android](http://www.mozilla.com/en-US/m/beta).
+Most of the demos should work work in all WebGL enabled browsers, including [Chrome](http://www.google.com/chrome/), [Firefox](http://www.mozilla.com/en-US/firefox/), [Opera 12 Alpha](http://www.opera.com/browser/next/) and Safari (with WebGL enabled) on desktop. Some demos only run in alpha/nightly builds of selected browsers. If this is the case the supported browsers are specified on the demo's page. Some demos run (poorly) in [Firefox on Android](http://www.mozilla.com/en-US/m/beta).
 
-Some demos only run in alpha/nightly builds of selected browsers. If this is the case the supported browsers are specified on the demo's page.
 
 J3D was created by [Bartek Drozdz](http://www.everyday3d.com/). You can contact me via email at bartek(a)everyday3d.com or on Twitter [@bartekd](http://twitter.com/bartekd)
 
