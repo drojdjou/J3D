@@ -3,64 +3,35 @@
 <head>
     <title>022 | User stream | J3D</title>
 
-    <style type="text/css">
-        #output {
-            width: 640px;
-            height: 480px;
-            background-color: #000000;
-            z-index: 1000;
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            display: none;
-        }
-    </style>
-
     <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 
     <link rel="stylesheet" href="../demo/common/common.css"/>
     <script type="text/javascript" src="../demo/common/common.js"></script>
+
     <script type="text/javascript" src="../build/j3d.js"></script>
+    <script type="text/javascript" src="../ext/UserStream.js"></script>
 
     <script>
 
         var engine, ctex, post;
         var mx = 0, my = 0;
-        var n = navigator, is_webkit = false;
         var postshader;
 
         window.onload = function() {
             if (!checkWebGL())
                 return;
+
             engine = new J3D.Engine();
             J3D.Loader.loadGLSL("shaders/VideoEffect.glsl", setupScene);
         }
 
         function setupScene(p) {
             postshader = p;
-            if (n.getUserMedia) {
-                n.getUserMedia({video: true, audio: true}, onSuccess, onError);
-            } else if (n.webkitGetUserMedia) {
-                is_webkit = true;
-                n.webkitGetUserMedia('video, audio', onSuccess, onError);
-            } else {
-                console.log("User media not supported. You need Chrome Canary with MediaStream enabled or Opera Labs Camera!");
-            }
+            webcam = new UserStream(onUserStream);
         }
 
-        function onSuccess(stream) {
-            var output = document.getElementById('output');
-
-            output.style.width = window.innerWidth / 2;
-            output.style.height - window.innerHeight / 2;
-
-            if (!is_webkit) {
-                output.src = stream;
-            } else {
-                output.src = window.webkitURL.createObjectURL(stream);
-            }
-
-            ctex = new J3D.Texture(output);
+        function onUserStream() {
+            ctex = new J3D.Texture(webcam.output);
 
             postshader.colorOffset = [0.0, 0.0, 0.0];
 
@@ -75,10 +46,6 @@
             document.onmousemove = onMouseMove;
 
             draw();
-        }
-
-        function onError(e) {
-            console.log("Houston, we have a problem: " + e);
         }
 
         function onMouseMove(e) {
@@ -101,7 +68,6 @@
 <script>
     setLabels("022. User stream example", "Works only in Chrome Canary with <a href='http://www.webrtc.org/running-the-demos'>MediaStream enabled</a> and in <a href='http://snapshot.opera.com/labs/camera/'>Opera Labs Camera</a>.", false);
 </script>
-<video id="output" autoplay></video>
 </body>
 
 </html> 

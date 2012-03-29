@@ -1,9 +1,9 @@
-<html> 
- 
-<head> 
-<title>008 | Lightmapped scene | J3D</title> 
+<html>
 
-<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
+<head>
+<title>008 | Lightmapped scene | J3D</title>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 
 <link rel="stylesheet" href="common/common.css"/>
 <script type="text/javascript" src="common/common.js"></script>
@@ -12,272 +12,281 @@
 
 
 <script id="filter" type="x-shader/x-filter">
-	//#name BasicFilter
-	//#author bartekd
-	
-	//#include CommonFilterInclude
-	
-	//#vertex
-	//#include BasicFilterVertex
-	
-	//#fragment
-	uniform sampler2D uTexture;
-	
-	varying vec2 vTextureCoord;
+    //#name BasicFilter
+    //#author bartekd
 
-	void main(void) {
+    //#include CommonFilterInclude
 
-		float m1 = sin(uTime * 2.0 + vTextureCoord.y * 6.0) * cos(uTime * -1.0 + vTextureCoord.x * 4.0) * 0.03;
-		
-		vec4 a = texture2D(uTexture, vTextureCoord + m1 * 0.5);
-		vec4 b = texture2D(uTexture, vTextureCoord + m1);
-		vec4 c = texture2D(uTexture, vTextureCoord + m1 * 1.5);
-		
-		float n = 1.0;//whiteNoise(vTextureCoord, 4.0);
-		
-		vec3 cl = vec3(a.r, b.g, c.b) * n;
+    //#vertex
+    //#include BasicFilterVertex
 
-		gl_FragColor = vec4(cl, 1.0);
-		
-	}
+    //#fragment
+    uniform sampler2D uTexture;
+
+    varying vec2 vTextureCoord;
+
+    void main(void) {
+
+    float m1 = sin(uTime * 2.0 + vTextureCoord.y * 6.0) * cos(uTime * -1.0 + vTextureCoord.x * 4.0) * 0.03;
+
+    vec4 a = texture2D(uTexture, vTextureCoord + m1 * 0.5);
+    vec4 b = texture2D(uTexture, vTextureCoord + m1);
+    vec4 c = texture2D(uTexture, vTextureCoord + m1 * 1.5);
+
+    float n = 1.0;//whiteNoise(vTextureCoord, 4.0);
+
+    vec3 cl = vec3(a.r, b.g, c.b) * n;
+
+    gl_FragColor = vec4(cl, 1.0);
+
+    }
 </script>
 
 <script>
-	var mx = 0, my = 0;	
-	var fps, eye, headlight;
-	var showmaps = true;
-	var moveLeft = 0, moveForward = 0;
-	var post;
-    var isMoving = 0;
-    var skin = 0.3;
+var mx = 0, my = 0;
+var fps, eye, headlight;
+var showmaps = true;
+var moveLeft = 0, moveForward = 0;
+var post;
+var skin = 0.3;
+var gamepad;
 
-    var fv = v3.FORWARD();
-    var bv = v3.FORWARD().neg();
-    var lv = v3.RIGHT().neg();
-    var rv = v3.RIGHT();
+var fv = v3.FORWARD();
+var bv = v3.FORWARD().neg();
+var lv = v3.RIGHT().neg();
+var rv = v3.RIGHT();
 
-    var START;
-	
-	function init() {
+var START;
 
-		if(!checkWebGL()) return;
-		
-		engine = new J3D.Engine();
-		
-		var path = "models/008/";
-		
-		post = new J3D.Postprocess(engine);
-		post.filter = new J3D.ShaderUtil.parseGLSL(document.getElementById("filter").firstChild.nodeValue);
+function init() {
 
-		J3D.Loader.loadJSON(path + "bunker.json", function(jsmeshes) { 
-			J3D.Loader.loadJSON(path + "bunkerScene.json", function(jsscene) {
+    if (!checkWebGL()) return;
 
-                // Set the path variable of the scene, so that it can find texture files
-				jsscene.path = path;
+    engine = new J3D.Engine();
 
-				J3D.Loader.parseJSONScene(jsscene, jsmeshes, engine);
-				fps = engine.scene.find("fps");
-				eye = engine.scene.find("fps/eye");
+    var path = "models/008/";
 
-                headlight = eye.light;
+    post = new J3D.Postprocess(engine);
+    post.filter = new J3D.ShaderUtil.parseGLSL(document.getElementById("filter").firstChild.nodeValue);
 
-				draw();
-			})
-		});
+    J3D.Loader.loadJSON(path + "bunker.json", function(jsmeshes) {
+        J3D.Loader.loadJSON(path + "bunkerScene.json", function(jsscene) {
 
-		document.onmousemove = onMouseMove;
-        document.onmousedown = onMouseDown;
-		document.onkeydown = onKeyDown;
-		document.onkeyup = onKeyUp;
-	}
+            // Set the path variable of the scene, so that it can find texture files
+            jsscene.path = path;
 
-    function onMouseDown(e) {
-        if(eye.light) {
+            J3D.Loader.parseJSONScene(jsscene, jsmeshes, engine);
+            fps = engine.scene.find("fps");
+            eye = engine.scene.find("fps/eye");
+
+            headlight = eye.light;
             eye.light = null;
-        } else {
-            eye.light = headlight;
+
+            draw();
+        })
+    });
+
+    document.onmousemove = onMouseMove;
+
+    document.onmousedown = function(e) {
+        eye.light = headlight;
+    };
+
+    document.onmouseup = function(e) {
+        eye.light = null;
+    };
+
+    document.onkeydown = onKeyDown;
+    document.onkeyup = onKeyUp;
+}
+
+function onKeyDown(e) {
+    switch (e.keyCode) {
+        case 37:
+        case 65:
+            moveLeft = 0.04;
+            break;
+        case 39:
+        case 68:
+            moveLeft = -0.04;
+            break;
+        case 38:
+        case 87:
+            moveForward = 0.04;
+            break;
+        case 40:
+        case 83:
+            moveForward = -0.04;
+            break;
+    }
+}
+
+function onKeyUp(e) {
+    switch (e.keyCode) {
+        case 38:
+        case 40:
+        case 87:
+        case 83:
+            moveForward = 0;
+            break;
+        case 37:
+        case 39:
+        case 65:
+        case 68:
+            moveLeft = 0;
+            break;
+    }
+}
+
+function onMouseMove(e) {
+    mx = (( e.clientX / window.innerWidth  ) * 2 - 1) * Math.PI * -2;
+    my = (( e.clientY / window.innerHeight ) * 2 - 1) * Math.PI * -0.25;
+}
+
+function readGamepadData() {
+
+    if (!navigator.webkitGamepads) {
+        document.getElementById("gamepadInfo").innerHTML = "ursors/WASD: move, mouse: look, click: headlight.<br>Gamepad is not suupported on your browser.<br>";
+        return false;
+    }
+
+    gamepad = navigator.webkitGamepads[0];
+
+    if (!gamepad) {
+        document.getElementById("gamepadInfo").innerHTML = "Cursors/WASD: move, mouse: look, click: headlight.<br>Gamepad supported, connect your device.<br>";
+        return false;
+    } else {
+        document.getElementById("gamepadInfo").innerHTML = "Gamepad connected. You are ready to rock!<br>";
+
+        var deadZone = 0.05;
+        var mul = -0.06;
+
+        mx = gamepad.axes[0];
+        my = gamepad.axes[1];
+
+        moveForward = gamepad.axes[3];
+        moveLeft = gamepad.axes[2];
+
+        if(Math.abs(mx) < deadZone) mx = 0;
+        if(Math.abs(my) < deadZone) my = 0;
+        if(Math.abs(moveForward) < deadZone) moveForward = 0;
+        if(Math.abs(moveLeft) < deadZone) moveLeft = 0;
+
+        mx *= mul;
+        my *= mul;
+        moveForward *= mul;
+        moveLeft *= mul;
+
+        var h = false;
+
+        for (var i = 0; i < gamepad.buttons.length; i++) {
+
+            if (gamepad.buttons[i] && !h) {
+                h = true;
+            }
         }
+
+        eye.light = (h) ? headlight : null;
+
+        return true;
     }
-	
-	function onKeyDown(e) {
-		switch(e.keyCode) {
-			case 37:
-			case 65:
-				moveLeft = 0.04;
-				break;
-			case 39:
-			case 68:
-				moveLeft = -0.04;
-				break;
-			case 38:
-			case 87:
-				moveForward = 0.04;
-				break;
-			case 40:
-			case 83:
-				moveForward = -0.04;
-				break;
-		}
+}
 
-        isMoving++;
-	}
-	
-	function onKeyUp(e) {
-		switch(e.keyCode) {
-			case 38:
-			case 40:
-			case 87:
-			case 83:
-				moveForward = 0;
-				break;
-			case 37:
-			case 39:
-			case 65:
-			case 68:
-				moveLeft = 0;
-				break;
-		}
+function move() {
+    var fv = fps.forward().mul(moveForward).add(fps.left().mul(moveLeft));
+    var cx = new v3(fv.x, 0, 0).norm();
+    var cz = new v3(0, 0, fv.z).norm();
 
-        isMoving--;
-	}
-	
-	function onMouseMove(e) {
-		mx = ( e.clientX / window.innerWidth  ) * 2 - 1;
-		my = ( e.clientY / window.innerHeight ) * 2 - 1;
-	}
+    var rf = new J3D.Ray(fps.position, fv);
+    var rx = new J3D.Ray(fps.position, cx);
+    var rz = new J3D.Ray(fps.position, cz);
 
-    function move2() {
-        var fv = fps.forward().mul(moveForward).add( fps.left().mul(moveLeft) );
-        var cx = new v3(fv.x, 0, 0).norm();
-        var cz = new v3(0, 0, fv.z).norm();
+    var fvh = Number.MAX_VALUE, cxh = Number.MAX_VALUE, czh = Number.MAX_VALUE;
 
-        var rf = new J3D.Ray(fps.position, fv);
-        var rx = new J3D.Ray(fps.position, cx);
-        var rz = new J3D.Ray(fps.position, cz);
+    engine.scene.recurse(function(t) {
+        if (!t.collider) return;
 
-        var fvh = Number.MAX_VALUE, cxh = Number.MAX_VALUE, czh = Number.MAX_VALUE;
+        //var hfi = J3D.Intersection.rayTest(rf, t);
+        var cxi = J3D.Intersection.rayTest(rx, t);
+        var czi = J3D.Intersection.rayTest(rz, t);
 
-        engine.scene.recurse( function(t) {
-            if(!t.collider) return;
+        //if(hfi && hfi > -1) fvh = Math.min(fvh, hfi);
+        if (cxi && cxi > -1) cxh = Math.min(cxh, cxi);
+        if (czi && czi > -1) czh = Math.min(czh, czi);
+    });
 
-            //var hfi = J3D.Intersection.rayTest(rf, t);
-            var cxi = J3D.Intersection.rayTest(rx, t);
-            var czi = J3D.Intersection.rayTest(rz, t);
+    fvh -= skin;
+    fvh = Math.max(0, fvh);
 
-            //if(hfi && hfi > -1) fvh = Math.min(fvh, hfi);
-            if(cxi && cxi > -1) cxh = Math.min(cxh, cxi);
-            if(czi && czi > -1) czh = Math.min(czh, czi);
-        });
+    cxh -= skin;
+    cxh = Math.max(0, cxh);
 
-        fvh -= skin;
-        fvh = Math.max(0, fvh);
+    czh -= skin;
+    czh = Math.max(0, czh);
 
-        cxh -= skin;
-        cxh = Math.max(0, cxh);
+    //if(fvh < fv.mag()) fv.norm().mul(fvh);
+    fv.x = (fv.x > 0) ? Math.min(fv.x, cxh) : Math.max(fv.x, -cxh);
+    fv.z = (fv.z > 0) ? Math.min(fv.z, czh) : Math.max(fv.z, -czh);
 
-        czh -= skin;
-        czh = Math.max(0, czh);
+    fps.position = fps.position.add(fv);
+}
 
-        //if(fvh < fv.mag()) fv.norm().mul(fvh);
-        fv.x = (fv.x > 0) ? Math.min(fv.x, cxh) : Math.max(fv.x, -cxh);
-        fv.z = (fv.z > 0) ? Math.min(fv.z, czh) : Math.max(fv.z, -czh);
+function draw() {
 
-        fps.position = fps.position.add(fv);
+    var isGamepad = readGamepadData();
+
+    if (isGamepad) {
+        fps.rotation.y += mx;
+        eye.rotation.x += my;
+    } else {
+        fps.rotation.y = mx;
+        eye.rotation.x = my;
     }
 
-    function move() {
-            var rp = fps.position;
+    move();
 
-            var rf = new J3D.Ray(rp, fv);
-            var rb = new J3D.Ray(rp, bv);
-            var rl = new J3D.Ray(rp, lv);
-            var rr = new J3D.Ray(rp, rv);
+    var diz = document.getElementById("dizzy");
 
-            var hf = Number.MAX_VALUE, hb = Number.MAX_VALUE, hl = Number.MAX_VALUE, hr = Number.MAX_VALUE;
+    if (diz && diz.checked)
+        post.render();
+    else
+        engine.render();
 
-            engine.scene.recurse( function(t) {
-                if(!t.collider) return;
-
-                var hfi = J3D.Intersection.rayTest(rf, t);
-                var hbi = J3D.Intersection.rayTest(rb, t);
-                var hli = J3D.Intersection.rayTest(rl, t);
-                var hri = J3D.Intersection.rayTest(rr, t);
-
-                if(hfi && hfi > -1) hf = Math.min(hf, hfi);
-                if(hbi && hbi > -1) hb = Math.min(hb, hbi);
-                if(hli && hli > -1) hl = Math.min(hl, hli);
-                if(hri && hri > -1) hr = Math.min(hr, hri);
-            });
-
-            hf -= skin;
-            hf = Math.max(0, hf);
-
-            hb -= skin;
-            hb = Math.max(0, hb);
-
-            hl -= skin;
-            hl = Math.max(0, hl);
-
-            hr -= skin;
-            hr = Math.max(0, hr);
-
-            var m = fps.forward().mul(moveForward).add( fps.left().mul(moveLeft) );
-
-            m.x = Math.min(m.x, hr);
-            m.x = Math.max(m.x, -hl);
-
-            m.z = Math.min(m.z, hb);
-            m.z = Math.max(m.z, -hf);
-
-            fps.position = fps.position.add(m);
-    }
-
-	function draw() {
-
-        fps.rotation.y = -mx * Math.PI * 2;
-		eye.rotation.x = -my * Math.PI * .25;
-
-        if(isMoving > 0) move2();
-
-		if(document.getElementById("dizzy").checked)
-            post.render();
-		else
-            engine.render();
-
-        requestAnimationFrame(draw);
-	}
+    requestAnimationFrame(draw);
+}
 
 
-		
 </script>
 
-</head> 
+</head>
 
 <body onload="init();">
-	<script>
-		setLabels("008. Lightmapped scene");
-	</script>
-		<div id="details">
-		Lightmapped scene built with Cinema4D/Unity3D.<br>
-        Cursor keys/WASD to move, mouse to look around.<br>
-        Mouse click to toggle head light.<br>
-		<input type='checkbox' id='dizzy'> Make me dizzy
-	</div>
-	
+<script>
+    setLabels("008. Lightmapped scene");
+</script>
+<div id="details">
+    Lightmapped scene built with Cinema4D/Unity3D.<br>
+    <span id="gamepadInfo"></span>
+    <input type='checkbox' id='dizzy'> Make me dizzy
+</div>
+
 <script type="text/javascript">
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-24294554-1']);
-  _gaq.push(['_trackPageview']);
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-24294554-1']);
+    _gaq.push(['_trackPageview']);
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+    (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+    })();
 
 </script>
 
-</body> 
+</body>
 
 </html> 
