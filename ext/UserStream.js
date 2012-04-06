@@ -32,7 +32,7 @@ function UserStream(_callback, _settings) {
     }
 
     if (n.getUserMedia) {
-        n.getUserMedia({video: true, audio: false}, onSuccess, onError);
+        n.getUserMedia({video: true, audio: false, captureDelay:2}, onSuccess, onError);
     } else if (n.webkitGetUserMedia) {
         is_webkit = true;
         n.webkitGetUserMedia('video', onSuccess, onError);

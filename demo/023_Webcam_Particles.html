@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>022 | User stream | J3D</title>
+    <title>023 | Webcam + particles | J3D</title>
 
     <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 
@@ -22,7 +22,7 @@
                 return;
 
             engine = new J3D.Engine();
-            J3D.Loader.loadGLSL("shaders/VideoEffect.glsl", setupScene);
+            J3D.Loader.loadGLSL("shaders/WebcamParticle.glsl", setupScene);
         }
 
         function setupScene(p) {
@@ -37,6 +37,26 @@
 
             post = new J3D.Postprocess(engine);
             post.filter = postshader;
+
+            var resX = 320, resY = 240;
+            var resMul = 0.6;
+
+            resX *= resMul;
+            resY *= resMul;
+
+            var cd = [], ns = [];
+            for (var i = 0; i < resX; i++) {
+                for(var j = 0; j < resY; j++) {
+                    cd.push((i / resX) * 2 - 1, (j / resY) * 2 - 1);
+                    ns.push( (1.0 + Math.random()) / 10, (Math.random() * 2 - 1) * 32);
+                }
+            }
+
+            post.geometry = new J3D.Geometry();
+            post.geometry.addArray("aParticle", new Float32Array(cd), 2);
+            post.geometry.addArray("aNormal", new Float32Array(ns), 2);
+            post.drawMode = gl.POINTS;
+
             post.render = function() {
                 J3D.Time.tick();
                 ctex.update();
@@ -66,7 +86,7 @@
 
 <body>
 <script>
-    setLabels("022. User stream example", "Works in Chrome with <a href='http://www.webrtc.org/running-the-demos'>MediaStream enabled</a> and in <a href='http://snapshot.opera.com/labs/camera/'>Opera Labs Camera</a>.");
+    setLabels("023. Webcam + particles", "Works in Chrome with <a href='http://www.webrtc.org/running-the-demos'>MediaStream enabled</a> and in <a href='http://snapshot.opera.com/labs/camera/'>Opera Labs Camera</a>.");
 </script>
 </body>
 
