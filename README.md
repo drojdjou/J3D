@@ -61,3 +61,5 @@ J3D was created by [Bartek Drozdz](http://www.everyday3d.com/). You can contact 
 (http://www.everyday3d.com/j3d/demo/019_Terrain.html)
 [![Webcam texture (Canary, Opera Labs)](http://www.everyday3d.com/j3d/thumbs/023_webrtc.jpg)]
 (http://www.everyday3d.com/j3d/demo/022_Webcam.html)
+[![Webcam particles (Canary, Opera Labs)](http://www.everyday3d.com/j3d/thumbs/024_webcamParticles.jpg)]
+(http://www.everyday3d.com/j3d/demo/023_Webcam_Particles.html)

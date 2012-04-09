@@ -32,10 +32,6 @@ varying float time;
 varying vec2 vTextureCoord;
 varying float bar;
 
-float brightness(vec3 c) {
-    return c.r * 0.2126 + c.g * 0.7152 + c.b * 0.0722;
-}
-
 void main(void) {
 	float b = fract(bar);
 	b = (b > 0.5) ? 0.0 : 1.0;

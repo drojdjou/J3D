@@ -37,24 +37,29 @@
 
             post = new J3D.Postprocess(engine);
             post.filter = postshader;
+            post.filter.matrixTexture = new J3D.Texture("models/textures/martixAlphabet.png");
 
-            var resX = 320, resY = 240;
-            var resMul = 0.6;
+            var resX = window.innerWidth / 10.0;
+            var resY = window.innerHeight / 10.0;
 
-            resX *= resMul;
-            resY *= resMul;
+
+            var corr = (1/resX);
 
             var cd = [], ns = [];
             for (var i = 0; i < resX; i++) {
+                var rowRandom = Math.random();
                 for(var j = 0; j < resY; j++) {
-                    cd.push((i / resX) * 2 - 1, (j / resY) * 2 - 1);
-                    ns.push( (1.0 + Math.random()) / 10, (Math.random() * 2 - 1) * 32);
+                    cd.push((i / resX) * 2 - 1 + corr, (j / resY) * 2 - 1 + corr);
+                    ns.push( rowRandom, Math.random() );
                 }
             }
 
             post.geometry = new J3D.Geometry();
             post.geometry.addArray("aParticle", new Float32Array(cd), 2);
-            post.geometry.addArray("aNormal", new Float32Array(ns), 2);
+            post.geometry.addArray("aRandom", new Float32Array(ns), 2);
+
+            post.geometry.setTransparency(true, gl.SRC_ALPHA, gl.DST_ALPHA);
+            
             post.drawMode = gl.POINTS;
 
             post.render = function() {
