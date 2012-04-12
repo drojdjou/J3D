@@ -65,10 +65,13 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 		that.src = document.createElement('video');
 	    that.src.src = src;  
 		that.src.preload = 'auto';
+
+//        that.src.addEventListener('loadedmetadata', function(t) {
+//        });
+
 		that.src.addEventListener( "canplaythrough", function() { 
 			that.src.play();
 			setupTexture();
-			
 		});
 		
 		that.src.load();

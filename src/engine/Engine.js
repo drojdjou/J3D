@@ -6,8 +6,9 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
     var cv = (canvas) ? canvas : document.createElement("canvas");
     var isExternalCanvas = true;
 
+    this.resolution = (j3dSettings && j3dSettings.resolution) ? j3dSettings.resolution : 1;
+
     if (!canvas) {
-        this.resolution = (j3dSettings && j3dSettings.resolution) ? j3dSettings.resolution : 1;
         isExternalCanvas = false;
         document.body.appendChild(cv);
     }
@@ -37,26 +38,33 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
 
     this.gl = gl;
 
-    var resize = function() {
-        cv.width = window.innerWidth / that.resolution;
-        cv.height = window.innerHeight / that.resolution;
+    this.resize = function(width, height) {
+        var w = (width) ?  width : window.innerWidth;
+        var h = (height) ? height : window.innerHeight;
 
-        cv.style.width = window.innerWidth + "px";
-        cv.style.height = window.innerHeight + "px";
+        cv.width = w / this.resolution;
+        cv.height = h / this.resolution;
+
+        cv.style.width = w + "px";
+        cv.style.height = h + "px";
 
         gl.viewportWidth = cv.width;
         gl.viewportHeight = cv.height;
 
         gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
 
-        if(that.camera) that.camera.camera.onResize();
+        if(this.camera) {
+            this.camera.camera.onResize();
+        }
     }
 
-
+    var autoResize = function() {
+        that.resize();
+    }
 
     if (!isExternalCanvas) {
-        resize();
-        window.addEventListener("resize", resize);
+        this.resize();
+        window.addEventListener("resize", autoResize);
     }
 }
 

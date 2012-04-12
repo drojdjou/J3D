@@ -33,22 +33,26 @@ J3D.FrameBuffer = function(width, height) {
     gl.bindRenderbuffer(gl.RENDERBUFFER, null);
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 
-    var resize = function() {
-        that.width = gl.viewportWidth;
-        that.height = gl.viewportHeight;
+    this.resize = function(w, h) {
+        this.width = (w) ? w : gl.viewportWidth;
+        this.height = (h) ? h : gl.viewportHeight;
 
-        gl.bindTexture(gl.TEXTURE_2D, that.texture);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, that.width, that.height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+        gl.bindTexture(gl.TEXTURE_2D, this.texture);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, this.width, this.height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
 
-        gl.bindRenderbuffer(gl.RENDERBUFFER, that.depthBuffer);
-        gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, that.width, that.height);
+        gl.bindRenderbuffer(gl.RENDERBUFFER, this.depthBuffer);
+        gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, this.width, this.height);
 
         gl.bindTexture(gl.TEXTURE_2D, null);
         gl.bindRenderbuffer(gl.RENDERBUFFER, null);
     }
 
+    var autoResize = function() {
+        that.resize();
+    }
+
     if (!width) {
-        window.addEventListener("resize", resize);
+        window.addEventListener("resize", autoResize);
     }
 }
 

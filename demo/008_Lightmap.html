@@ -99,22 +99,23 @@ function init() {
     document.onkeydown = onKeyDown;
     document.onkeyup = onKeyUp;
 
-    navigator.pointer = navigator.pointer || navigator.mozPointer || navigator.webkitPointer;
+//    navigator.pointer = navigator.pointer || navigator.mozPointer || navigator.webkitPointer;
 
     document.addEventListener('webkitfullscreenchange', function(e) {
         console.log("document.webkitIsFullScreen: " + document.webkitIsFullScreen);
-        if (document.webkitIsFullScreen) {
-            navigator.pointer.lock(document.body, function() {
-                console.log("Ready to play");
-            }, function() {
-                console.log("Mouse lock was not successful.");
-            });
-        }
+        // Can't seem to make this work!
+//        if (document.webkitIsFullScreen) {
+//            navigator.pointer.lock(document.body, function() {
+//                console.log("Ready to play");
+//            }, function() {
+//                console.log("Mouse lock was not successful.");
+//            });
+//        }
     }, false);
 
-    document.body.addEventListener('webkitpointerlocklost', function(e) {
-        console.log('Pointer lock lost!');
-    }, false);
+//    document.body.addEventListener('webkitpointerlocklost', function(e) {
+//        console.log('Pointer lock lost!');
+//    }, false);
 }
 
 function onKeyDown(e) {
@@ -135,13 +136,13 @@ function onKeyDown(e) {
         case 83:
             moveForward = -0.04;
             break;
-        case 32:
-            navigator.pointer.lock(document.body, function() {
-                console.log("Ready to play");
-            }, function() {
-                console.log("Mouse lock was not successful.");
-            });
-            break;
+//        case 32:
+//            navigator.pointer.lock(document.body, function() {
+//                console.log("Ready to play");
+//            }, function() {
+//                console.log("Mouse lock was not successful.");
+//            });
+//            break;
     }
 }
 
