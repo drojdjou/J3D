@@ -118,7 +118,6 @@
 
 		post = new J3D.Postprocess(engine);
 		post.filter = new J3D.ShaderUtil.parseGLSL(document.getElementById("filter").firstChild.nodeValue);
-        post.filter.wsize = [window.innerWidth, window.innerHeight];
 
 		draw();
 	}
@@ -129,6 +128,7 @@
 		cube.rotation.x += Math.PI * J3D.Time.deltaTime / 12000;
 		cube.rotation.y -= Math.PI * J3D.Time.deltaTime / 6000;
 
+        post.filter.wsize = [window.innerWidth, window.innerHeight];
         post.filter.cellsize = props.cellsize;
         post.filter.roundness = props.roundness;
         post.filter.softness = props.softness;

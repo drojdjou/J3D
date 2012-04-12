@@ -98,6 +98,23 @@ function init() {
 
     document.onkeydown = onKeyDown;
     document.onkeyup = onKeyUp;
+
+    navigator.pointer = navigator.pointer || navigator.mozPointer || navigator.webkitPointer;
+
+    document.addEventListener('webkitfullscreenchange', function(e) {
+        console.log("document.webkitIsFullScreen: " + document.webkitIsFullScreen);
+        if (document.webkitIsFullScreen) {
+            navigator.pointer.lock(document.body, function() {
+                console.log("Ready to play");
+            }, function() {
+                console.log("Mouse lock was not successful.");
+            });
+        }
+    }, false);
+
+    document.body.addEventListener('webkitpointerlocklost', function(e) {
+        console.log('Pointer lock lost!');
+    }, false);
 }
 
 function onKeyDown(e) {
@@ -117,6 +134,13 @@ function onKeyDown(e) {
         case 40:
         case 83:
             moveForward = -0.04;
+            break;
+        case 32:
+            navigator.pointer.lock(document.body, function() {
+                console.log("Ready to play");
+            }, function() {
+                console.log("Mouse lock was not successful.");
+            });
             break;
     }
 }
@@ -167,10 +191,10 @@ function readGamepadData() {
         moveForward = gamepad.axes[3];
         moveLeft = gamepad.axes[2];
 
-        if(Math.abs(mx) < deadZone) mx = 0;
-        if(Math.abs(my) < deadZone) my = 0;
-        if(Math.abs(moveForward) < deadZone) moveForward = 0;
-        if(Math.abs(moveLeft) < deadZone) moveLeft = 0;
+        if (Math.abs(mx) < deadZone) mx = 0;
+        if (Math.abs(my) < deadZone) my = 0;
+        if (Math.abs(moveForward) < deadZone) moveForward = 0;
+        if (Math.abs(moveLeft) < deadZone) moveLeft = 0;
 
         mx *= mul;
         my *= mul;
@@ -267,7 +291,8 @@ function draw() {
 <div id="details">
     Lightmapped scene built with Cinema4D/Unity3D.<br>
     <span id="gamepadInfo"></span>
-    <input type='checkbox' id='dizzy'> Make me dizzy
+    <input type='checkbox' id='dizzy'> Make me dizzy<br>
+    <button onclick="document.body.webkitRequestFullScreen();">Full screen!</button>
 </div>
 
 <script type="text/javascript">
