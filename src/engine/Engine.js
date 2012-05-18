@@ -17,7 +17,7 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
         gl = cv.getContext("experimental-webgl", webglSettings);
     }
     catch (e) {
-        j3dlog("ERROR. Getting webgl context failed!");
+        throw J3D.ERRORS.NO_WEBGL_CONTEXT;
         return;
     }
 
@@ -38,7 +38,15 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
 
     this.gl = gl;
 
+    this.destroy = function() {
+        window.removeEventListener("resize", autoResize);
+        gl = null;
+        document.body.removeChild(cv);
+    }
+
     this.resize = function(width, height) {
+        if(!gl || gl == undefined) return;
+
         var w = (width) ?  width : window.innerWidth;
         var h = (height) ? height : window.innerHeight;
 
@@ -76,6 +84,8 @@ J3D.Engine.prototype.render = function(dontClear) {
     J3D.Time.tick();
 
     if (!dontClear) gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    if (!this.camera) throw J3D.ERRORS.NO_CAMERA;
 
     if (this.scene.numChildren > 0) this.renderScene();
 }

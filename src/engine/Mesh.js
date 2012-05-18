@@ -43,7 +43,7 @@ J3D.Mesh = function(source) {
     for (var attr in source) {
         switch (attr) {
             case "vertices":
-                this.vertexPositionBuffer = this.addArray("aVertexPosition", new Float32Array(source[attr]), 3);
+                this.vertexPositionBuffer = this.addArray("aVertexPosition", new Float32Array(source[attr]), 3, gl.DYNAMIC_DRAW);
                 break;
             case "colors":
                 if (source[attr].length > 0) this.addArray("aVertexColor", new Float32Array(source[attr]), 4);

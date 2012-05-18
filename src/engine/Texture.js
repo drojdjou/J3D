@@ -105,17 +105,18 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 		that.src = source;
 		setupTexture();
 	} else if(source.src) {
-        /** Experimental support for user stream **/
-        this.isVideo = true;
+        that.isVideo = true;
         that.src = source;
         that.src.addEventListener( "canplaythrough", function() {
             setupTexture();
         });
+    } else {
+        j3dlog("Video format not recognized");
     }
 }
 
-J3D.Texture.prototype.update = function() {
-	if(!this.loaded || !this.isVideo) return;
+J3D.Texture.prototype.update = function(force) {
+	if(!force && (!this.loaded || !this.isVideo)) return;
 	gl.bindTexture(gl.TEXTURE_2D, this.tex);
 	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, this.src);
 	gl.bindTexture(gl.TEXTURE_2D, null);

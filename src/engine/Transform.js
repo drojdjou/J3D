@@ -43,7 +43,7 @@ J3D.Transform = function(n, u) {
 		for (var i = 0; i < arguments.length; i++) {
 			var t = arguments[i];
 			if(!fa) fa = t;
-			children.push(t);
+			if (children.indexOf(t) == -1) children.push(t);
 			t.parent = that;
 			that.numChildren = children.length;
 		}
@@ -176,12 +176,13 @@ J3D.Transform.prototype.getTileOffset = function() {
     return t.concat(o);
 }
 
-J3D.Transform.prototype.find = function(p) {
-
+J3D.Transform.prototype.find = function(path) {
+    var p = path.split("/");
+    
     for (var i = 0; i < this.numChildren; i++) {
         if (this.childAt(i).name == p[0]) {
             if (p.length == 1) return this.childAt(i);
-            else return this.childAt(i).find(p.slice(1));
+            else return this.childAt(i).find(p.slice(1).join("/"));
         }
     }
 

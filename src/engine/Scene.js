@@ -3,7 +3,7 @@ J3D.Scene = function() {
     var children = [];
 
     this.ambient = J3D.Color.black;
-    this.numChildren;
+    this.numChildren = 0;
     this.skybox;
 
     this.add = function() {
@@ -11,7 +11,7 @@ J3D.Scene = function() {
         for (var i = 0; i < arguments.length; i++) {
             var t = arguments[i];
             if (!fa) fa = t;
-            children.push(t);
+            if (children.indexOf(t) == -1) children.push(t);
             t.parent = null;
             that.numChildren = children.length;
         }
@@ -66,7 +66,7 @@ J3D.Scene.prototype.find = function(path) {
     for (var i = 0; i < this.numChildren; i++) {
         if (this.childAt(i).name == p[0]) {
             if (p.length == 1) return this.childAt(i);
-            else return this.childAt(i).find(p.slice(1));
+            else return this.childAt(i).find(p.slice(1).join("/"));
         }
     }
 

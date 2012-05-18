@@ -218,7 +218,7 @@ J3D.ShaderSource.Reflective = [
 	"void main(void) {",
 	"gl_Position = mvpMatrix() * vec4(aVertexPosition, 1.0);",
 	"vec3 normal = normalize(nMatrix * aVertexNormal);",
-	"vec3 incident = normalize( (vec4(aVertexPosition, 1.0) * mMatrix).xyz - uEyePosition);",
+	"vec3 incident = normalize( (mMatrix * vec4(aVertexPosition, 1.0)).xyz - uEyePosition);",
 	"refVec = reflect(incident, normal);",
 	"}",
 

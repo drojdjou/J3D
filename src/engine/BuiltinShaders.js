@@ -45,7 +45,9 @@ J3D.BuiltinShaders = (function() {
 	
 	shaders.Normal2Color = J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Normal2Color);
 
-    shaders.Selflit = J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Selflit);
+    var s = J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Selflit);
+    s.color = J3D.Color.white;
+    shaders.Selflit = s;
 
 	return { shaders:shaders, fetch:fetch };
 }());
