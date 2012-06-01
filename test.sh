@@ -1,1 +1,0 @@
-java -jar tools/test/JsTestDriver.jar --tests all --captureConsole --verbose --reset

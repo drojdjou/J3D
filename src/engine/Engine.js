@@ -26,6 +26,7 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
     gl.enable(gl.CULL_FACE);
     gl.frontFace(gl.CW);
 
+    if(typeof(J3D.BuiltinShaders) == "function") J3D.BuiltinShaders = J3D.BuiltinShaders();
     this.shaderAtlas = new J3D.ShaderAtlas();
     this.scene = new J3D.Scene();
     this.camera; // it is a J3D.Transform

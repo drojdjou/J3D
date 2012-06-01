@@ -1,4 +1,4 @@
-TestCase("EngineTest_DefaultCanvas", {
+TestCase("engine_defcanvas", {
 
     setUp:function() {
         this.engine = new J3D.Engine();
@@ -21,13 +21,21 @@ TestCase("EngineTest_DefaultCanvas", {
     }
 });
 
-TestCase("SceneTests", {
+TestCase("nowebgl", {
+    testNowebgl:function() {
+         assertEquals("Dummy test failed!", 1, 1);
+    }
+})
+
+TestCase("scene", {
 
     setUp:function() {
         this.engine = new J3D.Engine();
     },
 
     testScene:function() {
+        assertNotUndefined("engine was not initialized", this.engine);
+        
         assertEquals("Wrong number of children", 0, this.engine.scene.numChildren);
 
         var t = new J3D.Transform();

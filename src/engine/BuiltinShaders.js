@@ -1,4 +1,4 @@
-J3D.BuiltinShaders = (function() {
+J3D.BuiltinShaders = function() {
 	
 	var shaders = {};
 
@@ -50,4 +50,4 @@ J3D.BuiltinShaders = (function() {
     shaders.Selflit = s;
 
 	return { shaders:shaders, fetch:fetch };
-}());
+};
