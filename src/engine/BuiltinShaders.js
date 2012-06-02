@@ -4,7 +4,7 @@ J3D.BuiltinShaders = function() {
 
 	var fetch = function(n) {
 		if (!shaders[n]) {
-			j3dlog("ERROR. Built-in shader " + n + " doesn't exist");
+			throw J3D.ERRORS.NO_BUILTIN_SHADER + n;
 			return null;
 		} else {
 			return shaders[n].clone();

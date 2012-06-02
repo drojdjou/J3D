@@ -69,11 +69,10 @@ J3D.Mesh = function(source) {
                 if (source[attr].length > 0) this.addElement(new Uint16Array(source[attr]));
                 break;
             case "tangents":
-                j3dlog("Found tangents data: " + source[attr].length);
                 if (source[attr].length > 0) this.addArray("aVertexTangent", new Float32Array(source[attr]), 4);
                 break;
             default:
-                j3dlog("WARNING! Unknown attribute: " + attr);
+                throw "WARNING! Unknown attribute in geometry: " + attr;
                 break;
         }
     }

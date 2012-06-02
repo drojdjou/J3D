@@ -138,10 +138,10 @@ J3D.Engine.prototype.renderScene = function() {
         this.renderObject(t);
     }
 
-    // #DEBUG Monitor the amount of shaders created
-    // j3dlog( this.shaderAtlas.shaderCount );
+    // #DEBUG Monitor the amount of shaders created (TODO: create a test case for that)
+    // console.log( this.shaderAtlas.shaderCount );
 
-    // gl.flush();
+    gl.flush();
 }
 
 J3D.Engine.prototype.renderObject = function(t) {

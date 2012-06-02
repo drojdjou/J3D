@@ -10,7 +10,6 @@ J3D.ShaderAtlas.prototype.compileShaderSource = function(name, src, type, meta){
 	var ci = "";
 	if(meta.includes && meta.includes.length > 0) {
 		for(var i = 0; i < meta.includes.length; i++) {
-//			j3dlog("Adding common include: " + meta.includes[i]);
 			ci += J3D.ShaderSource[meta.includes[i]];
 		}
 	}
@@ -21,7 +20,6 @@ J3D.ShaderAtlas.prototype.compileShaderSource = function(name, src, type, meta){
 		var vi = "";
 		if(meta.vertexIncludes && meta.vertexIncludes.length > 0) {
 			for(var i = 0; i < meta.vertexIncludes.length; i++) {
-//				j3dlog("Adding vert include: " + meta.vertexIncludes[i])
 				vi += J3D.ShaderSource[meta.vertexIncludes[i]];
 			}
 		}
@@ -30,7 +28,6 @@ J3D.ShaderAtlas.prototype.compileShaderSource = function(name, src, type, meta){
 		var fi = "";
 		if(meta.fragmentIncludes && meta.fragmentIncludes.length > 0) {
 			for(var i = 0; i < meta.fragmentIncludes.length; i++) {
-//				j3dlog("Adding frag include: " + meta.fragmentIncludes[i]);
 				fi += J3D.ShaderSource[meta.fragmentIncludes[i]];
 			}
 		}
@@ -42,7 +39,7 @@ J3D.ShaderAtlas.prototype.compileShaderSource = function(name, src, type, meta){
     gl.compileShader(shader);
  
     if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-		j3dlog("ERROR. Shader compile error: " + gl.getShaderInfoLog(shader));
+		throw J3D.ERRORS.SHADER_COMPILE_ERROR + gl.getShaderInfoLog(shader);
     }
 	
 	this.programs[name] = shader;

@@ -38,7 +38,7 @@ J3D.ShaderUtil.setLights = function(shader, lights) {
 		} else if(shader.uniforms["uLight[" + i + "].type"]) {
 			gl.uniform1i(shader.uniforms["uLight[" + i + "].type"].location, J3D.NONE);
 		} else {
-//			j3dlog("Light not set " + i);
+            // light not set
 		}
 	}
 }
@@ -173,7 +173,6 @@ J3D.ShaderUtil.parseGLSL = function(source){
 		
 		if(p > -1) {
 			var d = line.substring(p + tag.length + 1);
-//			j3dlog("Tag: " + tag + " (" + section + ") Value: " + d);
 			return d;
 		}
 		

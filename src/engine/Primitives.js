@@ -173,8 +173,6 @@ J3D.Primitive.SingleTextureSkybox = function(segmentsWidth, segmentsHeight) {
 
             var vx = new v3(xp, yp, zp);
 
-            j3dlog("Skybox v 03");
-
             var ad = Math.max( Math.max(vx.x, vx.y), vx.z );
             var ad2 = Math.min( Math.min(vx.x, vx.y), vx.z );
 

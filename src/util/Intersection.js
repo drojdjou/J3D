@@ -2,7 +2,7 @@ J3D.Intersection = {};
 
 J3D.Intersection.rayTest = function(r, t) {
     if(!t.collider) {
-        j3dlog("Intersection test failed. " + t.name + " has no collider.");
+        console.log("Intersection test failed. " + t.name + " has no collider.");
         return false;
     }
 
@@ -14,14 +14,14 @@ J3D.Intersection.rayTest = function(r, t) {
         case J3D.Collider.MESH:
             return J3D.Intersection.rayMesh(r, t);
         default:
-            j3dlog("Unrecognized collider type");
+            throw J3D.ERRORS.UNKNOWN_COLLIDER_TYPE + t.collider.type;
             return false;
     }
 }
 
 J3D.Intersection.rayMesh = function(r, t) {
     if (!t.collider.mesh || !t.collider.mesh.vertexPositionBuffer) {
-        j3dlog("Intersection test failed. " + t.name + " has no mesh defined or no vertex data in the mesh.");
+        console.log("Intersection test failed. " + t.name + " has no mesh defined or no vertex data in the mesh.");
         return false;
     }
 
@@ -62,7 +62,6 @@ J3D.Intersection.rayTriangle = function(r, p0, p1, p2) {
 
     var dot = v3.dot( n, r.localDirection );
     if ( !( dot < 0 ) ) {
-//        j3dlogOnce("dot < 0");
         return false;
     }
 
@@ -70,7 +69,6 @@ J3D.Intersection.rayTriangle = function(r, p0, p1, p2) {
     var t = d - v3.dot( n, r.localOrigin );
 
     if ( !( t <= 0 ) ) {
-//        j3dlogOnce("!(t <= 0)");
         return false;
     }
 
@@ -133,32 +131,26 @@ J3D.Intersection.rayTriangle = function(r, p0, p1, p2) {
 
     var temp = u1 * v2 - v1 * u2;
     if( !(temp != 0) ) {
-//        j3dlogOnce("!(temp != 0)");
         return false;
     }
-    //console.log("temp: " + temp);
+
     temp = 1 / temp;
 
     var alpha = ( u0 * v2 - v0 * u2 ) * temp;
     if( !(alpha >= 0) ) {
-//        j3dlogOnce("!(alpha >= 0)");
+
         return false;
     }
-    //console.log("alpha: " + alpha);
 
     var beta = ( u1 * v0 - v1 * u0 ) * temp;
     if( !(beta >= 0) ) {
-//        j3dlogOnce("!(beta >= 0)");
         return false;
     }
-    //console.log("beta: " + beta);
 
     var gamma = 1 - alpha - beta;
     if( !(gamma >= 0) ) {
-//        j3dlogOnce("!(gamma >= 0)");
         return false;
     }
-    //console.log("gamma: " + gamma);
 
     return t;
 
@@ -166,7 +158,7 @@ J3D.Intersection.rayTriangle = function(r, p0, p1, p2) {
 
 J3D.Intersection.raySphere = function(r, t) {
     if (!t.collider.radius) {
-        j3dlog("Intersection test failed. " + t.name + " has no radius defined.");
+        console.log("Intersection test failed. " + t.name + " has no radius defined.");
         return false;
     }
 
@@ -190,7 +182,7 @@ J3D.Intersection.raySphere = function(r, t) {
 
 J3D.Intersection.rayBox = function(r, t) {
     if (!t.collider.box) {
-        j3dlog("Intersection test failed. " + t.name + " has no box defined.");
+        console.log("Intersection test failed. " + t.name + " has no box defined.");
         return false;
     }
 

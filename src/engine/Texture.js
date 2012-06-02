@@ -18,8 +18,6 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 	}
 		
 	var setupTexture = function(){
-		//j3dlog(that.src.width + " x " + that.src.height + " isPOT: " + isPOT(that.src.width, that.src.height));
-		
 		var p = that.src && isPOT(that.src.width, that.src.height);
 
        if(!that.wrapMode) that.wrapMode = params.wrapMode || (p) ? gl.REPEAT : gl.CLAMP_TO_EDGE;
@@ -36,7 +34,9 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, that.wrapMode);
 			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, that.wrapMode);
 		} else {
-			if(that.wrapMode != gl.CLAMP_TO_EDGE) j3dlog("WARNING! Texture: " + source + " : only CLAMP_TO_EDGE wrapMode is supported for non-power-of-2 textures.");
+			if(that.wrapMode != gl.CLAMP_TO_EDGE) {
+                console.log("WARNING! Texture: " + source + " : only CLAMP_TO_EDGE wrapMode is supported for non-power-of-2 textures.");
+            }
 			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
 			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 		}
@@ -79,9 +79,7 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 
 	if (typeof(source) == "string") {
 		var ext = source.substring(source.lastIndexOf(".") + 1).toLowerCase();
-		
-		//j3dlog("Extension: " + ext);
-		
+
 		switch(ext) {
 			case "jpg":
 			case "png":
@@ -97,7 +95,7 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
                 // Assume it's a URL to a dynamic image
                 if(params.image) loadImage(source);
                 else if(params.video) loadVideo(source);
-                else j3dlog("Texture format not detected from source path and not specifed in params.")
+                else console.log("Texture format not detected from source path and not specifed in params.")
                 break;
 		}
 		
@@ -111,7 +109,7 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
             setupTexture();
         });
     } else {
-        j3dlog("Video format not recognized");
+        console.log("Video format not recognized");
     }
 }
 

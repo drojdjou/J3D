@@ -49,7 +49,6 @@ J3D.Shader.prototype.setup = function(shader, transform) {
 		}
 	}
 	this.reloadStaticUniforms = false;
-//	j3dlogOnce("Shader " + this.name + " has " + t + " dynamic uniforms");
 }
 
 J3D.Shader.prototype.clone = function() {
@@ -78,7 +77,5 @@ J3D.Shader.prototype.clone = function() {
 	
 	c.reloadStaticUniforms = true;
 
-    //j3dlog(this.name + " cloned to " + c.name);
-	
 	return c;
 }
