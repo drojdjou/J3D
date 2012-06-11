@@ -1,5 +1,11 @@
+/**
+    @class Utility for loading assets such as JSON scene and mesh files as well as GLSL shader files.
+ */
 J3D.Loader = {};
 
+/**
+ * @static Loads a JSON file (simple wrapper around XMLHttpRequest used by other loader functions)
+ */
 J3D.Loader.loadJSON = function(path, onLoadedFunc){
 
 	var request = new XMLHttpRequest();
@@ -14,6 +20,15 @@ J3D.Loader.loadJSON = function(path, onLoadedFunc){
 	request.send();
 }
 
+/**
+ * @static Parses a set of 2 JSON files - the scene file and the mesh file and populates the scene with it.
+ *
+ * @param jscene The JSON scene file (usually exported from the Unity3D)
+ *
+ * @param jmeshes The JSON meshesh file
+ *
+ * @param engine The current instance of J3D.Engine
+ */
 J3D.Loader.parseJSONScene = function(jscene, jmeshes, engine) {
 	
 	var ambient = new J3D.Transform();
@@ -158,6 +173,15 @@ J3D.Loader.v3FromArray = function(arr){
 	return new v3(arr[0], arr[1], arr[2]);
 }
 
+/**
+ * @static Loads a GLSL shader file
+ *
+ * @param path The path to the GLS file
+ *
+ * @param onLoadedFunc The callback function for when it's loaded.
+ *
+ * @returns {J3D.Shader} The GLSL file is parsed with {@link J3D.ShaderUtil.parseGLSL} and the resulting instance of J3D.Shader is returned.
+ */
 J3D.Loader.loadGLSL = function(path, onLoadedFunc){
 	var request = new XMLHttpRequest();
 	request.open("GET", path);

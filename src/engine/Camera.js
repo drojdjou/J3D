@@ -1,12 +1,16 @@
-// Constructor parameters for perspective: { type, fov, near, far, aspect }
-// Constructor parameters for ortho: { type, left, right, top, bottom, near, far }
-
-
 J3D.PERSPECTIVE = 0; // <- if not provided, this one is default
 J3D.ORTHO = 1;
 
+/**
+    Creates a new Camera
 
+    @class A camera represents a point of view. A camera is typically attached to a transform, and moving/rotting that transform allows to manipulate that point of view.
+ 
+    @params params Object, a set of parameters to seup the camera.
+ */
 J3D.Camera = function(params) {
+    // Constructor parameters for perspective: { type, fov, near, far, aspect }
+    // Constructor parameters for ortho: { type, left, right, top, bottom, near, far }
     that = this;
 
     if (!params) params = {};

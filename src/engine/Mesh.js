@@ -1,13 +1,19 @@
-/*
- *  A Mesh is a structured geometry coming from and external source (either a JSON file or generated with code)
- *  
- *  Typically a Mesh is designed to hold data about 3D objects. It has a primary set of attributes that will be interpreted by name:
- *  vertices (3 x float), colors (4 x float), normals (3 x float), uv1 (2 x float), uv2 (2 x float) - none is mandatory.
- * 
- *  If an attribute named "tris" is present it will be interpreted as the elements array.
- *  
- *  WARNING: Other attributes in the "source" will be ignored.
- *  Mesh extends Geometry, so more attributes can be added manually if necessary.
+/**
+    Creates a new Geometry
+
+    @class <p>A Mesh is a structured geometry coming from and external source (either a JSON file or generated with code). Typically a Mesh is designed to hold data about 3D objects. It has a primary set of attributes that will be interpreted by name:
+    <ul>
+    <li>vertices (3 x float)</li>
+    <li>colors (4 x float)</li>
+    <li>normals (3 x float)</li>
+    <li>uv1 (2 x float)</li>
+    <li>uv2 (2 x float)</li>
+    </ul>
+
+    No atrribute is mandatory, but the shader that is being used might expect them to exist in the mesh. If an attribute named "tris" is present it will be interpreted as the elements array.</p>
+
+    <p>WARNING: Other attributes in the "source" will be ignored. Mesh extends Geometry, so more attributes can be added manually if necessary.</p>
+
  */
 J3D.Mesh = function(source) {
     that = this;

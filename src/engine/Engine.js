@@ -1,5 +1,16 @@
 var gl;
 
+/**
+    Creates a new Engine
+
+    @class Creating a new instance of J3D.Engine is be the first thing you do when working with J3D. It will instantiate a canvas webgl context and populate the global variable gl with it.
+
+    @param canvas The canvas on which to instantiate the webgl context. If null, a new fullscreen canvas will be created and added to the document.
+
+    @param j3dSettings J3D specific settings.
+
+    @param webglSettings The webGL context attributes as defined in the <a href='http://www.khronos.org/registry/webgl/specs/latest/#5.2'>specification</a>.
+ */
 J3D.Engine = function(canvas, j3dSettings, webglSettings) {
     var that = this;
 
@@ -92,6 +103,8 @@ J3D.Engine.prototype.render = function(dontClear) {
 }
 
 J3D.Engine.prototype.renderScene = function() {
+    var i;
+    var lt;
 
     // 3. Clear collecions
     this._opaqueMeshes.length = 0;
@@ -99,7 +112,7 @@ J3D.Engine.prototype.renderScene = function() {
     this._lights.length = 0;
 
     // 4. Update all transforms recursively
-    for (var i = 0; i < this.scene.numChildren; i++) {
+    for (i = 0; i < this.scene.numChildren; i++) {
         this.updateTransform(this.scene.childAt(i), null);
     }
 
@@ -115,7 +128,8 @@ J3D.Engine.prototype.renderScene = function() {
     }
 
     // 7. Calculate global positions for all lights
-    for (var i = 0; i < this._lights.length; i++) {
+    lt = this._lights.length;
+    for (i = 0; i < lt; i++) {
         var t = this._lights[i];
         t.updateWorldPosition();
     }
@@ -123,14 +137,16 @@ J3D.Engine.prototype.renderScene = function() {
     // 8. Render opaque meshes
     gl.disable(gl.BLEND);
     gl.enable(gl.DEPTH_TEST);
-    for (var i = 0; i < this._opaqueMeshes.length; i++) {
+    lt = this._opaqueMeshes.length;
+    for (i = 0; i < lt; i++) {
         this.renderObject(this._opaqueMeshes[i]);
     }
 
     // 9. Render transparent meshes	(TODO: sort before rendering)
     gl.disable(gl.DEPTH_TEST);
     gl.enable(gl.BLEND);
-    for (var i = 0; i < this._transparentMeshes.length; i++) {
+    lt = this._transparentMeshes.length;
+    for (i = 0; i < lt; i++) {
         var t = this._transparentMeshes[i];
         var srcFactor = (t.geometry.srcFactor != null) ? t.geometry.srcFactor : gl.SRC_ALPHA;
         var dstFactor = (t.geometry.dstFactor != null) ? t.geometry.dstFactor : gl.ONE;

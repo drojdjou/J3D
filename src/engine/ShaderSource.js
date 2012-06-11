@@ -85,7 +85,7 @@ J3D.ShaderSource.Gouraud = [
 	"void main(void) {",
 	"vec4 tc = color;",
 	"if(hasColorTexture) tc *= texture2D(colorTexture, vTextureCoord);",
-	"gl_FragColor = vec4(tc.rgb * vLight + emissive.rgb, color.a);",
+	"gl_FragColor = vec4(tc.rgb * vLight + emissive.rgb, tc.a);",
 	"}",
 ""].join("\n");
 
@@ -198,7 +198,7 @@ J3D.ShaderSource.Phong = [
 	"vec4 tc = color;",
 	"if(hasColorTexture) tc *= texture2D(colorTexture, vTextureCoord);",
 	"vec3 l = computeLights(vPosition, vNormal, specularIntensity, shininess);",
-	"gl_FragColor = vec4(tc.rgb * l, color.a);",
+	"gl_FragColor = vec4(tc.rgb * l, tc.a);",
 	"}",
 ""].join("\n");
 

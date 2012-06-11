@@ -7,7 +7,7 @@ struct lightSource {
 	int type;
 
 	vec3 direction;     // used by directional and spotlight (global direction of the transfom)
-	vec3 position;      // used by point, spotlight (it's the global position of the transform)
+	vec3 position;      // used by hemisphere, point, spotlight (it's the global position of the transform)
 
 	vec3 color;         // used by d/p/s and hemisphere
 	float intensity;    // used by spherical harmonics & d/p/s

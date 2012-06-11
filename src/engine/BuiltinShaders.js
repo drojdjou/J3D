@@ -1,3 +1,6 @@
+/**
+    @class A utility to fetch built-in shaders. It is a singleton instantiated by the {@link J3D.Engine} constructor.
+ */
 J3D.BuiltinShaders = function() {
 	
 	var shaders = {};
@@ -30,7 +33,7 @@ J3D.BuiltinShaders = function() {
 	l.setup = function(shader, transform) {
 	    for (var s in shader.uniforms) {
 			if (s == "lightmapTexture") {
-				J3D.ShaderUtil.setTexture(shader, 1, "lightmapTexture", J3D.LightmapAtlas[transform.lightmapIndex].tex);
+				J3D.ShaderUtil.setTexture(shader, 1, "lightmapTexture", J3D.LightmapAtlas[transform.lightmapIndex]);
 			} else if(s == "lightmapAtlas") {
 				gl.uniform4fv(shader.uniforms.lightmapAtlas.location, transform.lightmapTileOffset);
 			}

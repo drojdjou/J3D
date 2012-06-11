@@ -1,3 +1,8 @@
+/**
+    Creates a new Collider
+
+    @class A collider can be attached to a transform and later used with the functions in the Intersection utility to detect collisions.
+ */
 J3D.Collider = function() {
     this.center = v3.ZERO();
     this.type;

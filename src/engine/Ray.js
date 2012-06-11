@@ -1,3 +1,12 @@
+/**
+    Creates a new PostProcess
+
+    @class A PostProcess is used for image effects.
+
+    @params o Origin of the ray
+
+    @params d Direction of the ray
+ */
 J3D.Ray = function(o, d) {
 	this.origin = o || new v3();
 	this.direction = d || new v3();

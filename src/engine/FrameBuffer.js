@@ -1,3 +1,12 @@
+/**
+    Creates a new FrameBuffer
+
+    @class A FrameBuffer is used in render-to-texture, image effects and other advances rendering schemes.
+
+    @params width The width of the frame buffer
+
+    @params height The width of the frame buffer
+ */
 J3D.FrameBuffer = function(width, height) {
     var that = this;
 

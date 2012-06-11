@@ -1,3 +1,10 @@
+/**
+    Creates a new PostProcess
+
+    @class A PostProcess is used for image effects.
+
+    @params engine The current instance og J3D.Engine
+ */
 J3D.Postprocess = function(engine) {
     this.drawMode = gl.TRIANGLES;
     this.engine = engine;

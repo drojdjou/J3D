@@ -1,3 +1,8 @@
+/**
+    Creates a new ShaderAtals
+
+    @class ShaderAtlas holds all the shaders used in the engine. An instance of this class is created by the {@link J3D.Engine} class.
+ */
 J3D.ShaderAtlas = function(){
 	this.shaders = {};
 	this.programs = {};
@@ -68,12 +73,12 @@ J3D.ShaderAtlas.prototype.linkShader = function(renderer){
 	var tid = 0;
 	program.uniforms = {};
 	var numUni = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS);
-	for(var i = 0; i < numUni; i++) {
+    for(var i = 0; i < numUni; i++) {
 		var acUni = gl.getActiveUniform(program, i);
 		program.uniforms[acUni.name] = acUni;
 		program.uniforms[acUni.name].location = gl.getUniformLocation(program, acUni.name);
 		if (J3D.ShaderUtil.isTexture(acUni.type)) {
-			program.uniforms[acUni.name].texid = tid;
+            program.uniforms[acUni.name].texid = tid;
 			tid++;
 		}
 	}

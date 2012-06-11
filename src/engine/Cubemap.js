@@ -1,3 +1,4 @@
+
 J3D.Cubemap = function(faces){
 	var that = this;
 	this.tex = gl.createTexture();

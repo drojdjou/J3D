@@ -1,3 +1,12 @@
+/**
+    Creates a new Texture
+
+    @class A transform represents a point in 3d world. A point has a position, rotation and scale. Since everything in J3D is a transform, many different things can be attached, like a camera, light source or, in most cases, geometry and a renderer. A transform can also be used as a hierarchy building element - it can have it's own child transforms.
+
+    @param source can be either a string containing with a path to an image, or a canvas, video or image elements.
+
+    @param params Object, a set of parameters to setup the texture.
+ */
 J3D.Texture = function(source, params){ // <- use this to pass parameters of the texture
 	var that = this;
 	this.tex = gl.createTexture();
@@ -118,9 +127,4 @@ J3D.Texture.prototype.update = function(force) {
 	gl.bindTexture(gl.TEXTURE_2D, this.tex);
 	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, this.src);
 	gl.bindTexture(gl.TEXTURE_2D, null);
-}
-
-J3D.Texture.prototype.toUniform = function(){
-	this.update();
-	return this.tex;
 }

@@ -1,3 +1,8 @@
+/**
+    Creates a new Geometry
+
+    @class A gemeotry is the basic class to define 3d shapes - solid and paritcles alike.
+ */
 J3D.Geometry = function(){
 	this.renderMode = J3D.RENDER_AS_OPAQUE;
 	this.arrays = [];
