@@ -14,7 +14,7 @@ J3D.Intersection.rayTest = function(r, t) {
         case J3D.Collider.MESH:
             return J3D.Intersection.rayMesh(r, t);
         default:
-            throw J3D.ERRORS.UNKNOWN_COLLIDER_TYPE + t.collider.type;
+            throw J3D.Error.UNKNOWN_COLLIDER_TYPE + t.collider.type;
             return false;
     }
 }

@@ -14,6 +14,8 @@
 
     <p>WARNING: Other attributes in the "source" will be ignored. Mesh extends Geometry, so more attributes can be added manually if necessary.</p>
 
+    @augments J3D.Geometry
+
  */
 J3D.Mesh = function(source) {
     that = this;

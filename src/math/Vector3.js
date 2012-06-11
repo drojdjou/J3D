@@ -1,3 +1,8 @@
+/**
+    Creates a new three-dimensinal Vector
+
+    @class Three dimensional vector
+ */
 var v3 = function(x, y, z){
 	this.x = x || 0;
 	this.y = y || 0;

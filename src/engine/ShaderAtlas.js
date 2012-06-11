@@ -44,7 +44,7 @@ J3D.ShaderAtlas.prototype.compileShaderSource = function(name, src, type, meta){
     gl.compileShader(shader);
  
     if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-		throw J3D.ERRORS.SHADER_COMPILE_ERROR + gl.getShaderInfoLog(shader);
+		throw J3D.Error.SHADER_COMPILE_ERROR + gl.getShaderInfoLog(shader);
     }
 	
 	this.programs[name] = shader;

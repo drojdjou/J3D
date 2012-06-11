@@ -1,3 +1,8 @@
+/**
+    Creates a new 4x4 Matrix
+
+    @class The 4x4 matrix is used mostly for perspective and orthographic projection.
+ */
 var m44 = function(){
 	this.array = [];//new Float32Array(16);
 	this.identity();

@@ -1,15 +1,15 @@
 var gl;
 
 /**
-    Creates a new Engine
+ Creates a new Engine
 
-    @class Creating a new instance of J3D.Engine is be the first thing you do when working with J3D. It will instantiate a canvas webgl context and populate the global variable gl with it.
+ @class Creating a new instance of J3D.Engine is be the first thing you do when working with J3D. It will instantiate a canvas webgl context and populate the global variable gl with it.
 
-    @param canvas The canvas on which to instantiate the webgl context. If null, a new fullscreen canvas will be created and added to the document.
+ @param canvas The canvas on which to instantiate the webgl context. If null, a new fullscreen canvas will be created and added to the document.
 
-    @param j3dSettings J3D specific settings.
+ @param j3dSettings J3D specific settings.
 
-    @param webglSettings The webGL context attributes as defined in the <a href='http://www.khronos.org/registry/webgl/specs/latest/#5.2'>specification</a>.
+ @param webglSettings The webGL context attributes as defined in the <a href='http://www.khronos.org/registry/webgl/specs/latest/#5.2'>specification</a>.
  */
 J3D.Engine = function(canvas, j3dSettings, webglSettings) {
     var that = this;
@@ -28,7 +28,7 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
         gl = cv.getContext("experimental-webgl", webglSettings);
     }
     catch (e) {
-        throw J3D.ERRORS.NO_WEBGL_CONTEXT;
+        throw J3D.Error.NO_WEBGL_CONTEXT;
         return;
     }
 
@@ -37,7 +37,7 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
     gl.enable(gl.CULL_FACE);
     gl.frontFace(gl.CW);
 
-    if(typeof(J3D.BuiltinShaders) == "function") J3D.BuiltinShaders = J3D.BuiltinShaders();
+    if (typeof(J3D.BuiltinShaders) == "function") J3D.BuiltinShaders = J3D.BuiltinShaders();
     this.shaderAtlas = new J3D.ShaderAtlas();
     this.scene = new J3D.Scene();
     this.camera; // it is a J3D.Transform
@@ -50,16 +50,26 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
 
     this.gl = gl;
 
+    /**
+     * Destroy the engine. Removes some listeners and removes the global 'gl' variable.
+     */
     this.destroy = function() {
         window.removeEventListener("resize", autoResize);
         gl = null;
         document.body.removeChild(cv);
     }
 
+    /**
+     * Resize the engines viewport as the size of the canvas changes.
+     *
+     * @param width The new width of the viewport
+     *
+     * @param height The new height of the viewport
+     */
     this.resize = function(width, height) {
-        if(!gl || gl == undefined) return;
+        if (!gl || gl == undefined) return;
 
-        var w = (width) ?  width : window.innerWidth;
+        var w = (width) ? width : window.innerWidth;
         var h = (height) ? height : window.innerHeight;
 
         cv.width = w / this.resolution;
@@ -73,7 +83,7 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
 
         gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
 
-        if(this.camera) {
+        if (this.camera) {
             this.camera.camera.onResize();
         }
     }
@@ -88,16 +98,26 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
     }
 }
 
+/**
+ * Set the clear color in the webgl context. The clear color is the default background color to which the screen gets cleared before each rendering loop.
+ *
+ * @param c An instance of J3D.Color
+ */
 J3D.Engine.prototype.setClearColor = function(c) {
     gl.clearColor(c.r, c.g, c.b, c.a);
 }
 
+/**
+ * The main rendering function.
+ *
+ * @param dontClear Boolean, if set to false the current contents of the screen won;t be removed before new frame is drawn.
+ */
 J3D.Engine.prototype.render = function(dontClear) {
     J3D.Time.tick();
 
     if (!dontClear) gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    if (!this.camera) throw J3D.ERRORS.NO_CAMERA;
+    if (!this.camera) throw J3D.Error.NO_CAMERA;
 
     if (this.scene.numChildren > 0) this.renderScene();
 }

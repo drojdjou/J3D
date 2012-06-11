@@ -1,3 +1,8 @@
+/**
+    Creates a new Color
+
+    @class Color is used to hold information about colors that can be passed as uniforms to a shader. The color has red, green, blue and alpha channels defined in normalized values.
+ */
 J3D.Color = function(r, g, b, a){
 	var that = this;
 	this.r = r || 0;

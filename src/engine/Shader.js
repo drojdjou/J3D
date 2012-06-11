@@ -1,3 +1,16 @@
+/**
+    Creates a new Shader
+
+    @class A Shader represents a piece of GLSL code composed of a vertex shader and a fragment shader. The uniform properties present in the GLSl shader code are reflected as public properties of the instance of J3D.Shader
+
+    @param n The mandatory name of the shader.
+
+    @param v The mandatory source of the vertex shader.
+
+    @param f The mandatory source of the fragment shader.
+
+    @param m The shaders metadata. This optional argument, which is  an object literal, allows to provide information such as shaders author and/or description.
+ */
 J3D.Shader = function(n, v, f, m) {
 	if(!n) throw new Error("You must specify a name for custom shaders");
 	if(v == null || f == null) throw new Error("You must pass a vertex and fragment shader source for custom shaders");

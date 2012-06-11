@@ -120,7 +120,7 @@ TestCase("scene", {
             this.engine.scene.add(t1);
         }
 
-        assertException("Missing camera", this.engine.render, J3D.ERRORS.NO_CAMERA.name);
+        assertException("Missing camera", this.engine.render, J3D.Error.NO_CAMERA.name);
 
         var camera = new J3D.Transform();
         camera.camera = new J3D.Camera();

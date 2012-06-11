@@ -1,3 +1,8 @@
+/**
+    Creates a new Scene
+
+    @class A Scene is a hierarchy of transforms. When {@link J3D.Engine.render} is invoked the scene set as the scene property on the engine instance is going to be used for rendering. The J3D.Engine constructor also creates an empty scene ready for use.
+ */
 J3D.Scene = function() {
     var that = this;
     var children = [];

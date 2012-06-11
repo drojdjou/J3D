@@ -1,7 +1,7 @@
 /**
     Creates a new Texture
 
-    @class A transform represents a point in 3d world. A point has a position, rotation and scale. Since everything in J3D is a transform, many different things can be attached, like a camera, light source or, in most cases, geometry and a renderer. A transform can also be used as a hierarchy building element - it can have it's own child transforms.
+    @class A texture represents a graphical image used as texture by a shader.
 
     @param source can be either a string containing with a path to an image, or a canvas, video or image elements.
 

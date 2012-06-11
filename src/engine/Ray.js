@@ -1,7 +1,7 @@
 /**
-    Creates a new PostProcess
+    Creates a new Ray
 
-    @class A PostProcess is used for image effects.
+    @class A Ray has an origin and a direction. It is for ray casting, mostly to calculate the ray from the mouse and detect 3d rollovers.
 
     @params o Origin of the ray
 

@@ -1,4 +1,10 @@
+/**
+    Creates a new Cubemap Texture
 
+    @class A cubemap texture is used for texturing reflections, skyboxes and similar effects. If your shader expects a cubemap uniform use this object to create one.
+
+    @param faces An object containing 6 paths to the textures. They need to be defined as 'left', 'right', 'up', 'down', 'back', 'front'.
+ */
 J3D.Cubemap = function(faces){
 	var that = this;
 	this.tex = gl.createTexture();

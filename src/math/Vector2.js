@@ -1,3 +1,8 @@
+/**
+    Creates a new two-dimensinal Vector
+
+    @class Two dimensional vector
+ */
 var v2 = function(x, y){
 	this.x = x || 0;
 	this.y = y || 0;

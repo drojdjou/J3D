@@ -1,13 +1,34 @@
 /**
-    @class A utility to fetch built-in shaders. It is a singleton instantiated by the {@link J3D.Engine} constructor.
+    @class <p>A utility to fetch built-in shaders. It is a singleton instantiated by the {@link J3D.Engine} constructor.</p>
+
+    <p>Currently built-in shaders include:
+    <ul>
+        <li>Phong</li>
+        <li>Gouraud</li>
+        <li>Lightmap</li>
+        <li>Reflective</li>
+        <li>Skybox</li>
+        <li>Normal2Color</li>
+        <li>Selflit</li>
+    </ul>
+    </p>
  */
 J3D.BuiltinShaders = function() {
 	
 	var shaders = {};
 
+    /**
+     * @public Gets a copy of a build-in shader.
+     *
+     * @param n The name of the shader as String (ex. "Phong", "Gouraud").
+     *
+     * @return An instance of J3D.Shader
+     *
+     * @throws J3D.Error.NO_BUILTIN_SHADER if the shader does not exist.
+     */
 	var fetch = function(n) {
 		if (!shaders[n]) {
-			throw J3D.ERRORS.NO_BUILTIN_SHADER + n;
+			throw J3D.Error.NO_BUILTIN_SHADER + n;
 			return null;
 		} else {
 			return shaders[n].clone();
