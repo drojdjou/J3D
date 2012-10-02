@@ -1,4 +1,4 @@
-# J3D is no longer actively supported. I do not plan to add any new features or fix bugs on a regular basis. I still use this lib for my own WebGL experiments, so some updates might occur. You are welcome to fork it and continue development or use it on personal projects, if you are prepared to fix occasional bugs :) If you are working on a commercial project however, please consider using Three.js(http://mrdoob.github.com/three.js/) or another popular WebGL engine instead.
+### J3D is no longer actively supported. I do not plan to add any new features or fix bugs on a regular basis. I still use this lib for my own WebGL experiments, so some updates might occur. You are welcome to fork it and continue development or use it on personal projects, if you are prepared to fix occasional bugs :) If you are working on a commercial project however, please consider using Three.js(http://mrdoob.github.com/three.js/) or another popular WebGL engine instead.
 
 * * *
 
