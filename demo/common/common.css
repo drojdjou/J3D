@@ -76,6 +76,13 @@ p {
     z-index: 1;
 }
 
+#stats {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    z-index: 100;
+}
+
 #madewith {
     color: #ffffff;
     background-color: #000000;
@@ -153,6 +160,11 @@ p {
 a.sotd:link, a.sotd:visited {
     color: #000000;
     background-color: #ffd200;
+}
+
+a.motd:link, a.motd:visited {
+    color: #ffffff;
+    background-color: #1e5fa1;
 }
 
 a.sotm:link, a.sotm:visited {

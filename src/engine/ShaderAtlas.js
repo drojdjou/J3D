@@ -11,7 +11,7 @@ J3D.ShaderAtlas = function(){
 
 J3D.ShaderAtlas.prototype.compileShaderSource = function(name, src, type, meta){
 	var isrc;
-	
+
 	var ci = "";
 	if(meta.includes && meta.includes.length > 0) {
 		for(var i = 0; i < meta.includes.length; i++) {

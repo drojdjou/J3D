@@ -54,15 +54,10 @@ J3D.Cubemap = function(faces){
         }
 	}
 	
-	
 	load("left", 	faces.left);
 	load("right", 	faces.right);
 	load("up", 		faces.up);
 	load("down", 	faces.down);
 	load("back", 	faces.back);
 	load("front", 	faces.front);
-}
-
-J3D.Cubemap.prototype.toUniform = function(){
-	return this.tex;
 }

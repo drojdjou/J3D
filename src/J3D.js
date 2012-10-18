@@ -1,7 +1,9 @@
+"use strict";
+
 /**
     @namespace J3D holds all of the J3D classes except for the matrix and vector classes which reside in global namespace.
 */
-J3D = {};
+var J3D = {};
 
 /**
  * @deprecated Not used in the code.

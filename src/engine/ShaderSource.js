@@ -139,22 +139,27 @@ J3D.ShaderSource.Lightmap = [
 
 J3D.ShaderSource.Normal2Color = [
 	"//#name Normal2Color",
+	"//#description Simplest shader possible, no includes",
 	"//#author bartekd",
 
-	"//#include CommonInclude",
-
-	"//#vertex",
-	"//#include VertexInclude",
+	"precision mediump float;",
 	"varying vec3 vColor;",
 
+	"//#vertex",
+
+	"attribute vec3 aVertexPosition;",
+	"attribute vec3 aVertexNormal;",
+
+	"uniform mat4 mMatrix;",
+	"uniform mat4 vMatrix;",
+	"uniform mat4 pMatrix;",
+
 	"void main(void) {",
-	"gl_Position = mvpMatrix() * vec4(aVertexPosition, 1.0);",
+	"gl_Position = pMatrix * vMatrix * mMatrix * vec4(aVertexPosition, 1.0);",
 	"vColor = normalize( aVertexNormal / 2.0 + vec3(0.5) );",
 	"}",
 
 	"//#fragment",
-	"varying vec3 vColor;",
-
 	"void main(void) {",
 	"gl_FragColor = vec4(vColor, 1.0);",
 	"}",
@@ -258,7 +263,7 @@ J3D.ShaderSource.Selflit = [
 	"void main(void) {",
 	"vec4 tc = color;",
 	"if(hasColorTexture) tc *= texture2D(colorTexture, vTextureCoord);",
-	"gl_FragColor = vec4(tc.rgb, color.a);",
+	"gl_FragColor = vec4(tc.rgba);",
 	"}",
 ""].join("\n");
 
@@ -388,7 +393,7 @@ J3D.ShaderSource.Lights = [
 	"int type;",
 
 	"vec3 direction;     // used by directional and spotlight (global direction of the transfom)",
-	"vec3 position;      // used by point, spotlight (it's the global position of the transform)",
+	"vec3 position;      // used by hemisphere, point, spotlight (it's the global position of the transform)",
 
 	"vec3 color;         // used by d/p/s and hemisphere",
 	"float intensity;    // used by spherical harmonics & d/p/s",

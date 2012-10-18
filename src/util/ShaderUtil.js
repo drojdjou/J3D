@@ -12,7 +12,6 @@ J3D.ShaderUtil.setTexture = function(shader, id, uniformName, texture){
 
 J3D.ShaderUtil.setTextureCube = function(shader, id, uniformName, texture){
     gl.activeTexture(33984 + id);
-    texture.update();
 	gl.bindTexture(gl.TEXTURE_CUBE_MAP, texture.tex);
 	gl.uniform1i(shader.uniforms[uniformName].location, id);
 }

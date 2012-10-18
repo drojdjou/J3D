@@ -154,15 +154,7 @@ J3D.Engine.prototype.renderScene = function() {
         t.updateWorldPosition();
     }
 
-    // 8. Render opaque meshes
-    gl.disable(gl.BLEND);
-    gl.enable(gl.DEPTH_TEST);
-    lt = this._opaqueMeshes.length;
-    for (i = 0; i < lt; i++) {
-        this.renderObject(this._opaqueMeshes[i]);
-    }
-
-    // 9. Render transparent meshes	(TODO: sort before rendering)
+    // 8. Render transparent meshes	(TODO: sort before rendering)
     gl.disable(gl.DEPTH_TEST);
     gl.enable(gl.BLEND);
     lt = this._transparentMeshes.length;
@@ -174,6 +166,14 @@ J3D.Engine.prototype.renderScene = function() {
         this.renderObject(t);
     }
 
+    // 9. Render opaque meshes
+    gl.disable(gl.BLEND);
+    gl.enable(gl.DEPTH_TEST);
+    lt = this._opaqueMeshes.length;
+    for (i = 0; i < lt; i++) {
+        this.renderObject(this._opaqueMeshes[i]);
+    }
+
     // #DEBUG Monitor the amount of shaders created (TODO: create a test case for that)
     // console.log( this.shaderAtlas.shaderCount );
 
@@ -183,7 +183,10 @@ J3D.Engine.prototype.renderScene = function() {
 J3D.Engine.prototype.renderObject = function(t) {
     var s = this.shaderAtlas.getShader(t.renderer);
 
+    // var same = (s == this.lastProgram);
+    // if(!same)
     gl.useProgram(s);
+    // this.lastProgram = s;
 
     // Setup standard uniforms and attributes
     if (s.uniforms.pMatrix)
@@ -205,7 +208,8 @@ J3D.Engine.prototype.renderObject = function(t) {
         gl.uniform4fv(s.uniforms.uTileOffset.location, t.getTileOffset());
 
 
-    J3D.ShaderUtil.setLights(s, this._lights);
+    if(this._lights.length > 0)
+        J3D.ShaderUtil.setLights(s, this._lights);
 
     J3D.ShaderUtil.setAttributes(s, t.geometry);
 
@@ -226,6 +230,7 @@ J3D.Engine.prototype.renderObject = function(t) {
 }
 
 J3D.Engine.prototype.updateTransform = function(t, p) {
+
     t.updateWorld(p);
 
     for (var j = 0; j < t.numChildren; j++) {

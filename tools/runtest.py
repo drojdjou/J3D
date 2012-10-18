@@ -7,6 +7,7 @@ if(__name__ == '__main__'):
 	cwd = os.getcwd().split("/")[-1]
 	if cwd == "tools":
 		os.chdir('../')
+	print os.getcwd()
 
 	if len(sys.argv) > 1:
 		tests = ','.join(sys.argv[1:])

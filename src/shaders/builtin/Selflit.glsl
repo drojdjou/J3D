@@ -25,5 +25,5 @@ varying vec2 vTextureCoord;
 void main(void) {
 	vec4 tc = color;
 	if(hasColorTexture) tc *= texture2D(colorTexture, vTextureCoord);
-	gl_FragColor = vec4(tc.rgb, color.a);
+	gl_FragColor = vec4(tc.rgba);
 }

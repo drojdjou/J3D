@@ -50,7 +50,7 @@ def parseDemos(debug):
 
 # # # # # #
 if(__name__ == '__main__'):
-	print "[  ]"
+	print "[ 'debug' for individual js includes, no params - include library ]"
 	cwd = os.getcwd().split("/")[-1]
 	if cwd == "tools":
 		os.chdir('../')

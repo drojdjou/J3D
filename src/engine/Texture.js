@@ -74,6 +74,7 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 		that.src = document.createElement('video');
 	    that.src.src = src;  
 		that.src.preload = 'auto';
+        that.src.loop = params.loop || "false";
 
 //        that.src.addEventListener('loadedmetadata', function(t) {
 //        });
@@ -111,14 +112,15 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 	} else if(!!source.getContext) {
 		that.src = source;
 		setupTexture();
-	} else if(source.src) {
+	} else if(source instanceof HTMLVideoElement) {
         that.isVideo = true;
         that.src = source;
         that.src.addEventListener( "canplaythrough", function() {
             setupTexture();
         });
     } else {
-        console.log("Video format not recognized");
+        console.log("Video format not recognized: " + typeof(source));
+        console.log(source instanceof HTMLVideoElement);
     }
 }
 

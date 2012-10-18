@@ -35,7 +35,7 @@ function UserStream(_callback, _settings) {
         n.getUserMedia({video: true, audio: false, captureDelay:2}, onSuccess, onError);
     } else if (n.webkitGetUserMedia) {
         is_webkit = true;
-        n.webkitGetUserMedia('video', onSuccess, onError);
+        n.webkitGetUserMedia({audio:false, video:true}, onSuccess, onError);
     } else {
         console.log("UserStream error: user media not supported.");
     }

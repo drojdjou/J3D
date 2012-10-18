@@ -77,7 +77,7 @@ J3D.Primitive.FullScreenQuad = function() {
 	return c;
 }
 
-J3D.Primitive.Plane = function(w, h, wd, hd, wo, ho) {
+J3D.Primitive.Plane = function(w, h, wd, hd, wo, ho, uv) {
 	var c = J3D.Primitive.getEmpty();
 	
 	if(!wo) wo = 0;
@@ -93,10 +93,11 @@ J3D.Primitive.Plane = function(w, h, wd, hd, wo, ho) {
 	var wEnd = w + wo;
 	var hStart = h + ho;
 	var hEnd = -h + ho;
-	var uStart = 0;
-	var uEnd = 1;
-	var vStart = 1;
-	var vEnd = 0;
+    
+	var uStart = (uv && uv.us) ? uv.us : 0;
+	var uEnd =   (uv && uv.ue) ? uv.ue : 1;
+	var vStart = (uv && uv.vs) ? uv.vs : 0;
+	var vEnd =   (uv && uv.ve) ? uv.ve : 1;
 	
 	var wb = (w * 2) / wd;
 	var hb = (h * 2) / hd;
@@ -114,10 +115,10 @@ J3D.Primitive.Plane = function(w, h, wd, hd, wo, ho) {
 			var vc = new v3(bvEnd, bhEnd, 0);
 			var vd = new v3(bvStart, bhEnd, 0);
 			
-			var us = 1 / wd * i;
-			var ue = 1 / wd * (i + 1);
-			var vs = 1 - (1 / hd * (j + 1));
-			var ve = 1 - (1 / hd * j);
+			var us = uStart + (1 / wd * i) * (uEnd - uStart);
+			var ue = uStart + (1 / wd * (i + 1)) * (uEnd - uStart);
+			var vs = 1 - (vStart + (1 / hd * (j + 1)) * (vEnd - vStart));
+			var ve = 1 - (vStart + (1 / hd * j) * (vEnd - vStart));
 			
 			J3D.Primitive.addQuad(c, va, vb, vc, vd, [us, ue, vs, ve]);
 		}

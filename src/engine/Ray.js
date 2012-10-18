@@ -18,9 +18,19 @@ J3D.Ray = function(o, d) {
 J3D.Ray._mt = mat4.create();
 J3D.Ray._nt = mat3.create();
 
-J3D.Ray.fromMousePosition = function(mouseX, mouseY, camera) {
-    var mx = (mouseX / window.innerWidth) * 2 - 1;
-    var my = (1 - mouseY / window.innerHeight) * 2 - 1;
+J3D.Ray.fromMousePosition = function(mouseX, mouseY, camera, canvasRect) {
+
+    if(!canvasRect) {
+        canvasRect = {
+            x: 0,
+            y: 0,
+            width: window.innerWidth,
+            height: window.innerHeight
+        }
+    }
+
+    var mx = ( (mouseX - canvasRect.x) / canvasRect.width) * 2 - 1;
+    var my = (1 - (mouseY - canvasRect.y) / canvasRect.height) * 2 - 1;
 	var ra = [mx, my, 0];
 
     mat4.inverse(camera.camera.projectionMat.toArray(), J3D.Ray._mt);

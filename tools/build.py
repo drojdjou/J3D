@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import os, glob
+import os, glob, sys, shutil
 
 srcfolder = "src"
 shaderfile = "src/engine/ShaderSource.js"
@@ -62,9 +62,7 @@ def cleanup():
 	os.remove(output)
 
 def build():
-	cwd = os.getcwd().split("/")[-1]
-	if cwd == "tools":
-		os.chdir('../')
+	
 
 	print "[ Parsing shaders ]"
 	buildShaders()
@@ -79,7 +77,15 @@ def build():
 
 # # # # # #
 if(__name__ == '__main__'):
+	cwd = os.getcwd().split("/")[-1]
+	if cwd == "tools":
+		os.chdir('../')
+
 	build()
+
+	if len(sys.argv) == 2:
+		if os.path.exists(sys.argv[1]):
+			shutil.copy("build/j3d.js", sys.argv[1])
 
 
 
