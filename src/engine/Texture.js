@@ -10,12 +10,13 @@
 J3D.Texture = function(source, params){ // <- use this to pass parameters of the texture
 	var that = this;
 	this.tex = gl.createTexture();
+
+    this.autoLoad = true || params.autoLoad;
 	
 	if(!params) params = {};
 	this.loaded = false;
 	this.isVideo = false;
 
-	this.onLoad = params.onLoad;
 	this.mipmap = (params.mipmap != null) ? params.mipmap : true;
 	this.flip = (params.flip != null) ? params.flip : true;
 	this.magFilter = params.magFilter || gl.LINEAR;
@@ -26,7 +27,7 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 	    return x > 0 && y > 0 && (x & (x - 1)) == 0 && (y & (y - 1)) == 0;
 	}
 		
-	var setupTexture = function(){
+	var setupTexture = function() {
 		var p = that.src && isPOT(that.src.width, that.src.height);
 
        if(!that.wrapMode) that.wrapMode = params.wrapMode || (p) ? gl.REPEAT : gl.CLAMP_TO_EDGE;
@@ -53,7 +54,7 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 		if(that.mipmap && p) gl.generateMipmap(gl.TEXTURE_2D);	
 		gl.bindTexture(gl.TEXTURE_2D, null);
 		
-		if(that.onLoad) that.onLoad.call();
+		if(params.onLoad) params.onLoad();
 		
 		that.loaded = true;
 	}

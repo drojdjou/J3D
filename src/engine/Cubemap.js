@@ -5,12 +5,14 @@
 
     @param faces An object containing 6 paths to the textures. They need to be defined as 'left', 'right', 'up', 'down', 'back', 'front'.
  */
-J3D.Cubemap = function(faces){
+J3D.Cubemap = function(faces, params){
 	var that = this;
 	this.tex = gl.createTexture();
 	
 	this.facesLeft = 6;
 	this.faceImages = {};
+
+    if(!params) params = {};
 	
 	var onLoad = function() {
 		gl.bindTexture(gl.TEXTURE_CUBE_MAP, that.tex);
@@ -33,6 +35,8 @@ J3D.Cubemap = function(faces){
 		gl.generateMipmap(gl.TEXTURE_CUBE_MAP);
 		
 		gl.bindTexture(gl.TEXTURE_CUBE_MAP, null);
+
+         if(params.onLoad) params.onLoad();
 	}
 	
 	var onFace = function() {

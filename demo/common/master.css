@@ -1,0 +1,50 @@
+body {
+    font-family: 'Archivo Narrow', sans-serif;
+    background-color: #000000;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    overflow: auto;
+}
+
+#webgl {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    -webkit-transition-property: all;
+    -webkit-transition-duration: 1s;
+    -webkit-filter: grayscale(0) brightness(0);
+}
+
+#overlay {
+    position: absolute;
+    top: 0px;
+    left: 10px;
+}
+
+#overlay ul {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border: 0;
+    list-style: none;
+}
+
+#overlay li {
+    color: #fff;
+    display: inline-block;
+    float: left;
+    text-align: center;
+    line-height: 32px;
+    background-color: #000;
+    margin: 0;
+    margin-left: 1px;
+    padding: 0 10px 0 10px;
+    border: 0;
+    cursor: pointer;
+}
+
+#overlay li:hover {
+    background-color: #fff;
+    color: #000;
+}

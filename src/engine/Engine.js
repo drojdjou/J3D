@@ -32,11 +32,6 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
         return;
     }
 
-    this.setClearColor(J3D.Color.black);
-
-    gl.enable(gl.CULL_FACE);
-    gl.frontFace(gl.CW);
-
     if (typeof(J3D.BuiltinShaders) == "function") J3D.BuiltinShaders = J3D.BuiltinShaders();
     this.shaderAtlas = new J3D.ShaderAtlas();
     this.scene = new J3D.Scene();
@@ -44,19 +39,38 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
 
     this.outCanvas = cv;
 
-    this._opaqueMeshes = [];
-    this._transparentMeshes = [];
-    this._lights = [];
-
     this.gl = gl;
+
+    /**
+     * Clear the engine. Removes all objects from the scene, the skybox and the camera.
+     */
+    this.clear = function() {
+        gl.enable(gl.CULL_FACE);
+        gl.frontFace(gl.CW);
+
+        this.setClearColor(J3D.Color.black);
+
+        this._opaqueMeshes = [];
+        this._transparentMeshes = [];
+        this._lights = [];
+
+        this.scene.removeAll();
+        this.scene.skybox = null;
+        this.shaderAtlas.clear();
+        this.camera = null;
+    }
 
     /**
      * Destroy the engine. Removes some listeners and removes the global 'gl' variable.
      */
     this.destroy = function() {
-        window.removeEventListener("resize", autoResize);
+
         gl = null;
-        document.body.removeChild(cv);
+        
+        if(!isExternalCanvas) {
+            window.removeEventListener("resize", autoResize);
+            document.body.removeChild(cv);
+        }
     }
 
     /**
@@ -95,7 +109,11 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
     if (!isExternalCanvas) {
         this.resize();
         window.addEventListener("resize", autoResize);
+    } else {
+        this.resize(canvas.width, canvas.height);
     }
+
+    this.clear();
 }
 
 /**
@@ -208,7 +226,7 @@ J3D.Engine.prototype.renderObject = function(t) {
         gl.uniform4fv(s.uniforms.uTileOffset.location, t.getTileOffset());
 
 
-    if(this._lights.length > 0)
+    if (this._lights.length > 0)
         J3D.ShaderUtil.setLights(s, this._lights);
 
     J3D.ShaderUtil.setAttributes(s, t.geometry);

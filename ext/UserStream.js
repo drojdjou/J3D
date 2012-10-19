@@ -1,6 +1,6 @@
 /**
  *  Supports Webcam
- *  Browsers: Chrome Canary, Opera Alpha Camera build
+ *  Browsers: Chrome, Opera Alpha Camera build
  */
 
 function UserStream(_callback, _settings) {

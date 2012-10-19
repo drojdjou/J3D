@@ -7,7 +7,6 @@ J3D.Scene = function() {
     var that = this;
     var children = [];
 
-    this.ambient = J3D.Color.black;
     this.numChildren = 0;
     this.skybox;
 
@@ -55,7 +54,6 @@ J3D.Scene = function() {
         children = [];
         that.numChildren = 0;
     }
-
 
     this.addSkybox = function(cubemap) {
         this.skybox = new J3D.Transform();
