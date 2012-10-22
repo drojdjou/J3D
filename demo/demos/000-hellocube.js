@@ -2,11 +2,9 @@ registerDemo(function(engine) {
 
     var cube;
 
-    var version = "0.1";
-    document.title = "Hello Cube | J3D | v" + version;
+    console.log("Hello Cube | J3D | v0.16");
 
     this.setup = function(callback) {
-
         engine.setClearColor(J3D.Color.black);
 
         var ambient = new J3D.Transform();
@@ -26,18 +24,16 @@ registerDemo(function(engine) {
         var camera = new J3D.Transform();
         camera.camera = new J3D.Camera();
         camera.position.z = 4;
-        engine.camera = camera;
 
+        engine.scene.setCamera(camera);
         engine.scene.add(camera, cube, light, ambient);
 
-        callback.call(null);
+        callback();
     }
 
-    this.render = function() {
+    this.render = function(interactor) {
         cube.rotation.x += Math.PI * J3D.Time.deltaTime / 6000;
         cube.rotation.y += Math.PI / 2 * J3D.Time.deltaTime / 3000;
         engine.render();
     }
-
-    return this;
 });

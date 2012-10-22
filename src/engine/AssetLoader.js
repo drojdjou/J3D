@@ -1,3 +1,8 @@
+/**
+    Utility used to load multiple assets
+
+    @class AssetLoader can load several files in a batch. It loads JSON, Shaders, Textures and Cubemaps
+ */
 J3D.AssetLoader = function() {
 
     var that = this;
@@ -7,6 +12,15 @@ J3D.AssetLoader = function() {
 
     this.assets = {};
 
+    /**
+     * Add a texture to load.
+     * 
+     * @param name the name used later to refer to the asset
+     *
+     * @param source The new height of the viewport
+     *
+     * @param params a collection of params to pass to the texture
+     */
     this.addTexture = function(name, source, params) {
         assetList.push({
             name:name,
@@ -16,6 +30,15 @@ J3D.AssetLoader = function() {
         });
     }
 
+    /**
+     * Add a cubemap to load.
+     *
+     * @param name the name used later to refer to the asset
+     *
+     * @param faces a list of 6 path to images representing the 6 faces of a cubemap
+     *
+     * @param params a collection of params to pass to the cubemap
+     */
     this.addCubemap = function(name, faces, params) {
         assetList.push({
             name:name,
@@ -25,6 +48,13 @@ J3D.AssetLoader = function() {
         });
     }
 
+    /**
+     * Add a shader file to load.
+     *
+     * @param name the name used later to refer to the asset
+     *
+     * @param path path to the GLSL file
+     */
     this.addShader = function(name, path) {
         assetList.push({
             name:name,
@@ -33,6 +63,13 @@ J3D.AssetLoader = function() {
         });
     }
 
+    /**
+     * Add a JSON file to load.
+     *
+     * @param name the name used later to refer to the asset
+     *
+     * @param path path to the JSON file
+     */
     this.addJSON = function(name, path) {
         assetList.push({
             name:name,
@@ -59,6 +96,11 @@ J3D.AssetLoader = function() {
 
     }
 
+    /**
+     * Load all the files added previously to the loader.
+     *
+     * @param callback A function to invoke when all assets are loaded. An object containing all the assets by name is passed as argument to that function.
+     */
     this.load = function(callback) {
         assetsToLoad = assetList.length;
         var onAssetLoadedLC = onAssetLoaded;

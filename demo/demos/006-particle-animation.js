@@ -18,7 +18,7 @@ registerDemo(function(engine) {
         var camera = new J3D.Transform();
         camera.camera = new J3D.Camera();
         camera.position.z = 100;
-        engine.camera = camera;
+        engine.scene.setCamera(camera);
 
         var stars = new J3D.Transform();
 

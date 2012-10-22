@@ -22,7 +22,6 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 	this.magFilter = params.magFilter || gl.LINEAR;
 	this.minFilter = params.minFilter || gl.LINEAR_MIPMAP_NEAREST;
 
-	
 	var isPOT = function(x, y){
 	    return x > 0 && y > 0 && (x & (x - 1)) == 0 && (y & (y - 1)) == 0;
 	}
@@ -45,7 +44,7 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, that.wrapMode);
 		} else {
 			if(that.wrapMode != gl.CLAMP_TO_EDGE) {
-                console.log("WARNING! Texture: " + source + " : only CLAMP_TO_EDGE wrapMode is supported for non-power-of-2 textures.");
+                console.warn("WARNING! Texture: " + source + " : only CLAMP_TO_EDGE wrapMode is supported for non-power-of-2 textures.");
             }
 			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
 			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);

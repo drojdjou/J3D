@@ -2,7 +2,7 @@ registerDemo(function(engine) {
 
     var stars;
 
-    document.title = "Lots of particles | J3D";
+    document.title = "Lots of particles | J3D | v0.12";
 
     var numParticles = 1000000;
 
@@ -17,8 +17,7 @@ registerDemo(function(engine) {
         var camera = new J3D.Transform();
         camera.camera = new J3D.Camera();
         camera.position.z = 100;
-        engine.camera = camera;
-        engine.scene.add(camera);
+        engine.scene.setCamera(camera);
 
         stars = new J3D.Transform();
         stars.renderer = s
@@ -28,7 +27,7 @@ registerDemo(function(engine) {
         stars.geometry.addArray("aVertexPosition", J3D.ParticleUtil.insideCube(numParticles, 400), 3);
         stars.geometry.addArray("aVertexColor", J3D.ParticleUtil.randomColors(numParticles, 0.5), 4);
 
-        engine.scene.add(stars);
+        engine.scene.add(stars, camera);
     }
 
     this.render = function(interactor) {

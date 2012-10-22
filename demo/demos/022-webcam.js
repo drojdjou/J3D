@@ -7,9 +7,9 @@ registerDemo(function(engine) {
     this.setup = function(callback) {
 
         var setup = function(p) {
-            var webcam = new UserStream(function() {
+            J3D.UserStream(function(stream) {
 
-                var ctex = new J3D.Texture(webcam.output);
+                var ctex = new J3D.Texture(stream);
 
                 p.colorOffset = [0.0, 0.0, 0.0];
 

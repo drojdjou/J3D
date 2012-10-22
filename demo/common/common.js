@@ -18,24 +18,6 @@ function updateDesc(s) {
     document.getElementById("details").innerHTML = s;
 }
 
-function checkWebGL() {
-    if (!
-        ( function () {
-            try {
-                return !! window.WebGLRenderingContext && !! document.createElement('canvas').getContext('experimental-webgl');
-            } catch(e) {
-                return false;
-            }
-        }
-            )()
-        ) {
-        document.write("<div id='nowebgl'>Oh no! Your browser or GPU does not seem to like WebGL. Click <a href='http://doesmybrowsersupportwebgl.com/'>here</a> to learn more.</div>");
-        return false;
-    } else {
-        return true;
-    }
-}
-
 function isLocalhost() {
     return document.location.host.indexOf("localhost") > -1;
 }
@@ -67,17 +49,16 @@ function Interactor() {
     this.pageX = 0;
     this.pageY = 0;
 
-    // Normalized mouse coordinates [ 0 - 1 ]
+    // Normalized mouse coordinates [ 0 to 1 ]
     this.normX = 0;
     this.normY = 0;
 
-    // Normalized and centered mouse coodinates [ -1 - 1 ]
+    // Normalized and centered mouse coodinates [ -1 to 1 ]
     this.centerX = 0;
     this.centerY = 0;
 
-    document.addEventListener(moveevent, mousemove, null);
+    var mousemove = function(e) {
 
-    function mousemove(e) {
         that.pageX = e.pageX;
         that.pageY = e.pageY;
 
@@ -88,8 +69,10 @@ function Interactor() {
         that.centerY = that.normY * 2 - 1;
     }
 
-    function destroy() {
+    this.destroy = function() {
         document.removeEventListener(moveevent, mousemove, null);
     }
+
+    document.addEventListener(moveevent, mousemove, null);
 }
 

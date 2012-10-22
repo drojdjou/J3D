@@ -7,7 +7,7 @@ J3D.Error = {};
  * Thrown when there is no WebGL context in the browser.
  * @constant
  */
-J3D.Error.NO_WEBGL_CONTEXT = "No webgl context. Looks like your browser does not support webgl :(";
+J3D.Error.NO_WEBGL_CONTEXT = "No webgl context. Looks like your browser does not support webgl";
 
 /**
  * Thrown when engine.render() is called but no camera was defined.
@@ -32,3 +32,9 @@ J3D.Error.UNKNOWN_COLLIDER_TYPE = "Unrecognized collider type: ";
  * @constant
  */
 J3D.Error.SHADER_COMPILE_ERROR = "Shader compile error: ";
+
+/**
+ * Thrown when user stream is not supported.
+ * @constant
+ */
+J3D.Error.USER_STREAM_ERROR = "UserStream not supported";

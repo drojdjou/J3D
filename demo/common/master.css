@@ -13,7 +13,7 @@ body {
     left: 0px;
     -webkit-transition-property: all;
     -webkit-transition-duration: 1s;
-    -webkit-filter: grayscale(0) brightness(0);
+    -webkit-filter: grayscale(1) brightness(0);
 }
 
 #overlay {
@@ -42,9 +42,12 @@ body {
     padding: 0 10px 0 10px;
     border: 0;
     cursor: pointer;
+    -webkit-transition-property: all;
+    -webkit-transition-duration: 0.2s;
 }
 
 #overlay li:hover {
     background-color: #fff;
     color: #000;
+    padding-top: 4px;
 }

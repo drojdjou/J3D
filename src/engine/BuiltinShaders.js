@@ -29,7 +29,6 @@ J3D.BuiltinShaders = function() {
 	var fetch = function(n) {
 		if (!shaders[n]) {
 			throw J3D.Error.NO_BUILTIN_SHADER + n;
-			return null;
 		} else {
 			return shaders[n].clone();
 		}
@@ -66,7 +65,8 @@ J3D.BuiltinShaders = function() {
 	
 	shaders.Reflective =  J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Reflective);
 	shaders.Skybox =  J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Skybox);
-	
+	shaders.Vignette =  J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Vignette);
+
 	shaders.Normal2Color = J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Normal2Color);
 
     var s = J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Selflit);

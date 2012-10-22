@@ -3,6 +3,13 @@
  */
 J3D.Primitive = {};
 
+/**
+ * Create a primitive cube
+ * @param w width of the cube
+ * @param h height of the cube
+ * @param d depth of the cube
+ * @param sixway A sizway texture is a texture where the faces are laid our in a 3x2 pattern in order from top-left to bottom-right. TODO: Add exact list of faces.
+ */
 J3D.Primitive.Cube = function(w, h, d, sixway) {
 	var c = J3D.Primitive.getEmpty();
 	w = w * 0.5;
@@ -70,6 +77,9 @@ J3D.Primitive.Cube = function(w, h, d, sixway) {
 	return new J3D.Mesh(c);
 }
 
+/**
+ * Create a full screen quad. Used mostly for post effects.
+ */
 J3D.Primitive.FullScreenQuad = function() {
 	var c = new J3D.Geometry();
 	c.addArray("aVertexPosition", new Float32Array([-1, 1,     1, 1,     1, -1,     -1, 1,     1, -1,     -1, -1]), 2);
@@ -77,6 +87,16 @@ J3D.Primitive.FullScreenQuad = function() {
 	return c;
 }
 
+/**
+ * Creates a primitive plane
+ * @param w width of the plane
+ * @param h height of the plane
+ * @param wd number of vertical segments
+ * @param hd number of horizontal segments
+ * @param wo horizontal offset (i.e. how much to move the anchor on x)
+ * @param ho vertical offset (i.e. how much to move the anchor on y)
+ * @param uv object with uv coordinates us = u start, ue = u end, vs = v start, ve = v end
+ */
 J3D.Primitive.Plane = function(w, h, wd, hd, wo, ho, uv) {
 	var c = J3D.Primitive.getEmpty();
 	
@@ -128,7 +148,13 @@ J3D.Primitive.Plane = function(w, h, wd, hd, wo, ho, uv) {
 }
 
 /**
- * Adapted from Three.js & Papervision3d
+ * Creates a sphere. Code adapted from Three.js & Papervision3d.
+ *
+ * @param radius the radius of the sphere
+ *
+ * @param segmentsWidth number of vertical segments
+ *
+ * @param segmentsHeight number of horizontal segments
  */
 J3D.Primitive.Sphere = function(radius, segmentsWidth, segmentsHeight) {
     var c = J3D.Primitive.getEmpty();
@@ -195,6 +221,13 @@ J3D.Primitive.Sphere = function(radius, segmentsWidth, segmentsHeight) {
     return new J3D.Mesh(c);
 }
 
+/**
+ * Similar to sphere, but inverts all the normals and UVs.
+ *
+ * @param segmentsWidth number of vertical segments
+ *
+ * @param segmentsHeight number of horizontal segments
+ */
 J3D.Primitive.SingleTextureSkybox = function(segmentsWidth, segmentsHeight) {
     var c = J3D.Primitive.getEmpty();
 
@@ -298,6 +331,9 @@ J3D.Primitive.SingleTextureSkybox = function(segmentsWidth, segmentsHeight) {
     return new J3D.Mesh(c);
 }
 
+/**
+ * Utility function. Returns an empty object to populate with geometry. Contains empty arrays for vertices, normals, uv1 and indices (called tris).
+ */
 J3D.Primitive.getEmpty = function(){
 	var g = {};
 	g.vertices = [];	 
@@ -307,8 +343,18 @@ J3D.Primitive.getEmpty = function(){
 	return g;
 }
 
-// uv array = [minU, maxU, minV, maxV]
+/**
+ * Add a quad to an object containing graphics data.
+ * 
+ * @param g graphics object to add the quad to
+ * @param p1 coordinates of first point
+ * @param p2 coordinates of second point
+ * @param p3 coordinates of third point
+ * @param p4 coordinates of fourth point
+ * @param uv an array with uv coordinates [minU, maxU, minV, maxV]
+ */
 J3D.Primitive.addQuad = function(g, p1, p2, p3, p4, uv) {
+    //
 	var n1 = v3.cross(p1.sub(p2), p2.sub(p3)).norm();
 	var p = g.vertices.length / 3;
 

@@ -316,7 +316,9 @@ J3D.Transform.prototype.find = function(path) {
 }
 
 /**
- * This method is only used if the transform holds a camera
+ * Calculate the inverse of the global matrix for this transform.
+ * This method is mostly useful if the transform holds a camera.
+ * After this method is invoked, the inverseMat property becomes available on this object.
  */
 J3D.Transform.prototype.updateInverseMat = function() {
     if (!this.inverseMat) this.inverseMat = mat4.create();

@@ -29,13 +29,11 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
     }
     catch (e) {
         throw J3D.Error.NO_WEBGL_CONTEXT;
-        return;
     }
 
     if (typeof(J3D.BuiltinShaders) == "function") J3D.BuiltinShaders = J3D.BuiltinShaders();
     this.shaderAtlas = new J3D.ShaderAtlas();
     this.scene = new J3D.Scene();
-    this.camera; // it is a J3D.Transform
 
     this.outCanvas = cv;
 
@@ -55,9 +53,7 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
         this._lights = [];
 
         this.scene.removeAll();
-        this.scene.skybox = null;
         this.shaderAtlas.clear();
-        this.camera = null;
     }
 
     /**
@@ -81,6 +77,7 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
      * @param height The new height of the viewport
      */
     this.resize = function(width, height) {
+
         if (!gl || gl == undefined) return;
 
         var w = (width) ? width : window.innerWidth;
@@ -97,8 +94,8 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
 
         gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
 
-        if (this.camera) {
-            this.camera.camera.onResize();
+        if (this.scene.camera) {
+            this.scene.camera.camera.onResize();
         }
     }
 
@@ -135,7 +132,7 @@ J3D.Engine.prototype.render = function(dontClear) {
 
     if (!dontClear) gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    if (!this.camera) throw J3D.Error.NO_CAMERA;
+    if (!this.scene.camera) throw J3D.Error.NO_CAMERA;
 
     if (this.scene.numChildren > 0) this.renderScene();
 }
@@ -155,13 +152,15 @@ J3D.Engine.prototype.renderScene = function() {
     }
 
     // 5. Calculate camera inverse matrix and it's world position
-    this.camera.updateInverseMat();
+    this.scene.camera.updateInverseMat();
 
     // 6. Render sky box (if any)
     if (this.scene.skybox) {
         gl.depthMask(false);
-        this.scene.skybox.renderer.mid = this.camera.camera.near + (this.camera.camera.far - this.camera.camera.near) / 2;
-        this.renderObject(this.scene.skybox);
+        var c = this.scene.camera.camera;
+        var s = this.scene.skybox;
+        s.renderer.mid = c.near + (c.far - c.near) / 2;
+        this.renderObject(s);
         gl.depthMask(true);
     }
 
@@ -172,7 +171,7 @@ J3D.Engine.prototype.renderScene = function() {
         t.updateWorldPosition();
     }
 
-    // 8. Render transparent meshes	(TODO: sort before rendering)
+    // 8. Render transparent meshes	(TODO: add layers & sort before rendering)
     gl.disable(gl.DEPTH_TEST);
     gl.enable(gl.BLEND);
     lt = this._transparentMeshes.length;
@@ -200,6 +199,7 @@ J3D.Engine.prototype.renderScene = function() {
 
 J3D.Engine.prototype.renderObject = function(t) {
     var s = this.shaderAtlas.getShader(t.renderer);
+    var c = this.scene.camera;
 
     // var same = (s == this.lastProgram);
     // if(!same)
@@ -208,10 +208,10 @@ J3D.Engine.prototype.renderObject = function(t) {
 
     // Setup standard uniforms and attributes
     if (s.uniforms.pMatrix)
-        gl.uniformMatrix4fv(s.uniforms.pMatrix.location, false, this.camera.camera.projectionMat.toArray());
+        gl.uniformMatrix4fv(s.uniforms.pMatrix.location, false, c.camera.projectionMat.toArray());
 
     if (s.uniforms.vMatrix)
-        gl.uniformMatrix4fv(s.uniforms.vMatrix.location, false, this.camera.inverseMat);
+        gl.uniformMatrix4fv(s.uniforms.vMatrix.location, false, c.inverseMat);
 
     if (s.uniforms.mMatrix)
         gl.uniformMatrix4fv(s.uniforms.mMatrix.location, false, t.globalMatrix);
@@ -220,7 +220,7 @@ J3D.Engine.prototype.renderObject = function(t) {
         gl.uniformMatrix3fv(s.uniforms.nMatrix.location, false, t.normalMatrix);
 
     if (s.uniforms.uEyePosition)
-        gl.uniform3fv(s.uniforms.uEyePosition.location, this.camera.worldPosition.xyz());
+        gl.uniform3fv(s.uniforms.uEyePosition.location, c.worldPosition.xyz());
 
     if (s.uniforms.uTileOffset)
         gl.uniform4fv(s.uniforms.uTileOffset.location, t.getTileOffset());
@@ -234,8 +234,7 @@ J3D.Engine.prototype.renderObject = function(t) {
     // Setup renderers custom uniforms and attributes
     t.renderer.setup(s, t);
 
-    var cull = t.renderer.cullFace || gl.BACK;
-    gl.cullFace(cull);
+    gl.cullFace(t.renderer.cullFace || gl.BACK);
 
     var mode = (t.renderer.drawMode != null) ? t.renderer.drawMode : gl.TRIANGLES;
 

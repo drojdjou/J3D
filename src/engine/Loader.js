@@ -128,9 +128,9 @@ J3D.Loader.parseJSONScene = function(jscene, jmeshes, engine) {
         }
 		
 		if (t.camera) {
-			//jscene.cameras[t.camera].transform = t;
 			t.camera = jscene.cameras[t.camera];
-			engine.camera = t;
+            // The current camera is always the one that was last exported from Unity
+			engine.scene.setCamera(t);
 		}
 
 		jscene.transforms[i] = t;
