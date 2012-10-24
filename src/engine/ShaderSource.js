@@ -156,7 +156,7 @@ J3D.ShaderSource.Normal2Color = [
 
 	"void main(void) {",
 	"gl_Position = pMatrix * vMatrix * mMatrix * vec4(aVertexPosition, 1.0);",
-	"vColor = normalize( aVertexNormal / 2.0 + vec3(0.5) );",
+	"vColor = normalize( aVertexNormal );",
 	"}",
 
 	"//#fragment",

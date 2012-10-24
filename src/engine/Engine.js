@@ -171,8 +171,16 @@ J3D.Engine.prototype.renderScene = function() {
         t.updateWorldPosition();
     }
 
+    // 8. Render opaque meshes
+    gl.disable(gl.BLEND);
+    gl.enable(gl.DEPTH_TEST);
+    lt = this._opaqueMeshes.length;
+    for (i = 0; i < lt; i++) {
+        this.renderObject(this._opaqueMeshes[i]);
+    }
+
     // 8. Render transparent meshes	(TODO: add layers & sort before rendering)
-    gl.disable(gl.DEPTH_TEST);
+    // gl.disable(gl.DEPTH_TEST);
     gl.enable(gl.BLEND);
     lt = this._transparentMeshes.length;
     for (i = 0; i < lt; i++) {
@@ -181,14 +189,6 @@ J3D.Engine.prototype.renderScene = function() {
         var dstFactor = (t.geometry.dstFactor != null) ? t.geometry.dstFactor : gl.ONE;
         gl.blendFunc(srcFactor, dstFactor);
         this.renderObject(t);
-    }
-
-    // 9. Render opaque meshes
-    gl.disable(gl.BLEND);
-    gl.enable(gl.DEPTH_TEST);
-    lt = this._opaqueMeshes.length;
-    for (i = 0; i < lt; i++) {
-        this.renderObject(this._opaqueMeshes[i]);
     }
 
     // #DEBUG Monitor the amount of shaders created (TODO: create a test case for that)

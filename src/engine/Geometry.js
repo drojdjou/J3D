@@ -6,9 +6,10 @@
 J3D.Geometry = function(){
 	this.renderMode = J3D.RENDER_AS_OPAQUE;
 	this.arrays = [];
-	this.elements;
+    this.arraysByName = {};
+	this.elements = null;
 	this.hasElements = false;
-	this.size;
+	this.size = 0;
 }
 
 J3D.Geometry.prototype.setTransparency = function(transparency, srcFactor, dstFactor) {
@@ -26,6 +27,7 @@ J3D.Geometry.prototype.addArray = function(name, data, itemSize, type, usage) {
 	if(!usage) usage = gl.STATIC_DRAW;
 	var vbo = new J3D.Geometry.Attribute(name, data, itemSize, type, usage, gl.ARRAY_BUFFER);
 	this.arrays.push(vbo);
+    this.arraysByName[name] = vbo;
 	this.size = vbo.size;
 	return vbo;
 }

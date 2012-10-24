@@ -1,0 +1,122 @@
+{
+	
+"path" : "",
+"ambient": { "r":0.2, "g":0.2, "b":0.2, "a":1 },
+"background": { "r":0, "g":0, "b":0, "a":1 },
+
+"textures": {
+	
+	"mug": { 
+		"file": "mug.jpg"
+	}
+
+},
+
+"lightmaps": [
+],
+	
+"materials": {
+	
+	"no_name": { 
+		"type": "Phong",
+		"color": { "r":1, "g":1, "b":1, "a":1 },
+		"specularIntensity": 0,
+        "shininess": 0,
+		"textureTile": [  ],
+		"textureOffset": [  ]
+	},
+	
+	"blue": { 
+		"type": "Phong",
+		"color": { "r":0.3452885, "g":0.5846242, "b":0.9253731, "a":1 },
+		"specularIntensity": 0.4920448,
+        "shininess": 1,
+		"textureTile": [ 1,1 ],
+		"textureOffset": [ 0,0 ],
+		"colorTexture": "mug"
+	}
+
+},
+
+"lights": {
+	
+	"light": { 
+		"type": 1,
+		"color": { "r":1, "g":1, "b":1, "a":1 },
+		"intensity": 1
+	},
+	
+	"light2": { 
+		"type": 1,
+		"color": { "r":1, "g":1, "b":1, "a":1 },
+		"intensity": 0.5
+	}
+
+},
+
+"cameras": {
+	
+	"camera": { 
+		"fov": 24.95,
+		"near": 0.3,
+		"far": 1000
+	}
+
+},
+
+"transforms": [
+	
+	{
+		"uid": 1,
+        "name": "light",
+		"position": [ -8.286189,20.59642,10.3779 ],
+		"rotation": [ 1.184221,1.195639,0.4911658 ],
+		"light": "light"
+	},
+	
+	{
+		"uid": 2,
+        "name": "light2",
+		"position": [ -8.286189,20.59642,10.3779 ],
+		"rotation": [ 1.184222,-2.545302,0.4911662 ],
+		"light": "light2"
+	},
+	
+	{
+		"uid": 3,
+        "name": "camera",
+		"position": [ 0,12.51905,0 ],
+		"rotation": [ 0.0679742,2.986009,0.01795381 ],
+		"camera": "camera"
+	},
+	
+	{
+		"uid": 4,
+        "name": "floor",
+		"position": [ -10.03497,4.535104,51.05085 ],
+		"rotation": [ 0,0.01914218,0 ],
+		"renderer": "no_name",
+		"mesh": "floor"
+	},
+	
+	{
+		"uid": 5,
+        "name": "mug",
+		"parent": 4,
+		"position": [ -0.2179696,2.053033,-0.06602813 ],
+		"rotation": [ 0,0.4456328,0 ],
+		"collider": {
+		    "type": "box",
+		    "center": [ 0.26,0.3427755,0.02 ],
+		    "size": [ 4.8,4.745843,4.800004 ]
+		},
+		"renderer": "blue",
+		"mesh": "mug"
+	}
+
+]
+}
+
+
+
+

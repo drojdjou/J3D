@@ -51,7 +51,7 @@ def listSourceFiles():
 
 def minifyWithClosure(jsf):
 	_cmd =  "java -jar tools/build/compiler.jar --js_output_file %s --warning_level QUIET" % output
-	_cmd += " --js lib/requestAnimationFrame.js --js lib/gl-matrix.js --js "
+	_cmd += " --js lib/requestAnimationFrame.js --js lib/gl-matrix-1.3.7.js --js "
 	_cmd += ' --js '.join(jsf)
 	os.system(_cmd)
 

@@ -1,14 +1,14 @@
 /**
-    Creates a new Transform
+ Creates a new Transform
 
-    @class A transform represents a point in 3d world. A point has a position, rotation and scale. Since everything in J3D is a transform, many different things can be attached, like a camera, light source or, in most cases, geometry and a renderer. A transform can also be used as a hierarchy building element - it can have it's own child transforms.
+ @class A transform represents a point in 3d world. A point has a position, rotation and scale. Since everything in J3D is a transform, many different things can be attached, like a camera, light source or, in most cases, geometry and a renderer. A transform can also be used as a hierarchy building element - it can have it's own child transforms.
 
-    @param n A name to identify the transform. Not required and doesn't have to be unique, but it is useful if you want to use the find function to search for transforms in your scene later on. Used by the Loader when loading scenes exported from Unity3d.
+ @param n A name to identify the transform. Not required and doesn't have to be unique, but it is useful if you want to use the find function to search for transforms in your scene later on. Used by the Loader when loading scenes exported from Unity3d.
 
-    @param u A unique id for this transform. Not required, it's mostly used but the Loader when loading scenes exported with Unity3d.
+ @param u A unique id for this transform. Not required, it's mostly used but the Loader when loading scenes exported with Unity3d.
  */
 J3D.Transform = function(n, u) {
-    
+
     var that = this;
     var children = [];
 
@@ -28,17 +28,21 @@ J3D.Transform = function(n, u) {
     this.numChildren = 0;
 
     /**
-     * Position of the transform relative to parents coordinate system. It's ok to manipulate this value directly.
+     * Position of the transform relative to parents coordinate system.
+     * It's ok to manipulate this value directly.
      */
     this.position = v3.ZERO();
 
     /**
-     * Rotstion of the transform relative to parents coordinate system. It's ok to manipulate this value directly.
+     * Rotation of the transform relative to parents coordinate system.
+     * This value is in RADIANS
+     * It's ok to manipulate this value directly.
      */
     this.rotation = v3.ZERO();
 
     /**
-     * Scale of the transform relative to parents coordinate system. It's ok to manipulate this value directly.
+     * Scale of the transform relative to parents coordinate system.
+     * It's ok to manipulate this value directly.
      */
     this.scale = v3.ONE();
 
@@ -53,17 +57,24 @@ J3D.Transform = function(n, u) {
     this.matrix = mat4.create();
 
     /**
-     * World transformation matrix (concatenated local transforms of all parents and self). Do not manipulate directly, it will be overwritten by the rendering function.
+     * World transformation matrix (concatenated local transforms of all parents and self).
+     * Do not manipulate directly, it will be overwritten by the rendering function.
      */
     this.globalMatrix = mat4.create();
 
     /**
-     * Normal matrix (inverse/transpose of global matrix for use with normals). Do not manipulate directly, it will be overwritten by the rendering function.
+     * Normal matrix (inverse/transpose of global matrix for use with normals).
+     * Do not manipulate directly, it will be overwritten by the rendering function.
      */
     this.normalMatrix = mat3.create();
 
     this.isStatic = false;
     this._lockedMatrix = false;
+
+    /**
+     *  Set to true, to manipulate the matrix directly (position, rotation and scale DO NOT WORK in true)
+     */
+    this.matrixMode = false;
 
     /**
      *  If set to false, this transform will not be rendered. But it's children still will!
@@ -107,15 +118,15 @@ J3D.Transform = function(n, u) {
      * @param t J3D.Transform to look add. Multiple arguments are accepted.
      */
     this.add = function(t) {
-		var fa;
-		for (var i = 0; i < arguments.length; i++) {
-			var t = arguments[i];
-			if(!fa) fa = t;
-			if (children.indexOf(t) == -1) children.push(t);
-			t.parent = that;
-			that.numChildren = children.length;
-		}
-		return fa;
+        var fa;
+        for (var i = 0; i < arguments.length; i++) {
+            var t = arguments[i];
+            if (!fa) fa = t;
+            if (children.indexOf(t) == -1) children.push(t);
+            t.parent = that;
+            that.numChildren = children.length;
+        }
+        return fa;
     }
 
     /**
@@ -158,7 +169,7 @@ J3D.Transform = function(n, u) {
             return true;
         } else if (any) {
             for (var i = 0; i < children.length; i++) {
-                if(children[i].remove(t)) return true;
+                if (children[i].remove(t)) return true;
             }
         } else {
             return false;
@@ -185,7 +196,7 @@ J3D.Transform = function(n, u) {
 
         var p = that.parent;
 
-        while(p != null) {
+        while (p != null) {
             pe.push(p.name);
             p = p.parent;
         }
@@ -217,7 +228,7 @@ J3D.Transform.prototype.clone = function() {
 }
 
 /**
- * @returns Transforms a vector transformed by the transforms normal matrix
+ * @returns Multiplies a vector by the normal matrix of this transform
  */
 J3D.Transform.prototype.transformDirection = function(d) {
     // TODO: optimize
@@ -255,15 +266,17 @@ J3D.Transform.prototype.left = function() {
 J3D.Transform.prototype.updateWorld = function(parent) {
     if (this._lockedMatrix) return;
 
-    mat4.identity(this.matrix);
+    if (!this.matrixMode) {
+        mat4.identity(this.matrix);
 
-    mat4.translate(this.matrix, [this.position.x, this.position.y, this.position.z]);
+        mat4.translate(this.matrix, [this.position.x, this.position.y, this.position.z]);
 
-    mat4.rotateZ(this.matrix, this.rotation.z);
-    mat4.rotateX(this.matrix, this.rotation.x);
-    mat4.rotateY(this.matrix, this.rotation.y);
+        mat4.rotateZ(this.matrix, this.rotation.z);
+        mat4.rotateX(this.matrix, this.rotation.x);
+        mat4.rotateY(this.matrix, this.rotation.y);
 
-    mat4.scale(this.matrix, [this.scale.x, this.scale.y, this.scale.z]);
+        mat4.scale(this.matrix, [this.scale.x, this.scale.y, this.scale.z]);
+    }
 
     if (parent != null) mat4.multiply(parent.globalMatrix, this.matrix, this.globalMatrix);
     else this.globalMatrix = this.matrix;
@@ -304,7 +317,7 @@ J3D.Transform.prototype.getTileOffset = function() {
  */
 J3D.Transform.prototype.find = function(path) {
     var p = path.split("/");
-    
+
     for (var i = 0; i < this.numChildren; i++) {
         if (this.childAt(i).name == p[0]) {
             if (p.length == 1) return this.childAt(i);

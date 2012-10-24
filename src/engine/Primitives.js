@@ -148,7 +148,7 @@ J3D.Primitive.Plane = function(w, h, wd, hd, wo, ho, uv) {
 }
 
 /**
- * Creates a sphere. Code adapted from Three.js & Papervision3d.
+ * Creates a sphere. Code adapted from Three.js (https://github.com/mrdoob/three.js/blob/master/src/extras/geometries/SphereGeometry.js) & Papervision3d.
  *
  * @param radius the radius of the sphere
  *
@@ -181,42 +181,47 @@ J3D.Primitive.Sphere = function(radius, segmentsWidth, segmentsHeight) {
             var u = x / segmentsX;
             var v = y / segmentsY;
 
-            var xp = - radius * Math.cos(phiStart + u * phiLength) * Math.sin(thetaStart + v * thetaLength);
-            var yp = radius * Math.cos(thetaStart + v * thetaLength);
-            var zp = radius * Math.sin(phiStart + u * phiLength) * Math.sin(thetaStart + v * thetaLength);
+            var xp = -radius * Math.cos(phiStart + u   * phiLength)  * Math.sin(thetaStart + v * thetaLength);
+            var yp =  radius * Math.cos(thetaStart + v * thetaLength);
+            var zp =  radius * Math.sin(phiStart + u   * phiLength)  * Math.sin(thetaStart + v * thetaLength);
 
             vertices.push(new v3(xp, yp, zp));
             uvs.push([u, 1 - v]);
         }
     }
 
-    for (y = 0; y <= segmentsY; y ++) {
+    for (y = 0; y < segmentsY; y ++) {
 
         for (x = 0; x < segmentsX; x ++) {
 
-            var vt1 = vertices[ y * segmentsX + x + 0 ];
-            var vt2 = vertices[ y * segmentsX + x + 1 ];
-            var vt3 = vertices[ (y + 1) * segmentsX + x + 1 ];
-            var vt4 = vertices[ (y + 1) * segmentsX + x + 0 ];
+            var o = segmentsX + 1;
+            var vt1 = vertices[ y * o + x + 0 ];
+            var vt2 = vertices[ y * o + x + 1 ];
+            var vt3 = vertices[ (y + 1) * o + x + 1 ];
+            var vt4 = vertices[ (y + 1) * o + x + 0 ];
 
-            var uv1 = uvs[ y * segmentsX + x + 0 ];
-            var uv2 = uvs[ y * segmentsX + x + 1 ];
-            var uv3 = uvs[ (y + 1) * segmentsX + x + 1 ];
-            var uv4 = uvs[ (y + 1) * segmentsX + x + 0 ];
+            var uv1 = uvs[ y * o + x + 0 ];
+            var uv2 = uvs[ y * o + x + 1 ];
+            var uv3 = uvs[ (y + 1) * o + x + 1 ];
+            var uv4 = uvs[ (y + 1) * o + x + 0 ];
 
             var n1 = vt1.cp().norm();
             var n2 = vt2.cp().norm();
             var n3 = vt3.cp().norm();
             var n4 = vt4.cp().norm();
 
-            var p = c.vertices.length / 3;
+            var p = Math.floor(c.vertices.length / 3);
 
             c.vertices.push(vt1.x, vt1.y, vt1.z, vt2.x, vt2.y, vt2.z, vt3.x, vt3.y, vt3.z, vt4.x, vt4.y, vt4.z);
             c.uv1.push(uv1[0], uv1[1], uv2[0], uv2[1], uv3[0], uv3[1], uv4[0], uv4[1]);
+            //c.uv1.push(0, 0,  1, 0,  1, 1,  0, 1);
+
             c.normals.push(n1.x, n1.y, n1.z, n2.x, n2.y, n2.z, n3.x, n3.y, n3.z, n4.x, n4.y, n4.z);
             c.tris.push(p + 0, p + 1, p + 2, p + 0, p + 2, p + 3);
         }
     }
+
+    J3D.MathUtil.calculateTangents(c);
 
     return new J3D.Mesh(c);
 }
@@ -227,6 +232,7 @@ J3D.Primitive.Sphere = function(radius, segmentsWidth, segmentsHeight) {
  * @param segmentsWidth number of vertical segments
  *
  * @param segmentsHeight number of horizontal segments
+ *
  */
 J3D.Primitive.SingleTextureSkybox = function(segmentsWidth, segmentsHeight) {
     var c = J3D.Primitive.getEmpty();
@@ -339,6 +345,7 @@ J3D.Primitive.getEmpty = function(){
 	g.vertices = [];	 
 	g.normals = [];
 	g.uv1 = [];
+    g.tangents = [];
 	g.tris = [];
 	return g;
 }
