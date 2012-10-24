@@ -119,6 +119,7 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
  * @param c An instance of J3D.Color
  */
 J3D.Engine.prototype.setClearColor = function(c) {
+    this.outCanvas.style['background-color'] = c.toRGB();
     gl.clearColor(c.r, c.g, c.b, c.a);
 }
 

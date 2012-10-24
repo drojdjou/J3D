@@ -1,3 +1,5 @@
+var nowebglParagraph = "<div class='warning'>Your browser does not support webgl.<br>Please try latest Chrome or Firefox.</div>";
+
 function setLabels(title, desc, madeBy) {
 
     var mb = (madeBy == null) ? true : false;
