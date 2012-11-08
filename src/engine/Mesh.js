@@ -10,7 +10,7 @@
     <li>uv2 (2 x float)</li>
     </ul>
 
-    No atrribute is mandatory, but the shader that is being used might expect them to exist in the mesh. If an attribute named "tris" is present it will be interpreted as the elements array.</p>
+    No attribute is mandatory, but the shader that is being used might expect them to exist in the mesh. If an attribute named "tris" is present it will be interpreted as the elements array.</p>
 
     <p>WARNING: Other attributes in the "source" will be ignored. Mesh extends Geometry, so more attributes can be added manually if necessary.</p>
 
@@ -51,8 +51,8 @@ J3D.Mesh = function(source) {
     for (var attr in source) {
         switch (attr) {
             case "vertices":
-                this.vertexPositionBuffer = this.addArray("aVertexPosition", new Float32Array(source[attr]), 3, gl.DYNAMIC_DRAW);
-                break;
+                this.vertexPositionBuffer = this.addArray(J3D.Mesh.VERTEX_POSITION, new Float32Array(source[attr]), 3, gl.DYNAMIC_DRAW);
+               break;
             case "colors":
                 if (source[attr].length > 0) this.addArray("aVertexColor", new Float32Array(source[attr]), 4);
                 break;
@@ -80,7 +80,7 @@ J3D.Mesh = function(source) {
                 if (source[attr].length > 0) this.addArray("aVertexTangent", new Float32Array(source[attr]), 4);
                 break;
             default:
-                throw "WARNING! Unknown attribute in geometry: " + attr;
+                console.log("WARNING! Unknown attribute in geometry: " + attr + ". It will be ignored.");
                 break;
         }
     }
@@ -107,4 +107,6 @@ J3D.Mesh = function(source) {
 J3D.Mesh.prototype = new J3D.Geometry();
 J3D.Mesh.prototype.constructor = J3D.Mesh;
 J3D.Mesh.prototype.supr = J3D.Geometry.prototype;
+
+J3D.Mesh.VERTEX_POSITION = "aVertexPosition";
 

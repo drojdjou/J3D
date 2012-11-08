@@ -22,5 +22,15 @@ J3D.Capabilities = {
     /**
      * true if userStream is supported
      */
-    userStream:(window.navigator.getUserMedia != null) || (window.navigator.webkitGetUserMedia != null)
+    userStream:(window.navigator.getUserMedia != null) || (window.navigator.webkitGetUserMedia != null),
+
+    /**
+     * true if pointerLock is supported
+     */
+    pointerLock: ('pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document),
+
+    /**
+     * true if gamepad is supported
+     */
+    gamepad: !!navigator.webkitGamepads || !!navigator.webkitGetGamepads
 }

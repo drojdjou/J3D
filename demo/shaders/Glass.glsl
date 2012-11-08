@@ -4,14 +4,15 @@
 
 //#include CommonInclude
 
-//#vertex
-//#include VertexInclude
 varying vec3 vNormal;
 varying vec3 t;
 varying vec3 tr;
 varying vec3 tg;
 varying vec3 tb;
 varying float rfac;
+
+//#vertex
+//#include VertexInclude
 
 uniform vec3 chromaticDispertion;
 uniform float bias;
@@ -34,13 +35,6 @@ void main(void) {
 
 //#fragment
 uniform samplerCube uCubemap;
-
-varying vec3 vNormal;
-varying vec3 t;
-varying vec3 tr;
-varying vec3 tg;
-varying vec3 tb;
-varying float rfac;
 
 void main(void) {
 	vec4 ref = textureCube(uCubemap, t);

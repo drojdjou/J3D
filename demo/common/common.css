@@ -1,6 +1,7 @@
 body {
     font-family: Georgia, serif;
-    background-color: #ffffff;
+    background-color: #000000;
+    color: #ffffff;
     margin: 0px;
     overflow: auto;
 }
@@ -107,6 +108,12 @@ p {
     top: 28px;
     left: 0px;
     z-index: 1;
+}
+
+.warning {
+    position: absolute;
+    top: 20px;
+    left: 20px;
 }
 
 @-webkit-keyframes thumbOn {

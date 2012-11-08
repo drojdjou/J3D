@@ -18,8 +18,8 @@ registerDemo(function(engine) {
 
         cube = new J3D.Transform();
         cube.geometry = J3D.Primitive.Cube(1, 1, 1);
-        cube.renderer = J3D.BuiltinShaders.fetch("Phong");
-        cube.renderer.color = new J3D.Color(1, 0, 0, 1);
+        cube.renderer = J3D.BuiltinShaders.fetch("Normal2Color");
+        // cube.renderer.color = new J3D.Color(1, 0, 0, 1);
 
         var camera = new J3D.Transform();
         camera.camera = new J3D.Camera();

@@ -1,7 +1,9 @@
 /**
- Creates a webcam stream for use as a texture.
-
- Browsers that support this feature: Chrome, Opera Alpha Camera build
+ * Creates a webcam stream for use as a texture.
+ *
+ * @param callback this function will be invoked when the webcam stream is ready. It will have the video element with the stream passed as argument.
+ *
+ * Browsers that support this feature: Chrome, Opera Alpha Camera build
  */
 J3D.UserStream = function(callback) {
 

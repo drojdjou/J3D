@@ -40,6 +40,16 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
     this.gl = gl;
 
     /**
+     * Set the clear color in the webgl context. The clear color is the default background color to which the screen gets cleared before each rendering loop.
+     *
+     * @param c An instance of J3D.Color
+     */
+    this.setClearColor = function(c) {
+        if (!webglSettings || !webglSettings.alpha) this.outCanvas.style['background-color'] = c.toRGB();
+        gl.clearColor(c.r, c.g, c.b, c.a);
+    }
+
+    /**
      * Clear the engine. Removes all objects from the scene, the skybox and the camera.
      */
     this.clear = function() {
@@ -62,8 +72,8 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
     this.destroy = function() {
 
         gl = null;
-        
-        if(!isExternalCanvas) {
+
+        if (!isExternalCanvas) {
             window.removeEventListener("resize", autoResize);
             document.body.removeChild(cv);
         }
@@ -113,14 +123,6 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
     this.clear();
 }
 
-/**
- * Set the clear color in the webgl context. The clear color is the default background color to which the screen gets cleared before each rendering loop.
- *
- * @param c An instance of J3D.Color
- */
-J3D.Engine.prototype.setClearColor = function(c) {
-    gl.clearColor(c.r, c.g, c.b, c.a);
-}
 
 /**
  * The main rendering function.
@@ -171,8 +173,16 @@ J3D.Engine.prototype.renderScene = function() {
         t.updateWorldPosition();
     }
 
+    // 8. Render opaque meshes
+    gl.disable(gl.BLEND);
+    gl.enable(gl.DEPTH_TEST);
+    lt = this._opaqueMeshes.length;
+    for (i = 0; i < lt; i++) {
+        this.renderObject(this._opaqueMeshes[i]);
+    }
+
     // 8. Render transparent meshes	(TODO: add layers & sort before rendering)
-    gl.disable(gl.DEPTH_TEST);
+    // gl.disable(gl.DEPTH_TEST);
     gl.enable(gl.BLEND);
     lt = this._transparentMeshes.length;
     for (i = 0; i < lt; i++) {
@@ -181,14 +191,6 @@ J3D.Engine.prototype.renderScene = function() {
         var dstFactor = (t.geometry.dstFactor != null) ? t.geometry.dstFactor : gl.ONE;
         gl.blendFunc(srcFactor, dstFactor);
         this.renderObject(t);
-    }
-
-    // 9. Render opaque meshes
-    gl.disable(gl.BLEND);
-    gl.enable(gl.DEPTH_TEST);
-    lt = this._opaqueMeshes.length;
-    for (i = 0; i < lt; i++) {
-        this.renderObject(this._opaqueMeshes[i]);
     }
 
     // #DEBUG Monitor the amount of shaders created (TODO: create a test case for that)

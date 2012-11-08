@@ -22,6 +22,13 @@ J3D.Color = function(r, g, b, a){
 		if(type == gl.FLOAT_VEC3) return this.rgb();
 		else return this.rgba();
 	}
+
+    this.toRGB = function() {
+        var r8 = (this.r * 255) | 0;
+        var g8 = (this.g * 255) | 0;
+        var b8 = (this.b * 255) | 0;
+        return 'rgb(' + r8 + ',' + g8 + ',' + b8 + ')';
+    }
 }
 
 J3D.Color.white = new J3D.Color(1,1,1,1);

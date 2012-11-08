@@ -30,7 +30,16 @@ m44.prototype.identity = function(){
     this.n44 = 1;
 }
 
-// based on https://github.com/mrdoob/three.js/blob/master/src/core/Matrix4.js
+/**
+ * Based on https://github.com/mrdoob/three.js/blob/master/src/core/Matrix4.js
+ *
+ * @param left
+ * @param right
+ * @param top
+ * @param bottom
+ * @param near
+ * @param far
+ */
 m44.prototype.ortho = function(left, right, top, bottom, near, far) {
 
 	var x, y, z, w, h, p;

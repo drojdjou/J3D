@@ -127,6 +127,6 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 J3D.Texture.prototype.update = function(force) {
 	if(!force && (!this.loaded || !this.isVideo)) return;
 	gl.bindTexture(gl.TEXTURE_2D, this.tex);
-	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, this.src);
+	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, this.src);
 	gl.bindTexture(gl.TEXTURE_2D, null);
 }
