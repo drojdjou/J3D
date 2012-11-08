@@ -26,10 +26,9 @@ uniform float cloudIntensity;
 void main(void) {
 
     float df = computeLights(vPosition, vNormal, 0.0, 0.0).r;
-    df = max(0.0, df);
 
     vec4 d = texture2D(cloudTexture, vTextureCoord);
-    vec3 c = vec3( 0.3 + df * 0.7 );
+    vec3 c = vec3( 0.2 + df * 0.8 );
 
     gl_FragColor = vec4(c, d.r * cloudIntensity);
 }

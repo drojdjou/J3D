@@ -40,6 +40,16 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
     this.gl = gl;
 
     /**
+     * Set the clear color in the webgl context. The clear color is the default background color to which the screen gets cleared before each rendering loop.
+     *
+     * @param c An instance of J3D.Color
+     */
+    this.setClearColor = function(c) {
+        if (!webglSettings || !webglSettings.alpha) this.outCanvas.style['background-color'] = c.toRGB();
+        gl.clearColor(c.r, c.g, c.b, c.a);
+    }
+
+    /**
      * Clear the engine. Removes all objects from the scene, the skybox and the camera.
      */
     this.clear = function() {
@@ -62,8 +72,8 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
     this.destroy = function() {
 
         gl = null;
-        
-        if(!isExternalCanvas) {
+
+        if (!isExternalCanvas) {
             window.removeEventListener("resize", autoResize);
             document.body.removeChild(cv);
         }
@@ -113,15 +123,6 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
     this.clear();
 }
 
-/**
- * Set the clear color in the webgl context. The clear color is the default background color to which the screen gets cleared before each rendering loop.
- *
- * @param c An instance of J3D.Color
- */
-J3D.Engine.prototype.setClearColor = function(c) {
-    this.outCanvas.style['background-color'] = c.toRGB();
-    gl.clearColor(c.r, c.g, c.b, c.a);
-}
 
 /**
  * The main rendering function.

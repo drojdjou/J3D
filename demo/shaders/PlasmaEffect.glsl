@@ -16,7 +16,7 @@ void main(void) {
     float da = distance(vTextureCoord, ca);
     float db = distance(vTextureCoord, cb);
 
-    float t = uTime * 0.5;
+    float t = uTime * 0.1;
 
     float c1 = sin(da * cos(t) * 16.0 + t * 4.0);
     float c2 = cos(vTextureCoord.y * 8.0 + t);

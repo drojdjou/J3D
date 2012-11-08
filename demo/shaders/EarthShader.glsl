@@ -78,16 +78,12 @@ void main(void) {
 	vec3 bump = normalize( texture2D(normalMap, vTextureCoord).xyz * 2.0 - 1.0);
 
     float dif = dot(lightVec, bump);
-    dif = clamp(dif, 0.0, 1.0);
-    // dif = smoothstep(ls.angleFalloff, 1.0-ls.angleFalloff, dif);
+    dif = smoothstep(-ls.angleFalloff, ls.angleFalloff, dif);
 
-    float s = dot(reflect(-lightVec, bump), eyeVec) * 0.5 + 0.5;
-	float spec = specMap.r * pow( s, shininess) * specularIntensity;
-
-	//color.r = vTextureCoord.x;
-	//color.g = vTextureCoord.y;
-
-	gl_FragColor = vec4(mix(night, day, smoothstep(0.4, 0.6, dif)) + spec * day, 1.0);
+    float s = max(0.0, dot(reflect(-lightVec, bump), eyeVec));
+	float spec = (0.5 + specMap.r) * pow( s, shininess) * specularIntensity;
+	
+	gl_FragColor = vec4(mix(night, day, dif) + spec * day, 1.0);
 
 }
 

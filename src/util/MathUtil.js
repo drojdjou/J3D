@@ -8,6 +8,8 @@ J3D.MathUtil = {
         var w = h * aspect;
         return { w : w, h : h };
 
+        
+
     },
 
     // Code based on http://www.terathon.com/code/tangent.html

@@ -9,9 +9,10 @@ registerDemo(function(engine) {
 
         var assetsLoader = new J3D.AssetLoader();
 
-        assetsLoader.addTexture("t1", "models/textures/colorramp1.png");
-        assetsLoader.addTexture("t2", "models/textures/colorramp2.png");
-        assetsLoader.addTexture("t3", "models/textures/colorramp3.png");
+        assetsLoader.addTexture("t1", "models/textures/plasma/colorramp1.png");
+        assetsLoader.addTexture("t2", "models/textures/plasma/colorramp2.png");
+        assetsLoader.addTexture("t3", "models/textures/plasma/colorramp3.png");
+        assetsLoader.addTexture("t4", "models/textures/plasma/colorramp4.jpg");
 
         assetsLoader.addShader("shader", "../demo/shaders/PlasmaEffect.glsl");
 
@@ -22,7 +23,7 @@ registerDemo(function(engine) {
 
     function setup(assets, callback) {
 
-        ts = [assets.t1, assets.t2, assets.t3];
+        ts = [assets.t1, assets.t2, assets.t3, assets.t4];
 
         ct = ts[i];
 

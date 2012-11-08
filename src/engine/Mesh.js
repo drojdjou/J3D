@@ -80,7 +80,7 @@ J3D.Mesh = function(source) {
                 if (source[attr].length > 0) this.addArray("aVertexTangent", new Float32Array(source[attr]), 4);
                 break;
             default:
-                throw "WARNING! Unknown attribute in geometry: " + attr;
+                console.log("WARNING! Unknown attribute in geometry: " + attr + ". It will be ignored.");
                 break;
         }
     }

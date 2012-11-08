@@ -116,6 +116,8 @@ J3D.Transform = function(n, u) {
      * Add a child transform to this transform.
      *
      * @param t J3D.Transform to look add. Multiple arguments are accepted.
+     *
+     * @returns Last transform added (the transform that was lats on the arguments list)
      */
     this.add = function(t) {
         var fa;
@@ -176,6 +178,11 @@ J3D.Transform = function(n, u) {
         }
     }
 
+    this.removeAll = function() {
+        children = [];
+        that.numChildren = 0;
+    }
+
     /**
      * Returns the child transform at a given position.
      *
@@ -211,6 +218,7 @@ J3D.Transform = function(n, u) {
  * @returns A deep copy of the transform
  */
 J3D.Transform.prototype.clone = function() {
+
     var c = new J3D.Transform();
     c.position = this.position.cp();
     c.rotation = this.rotation.cp();

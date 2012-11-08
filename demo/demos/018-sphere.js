@@ -45,13 +45,14 @@ registerDemo(function(engine) {
         sun.light.angleFalloff = 0.15;
 
         earth = new J3D.Transform();
+        earth.rotation.y = Math.PI;
         earth.renderer = assets.earthShader;
         earth.renderer.dayTexture = assets.color;
         earth.renderer.nightTexture = assets.night;
         earth.renderer.specularMap = assets.specular;
         earth.renderer.normalMap = assets.normal;
         earth.renderer.specularIntensity = 2.0; // 1.1;
-        earth.renderer.shininess = 4; // 10;
+        earth.renderer.shininess = 5; // 10;
         earth.renderer.invRadius = -1; // 10;
         earth.geometry = J3D.Primitive.Sphere(30, 40, 40);
         earth.collider = J3D.Collider.Sphere(30);
@@ -59,53 +60,54 @@ registerDemo(function(engine) {
         clouds = new J3D.Transform();
         clouds.renderer = assets.cloudShader;
         clouds.renderer.cloudTexture = assets.clouds;
-        clouds.renderer.cloudIntensity = 0.6;
+        clouds.renderer.cloudIntensity = 0.9;
         clouds.geometry = J3D.Primitive.Sphere(31, 40, 40);
         clouds.geometry.setTransparency(true, gl.SRC_ALPHA, gl.DST_ALPHA);
 
-        var lat, lon;
+//        var lat, lon;
 
-        // Los Angeles - 34.0522° N  118.2428° W
-        //lat = (90 - 34.0522) / 180 * Math.PI;
-        //lon = (-118.2428 + 180) / 180 * Math.PI;
-        //addPin(lat, lon);
+//        // Los Angeles - 34.0522° N  118.2428° W
+//        lat = (90 - 34.0522) / 180 * Math.PI;
+//        lon = (-118.2428 + 180) / 180 * Math.PI;
+//        addPin(lat, lon);
+//
+//        // New York 40.7142° N, 74.0064° W
+//        lat = (90 - 40.7142) / 180 * Math.PI;
+//        lon = (-74.0064 + 180) / 180 * Math.PI;
+//        addPin(lat, lon);
+//
+//        // Paris 48.8742° N, 2.3470° E
+//        lat = (90 - 48.8742) / 180 * Math.PI;
+//        lon = (2.3470 + 180) / 180 * Math.PI;
+//        addPin(lat, lon);
+//
+//        // London 51.5171° N, 0.1062° W
+//        lat = (90 - 51.5171) / 180 * Math.PI;
+//        lon = (0.1062 + 180) / 180 * Math.PI;
+//        addPin(lat, lon);
+//
+//        // Singapore 1.3667° N, 103.7500° E
+//        lat = (90 - 1.3667) / 180 * Math.PI;
+//        lon = (103.7500 + 180) / 180 * Math.PI;
+//        addPin(lat, lon);
+//
+//        // Tokyo 35.6833° N, 139.7667° E
+//        lat = (90 - 35.6833) / 180 * Math.PI;
+//        lon = (139.7667 + 180) / 180 * Math.PI;
+//        addPin(lat, lon);
+//
+//        // Sydney 33.8683° S, 151.2086° E
+//        lat = (90 + 33.8683) / 180 * Math.PI;
+//        lon = (151.2086 + 180) / 180 * Math.PI;
+//        addPin(lat, lon);
 
-
-        // New York 40.7142° N, 74.0064° W
-        lat = (90 - 40.7142) / 180 * Math.PI;
-        lon = (-74.0064 + 180) / 180 * Math.PI;
-        addPin(lat, lon);
-
-        // Paris 48.8742° N, 2.3470° E
-        lat = (90 - 48.8742) / 180 * Math.PI;
-        lon = (2.3470 + 180) / 180 * Math.PI;
-        addPin(lat, lon);
-
-        // London 51.5171° N, 0.1062° W
-        lat = (90 - 51.5171) / 180 * Math.PI;
-        lon = (0.1062 + 180) / 180 * Math.PI;
-        addPin(lat, lon);
-
-        // Singapore 1.3667° N, 103.7500° E
-        lat = (90 - 1.3667) / 180 * Math.PI;
-        lon = (103.7500 + 180) / 180 * Math.PI;
-        addPin(lat, lon);
-
-        // Tokyo 35.6833° N, 139.7667° E
-        lat = (90 - 35.6833) / 180 * Math.PI;
-        lon = (139.7667 + 180) / 180 * Math.PI;
-        addPin(lat, lon);
-
-        // Sydney 33.8683° S, 151.2086° E
-        lat = (90 + 33.8683) / 180 * Math.PI;
-        lon = (151.2086 + 180) / 180 * Math.PI;
-        addPin(lat, lon);
-
-        navigator.geolocation.getCurrentPosition(function(position) {
-            lat = (90 - position.coords.latitude) / 180 * Math.PI;
-            lon = (position.coords.longitude + 180) / 180 * Math.PI;
-            addPin(lat, lon, J3D.Color.green);
-        });
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                lat = (90 - position.coords.latitude) / 180 * Math.PI;
+                lon = (position.coords.longitude + 180) / 180 * Math.PI;
+                addPin(lat, lon, J3D.Color.red);
+            });
+        }
 
         engine.scene.add(earth, sun, root);
         engine.scene.add(clouds);
@@ -121,7 +123,7 @@ registerDemo(function(engine) {
     function onScroll(e) {
         var z = camera.position.z + window.pageYOffset * 0.25;
         z = Math.min(500, z);
-        z = Math.max(50, z);
+        z = Math.max(70, z);
         camera.position.z = z;
     }
 
@@ -161,15 +163,12 @@ registerDemo(function(engine) {
 
         document.body.style.cursor = (isHovered) ? "move" : "auto";
 
-        root.rotation.y = bsrX + csrX;
-        root.rotation.x = bsrY + csrY;
+        root.rotation.y = -0.5 + bsrX + csrX;
+        root.rotation.x = Math.max(-0.5, Math.min(0.5, bsrY + csrY));
 
         if (!isDown) {
-            earth.rotation.y += J3D.Time.deltaTime * 0.0002;
-            clouds.rotation.y += J3D.Time.deltaTime * 0.00021;
-
-            //earth.rotation.y += J3D.Time.deltaTime * 0.00005;
-            //clouds.rotation.y += J3D.Time.deltaTime * 0.000055;
+            earth.rotation.y += J3D.Time.deltaTime * 0.0001;
+            clouds.rotation.y += J3D.Time.deltaTime * 0.00011;
         }
 
         engine.render();
@@ -180,11 +179,9 @@ registerDemo(function(engine) {
         pin.renderer = J3D.BuiltinShaders.fetch("Phong");
         pin.renderer.color = color || J3D.Color.red;
 
-        pin.geometry = J3D.Primitive.Cube(0.25, 0.25, 3);
-        //pin.geometry = J3D.Primitive.Cube(2, 2, 2);
+        pin.geometry = J3D.Primitive.Cube(0.25, 0.25, 2);
 
-
-        var radius = 31.5;
+        var radius = 30;
 
         pin.position.x = -radius * Math.cos(lon) * Math.sin(lat);
         pin.position.y = radius * Math.cos(lat);
@@ -194,13 +191,9 @@ registerDemo(function(engine) {
 
         pin.matrixMode = true;
 
-        // from, at, up
         var lam = mat4.identity();
-
         mat4.lookAt2(v3.ZERO(), pin.position.norm(), v3.UP(), lam);
-
-        mat4.translate(lam, [0, 0, -31], lam);
-
+        mat4.translate(lam, [0, 0, -radius], lam);
         pin.matrix = lam;
     }
 });
