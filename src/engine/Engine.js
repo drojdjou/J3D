@@ -7,9 +7,9 @@ var gl;
 
  @param canvas The canvas on which to instantiate the webgl context. If null, a new fullscreen canvas will be created and added to the document.
 
- @param j3dSettings J3D specific settings.
+ @param j3dSettings Optional. J3D specific settings. Currently the only parameter that is supported is resolution. It defaults to 1 - i.e the size of the canvas will be the same as its css on-screen dimensions. A resolution of 2 will create a canvas 2 times smaller and size it up. This improves performance but can result in decreased quality.
 
- @param webglSettings The webGL context attributes as defined in the <a href='http://www.khronos.org/registry/webgl/specs/latest/#5.2'>specification</a>.
+ @param webglSettings Optional. The webGL context attributes as defined in the <a href='http://www.khronos.org/registry/webgl/specs/latest/#5.2'>specification</a>. These are passed directly to the getContext method of the canvas element.
  */
 J3D.Engine = function(canvas, j3dSettings, webglSettings) {
     var that = this;
