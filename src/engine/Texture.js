@@ -102,9 +102,9 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 				loadVideo(source, ext);
 				break;
             default:
-                // Assume it's a URL to a dynamic image
+                // Assume it's a URL to a dynamic image or video
                 if(params.image) loadImage(source);
-                else if(params.video) loadVideo(source);
+                else if(params.video) loadVideo(source, ext);
                 else console.log("Texture format not detected from source path and not specifed in params.")
                 break;
 		}
