@@ -1,7 +1,7 @@
 /**
-    Utility used to load multiple assets
+ Utility used to load multiple assets
 
-    @class AssetLoader can load several files in a batch. It loads JSON, Shaders, Textures and Cubemaps
+ @class AssetLoader can load several files in a batch. It loads JSON, Shaders, Textures and Cubemaps
  */
 J3D.AssetLoader = function() {
 
@@ -14,7 +14,7 @@ J3D.AssetLoader = function() {
 
     /**
      * Add a texture to load.
-     * 
+     *
      * @param name the name used later to refer to the asset
      *
      * @param source The new height of the viewport
@@ -78,6 +78,21 @@ J3D.AssetLoader = function() {
         });
     }
 
+    /**
+     * Add any text file to load.
+     *
+     * @param name the name used later to refer to the asset
+     *
+     * @param path path to the text file
+     */
+    this.addPlainText = function(name, path) {
+        assetList.push({
+            name:name,
+            type:"text",
+            path:path
+        });
+    }
+
     function onAssetLoaded(callback) {
         assetsToLoad--;
         if (assetsToLoad <= 0) callback(that.assets);
@@ -132,8 +147,18 @@ J3D.AssetLoader = function() {
                             onAssetLoadedLC(callback);
                         };
                     })(asset.name);
-                    
+
                     J3D.Loader.loadJSON(asset.path, f);
+                    break;
+                default:
+                    var f = (function(n) {
+                        return function(s) {
+                            that.assets[n] = s;
+                            onAssetLoadedLC(callback);
+                        };
+                    })(asset.name);
+
+                    J3D.Loader.loadPlainText(asset.path, f);
                     break;
             }
 

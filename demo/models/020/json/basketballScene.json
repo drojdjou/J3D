@@ -1,0 +1,161 @@
+{
+	
+"path" : "",
+"ambient": { "r":0.2, "g":0.2, "b":0.2, "a":1 },
+"background": { "r":0, "g":0, "b":0, "a":0 },
+
+"textures": {
+	
+	"shadow": { 
+		"file": "shadow.jpg"
+	},
+	
+	"basketball": { 
+		"file": "basketball.jpg"
+	}
+
+},
+
+"lightmaps": [
+],
+	
+"materials": {
+	
+	"shadowmat": { 
+		"type": "Selflit",
+		"color": { "r":1, "g":1, "b":1, "a":1 },
+		"specularIntensity": 0,
+        "shininess": 0,
+		"textureTile": [ 1,1 ],
+		"textureOffset": [ 0,0 ],
+		"colorTexture": "shadow"
+	},
+	
+	"ballmat": { 
+		"type": "Phong",
+		"color": { "r":1, "g":1, "b":1, "a":1 },
+		"specularIntensity": 0,
+        "shininess": 0,
+		"textureTile": [ 1,1 ],
+		"textureOffset": [ 0,0 ],
+		"colorTexture": "basketball"
+	}
+
+},
+
+"lights": {
+	
+	"sun": { 
+		"type": 1,
+		"color": { "r":1, "g":1, "b":1, "a":1 },
+		"intensity": 0.6
+	},
+	
+	"sun": { 
+		"type": 1,
+		"color": { "r":1, "g":1, "b":1, "a":1 },
+		"intensity": 0.6
+	}
+
+},
+
+"cameras": {
+	
+	"cam": { 
+		"fov": 24.95,
+		"near": 0.3,
+		"far": 1000
+	}
+
+},
+
+"transforms": [
+	
+	{
+		"uid": 1,
+        "name": "sun",
+		"position": [ 12.62844,6.46404,18.29474 ],
+		"rotation": [ -0.2142091,2.693195,0.7038356 ],
+		"light": "sun"
+	},
+	
+	{
+		"uid": 2,
+        "name": "sun",
+		"position": [ -20.04052,8.927542,30.16617 ],
+		"rotation": [ -0.4606814,-0.7348263,0.06469476 ],
+		"light": "sun"
+	},
+	
+	{
+		"uid": 3,
+        "name": "basketball",
+		"position": [ 0,0,0 ],
+		"rotation": [ 0,0,0 ]
+	},
+	
+	{
+		"uid": 4,
+        "name": "background",
+		"parent": 3,
+		"position": [ 0,0,0 ],
+		"rotation": [ 0,0,0 ]
+	},
+	
+	{
+		"uid": 5,
+        "name": "camera",
+		"parent": 3,
+		"position": [ -18.38627,13.25898,11.39941 ],
+		"rotation": [ 0.3516718,2.46594,-0.4059128 ],
+		"scale": [ 0.9999999,0.9999999,0.9999999 ]
+	},
+	
+	{
+		"uid": 6,
+        "name": "cam",
+		"parent": 5,
+		"position": [ 0,0,0 ],
+		"rotation": [ 0.0000000105,1.570797,0.0000000105 ],
+		"camera": "cam"
+	},
+	
+	{
+		"uid": 7,
+        "name": "shadow",
+		"parent": 3,
+		"position": [ -3.795684,0,23.86189 ],
+		"rotation": [ 0,0,0 ],
+		"renderer": "shadowmat",
+		"mesh": "shadow"
+	},
+	
+	{
+		"uid": 8,
+        "name": "ball",
+		"parent": 7,
+		"position": [ -0.002310181,0.5056766,-0.0008886718 ],
+		"rotation": [ 0,0,0 ],
+		"collider": {
+		    "type": "sphere",
+		    "center": [ 0,0,-0.0000000149 ],
+		    "radius": 0.5
+		},
+		"renderer": "ballmat",
+		"mesh": "ball"
+	},
+	
+	{
+		"uid": 9,
+        "name": "sky",
+		"parent": 3,
+		"position": [ 0,0,0 ],
+		"rotation": [ 0,0,0 ]
+	}
+
+]
+}
+
+
+
+

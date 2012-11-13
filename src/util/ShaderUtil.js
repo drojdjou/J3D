@@ -1,6 +1,6 @@
 J3D.ShaderUtil = {};
 
-J3D.ShaderUtil.setTexture = function(shader, id, uniformName, texture){
+J3D.ShaderUtil.setTexture = function(shader, id, uniformName, texture) {
     gl.activeTexture(33984 + id);
 
     if(texture.update) texture.update();

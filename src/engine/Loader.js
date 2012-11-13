@@ -21,6 +21,23 @@ J3D.Loader.loadJSON = function(path, onLoadedFunc){
 }
 
 /**
+ * @static Loads a text file (simple wrapper around XMLHttpRequest used by other loader functions)
+ */
+J3D.Loader.loadPlainText = function(path, onLoadedFunc){
+
+	var request = new XMLHttpRequest();
+	request.open("GET", path);
+
+	request.onreadystatechange = function(){
+		if (request.readyState == 4) {
+			onLoadedFunc.call(null, request.responseText);
+		}
+	}
+
+	request.send();
+}
+
+/**
  * @static Parses a set of 2 JSON files - the scene file and the mesh file and populates the scene with it.
  *
  * @param jscene The JSON scene file (usually exported from the Unity3D)

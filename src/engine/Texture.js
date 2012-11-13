@@ -69,10 +69,10 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 		that.src.src = src;
 	}
 	
-	var loadVideo = function(src){
+	var loadVideo = function(src, ext){
 		that.isVideo = true;
 		that.src = document.createElement('video');
-	    that.src.src = src;  
+	    that.src.src = src;
 		that.src.preload = 'auto';
         that.src.loop = params.loop || "false";
 
@@ -99,7 +99,7 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 			case "mp4":
 			case "webm":
 			case "ogv":
-				loadVideo(source);
+				loadVideo(source, ext);
 				break;
             default:
                 // Assume it's a URL to a dynamic image
