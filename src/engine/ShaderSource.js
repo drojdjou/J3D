@@ -204,6 +204,7 @@ J3D.ShaderSource.Phong = [
 	"if(hasColorTexture) tc *= texture2D(colorTexture, vTextureCoord);",
 	"vec3 l = computeLights(vPosition, vNormal, specularIntensity, shininess);",
 	"gl_FragColor = vec4(tc.rgb * l, tc.a);",
+	"//gl_FragColor = vec4(l, tc.a);",
 	"}",
 ""].join("\n");
 
@@ -401,7 +402,10 @@ J3D.ShaderSource.Lights = [
 	"float angle;        // used by spotlight",
 	"};",
 
-	"uniform lightSource uLight[4];",
+	"uniform lightSource uLight0;",
+	"uniform lightSource uLight1;",
+	"uniform lightSource uLight2;",
+	"uniform lightSource uLight3;",
 
 	"const float C1 = 0.429043;",
 	"const float C2 = 0.511664;",
@@ -507,16 +511,16 @@ J3D.ShaderSource.Lights = [
 	"} else if(ls.type == 5) {",
 	"return sphericalHarmonics(n, ls);",
 	"} else {",
-	"return vec3(0);",
+	"return vec3(0.0, 0.0, 0.0);",
 	"}",
 	"}",
 
 	"vec3 computeLights(vec4 p, vec3 n, float si, float sh) {",
-	"vec3 s = vec3(0);",
-	"s += singleLight(p, n, si, sh, uLight[0]);",
-	"s += singleLight(p, n, si, sh, uLight[1]);",
-	"s += singleLight(p, n, si, sh, uLight[2]);",
-	"s += singleLight(p, n, si, sh, uLight[3]);",
+	"vec3 s = vec3(0.0, 0.0, 0.0);",
+	"s += singleLight(p, n, si, sh, uLight0);",
+	"s += singleLight(p, n, si, sh, uLight1);",
+	"s += singleLight(p, n, si, sh, uLight2);",
+	"s += singleLight(p, n, si, sh, uLight3);",
 	"return s;",
 	"}",
 

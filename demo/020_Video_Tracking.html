@@ -72,6 +72,8 @@
         engine = new J3D.Engine(canvas, { resolution: 1 }, { alpha: true });
         engine.resize(canvas.width, canvas.height);
 
+        console.log(engine.version());
+
         debug = document.getElementById("debug");
         framenum = document.getElementById("framenum");
 
@@ -86,6 +88,7 @@
         assetsLoader.addShader("shadowShader", "models/020/shaders/Shadow.glsl");
 
         assetsLoader.addTexture("shadowTex", path + "shadow.jpg");
+//        assetsLoader.addTexture("ballTex", path + "basketball.png");
         assetsLoader.addTexture("videoTex", "models/020/video/base.webm", { loop: "loop", video: true });
 
         assetsLoader.load(function(a) {
@@ -138,6 +141,9 @@
         ball.origPosition = ball.position.cp();
         ball.bounce = 0;
         ball.phase = 0;
+//        ball.renderer = J3D.BuiltinShaders.fetch("Phong");
+//        ball.renderer.colorTexture = assets.ballTex;
+//        ball.renderer.hasColorTexture = true;
 
         camera = engine.scene.find("basketball/camera/cam");
 
@@ -150,7 +156,6 @@
         var harmonics = new J3D.Transform();
         harmonics.light = new J3D.Light(J3D.SPHERICAL_HARMONICS);
         engine.scene.add(harmonics);
-
 
         // video.play();
 

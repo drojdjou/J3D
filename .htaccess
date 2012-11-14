@@ -3,6 +3,7 @@ AddType audio/ogg .oga
 AddType video/ogg .ogv
 AddType application/ogg .ogg
 
-:Location /*.webm
-SetMime video/webm
-:Location
+# IdeaServer
+# :Location /*.webm
+# SetMime video/webm
+# :Location

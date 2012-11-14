@@ -58,7 +58,7 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 		that.loaded = true;
 	}
 	
-	var loadImage = function(src){
+	var loadImage = function(src) {
 		that.src = new Image();
 
         that.src.crossOrigin = params.cors || "";
@@ -66,6 +66,7 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
     	that.src.onload = function() {
 			setupTexture();
     	}
+        
 		that.src.src = src;
 	}
 	

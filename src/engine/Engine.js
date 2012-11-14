@@ -12,6 +12,11 @@ var gl;
  @param webglSettings Optional. The webGL context attributes as defined in the <a href='http://www.khronos.org/registry/webgl/specs/latest/#5.2'>specification</a>. These are passed directly to the getContext method of the canvas element.
  */
 J3D.Engine = function(canvas, j3dSettings, webglSettings) {
+
+    this.version = function() {
+        return 'J3D v 1.0 build 18';
+    }
+
     var that = this;
 
     var cv = (canvas) ? canvas : document.createElement("canvas");
@@ -172,6 +177,14 @@ J3D.Engine.prototype.renderScene = function() {
         var t = this._lights[i];
         t.updateWorldPosition();
     }
+
+//    if (!this.lightsLogged) {
+//        for (i = 0; i < lt; i++) {
+//            var t = this._lights[i];
+//            console.log(t.light.type);
+//        }
+//        this.lightsLogged = true;
+//    }
 
     // 8. Render opaque meshes
     gl.disable(gl.BLEND);
