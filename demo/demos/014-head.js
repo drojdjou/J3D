@@ -114,22 +114,27 @@ registerDemo(function(engine) {
             case 0:
                 setRenderer(null, gl.TRIANGLES);
                 setTransparency(false);
+                head.disableDepthTest = false;
                 break;
             case 1:
                 setRenderer(assets.darkglass, gl.TRIANGLES);
                 setTransparency(false);
+                head.disableDepthTest = false;
                 break;
             case 2:
                 setRenderer(assets.reflective, gl.TRIANGLES);
                 setTransparency(false);
+                head.disableDepthTest = false;
                 break;
             case 3:
                 setRenderer(assets.toon, gl.TRIANGLES);
                 setTransparency(false);
+                head.disableDepthTest = false;
                 break;
             case 4:
                 setRenderer(assets.glitter, gl.POINTS);
                 setTransparency(true, gl.SRC_ALPHA, gl.DST_ALPHA);
+                head.disableDepthTest = true;
                 break;
         }
     }

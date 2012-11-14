@@ -18,7 +18,9 @@ J3D.Ray = function(o, d) {
 J3D.Ray._mt = mat4.create();
 J3D.Ray._nt = mat3.create();
 
-J3D.Ray.fromMousePosition = function(mouseX, mouseY, camera, canvasRect) {
+J3D.Ray.fromMousePosition = function(mouseX, mouseY, camera, canvasRect, ray) {
+
+    if(!J3D.Ray._wp) J3D.Ray._wp = new v3();
 
     if(!canvasRect) {
         canvasRect = {
@@ -38,10 +40,10 @@ J3D.Ray.fromMousePosition = function(mouseX, mouseY, camera, canvasRect) {
 
     mat4.multiplyVec3(camera.globalMatrix, ra);
 
-    var r = new J3D.Ray();
+    var r = ray || new J3D.Ray();
     r.origin.fromArray(ra);
-    r.direction = r.origin.sub(camera.worldPosition).norm();
-
+    J3D.Ray._wp.fromArray(camera.worldPosition);
+    v3.sub(r.origin, J3D.Ray._wp, r.direction).norm();
 	return r;
 }
 

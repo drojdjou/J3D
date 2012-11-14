@@ -6,6 +6,8 @@ registerDemo(function(engine) {
     var isInside = true;
     var cs = 5;
 
+    var ray = new J3D.Ray();
+
     document.title = "Tile & offset | J3D";
 
     this.setup = function(callback) {
@@ -143,12 +145,12 @@ registerDemo(function(engine) {
         cube3.textureTile.x = cube3.textureTile.y = 2 + a;
         cube3.textureOffset.x = cube3.textureOffset.y = -a / 2;
 
-        var r = J3D.Ray.fromMousePosition(interactor.pageX, interactor.pageY, camera);
+        ray = J3D.Ray.fromMousePosition(interactor.pageX, interactor.pageY, camera, null, ray);
 
-        var c1h = J3D.Intersection.rayTest(r, cube1);
-        var c2h = J3D.Intersection.rayTest(r, cube2);
-        var c3h = J3D.Intersection.rayTest(r, cube3);
-        var c4h = J3D.Intersection.rayTest(r, cube4);
+        var c1h = J3D.Intersection.rayTest(ray, cube1);
+        var c2h = J3D.Intersection.rayTest(ray, cube2);
+        var c3h = J3D.Intersection.rayTest(ray, cube3);
+        var c4h = J3D.Intersection.rayTest(ray, cube4);
 
         cube1.renderer.colorTexture = (c1h) ? overTexture : outTexture;
         cube2.renderer.colorTexture = (c2h) ? overTexture : outTexture;

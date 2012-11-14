@@ -159,7 +159,7 @@ registerDemo(function(engine) {
 
     this.render = function() {
         var r = J3D.Ray.fromMousePosition(mx, my, camera);
-        isHovered = J3D.Intersection.raySphere(r, earth) > 0;
+        isHovered = J3D.Intersection.rayTest(r, earth) > 0;
 
         document.body.style.cursor = (isHovered) ? "move" : "auto";
 

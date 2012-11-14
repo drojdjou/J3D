@@ -1,12 +1,20 @@
 J3D.Intersection = {};
 
 J3D.Intersection.rayTest = function(r, t) {
-    if(!t.collider) {
+    if (!t.collider) {
         console.log("Intersection test failed. " + t.name + " has no collider.");
         return false;
     }
 
-    switch(t.collider.type) {
+    if (!J3D.Intersection.__tv1) {
+        J3D.Intersection.__tv1 = new v3();
+        J3D.Intersection.__tv2 = new v3();
+        J3D.Intersection.__tv3 = new v3();
+        J3D.Intersection.__tv4 = new v3();
+        J3D.Intersection.__tv5 = new v3();
+    }
+
+    switch (t.collider.type) {
         case J3D.Collider.SPHERE:
             return J3D.Intersection.raySphere(r, t);
         case J3D.Collider.BOX:
@@ -20,13 +28,15 @@ J3D.Intersection.rayTest = function(r, t) {
 }
 
 J3D.Intersection.rayMesh = function(r, t) {
+
+
     if (!t.collider.mesh || !t.collider.mesh.vertexPositionBuffer) {
         console.log("Intersection test failed. " + t.name + " has no mesh defined or no vertex data in the mesh.");
         return false;
     }
 
-    if(t.collider.box) {
-        if(!J3D.Intersection.rayBox(r, t)) {
+    if (t.collider.box) {
+        if (!J3D.Intersection.rayBox(r, t)) {
             return false;
         }
     } else {
@@ -38,17 +48,21 @@ J3D.Intersection.rayMesh = function(r, t) {
 
     var c = false;
 
-    for(var i = 0; i < d.length; i += 3) {
-        var i0 = d[i+0] * 3;
-        var i1 = d[i+1] * 3;
-        var i2 = d[i+2] * 3;
+    var p0 = J3D.Intersection.__tv1;
+    var p1 = J3D.Intersection.__tv2;
+    var p2 = J3D.Intersection.__tv3;
 
-        var p0 = new v3( v[ i0 ], v[ i0+1 ], v[ i0+2 ] );
-        var p1 = new v3( v[ i1 ], v[ i1+1 ], v[ i1+2 ] );
-        var p2 = new v3( v[ i2 ], v[ i2+1 ], v[ i2+2 ] );
+    for (var i = 0; i < d.length; i += 3) {
+        var i0 = d[i + 0] * 3;
+        var i1 = d[i + 1] * 3;
+        var i2 = d[i + 2] * 3;
+
+        p0.set(v[ i0 ], v[ i0 + 1 ], v[ i0 + 2 ]);
+        p1.set(v[ i1 ], v[ i1 + 1 ], v[ i1 + 2 ]);
+        p2.set(v[ i2 ], v[ i2 + 1 ], v[ i2 + 2 ]);
 
         c = c || J3D.Intersection.rayTriangle(r, p0, p1, p2);
-        if(c) break;
+        if (c) break;
     }
 
     return c;
@@ -56,48 +70,50 @@ J3D.Intersection.rayMesh = function(r, t) {
 
 J3D.Intersection.rayTriangle = function(r, p0, p1, p2) {
 
-    var e1 = v3.sub( p0, p1 );
-    var e2 = v3.sub( p0, p2 );
-    var n = v3.cross( e2, e1 );
+    var p = J3D.Intersection.__tv4;
+    var n = J3D.Intersection.__tv5;
 
-    var dot = v3.dot( n, r.localDirection );
-    if ( !( dot < 0 ) ) {
+    v3.calculateNormal(p0, p1, p2, n);
+
+    var dot = v3.dot(n, r.localDirection);
+    if (!( dot < 0 )) {
         return false;
     }
 
-    var d = v3.dot( n, p0 );
-    var t = d - v3.dot( n, r.localOrigin );
+    var d = v3.dot(n, p0);
+    var t = d - v3.dot(n, r.localOrigin);
 
-    if ( !( t <= 0 ) ) {
+    if (!( t <= 0 )) {
         return false;
     }
 
     t = t / dot;
 
-    var p = r.localDirection.norm().mul(t);
-    p = v3.add(p, r.localOrigin);
+    p.copyFrom(r.localDirection);
+    p = p.norm().mult(t);
+    p.add(r.localOrigin);
 
     var u0, u1, u2, v0, v1, v2;
 
-    if ( Math.abs( n.x ) > Math.abs( n.y ) ) {
+    if (Math.abs(n.x) > Math.abs(n.y)) {
 
-        if ( Math.abs( n.x ) > Math.abs( n.z ) ) {
+        if (Math.abs(n.x) > Math.abs(n.z)) {
 
-            u0 = p.y  - p0.y;
+            u0 = p.y - p0.y;
             u1 = p1.y - p0.y;
             u2 = p2.y - p0.y;
 
-            v0 = p.z  - p0.z;
+            v0 = p.z - p0.z;
             v1 = p1.z - p0.z;
             v2 = p2.z - p0.z;
 
         } else {
 
-            u0 = p.x  - p0.x;
+            u0 = p.x - p0.x;
             u1 = p1.x - p0.x;
             u2 = p2.x - p0.x;
 
-            v0 = p.y  - p0.y;
+            v0 = p.y - p0.y;
             v1 = p1.y - p0.y;
             v2 = p2.y - p0.y;
 
@@ -105,23 +121,23 @@ J3D.Intersection.rayTriangle = function(r, p0, p1, p2) {
 
     } else {
 
-        if( Math.abs( n.y ) > Math.abs( n.z ) ) {
+        if (Math.abs(n.y) > Math.abs(n.z)) {
 
-            u0 = p.x  - p0.x;
+            u0 = p.x - p0.x;
             u1 = p1.x - p0.x;
             u2 = p2.x - p0.x;
 
-            v0 = p.z  - p0.z;
+            v0 = p.z - p0.z;
             v1 = p1.z - p0.z;
             v2 = p2.z - p0.z;
 
         } else {
 
-            u0 = p.x  - p0.x;
+            u0 = p.x - p0.x;
             u1 = p1.x - p0.x;
             u2 = p2.x - p0.x;
 
-            v0 = p.y  - p0.y;
+            v0 = p.y - p0.y;
             v1 = p1.y - p0.y;
             v2 = p2.y - p0.y;
 
@@ -130,25 +146,25 @@ J3D.Intersection.rayTriangle = function(r, p0, p1, p2) {
     }
 
     var temp = u1 * v2 - v1 * u2;
-    if( !(temp != 0) ) {
+    if (!(temp != 0)) {
         return false;
     }
 
     temp = 1 / temp;
 
     var alpha = ( u0 * v2 - v0 * u2 ) * temp;
-    if( !(alpha >= 0) ) {
+    if (!(alpha >= 0)) {
 
         return false;
     }
 
     var beta = ( u1 * v0 - v1 * u0 ) * temp;
-    if( !(beta >= 0) ) {
+    if (!(beta >= 0)) {
         return false;
     }
 
     var gamma = 1 - alpha - beta;
-    if( !(gamma >= 0) ) {
+    if (!(gamma >= 0)) {
         return false;
     }
 
@@ -167,7 +183,8 @@ J3D.Intersection.raySphere = function(r, t) {
 
     r.makeLocal(t);
 
-    var e = t.collider.center.sub(r.localOrigin);
+    var e = J3D.Intersection.__tv1;
+    v3.sub(t.collider.center, r.localOrigin, e);
     if (e.lengthSq < radiusSq) return false;
 
     var a = v3.dot(e, r.localDirection);

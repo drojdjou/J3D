@@ -201,3 +201,21 @@ a:hover {
     color: #ffffff;
     background-color: #b00000;
 }
+
+.perf {
+    position: absolute;
+    z-index: 1000;
+    bottom: 0px;
+    left: 0px;
+    background-color: #000;
+    color: #fff;
+    font-family: Consolas, Courier, monospace;
+    font-size: 12px;
+    padding: 4px;
+}
+
+.perf ul, .perf li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}

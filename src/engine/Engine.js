@@ -12,7 +12,7 @@ var gl;
  @param webglSettings Optional. The webGL context attributes as defined in the <a href='http://www.khronos.org/registry/webgl/specs/latest/#5.2'>specification</a>. These are passed directly to the getContext method of the canvas element.
  */
 J3D.Engine = function(canvas, j3dSettings, webglSettings) {
-    
+
     var that = this;
 
     var cv = (canvas) ? canvas : document.createElement("canvas");
@@ -167,13 +167,6 @@ J3D.Engine.prototype.renderScene = function() {
         gl.depthMask(true);
     }
 
-    // 7. Calculate global positions for all lights
-    lt = this._lights.length;
-    for (i = 0; i < lt; i++) {
-        var t = this._lights[i];
-        t.updateWorldPosition();
-    }
-
 //    if (!this.lightsLogged) {
 //        for (i = 0; i < lt; i++) {
 //            var t = this._lights[i];
@@ -191,13 +184,16 @@ J3D.Engine.prototype.renderScene = function() {
     }
 
     // 8. Render transparent meshes	(TODO: add layers & sort before rendering)
-    // gl.disable(gl.DEPTH_TEST);
     gl.enable(gl.BLEND);
     lt = this._transparentMeshes.length;
     for (i = 0; i < lt; i++) {
         var t = this._transparentMeshes[i];
         var srcFactor = (t.geometry.srcFactor != null) ? t.geometry.srcFactor : gl.SRC_ALPHA;
         var dstFactor = (t.geometry.dstFactor != null) ? t.geometry.dstFactor : gl.ONE;
+
+        if(t.disableDepthTest) gl.disable(gl.DEPTH_TEST);
+        else gl.enable(gl.DEPTH_TEST);
+
         gl.blendFunc(srcFactor, dstFactor);
         this.renderObject(t);
     }
@@ -212,10 +208,14 @@ J3D.Engine.prototype.renderObject = function(t) {
     var s = this.shaderAtlas.getShader(t.renderer);
     var c = this.scene.camera;
 
-    // var same = (s == this.lastProgram);
-    // if(!same)
+    //var same = (s == this.lastProgram);
+
+    //if(!same) {
+    J3D.Performance.programChaged++;
     gl.useProgram(s);
-    // this.lastProgram = s;
+    //}
+
+    //this.lastProgram = s;
 
     // Setup standard uniforms and attributes
     if (s.uniforms.pMatrix)
@@ -231,7 +231,7 @@ J3D.Engine.prototype.renderObject = function(t) {
         gl.uniformMatrix3fv(s.uniforms.nMatrix.location, false, t.normalMatrix);
 
     if (s.uniforms.uEyePosition)
-        gl.uniform3fv(s.uniforms.uEyePosition.location, c.worldPosition.xyz());
+        gl.uniform3fv(s.uniforms.uEyePosition.location, c.worldPosition);
 
     if (s.uniforms.uTileOffset)
         gl.uniform4fv(s.uniforms.uTileOffset.location, t.getTileOffset());
@@ -258,6 +258,8 @@ J3D.Engine.prototype.renderObject = function(t) {
 }
 
 J3D.Engine.prototype.updateTransform = function(t, p) {
+
+    J3D.Performance.numTransforms++;
 
     t.updateWorld(p);
 

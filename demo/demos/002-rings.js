@@ -2,6 +2,7 @@ registerDemo(function(engine) {
 
     var rings = [];
     var root, camera;
+    var ray = new J3D.Ray();
 
     document.title = "Rings | J3D";
 
@@ -39,13 +40,14 @@ registerDemo(function(engine) {
 
     this.render = function(interactor) {
 
+
         var sx = interactor.centerX *  0.25;
         var sy = interactor.centerY * -0.25;
 
-        var r = J3D.Ray.fromMousePosition(interactor.pageX, interactor.pageY, camera);
+        ray = J3D.Ray.fromMousePosition(interactor.pageX, interactor.pageY, camera, null, ray);
 
         for (var i = 0; i < 7; i++) {
-            var h = J3D.Intersection.rayTest(r, rings[i]);
+            var h = J3D.Intersection.rayTest(ray, rings[i]);
             rings[i].renderer = (h) ? whiteMat : rings[i].originalRenderer;
             rings[i].rotation.y = sx + (sx * i * 0.02);
             rings[i].rotation.x = sy + (sy * i * 0.02);

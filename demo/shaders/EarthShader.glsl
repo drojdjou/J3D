@@ -21,35 +21,15 @@ void main(void) {
     vPosition = mMatrix * vec4(aVertexPosition, 1.0);
     gl_Position = pMatrix * vMatrix * vPosition;
 
-    /*
-    vec3 n = normalize(nMatrix * aVertexNormal);
-    vec3 t;
-	vec3 b;
-
-	vec3 c1 = cross(n, vec3(0.0, 0.0, 1.0));
-	vec3 c2 = cross(n, vec3(1.0, 0.0, 0.0));
-
-	if(length(c1) > length(c2)) {
-		t = c1;
-	} else {
-		t = c2;
-	}
-
-	t = normalize(t);
-
-	b = cross(n, t);
-	b = normalize(b);
-	*/
-
 	vec3 n = normalize(nMatrix * aVertexNormal);
 	vec3 t = normalize(nMatrix * aVertexTangent.xyz);
 	vec3 b = cross(n, t) * aVertexTangent.w;
 
 	vec3 v;
 
-	v.x = dot(uLight[0].position, t);
-	v.y = dot(uLight[0].position, b);
-	v.z = dot(uLight[0].position, n);
+	v.x = dot(uLight0.position, t);
+	v.y = dot(uLight0.position, b);
+	v.z = dot(uLight0.position, n);
 	lightVec = normalize(v);
 
 	v.x = dot(uEyePosition, t);
@@ -74,7 +54,7 @@ void main(void) {
     vec3 night = texture2D(nightTexture, vTextureCoord).rgb;
     vec3 specMap = texture2D(specularMap, vTextureCoord).rgb;
 
-    lightSource ls = uLight[0];
+    lightSource ls = uLight0;
 	vec3 bump = normalize( texture2D(normalMap, vTextureCoord).xyz * 2.0 - 1.0);
 
     float dif = dot(lightVec, bump);

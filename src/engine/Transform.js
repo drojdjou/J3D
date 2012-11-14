@@ -12,6 +12,8 @@ J3D.Transform = function(n, u) {
     var that = this;
     var children = [];
 
+    //var spx = 0, spy = 0, spz = 0, srx = 0, sry = 0, srz = 0
+
     /**
      * A unique id of this transform.
      */
@@ -49,7 +51,9 @@ J3D.Transform = function(n, u) {
     /**
      * This gets only updated for lights. Do not manipulate directly, it will be overwritten by the rendering function.
      */
-    this.worldPosition = v3.ZERO();
+    this.worldPosition = vec3.create();
+    this.worldForward = vec3.create();
+    this.worldLeft = vec3.create();
 
     /**
      * Local transformation matrix. Do not manipulate directly, it will be overwritten by the rendering function.
@@ -111,6 +115,11 @@ J3D.Transform = function(n, u) {
     // the settings for this specific object unless tile = 1,1 and offset = 0,0
     this.textureTile = v2.ONE();
     this.textureOffset = v2.ZERO();
+
+    /**
+     * 
+     */
+    this.disableDepthTest = false;
 
     /**
      * Add a child transform to this transform.
@@ -239,6 +248,7 @@ J3D.Transform.prototype.clone = function() {
  * @returns Multiplies a vector by the normal matrix of this transform
  */
 J3D.Transform.prototype.transformDirection = function(d) {
+    J3D.Performance.dirVecCalls++;
     // TODO: optimize
     var tm = mat4.create();
     var tv = vec3.create();
@@ -250,20 +260,21 @@ J3D.Transform.prototype.transformDirection = function(d) {
  * @returns Transforms world forward pointing vector
  */
 J3D.Transform.prototype.forward = function() {
-    // TODO: optimize
-    var tm = mat4.create();
-    var tv = mat4.multiplyVec3(mat3.toMat4(this.normalMatrix, tm), [0,0,-1]);
-    return new v3(tv[0], tv[1], tv[2]).norm();
+    J3D.Performance.dirVecCalls++;
+    return this.worldForward;
+
+
+//    var tm = mat4.create();
+//    var tv = mat4.multiplyVec3(mat3.toMat4(this.normalMatrix, tm), [0,0,-1]);
+//    return new v3(tv[0], tv[1], tv[2]).norm();
 }
 
 /**
  * @returns Transforms world left pointing vector
  */
 J3D.Transform.prototype.left = function() {
-    // TODO: optimize
-    var tm = mat4.create();
-    var tv = mat4.multiplyVec3(mat3.toMat4(this.normalMatrix, tm), [-1,0,0]);
-    return new v3(tv[0], tv[1], tv[2]).norm();
+    J3D.Performance.dirVecCalls++;
+    return this.worldLeft;
 }
 
 /**
@@ -284,26 +295,25 @@ J3D.Transform.prototype.updateWorld = function(parent) {
         mat4.rotateY(this.matrix, this.rotation.y);
 
         mat4.scale(this.matrix, [this.scale.x, this.scale.y, this.scale.z]);
+
+        J3D.Performance.localMatrixUpdate++;
     }
 
     if (parent != null) mat4.multiply(parent.globalMatrix, this.matrix, this.globalMatrix);
-    else this.globalMatrix = this.matrix;
+    else mat4.set(this.matrix, this.globalMatrix);
 
     mat4.toInverseMat3(this.globalMatrix, this.normalMatrix);
     mat3.transpose(this.normalMatrix);
 
-    if (this.isStatic) this._lockedMatrix = true;
-}
+    vec3.set(this.worldForward, 0, 0, -1);
+    mat3.multiplyVec3(this.normalMatrix, this.worldForward);
 
-/**
- * Updates the world position of the transform. Can be called if world position is necessary for any reason, otherwise, the engine is calling this function only if the transform has a light.
- */
-J3D.Transform.prototype.updateWorldPosition = function() {
-    var tmp = [0,0,0];
-    mat4.multiplyVec3(this.globalMatrix, tmp);
-    this.worldPosition.x = tmp[0];
-    this.worldPosition.y = tmp[1];
-    this.worldPosition.z = tmp[2];
+    vec3.set(this.worldLeft, -1, 0, 0);
+    mat3.multiplyVec3(this.normalMatrix, this.worldLeft);
+
+    mat4.extractTranslation(this.globalMatrix, this.worldPosition);
+
+    if (this.isStatic) this._lockedMatrix = true;
 }
 
 J3D.Transform.prototype.getTileOffset = function() {
@@ -344,6 +354,5 @@ J3D.Transform.prototype.find = function(path) {
 J3D.Transform.prototype.updateInverseMat = function() {
     if (!this.inverseMat) this.inverseMat = mat4.create();
     mat4.inverse(this.globalMatrix, this.inverseMat);
-    this.updateWorldPosition();
 }
 

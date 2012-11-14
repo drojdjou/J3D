@@ -361,8 +361,12 @@ J3D.Primitive.getEmpty = function(){
  * @param uv an array with uv coordinates [minU, maxU, minV, maxV]
  */
 J3D.Primitive.addQuad = function(g, p1, p2, p3, p4, uv) {
+    if(!J3D.Primitive.__tv1) J3D.Primitive.__tv1 = new v3();
+
     //
-	var n1 = v3.cross(p1.sub(p2), p2.sub(p3)).norm();
+	var n1 = J3D.Primitive.__tv1;
+    v3.calculateNormal(p1, p2, p3, n1).norm();
+    
 	var p = g.vertices.length / 3;
 
     if(!uv || !uv.length || uv.length != 4) uv = [0, 1, 0, 1];

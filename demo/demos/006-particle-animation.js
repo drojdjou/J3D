@@ -26,6 +26,8 @@ registerDemo(function(engine) {
         stars.renderer.drawMode = gl.POINTS;
         stars.renderer.uColor = [0.8, 0.3, 0.2, 1];
         stars.renderer.uParticleTex = a[particleTexture];
+        
+        stars.disableDepthTest = true;
 
         stars.geometry = new J3D.Geometry();
         stars.geometry.addArray("aVertexPosition", distributeAngles(numParticles), 3);

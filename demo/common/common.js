@@ -30,7 +30,7 @@ function loadScript(src, callback) {
     script.type = 'text/javascript';
 
     script.onload = callback;
-    script.src = src;
+    script.src = src + "?cb=" + Math.random();
     
     script.onreadystatechange = function() {
         if (this.readyState == 'complete') {
