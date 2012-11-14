@@ -1,16 +1,16 @@
 /*
 
-J3D, a Javascript/WebGL 3D egnine
-Created by Bartek Drozdz <bartek@everydayflash.com>
+J3D, a Javascript/WebGL 3D engine
+Created by Bartek Drozdz <bartek@everyday3d.com>
 http://www.everyday3d.com/j3d/
 
 Version 1
-Build 28 | Tue Nov 13 18:06:53 2012
+Build 29 | Tue Nov 13 18:10:46 2012
 
 Uses the following libraries:
 
-glMatrix, Copyright (c) 2010 Brandon Jone
-http://code.google.com/p/glmatrix/
+glMatrix.js, Copyright (c) 2010 Brandon Jones
+https://github.com/toji/gl-matrix
 
 requestAnimationFrame
 http://paulirish.com/2011/requestanimationframe-for-smart-animating/

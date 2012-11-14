@@ -1,16 +1,16 @@
 /*
 
-J3D, a Javascript/WebGL 3D egnine
-Created by Bartek Drozdz <bartek@everydayflash.com>
+J3D, a Javascript/WebGL 3D engine
+Created by Bartek Drozdz <bartek@everyday3d.com>
 http://www.everyday3d.com/j3d/
 
 Version 1
-Build 28 | Tue Nov 13 18:06:53 2012
+Build 29 | Tue Nov 13 18:10:46 2012
 
 Uses the following libraries:
 
-glMatrix, Copyright (c) 2010 Brandon Jone
-http://code.google.com/p/glmatrix/
+glMatrix.js, Copyright (c) 2010 Brandon Jones
+https://github.com/toji/gl-matrix
 
 requestAnimationFrame
 http://paulirish.com/2011/requestanimationframe-for-smart-animating/
@@ -62,7 +62,7 @@ i=d*h-g*e;if(!i)return null;i=1/i;b[0]=h*i;b[1]=-e*i;b[2]=-g*i;b[3]=d*i;return b
 t.scale=function(a,b,d){d||(d=a);var e=a[1],g=a[2],h=a[3],i=b[0];b=b[1];d[0]=a[0]*i;d[1]=e*b;d[2]=g*i;d[3]=h*b;return d};t.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};var v={};v.create=function(a){var b=new g(4);a?(b[0]=a[0],b[1]=a[1],b[2]=a[2],b[3]=a[3]):(b[0]=0,b[1]=0,b[2]=0,b[3]=0);return b};v.createFrom=function(a,b,d,e){var h=new g(4);h[0]=a;h[1]=b;h[2]=d;h[3]=e;return h};v.add=function(a,b,d){d||(d=b);d[0]=a[0]+b[0];d[1]=a[1]+b[1];d[2]=a[2]+b[2];d[3]=a[3]+b[3];return d};
 v.subtract=function(a,b,d){d||(d=b);d[0]=a[0]-b[0];d[1]=a[1]-b[1];d[2]=a[2]-b[2];d[3]=a[3]-b[3];return d};v.multiply=function(a,b,d){d||(d=b);d[0]=a[0]*b[0];d[1]=a[1]*b[1];d[2]=a[2]*b[2];d[3]=a[3]*b[3];return d};v.divide=function(a,b,d){d||(d=b);d[0]=a[0]/b[0];d[1]=a[1]/b[1];d[2]=a[2]/b[2];d[3]=a[3]/b[3];return d};v.scale=function(a,b,d){d||(d=a);d[0]=a[0]*b;d[1]=a[1]*b;d[2]=a[2]*b;d[3]=a[3]*b;return d};v.set=function(a,b){b[0]=a[0];b[1]=a[1];b[2]=a[2];b[3]=a[3];return b};v.equal=function(a,b){return a===
 b||Math.abs(a[0]-b[0])<1.0E-6&&Math.abs(a[1]-b[1])<1.0E-6&&Math.abs(a[2]-b[2])<1.0E-6&&Math.abs(a[3]-b[3])<1.0E-6};v.negate=function(a,b){b||(b=a);b[0]=-a[0];b[1]=-a[1];b[2]=-a[2];b[3]=-a[3];return b};v.length=function(a){var b=a[0],d=a[1],e=a[2];a=a[3];return Math.sqrt(b*b+d*d+e*e+a*a)};v.squaredLength=function(a){var b=a[0],d=a[1],e=a[2];a=a[3];return b*b+d*d+e*e+a*a};v.lerp=function(a,b,d,e){e||(e=a);e[0]=a[0]+d*(b[0]-a[0]);e[1]=a[1]+d*(b[1]-a[1]);e[2]=a[2]+d*(b[2]-a[2]);e[3]=a[3]+d*(b[3]-a[3]);
-return e};v.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};if(a)a.glMatrixArrayType=g,a.MatrixArray=g,a.setMatrixArrayType=d,a.determineMatrixArrayType=b,a.glMath=e,a.vec2=q,a.vec3=h,a.vec4=v,a.mat2=t,a.mat3=p,a.mat4=n,a.quat4=l;return{glMatrixArrayType:g,MatrixArray:g,setMatrixArrayType:d,determineMatrixArrayType:b,glMath:e,vec2:q,vec3:h,vec4:v,mat2:t,mat3:p,mat4:n,quat4:l}});var J3D={};J3D.VERSION=1;J3D.BUILD=28;J3D.getVersion=function(){return"Version "+J3D.VERSION+" | Build "+J3D.BUILD};J3D.debug=!0;J3D.LightmapAtlas=[];J3D.SHADER_MAX_LIGHTS=4;J3D.RENDER_AS_OPAQUE=0;J3D.RENDER_AS_TRANSPARENT=1;J3D.AssetLoader=function(){function a(a){g--;g<=0&&a(b.assets)}function d(b,d){b||(b={});var e=b.onLoad;b.onLoad=function(){a(d);e&&e()};return b}var b=this,e=[],g;this.assets={};this.addTexture=function(a,b,d){e.push({name:a,type:"texture",source:b,params:d||null})};this.addCubemap=function(a,b,d){e.push({name:a,type:"cubemap",faces:b,params:d||null})};this.addShader=function(a,b){e.push({name:a,type:"shader",path:b})};this.addJSON=function(a,b){e.push({name:a,type:"json",path:b})};this.addPlainText=
+return e};v.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};if(a)a.glMatrixArrayType=g,a.MatrixArray=g,a.setMatrixArrayType=d,a.determineMatrixArrayType=b,a.glMath=e,a.vec2=q,a.vec3=h,a.vec4=v,a.mat2=t,a.mat3=p,a.mat4=n,a.quat4=l;return{glMatrixArrayType:g,MatrixArray:g,setMatrixArrayType:d,determineMatrixArrayType:b,glMath:e,vec2:q,vec3:h,vec4:v,mat2:t,mat3:p,mat4:n,quat4:l}});var J3D={};J3D.VERSION=1;J3D.BUILD=29;J3D.getVersion=function(){return"Version "+J3D.VERSION+" | Build "+J3D.BUILD};J3D.debug=!0;J3D.LightmapAtlas=[];J3D.SHADER_MAX_LIGHTS=4;J3D.RENDER_AS_OPAQUE=0;J3D.RENDER_AS_TRANSPARENT=1;J3D.AssetLoader=function(){function a(a){g--;g<=0&&a(b.assets)}function d(b,d){b||(b={});var e=b.onLoad;b.onLoad=function(){a(d);e&&e()};return b}var b=this,e=[],g;this.assets={};this.addTexture=function(a,b,d){e.push({name:a,type:"texture",source:b,params:d||null})};this.addCubemap=function(a,b,d){e.push({name:a,type:"cubemap",faces:b,params:d||null})};this.addShader=function(a,b){e.push({name:a,type:"shader",path:b})};this.addJSON=function(a,b){e.push({name:a,type:"json",path:b})};this.addPlainText=
 function(a,b){e.push({name:a,type:"text",path:b})};this.load=function(h){g=e.length;var i=a,j;for(j in e){var k=e[j];switch(k.type){case "texture":this.assets[k.name]=new J3D.Texture(k.source,d(k.params,h));break;case "cubemap":this.assets[k.name]=new J3D.Cubemap(k.faces,d(k.params,h));break;case "shader":var m=function(a){return function(d){b.assets[a]=d;i(h)}}(k.name);J3D.Loader.loadGLSL(k.path,m);break;case "json":m=function(a){return function(d){b.assets[a]=d;i(h)}}(k.name);J3D.Loader.loadJSON(k.path,
 m);break;default:m=function(a){return function(d){b.assets[a]=d;i(h)}}(k.name),J3D.Loader.loadPlainText(k.path,m)}}}};J3D.BuiltinShaders=function(){var a={},d=J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Phong);d.color=J3D.Color.white;d.hasColorTexture=!1;a.Phong=d;d=J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Gouraud);d.color=J3D.Color.white;d.emissive=J3D.Color.black;d.hasColorTexture=!1;a.Gouraud=d;d=J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Lightmap);d.setup=function(a,d){for(var g in a.uniforms)g=="lightmapTexture"?J3D.ShaderUtil.setTexture(a,1,"lightmapTexture",J3D.LightmapAtlas[d.lightmapIndex]):g=="lightmapAtlas"&&
 gl.uniform4fv(a.uniforms.lightmapAtlas.location,d.lightmapTileOffset);J3D.Shader.prototype.setup.call(this,a,d)};a.Lightmap=d;a.Reflective=J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Reflective);a.Skybox=J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Skybox);a.Vignette=J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Vignette);a.Normal2Color=J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Normal2Color);d=J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Selflit);d.color=J3D.Color.white;a.Selflit=d;return{shaders:a,fetch:function(b){if(a[b])return a[b].clone();
