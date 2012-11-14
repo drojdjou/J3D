@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 
-import os, glob, sys, shutil
+import os, glob, sys, fileinput, shutil, time
 
 srcfolder = "src"
 shaderfile = "src/engine/ShaderSource.js"
 output = "build/j3dt.js"
+now = ""
 
 def buildShaders():
 	jsf = open(shaderfile, 'w')
@@ -17,23 +18,37 @@ def buildShaders():
 		# print "S %s" % infile
 		glsl = open(infile, 'r')
 		
+#		for line in glsl:		
+#			if line.strip().startswith("//#name "):
+#				if isw:
+#					jsf.write("\"\"].join(\"\\n\");\n\n")
+#				jsf.write("J3D.ShaderSource." + line[7:len(line)].strip() + " = [\n")
+#				jsf.write(	"\t\"" + line.strip() + "\",\n",)
+#				isw = True
+#			elif line.strip().startswith("// "):
+#				pass # Don't copy comments
+#			elif line.strip() == "":
+#				jsf.write("\n")
+#			else:
+#				jsf.write(	"\t\"" + line.strip() + "\",\n",)
+
 		for line in glsl:		
 			if line.strip().startswith("//#name "):
 				if isw:
-					jsf.write("\"\"].join(\"\\n\");\n\n")
-				jsf.write("J3D.ShaderSource." + line[7:len(line)].strip() + " = [\n")
-				jsf.write(	"\t\"" + line.strip() + "\",\n",)
+					jsf.write("\";\n\n")
+				jsf.write("J3D.ShaderSource." + line[7:len(line)].strip() + " = \"")
+				jsf.write(line.strip() + "\\n")
 				isw = True
 			elif line.strip().startswith("// "):
 				pass # Don't copy comments
 			elif line.strip() == "":
-				jsf.write("\n")
+				pass # Don't copy empty lines
 			else:
-				jsf.write(	"\t\"" + line.strip() + "\",\n",)
+				jsf.write(line.strip() + "\\n")
 			
 		glsl.close()
 		if isw:
-			jsf.write("\"\"].join(\"\\n\");\n\n")
+			jsf.write("\";\n\n")
 		isw = False
 
 	jsf.close()
@@ -46,7 +61,7 @@ def listSourceFiles():
 			fname = os.path.join(root, name)
 			if name[-2:] == "js":
 				jsf.append(fname)
-				print "J %s" % fname
+				# print "J %s" % fname
 	return jsf
 
 def minifyWithClosure(jsf):
@@ -61,11 +76,34 @@ def finalizeBuild():
 def cleanup():
 	os.remove(output)
 
+def incrementVersion():
+	global now
+	buildVersion = 0
+
+	for line in fileinput.input('src/J3D.js', inplace=1):	
+		if 'J3D.BUILD = ' in line:
+			buildVersion = int(line[-4:-2])
+			buildVersion += 1
+			print '// Built on %s' % now
+			print 'J3D.BUILD = %i;' % buildVersion
+		else:
+			print line,
+
+	for line in fileinput.input('tools/build/info.txt', inplace=1):	
+		if 'Build ' in line:
+			print 'Build %i | %s' % (buildVersion, now)
+		else:
+			print line,
+
 def build():
-	
+	global now
+	now = time.asctime( time.localtime(time.time()) )
+	print "[ Starting build at %s ]" % now
 
 	print "[ Parsing shaders ]"
 	buildShaders()
+	print "[ Update version ]"
+	incrementVersion()
 	print "[ Getting JS source files ]"
 	f = listSourceFiles()
 	print "[ Minifying ]"

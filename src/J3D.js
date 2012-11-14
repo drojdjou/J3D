@@ -1,9 +1,17 @@
 "use strict";
 
 /**
-    @namespace J3D holds all of the J3D classes except for the matrix and vector classes which reside in global namespace.
-*/
+ * @namespace J3D holds all of the J3D classes except for the matrix and vector classes which reside in global namespace.
+ */
 var J3D = {};
+
+J3D.VERSION = 1;
+// Built on Tue Nov 13 18:06:53 2012
+J3D.BUILD = 28;
+
+J3D.getVersion = function() {
+    return 'Version ' + J3D.VERSION + ' | Build ' + J3D.BUILD;
+}
 
 /**
  * @deprecated Not used in the code.

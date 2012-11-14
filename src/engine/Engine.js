@@ -12,11 +12,7 @@ var gl;
  @param webglSettings Optional. The webGL context attributes as defined in the <a href='http://www.khronos.org/registry/webgl/specs/latest/#5.2'>specification</a>. These are passed directly to the getContext method of the canvas element.
  */
 J3D.Engine = function(canvas, j3dSettings, webglSettings) {
-
-    this.version = function() {
-        return 'J3D v 1.0 build 18';
-    }
-
+    
     var that = this;
 
     var cv = (canvas) ? canvas : document.createElement("canvas");
