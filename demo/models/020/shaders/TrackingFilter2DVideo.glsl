@@ -26,7 +26,9 @@ void main(void) {
     vec4 v = texture2D(videoTexture, vTextureCoord);
     vec4 c = texture2D(uTexture, vTextureCoordOffset);
 
-    vec3 r = mix(v.rgb, c.rgb, c.a);
+    // c.a = smoothstep(0.2, 1.1, c.a);
+
+    vec3 r = v.rgb * (1.0 - c.a) + c.rgb * c.a;
 
     if(vTextureCoord.y < markerBarStart) r = vec3(0.0);
 

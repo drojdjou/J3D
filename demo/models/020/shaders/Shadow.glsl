@@ -8,11 +8,12 @@
 //#include VertexInclude
 
 varying vec2 vTextureCoord;
+uniform vec2 offset;
 
 void main(void) {
-    gl_Position = pMatrix * vMatrix * mMatrix * vec4(aVertexPosition, 1.0);
-    gl_PointSize = 1.0;
  	vTextureCoord = getTextureCoord(aTextureCoord);
+ 	vec4 p = (pMatrix * vMatrix * mMatrix * vec4(aVertexPosition, 1.0));
+    gl_Position = p + vec4(offset.x * -p.w, offset.y * -p.w, 0.0, 0.0);
 }
 
 //#fragment
@@ -23,5 +24,5 @@ uniform float intensity;
 
 void main(void) {
 	vec4 tc = texture2D(colorTexture, vTextureCoord);
-	gl_FragColor = vec4(vec3(0.0), (1.0 - intensity) - tc.r);
+	gl_FragColor = vec4(vec3(0.0, 0.05, 0.1), max(0.0, (0.9 - intensity) * (1.0 - tc.r)));
 }

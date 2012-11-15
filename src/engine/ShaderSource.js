@@ -2,6 +2,8 @@
 
 J3D.ShaderSource = {};
 
+J3D.ShaderSource.Background = "//#name Background\n//#author bartekd\n//#include CommonFilterInclude\n//#vertex\nattribute vec2 aVertexPosition;\nattribute vec2 aTextureCoord;\nvarying vec2 vTextureCoord;\nvoid main(void) {\ngl_Position = vec4(aVertexPosition, 0.0, 1.0);\nvTextureCoord = aTextureCoord;\n}\n//#fragment\nuniform sampler2D uTexture;\nvarying vec2 vTextureCoord;\nvoid main(void) {\ngl_FragColor = texture2D(uTexture, vTextureCoord);\n}\n";
+
 J3D.ShaderSource.CopyFilter = "//#name CopyFilter\n//#description All this shader does is to render a texture (typically a render texture) pixel-to-pixel.\n//#description It is useful in effects like Persistence\n//#author bartekd\n//#include CommonFilterInclude\n//#vertex\n//#include BasicFilterVertex\n//#fragment\nuniform sampler2D uTexture;\nvarying vec2 vTextureCoord;\nvoid main(void) {\nvec4 p = texture2D(uTexture, vTextureCoord);\ngl_FragColor = vec4(p.rgb, 1.0);\n}\n";
 
 J3D.ShaderSource.Depth = "//#name Depth\n//#author bartekd\n//#include CommonInclude\n//#vertex\n//#include VertexInclude\nvarying float depth;\nvoid main(void) {\nvec4 p = mMatrix * vec4(aVertexPosition, 1.0);\ngl_Position = pMatrix * vMatrix * p;\ndepth = gl_Position.z/gl_Position.w;\n}\n//#fragment\nvarying float depth;\nvoid main(void) {\nfloat d = 1.0 - depth;\ngl_FragColor = vec4(d, d, d, 1.0);\n}\n";

@@ -65,6 +65,7 @@ J3D.BuiltinShaders = function() {
 	
 	shaders.Reflective =  J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Reflective);
 	shaders.Skybox =  J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Skybox);
+	shaders.Background =  J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Background);
 	shaders.Vignette =  J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Vignette);
 
 	shaders.Normal2Color = J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Normal2Color);

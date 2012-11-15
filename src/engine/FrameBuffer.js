@@ -13,6 +13,8 @@ J3D.FrameBuffer = function(width, height) {
     this.width = (width) ? width : gl.viewportWidth;
     this.height = (height) ? height : gl.viewportHeight;
 
+//    console.log(this.viewportWidth, this.viewportHeight);
+
     this.fbo = gl.createFramebuffer();
     this.texture = gl.createTexture();
     this.depthBuffer = gl.createRenderbuffer();
@@ -22,8 +24,10 @@ J3D.FrameBuffer = function(width, height) {
 
     // bind & setup texture
     gl.bindTexture(gl.TEXTURE_2D, this.texture);
+
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 

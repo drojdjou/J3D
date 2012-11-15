@@ -56,11 +56,18 @@ J3D.Scene = function() {
         this.skybox = null;
     }
 
-    this.addSkybox = function(cubemap) {
+    this.addSkybox = function(cubemap, shader) {
         this.skybox = new J3D.Transform();
-        this.skybox.renderer = new J3D.BuiltinShaders.fetch("Skybox");
+        this.skybox.renderer = shader || J3D.BuiltinShaders.fetch("Skybox");
         this.skybox.renderer.uCubemap = cubemap;
         this.skybox.geometry = J3D.Primitive.Cube(1, 1, 1).flip();
+    }
+
+    this.addBackground = function(texture, shader) {
+        this.background = new J3D.Transform();
+        this.background.renderer = shader || J3D.BuiltinShaders.fetch("Background");
+        this.background.renderer.uTexture = texture;
+        this.background.geometry = J3D.Primitive.FullScreenQuad();
     }
 
     /**

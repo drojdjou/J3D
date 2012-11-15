@@ -167,6 +167,13 @@ J3D.Engine.prototype.renderScene = function() {
         gl.depthMask(true);
     }
 
+    // 6. Render background (if any)
+    if (this.scene.background) {
+        gl.depthMask(false);
+        this.renderObject(this.scene.background);
+        gl.depthMask(true);
+    }
+
 //    if (!this.lightsLogged) {
 //        for (i = 0; i < lt; i++) {
 //            var t = this._lights[i];
@@ -191,7 +198,7 @@ J3D.Engine.prototype.renderScene = function() {
         var srcFactor = (t.geometry.srcFactor != null) ? t.geometry.srcFactor : gl.SRC_ALPHA;
         var dstFactor = (t.geometry.dstFactor != null) ? t.geometry.dstFactor : gl.ONE;
 
-        if(t.disableDepthTest) gl.disable(gl.DEPTH_TEST);
+        if (t.disableDepthTest) gl.disable(gl.DEPTH_TEST);
         else gl.enable(gl.DEPTH_TEST);
 
         gl.blendFunc(srcFactor, dstFactor);
