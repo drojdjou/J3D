@@ -36,17 +36,17 @@ J3D.BuiltinShaders = function() {
 
 	var p = J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Phong);
 	p.color = J3D.Color.white;
-    //p.su.specularIntensity = 0;
-    //p.su.shininess = 0;
+    p.emissive = J3D.Color.black;
+//    p.specularIntensity = 0;
+//    p.shininess = 0;
 	p.hasColorTexture = false;
 	shaders.Phong = p;
 	
 	var g = J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Gouraud);
-	g.color = J3D.Color.white;
+	g.color = J3D.Color.black;
     g.emissive = J3D.Color.black;
-	//g.su.specularIntensity = 0;
-	//g.su.shininess = 0;
-	g.hasColorTexture = false;
+	g.specularIntensity = 0;
+	g.shininess = 0;
 	shaders.Gouraud = g;
 	
 	var l =  J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Lightmap);

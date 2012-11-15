@@ -74,8 +74,8 @@ varying vec2 vTextureCoord;
 
 void main(void) {
 
-    float t = uTime;
-    vec2 v = vTextureCoord * 2.0;
+    float t = uTime * 2.0;
+    vec2 v = vTextureCoord * 1.0;
 
     float n1 = snoise(v * 1.0 + t * 0.2);
 

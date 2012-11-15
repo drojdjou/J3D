@@ -72,30 +72,30 @@
         scene.add(light3);
 
         moMat = J3D.BuiltinShaders.fetch("Gouraud");
-        moMat.su.specularIntensity = 1;
-        moMat.su.shininess = 32;
-        moMat.su.color = new J3D.Color(0.9, 0.9, 0.9, 1);
+        moMat.specularIntensity = 0.10;//0.001;
+        moMat.shininess = 0.32;//0.001;
+        moMat.color = new J3D.Color(0.9, 0.9, 0.9, 1);
         moMat.hasColorTexture = false;
 
 
         ctMat = J3D.BuiltinShaders.fetch("Phong");
-        ctMat.su.color = J3D.Color.white;
-        ctMat.su.specularIntensity = 10;
-        ctMat.su.shininess = 32;
+        ctMat.color = J3D.Color.white;
+        ctMat.specularIntensity = 10;
+        ctMat.shininess = 32;
         ctMat.colorTexture = new J3D.Texture("models/textures/containerbake512.jpg");
         ctMat.hasColorTexture = true;
 
         crMat = J3D.BuiltinShaders.fetch("Phong");
-        crMat.su.color = new J3D.Color(1, 1, 1, 1);//J3D.Color.white;
-        crMat.su.specularIntensity = 0.1;
-        crMat.su.shininess = 0.1;
+        crMat.color = new J3D.Color(1, 1, 1, 1);//J3D.Color.white;
+        crMat.specularIntensity = 0.1;
+        crMat.shininess = 0.1;
         crMat.colorTexture = new J3D.Texture("models/textures/crate256.jpg");
         crMat.hasColorTexture = true;
 
         haMat = J3D.BuiltinShaders.fetch("Gouraud");
-        haMat.su.specularIntensity = 1;
-        haMat.su.shininess = 32;
-        haMat.su.color = new J3D.Color(1, 1, 1, 1);
+//        haMat.specularIntensity = 1;
+//        haMat.shininess = 32;
+        haMat.color = new J3D.Color(0, 0, 0, 1);
         haMat.colorTexture = new J3D.Texture("models/textures/metalbase.jpg");
         haMat.hasColorTexture = true;
 

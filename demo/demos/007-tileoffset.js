@@ -15,7 +15,7 @@ registerDemo(function(engine) {
 
         ambient = new J3D.Transform();
         ambient.light = new J3D.Light(J3D.AMBIENT);
-        ambient.light.color = new J3D.Color(0.75, 0.75, 0.75, 1);
+        ambient.light.color = new J3D.Color(0.25, 0.25, 0.25, 1);
 
         outTexture = createTexture("#87b95a", "#1f5a7c");
         overTexture = createTexture("#944d00", "#01b0ea");
@@ -61,6 +61,7 @@ registerDemo(function(engine) {
 
         cube4 = new J3D.Transform();
         cube4.position.x = 3 * cs;
+        //cube4.disableDepthTest = true;
         cube4.renderer = J3D.BuiltinShaders.fetch("Gouraud");
         cube4.renderer.colorTexture = out6Texture;
         cube4.renderer.hasColorTexture = true;
