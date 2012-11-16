@@ -32,6 +32,7 @@ v3.prototype.fromArray = function(a){
     this.x = a[0];
     this.y = a[1];
     this.z = a[2];
+    return this;
 }
 
 /**
@@ -89,6 +90,7 @@ v3.prototype.copyFrom = function(v) {
 	this.x = v.x;
     this.y = v.y;
     this.z = v.z;
+    return this;
 }
 
 /**
