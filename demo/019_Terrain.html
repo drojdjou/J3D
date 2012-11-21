@@ -68,7 +68,7 @@
 			J3D.Loader.loadJSON("models/019/terrainScene.json", function(jsscene) {
 				jsonScene = jsscene;
                 jsscene.path = "models/019/";
-				J3D.Loader.parseJSONScene(jsscene, jsmeshes, engine);
+				J3D.Loader.parseJSONScene(engine, jsscene, jsmeshes);
 
                 camroot = engine.scene.find("camroot");
                 terrain = engine.scene.find("terrain");

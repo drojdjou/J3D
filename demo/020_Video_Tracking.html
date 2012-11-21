@@ -133,7 +133,7 @@ function setup(assets) {
     engine.scene.addBackground(assets.videoTex, assets.bgShader);
 
     assets.jsscene.path = path;
-    J3D.Loader.parseJSONScene(assets.jsscene, assets.jsmeshes, engine);
+    J3D.Loader.parseJSONScene(engine, assets.jsscene, assets.jsmeshes);
 //        engine.setClearColor(J3D.Color.white);
 
     ball = engine.scene.find("basketball/shadow/ball");

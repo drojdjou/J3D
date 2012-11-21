@@ -82,7 +82,7 @@ registerDemo(function(engine) {
         assets.toon.uColorSampler = assets.ramp;
 
         assets.jsscene.path = path;
-        J3D.Loader.parseJSONScene(assets.jsscene, assets.jsmeshes, engine);
+        J3D.Loader.parseJSONScene(engine, assets.jsscene, assets.jsmeshes);
 
         base = engine.scene.find("base");
         cam = engine.scene.find("base/camera");

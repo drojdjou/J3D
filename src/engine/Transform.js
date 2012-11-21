@@ -300,23 +300,16 @@ J3D.Transform.prototype.updateWorld = function(parent) {
     if (this._lockedMatrix) return;
 
     if (!this.matrixMode) {
-        mat4.identity(this.matrix);
-
         var p = this.position;
         var r = this.rotation;
         var q = this.rotationq;
         var s = this.scale;
 
         if (!this.useQuaternion) {
-//            mat4.translate(this.matrix, [this.position.x, this.position.y, this.position.z]);
-//            mat4.rotateZ(this.matrix, this.rotation.z);
-//            mat4.rotateX(this.matrix, this.rotation.x);
-//            mat4.rotateY(this.matrix, this.rotation.y);
-//            mat4.scale(this.matrix, [this.scale.x, this.scale.y, this.scale.z]);
             quat4.fromEuler(r.x, r.y, r.z, q);
-        } //else {
-            mat4.fromRotationQTranslation(this.matrix, p.x, p.y, p.z, q[3], q[0], q[1], q[2], s.x, s.y, s.z);
-//        }
+        }
+
+        mat4.fromRotationQTranslation(this.matrix, p.x, p.y, p.z, q[3], q[0], q[1], q[2], s.x, s.y, s.z);
 
         J3D.Performance.localMatrixUpdate++;
     }
@@ -334,11 +327,6 @@ J3D.Transform.prototype.updateWorld = function(parent) {
     mat3.multiplyVec3(this.normalMatrix, this.worldLeft);
 
     mat4.extractTranslation(this.globalMatrix, this.worldPosition);
-
-
-//    console.log(this.matrix);
-//    console.log(this.globalMatrix);
-//    console.log(this.worldPosition[0], this.worldPosition[1], this.worldPosition[2]);
 
     if (this.isStatic) this._lockedMatrix = true;
 }

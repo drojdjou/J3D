@@ -136,7 +136,7 @@
 
 
         assets.jsscene.path = path;
-        J3D.Loader.parseJSONScene(assets.jsscene, assets.jsmeshes, engine);
+        J3D.Loader.parseJSONScene(engine, assets.jsscene, assets.jsmeshes);
         engine.setClearColor(new J3D.Color(0, 0, 0, 0));
 
         mug = engine.scene.find("floor/mug");
