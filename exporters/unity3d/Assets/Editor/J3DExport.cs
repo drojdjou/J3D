@@ -21,8 +21,8 @@ public class J3DExport : ScriptableWizard
 	public float lightmapBrightness = 8.0f;
 	public float lightmapContrast = 1.1f;
 	
-	public bool useQuaternions = false;
-	public bool exportAnimation = true;
+	public bool useQuaternions = true;
+	public bool exportAnimation = false;
 	public float samplesPerSec = 30.0f;
 	
 	public bool useConsole = false;
