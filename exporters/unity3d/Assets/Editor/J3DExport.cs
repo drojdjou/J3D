@@ -21,7 +21,11 @@ public class J3DExport : ScriptableWizard
 	public float lightmapBrightness = 8.0f;
 	public float lightmapContrast = 1.1f;
 	
-	public bool useConsole = true;
+	public bool useQuaternions = false;
+	public bool exportAnimation = true;
+	public float samplesPerSec = 30.0f;
+	
+	public bool useConsole = false;
 	//public ReportLevel level = ReportLevel.Warning;
 	public bool generateReport = false;
 	
@@ -29,6 +33,7 @@ public class J3DExport : ScriptableWizard
 	private List<LightExportData> lgx;
 	private List<CameraExportData> cmx;
 	private List<LightmapExportData> led;
+	private List<AnimationExportData> anx;
 	
 	private Hashtable mex;
 	private Hashtable mtx;
@@ -57,7 +62,9 @@ public class J3DExport : ScriptableWizard
 		
 		string meshesPath = EditorUtility.SaveFilePanel ("Save meshes", FileExport.lastExportPath, "", extenstion.ToString ());
 		int extl = (extenstion == Extension.js) ? 3 : 5;
+		
 		string scenePath = meshesPath.Substring (0, meshesPath.Length - extl) + "Scene." + extenstion.ToString ();
+		string animPath = meshesPath.Substring (0, meshesPath.Length - extl) + "Anim." + extenstion.ToString ();
 		string texturePath = meshesPath.Substring (0, meshesPath.LastIndexOf ("/") + 1);
 		string reportPath = meshesPath.Substring (0, meshesPath.Length - extl) + "Log.txt";
 		
@@ -67,6 +74,7 @@ public class J3DExport : ScriptableWizard
 		lgx = new List<LightExportData> ();
 		cmx = new List<CameraExportData> ();
 		led = new List<LightmapExportData> ();
+		anx = new List<AnimationExportData> ();
 		
 		mex = new Hashtable ();
 		mtx = new Hashtable ();
@@ -83,12 +91,19 @@ public class J3DExport : ScriptableWizard
 		}
 
 		StringTemplate mt = FileExport.LoadTemplate ("model");
-		mt.SetAttribute ("prefix", prefix + "Meshes");
 		mt.SetAttribute ("meshes", mex.Values);
 		FileExport.SaveContentsAsFile (FileExport.CleanJSON (mt), meshesPath);
 		
+		if(exportAnimation) {
+			StringTemplate at = FileExport.LoadTemplate ("animation");
+			at.SetAttribute ("quaternions", useQuaternions);
+			at.SetAttribute ("animations", anx);
+			FileExport.SaveContentsAsFile (FileExport.CleanJSON (at), animPath);
+		}
+		
 		StringTemplate st = FileExport.LoadTemplate ("scene");
 		st.SetAttribute ("ambient", RenderSettings.ambientLight);
+		st.SetAttribute ("quaternions", useQuaternions);
 		
 		if (Camera.mainCamera != null)
 			st.SetAttribute ("background", Camera.mainCamera.backgroundColor);
@@ -131,7 +146,7 @@ public class J3DExport : ScriptableWizard
 		if (!t.gameObject.active)
 			return;
 		
-		TransformExportData ted = new TransformExportData (t, p);
+		TransformExportData ted = new TransformExportData (t, p, useQuaternions);
 		
 		tex.Add (ted);
 		
@@ -149,7 +164,6 @@ public class J3DExport : ScriptableWizard
 			foreach (string tn in textures) {
 				TextureExportData tx = new TextureExportData (t.renderer.sharedMaterial.GetTexture (tn));
 				if (!txx.ContainsKey (tx.Name)) {
-					Debug.Log("Adding texture: " + tx.Name);
 					txx.Add (tx.Name, tx);
 				}
 			}
@@ -166,6 +180,11 @@ public class J3DExport : ScriptableWizard
 			cmx.Add (cd);
 		}
 		
+		if (exportAnimation && t.animation != null) {
+			AnimationExportData ad = new AnimationExportData(t, useQuaternions, samplesPerSec);
+			anx.Add(ad);
+		}
+		
 		for (var i = 0; i < t.childCount; i++) {
 			RecurseTransform (t.GetChild (i), ted);
 		}
@@ -176,4 +195,22 @@ public class J3DExport : ScriptableWizard
 	{
 		ScriptableWizard.DisplayWizard ("Export to J3D", typeof(J3DExport), "Export");
 	}
+	
+//	[MenuItem("J3D/Inspect Animation")]
+//	static void InspectAnimation ()
+//	{
+//		Transform t = Selection.transforms[0];
+//		
+//		AnimationClip[] clips = AnimationUtility.GetAnimationClips(t.animation);
+//		
+//		
+//		foreach(AnimationClip c in clips) {
+//			AnimationClipCurveData[] data = AnimationUtility.GetAllCurves(c, true);
+//			
+//			foreach(AnimationClipCurveData d in data) {
+//				Debug.Log(d.propertyName);
+//				Debug.Log(d.curve.Evaluate(0.33f));
+//			}
+//		};
+//	}
 }

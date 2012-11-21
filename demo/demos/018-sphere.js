@@ -37,12 +37,12 @@ registerDemo(function(engine) {
         engine.scene.setCamera(camera);
         root.add(camera);
 
-        sun = new J3D.Transform();
-        sun.light = new J3D.Light(J3D.HEMISPHERE);
-        sun.light.color = new J3D.Color(1, 1, 1, 1);
-        sun.position = new v3(-1000, 0, 0);
-        sun.light.direction = new v3(1, 0, 0);
-        sun.light.angleFalloff = 0.15;
+        light2 = new J3D.Transform();
+        light2.light = new J3D.Light(J3D.HEMISPHERE);
+        light2.light.color = new J3D.Color(1, 1, 1, 1);
+        light2.position = new v3(-1000, 0, 0);
+        light2.light.direction = new v3(1, 0, 0);
+        light2.light.angleFalloff = 0.15;
 
         earth = new J3D.Transform();
         earth.rotation.y = Math.PI;
@@ -109,7 +109,7 @@ registerDemo(function(engine) {
             });
         }
 
-        engine.scene.add(earth, sun, root);
+        engine.scene.add(earth, light2, root);
         engine.scene.add(clouds);
 
         document.onmousemove = onMouseMove;

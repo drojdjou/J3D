@@ -11,6 +11,8 @@ J3D.Texture = function(source, params){ // <- use this to pass parameters of the
 	var that = this;
 	this.tex = gl.createTexture();
 
+    console.log();
+
     this.autoLoad = true || params.autoLoad;
 	
 	if(!params) params = {};

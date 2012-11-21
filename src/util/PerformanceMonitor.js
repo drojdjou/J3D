@@ -8,26 +8,30 @@ J3D.Performance = (function() {
             this.vectorsPerFrame = 0;
             this.programChaged = 0;
             this.localMatrixUpdate = 0;
+            this.numColorArrays = 0;
+            this.numVectorArrays = 0;
+        }
+
+        var addp = function(n, v) {
+            return '<li>' + n + ' ' + v + '</li>';
         }
 
         this.printInfo = function() {
 
             var i = '';
+            i += addp('',                       J3D.getVersion());
+            i += addp('Transforms',             this.numTransforms);
+            i += addp('Vectors/frame',          this.vectorsPerFrame);
+            i += addp('Vector array/frame',     this.numVectorArrays);
+            i += addp('Num color array/frame',  this.numColorArrays);
+            i += addp('Vectors total',          this.numVectors);
+            i += addp('Matrices',               this.numMatrices);
+            i += addp('Program changed',        this.programChaged);
+            i += addp('Loc matrix updt',        this.localMatrixUpdate);
+            i += addp('Num colors',             this.numColors);
+            i += addp('Dir vector calls',       this.dirVecCalls);
 
-            i += '<ul>'
-            i += '<li>' + J3D.getVersion() + '</li>';
-            i += '<li>Transforms ' + this.numTransforms + '</li>';
-            i += '<li>Vectors/frame ' + this.vectorsPerFrame + '</li>';
-            i += '<li>Vectors total ' + this.numVectors + '</li>';
-            i += '<li>Matrices ' + this.numMatrices + '</li>';
-            i += '<li>Program changed ' + this.programChaged + '</li>';
-            i += '<li>Loc matrix updt ' + this.localMatrixUpdate + '</li>';
-//            i += '<li>Directional vector calls ' + this.dirVecCalls + '</li>';
-            i += '</ul>';
-
-            this.domElement.innerHTML = i;
-
-
+            this.domElement.innerHTML = '<ul>' + i + '</ul>';
         }
 
         this.domElement = document.createElement('div');
@@ -35,6 +39,8 @@ J3D.Performance = (function() {
 
         this.numVectors = 0;
         this.numMatrices = 0;
+        this.numColors = 0;
+
     }
 
     return new PerformanceMonitor();

@@ -24,10 +24,10 @@ registerDemo(function(engine) {
         out6Texture = create6wayTexture(["#999999", "#aaaaaa", "#bbbbbb", "#cccccc", "#dddddd", "#eeeeee"]);
         over6Texture = create6wayTexture(["#87b95a", "#1f5a7c", "#944d00", "#01b0ea", "#808080", "#000000"]);
 
-        sun = new J3D.Transform();
-        sun.light = new J3D.Light(J3D.DIRECT);
-        sun.light.color = new J3D.Color(0.75, 0.75, 0.75, 1);
-        sun.light.direction = new v3(0, -1, 0).norm();
+        light2 = new J3D.Transform();
+        light2.light = new J3D.Light(J3D.DIRECT);
+        light2.light.color = new J3D.Color(0.75, 0.75, 0.75, 1);
+        light2.light.direction = new v3(0, -1, 0).norm();
 
         gl.disable(gl.CULL_FACE);
 
@@ -88,7 +88,7 @@ registerDemo(function(engine) {
 
         engine.scene.setCamera(camera);
 
-        engine.scene.add(camera, sun, ambient, cube1, cube2, cube3, cube4);
+        engine.scene.add(camera, light2, ambient, cube1, cube2, cube3, cube4);
         callback();
     }
 

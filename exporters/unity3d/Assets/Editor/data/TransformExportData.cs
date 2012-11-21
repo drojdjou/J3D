@@ -7,14 +7,17 @@ public class TransformExportData
 	private TransformExportData p;
 	private ColliderExportData c;
 	private int uid;
+	private bool useQuaternion;
 	
 	public static int uidc;
 
-	public TransformExportData (Transform t, TransformExportData p)
+
+	public TransformExportData (Transform t, TransformExportData p, bool useQuaternion)
 	{
 		uid = uidc++;
 		this.t = t;
 		this.p = p;
+		this.useQuaternion = useQuaternion;
 		this.c = new ColliderExportData(t);
 	}
 	
@@ -70,6 +73,10 @@ public class TransformExportData
 	public string CameraName {
 		get { return NamesUtil.CleanLc (t.gameObject.camera.name); }
 	}
+	
+	public string AnimationName {
+		get { return NamesUtil.CleanLc (t.animation.clip.name); }
+	}
 
 	public bool HasRenderer {
 		get { return t.gameObject.renderer != null; }
@@ -81,6 +88,10 @@ public class TransformExportData
 
 	public bool HasCamera {
 		get { return t.gameObject.camera != null; }
+	}
+	
+	public bool HasAnimation {
+		get { return t.animation != null; }
 	}
 	
 	public bool HasCollider {
@@ -102,7 +113,7 @@ public class TransformExportData
 		get {
 			Vector3 s = t.localScale;
 			bool hs = s.x == 1.0f && s.y == 1.0f && s.z == 1.0f;
-			if(!hs) Debug.Log(t.name + " has scale " + t.localScale.ToString());
+			//if(!hs) Debug.Log(t.name + " has scale " + t.localScale.ToString());
 			return !hs;
 		}
 	}
@@ -114,19 +125,19 @@ public class TransformExportData
 		}
 	}
 	
-	public string[] Rotation {
+		public string[] Rotation {
 		get {
-			return RotationSwitched;
+			if(useQuaternion) {
+				Quaternion r = t.localRotation;
+				return new string[] { (r.x).ToString (ExporterProps.LN), (r.y).ToString (ExporterProps.LN), (-r.z).ToString (ExporterProps.LN), (r.w).ToString (ExporterProps.LN) };	
+			} else {
+				Vector3 r = Conversions.SwitchRotation(t.localRotation);
+				return new string[] { (r.x).ToString (ExporterProps.LN), (r.y).ToString (ExporterProps.LN), (r.z).ToString (ExporterProps.LN) };
+			}
 		}
 	}
 	
-	public string[] RotationRaw {
-		get {
-			Vector3 r = t.rotation.eulerAngles;
-			return new string[] { (r.x).ToString (ExporterProps.LN), (r.y).ToString (ExporterProps.LN), (r.z).ToString (ExporterProps.LN) }; 
-		}
-	}
-
+	/** Deprecated
 	public string[] RotationSwitched {
 		get {
 			
@@ -167,6 +178,7 @@ public class TransformExportData
 			};
 		}
 	}
+	**/
 
 	public string SetupChildren {
 		get {

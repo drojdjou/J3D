@@ -51,12 +51,18 @@ window.onload = function() {
             // Set the path variable of the scene, so that it can find texture files
             jsscene.path = path;
 
-            J3D.Loader.parseJSONScene(jsscene, jsmeshes, engine);
+            J3D.Loader.parseJSONScene(engine, jsscene, jsmeshes);
             fps = engine.scene.find("fps");
             eye = engine.scene.find("fps/eye");
 
             headlight = eye.light;
             eye.light = null;
+
+            fps.useQuaternion = false;
+            eye.useQuaternion = false;
+
+            fps.rotation = new v3();
+            eye.rotation = new v3();
 
             document.onmousemove = onMouseMove;
 
@@ -138,8 +144,8 @@ function onKeyUp(e) {
 }
 
 function onMouseMove(e) {
-    mx = (( e.clientX / window.innerWidth  ) * 2 - 1) * Math.PI * -2;
-    my = (( e.clientY / window.innerHeight ) * 2 - 1) * Math.PI * -0.25;
+    mx = (( e.clientX / window.innerWidth  ) * 2 - 1) * Math.PI * 2;
+    my = (( e.clientY / window.innerHeight ) * 2 - 1) * Math.PI * 0.25;
 }
 
 function readGamepadData() {

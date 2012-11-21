@@ -56,10 +56,19 @@ J3D.Cubemap = function(faces, params) {
         }
     }
 
-    load("left", faces.left);
-    load("right", faces.right);
-    load("up", faces.up);
-    load("down", faces.down);
-    load("back", faces.back);
-    load("front", faces.front);
+    if (faces.left) {
+        load("left", faces.left);
+        load("right", faces.right);
+        load("up", faces.up);
+        load("down", faces.down);
+        load("back", faces.back);
+        load("front", faces.front);
+    } else {
+        load("left", faces);
+        load("right", faces);
+        load("up", faces);
+        load("down", faces);
+        load("back", faces);
+        load("front", faces);
+    }
 }

@@ -68,17 +68,17 @@
         ambient.light = new J3D.Light(J3D.AMBIENT);
         ambient.light.color = new J3D.Color(0.75, 0.75, 0.75, 1);
 
-        sun = new J3D.Transform();
-        sun.light = new J3D.Light(J3D.DIRECT);
-        sun.light.color = new J3D.Color(0.75, 0.75, 0.75, 1);
-        sun.rotation.y = Math.PI / 2;
+        light2 = new J3D.Transform();
+        light2.light = new J3D.Light(J3D.DIRECT);
+        light2.light.color = new J3D.Color(0.75, 0.75, 0.75, 1);
+        light2.rotation.y = Math.PI / 2;
 
         camera = new J3D.Transform();
         camera.camera = new J3D.Camera({ fov:30 });
         camera.position.z = 12;
 
         camroot = new J3D.Transform();
-        camroot.add(camera, sun);
+        camroot.add(camera, light2);
 
         greenCube = new J3D.Transform();
         greenCube.geometry = J3D.Primitive.Cube(0.5, 0.5, 0.5);
@@ -175,7 +175,7 @@
         m.rotXspeed = 0.1;
         m.rotYspeed = 0.1;
 
-        engine.scene.add(m, sun, ambient, camroot);
+        engine.scene.add(m, light2, ambient, camroot);
         engine.scene.setCamera(camera);
     }
 

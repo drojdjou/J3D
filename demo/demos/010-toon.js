@@ -33,10 +33,10 @@ registerDemo(function(engine) {
         engine.setClearColor(new J3D.Color(0.85, 0.85, 0.85, 1.0));
 
         var sun = new J3D.Transform();
-        sun.light = new J3D.Light(J3D.DIRECT);
-        sun.light.color = new J3D.Color(1.0); // Toon shader uses only one channel for light calculations: r
+        light2.light = new J3D.Light(J3D.DIRECT);
+        light2.light.color = new J3D.Color(1.0); // Toon shader uses only one channel for light calculations: r
 //		sun.rotation.x = Math.PI;
-        sun.rotation.z = Math.PI;
+        light2.rotation.z = Math.PI;
 
         elephant = new J3D.Transform();
         elephant.rotation = new v3(0, Math.PI, 0);
@@ -49,7 +49,7 @@ registerDemo(function(engine) {
         camera.position.z = 12;
         camera.position.y = -1.2;
         engine.scene.setCamera(camera);
-        engine.scene.add(camera, elephant, sun);
+        engine.scene.add(camera, elephant, light2);
 
         post = new J3D.Postprocess(engine);
         post.filter = J3D.BuiltinShaders.fetch("Vignette");

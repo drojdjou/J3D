@@ -4,6 +4,8 @@
 "ambient": { "r":$ambient.r$, "g":$ambient.g$, "b":$ambient.b$, "a":$ambient.a$ },
 "background": { "r":$background.r$, "g":$background.g$, "b":$background.b$, "a":$background.a$ },
 
+"quaternions":$if(quaternions)$ true$else$ false$endif$,
+
 "textures": {
 $textures:{	
 	"$it.Name$": { 
@@ -68,6 +70,8 @@ $transforms:{
 		"rotation": [ $it.Rotation; separator=","$ ],
 		$if(it.HasScale)$
 		"scale": [ $it.Scale; separator=","$ ],$endif$
+		$if(it.HasAnimation)$
+		"animation": "$it.AnimationName$",$endif$
 		$if(it.HasCollider)$
 		"collider": {
 		    "type": "$it.Collider.Type$",

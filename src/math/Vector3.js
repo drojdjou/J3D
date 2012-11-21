@@ -106,6 +106,7 @@ v3.prototype.add = function(b) {
  * @returns array [x,y,z]
  */
 v3.prototype.xyz = function() {
+    J3D.Performance.numVectorArrays++;
 	return [this.x, this.y, this.z];
 }
 

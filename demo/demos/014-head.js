@@ -21,22 +21,34 @@ registerDemo(function(engine) {
 
         var assetsLoader = new J3D.AssetLoader();
 
-        assetsLoader.addShader("reflective", "../demo/shaders/GoldHead.glsl");
+        assetsLoader.addShader("reflective", "../demo/shaders/SpecularReflective.glsl");
         assetsLoader.addShader("glitter", "../demo/shaders/Glitter.glsl");
         assetsLoader.addShader("darkglass", "../demo/shaders/DarkGlass.glsl");
         assetsLoader.addShader("toon", "../demo/shaders/Stripes.glsl");
 
+//        assetsLoader.addCubemap("cubemap", {
+//            left: path + "cubemap/front.jpg",
+//            right: path + "cubemap/back.jpg",
+//            up: path + "cubemap/left.jpg",
+//            down: path + "cubemap/right.jpg",
+//            back: path + "cubemap/top.jpg",
+//            front: path + "cubemap/top.jpg"
+//        });
+
         assetsLoader.addCubemap("cubemap", {
-            left: path + "cubemap/front.jpg",
-            right: path + "cubemap/back.jpg",
-            up: path + "cubemap/left.jpg",
-            down: path + "cubemap/right.jpg",
-            back: path + "cubemap/top.jpg",
-            front: path + "cubemap/top.jpg"
+            left: "models/textures/skybox/left.jpg",
+            right: "models/textures/skybox/right.jpg",
+            up: "models/textures/skybox/up.jpg",
+            down: "models/textures/skybox/down.jpg",
+            back: "models/textures/skybox/back.jpg",
+            front: "models/textures/skybox/front.jpg"
         });
 
         assetsLoader.addTexture("headTex", path + "map_col.jpg");
-        assetsLoader.addTexture("particleTex", path + "particle01.png");
+        assetsLoader.addTexture("rustTex", path + "rust.jpg", { wrapMode: gl.REPEAT });
+        assetsLoader.addTexture("coverTex", path + "cover.jpg", { wrapMode: gl.REPEAT });
+        assetsLoader.addTexture("rustSpecTex", path + "rustspec.jpg", { wrapMode: gl.REPEAT });
+        assetsLoader.addTexture("particleTex", path + "particle01.png", { wrapMode: gl.CLAMP_TO_EDGE });
         assetsLoader.addTexture("ramp", path + "goldramp.png");
 
         assetsLoader.addJSON("jsmeshes", path + "leeperry.js");
@@ -49,11 +61,13 @@ registerDemo(function(engine) {
 
     function setup(_assets, callback) {
         assets = _assets;
-        
+
         assets.particleTex.wrapMode = gl.CLAMP_TO_EDGE;
 
-        assets.reflective.uCubemap = assets.cubemap;
-        assets.reflective.uColorTexture = assets.headTex;
+        assets.reflective.uReflTexture = assets.coverTex;
+        assets.reflective.uColorTexture = assets.rustTex;
+        assets.reflective.uSpecTexture = assets.rustSpecTex;
+        assets.reflective.textureTile = new v2(3, 3);
 
         assets.darkglass.uCubemap = assets.cubemap;
         assets.darkglass.uColorTexture = assets.headTex;
@@ -72,13 +86,15 @@ registerDemo(function(engine) {
 
         base = engine.scene.find("base");
         cam = engine.scene.find("base/camera");
+        cam.position.z -= 1;
         lee = engine.scene.find("headbase");
         head = engine.scene.find("headbase/head");
         defphong = head.renderer;
 
         document.addEventListener('mousedown', changeShaderManual, null);
 
-        auto = setInterval(changeShader, 5000);
+        // auto = setInterval(changeShader, 5000);
+        // changeShader();
 
         callback();
     }
@@ -109,10 +125,10 @@ registerDemo(function(engine) {
     }
 
     function changeShader() {
-        shd = (shd + 1) % 5;
+
         switch (shd) {
             case 0:
-                setRenderer(null, gl.TRIANGLES);
+                setRenderer(assets.reflective, gl.TRIANGLES);
                 setTransparency(false);
                 head.disableDepthTest = false;
                 break;
@@ -122,7 +138,7 @@ registerDemo(function(engine) {
                 head.disableDepthTest = false;
                 break;
             case 2:
-                setRenderer(assets.reflective, gl.TRIANGLES);
+                setRenderer(null, gl.TRIANGLES);
                 setTransparency(false);
                 head.disableDepthTest = false;
                 break;
@@ -137,6 +153,8 @@ registerDemo(function(engine) {
                 head.disableDepthTest = true;
                 break;
         }
+
+        shd = (shd + 1) % 5;
     }
 
     this.render = function(interactor) {
@@ -148,8 +166,8 @@ registerDemo(function(engine) {
         lee.rotation.z += (tgrz - lee.rotation.z) / 12;
         lee.position.z += (tgpz - lee.position.z) / 10;
 
-        lee.rotation.x = Math.sin(t) * 0.1;
-        t += 0.1;
+        //lee.rotation.x = Math.sin(t) * 0.1;
+        //t += 0.1;
 
         engine.render();
     }

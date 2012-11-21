@@ -5,7 +5,7 @@ Created by Bartek Drozdz <bartek@everyday3d.com>
 http://www.everyday3d.com/j3d/
 
 Version 1
-Build 51 | Thu Nov 15 12:40:19 2012
+Build 57 | Sun Nov 18 22:59:42 2012
 
 Uses the following libraries:
 

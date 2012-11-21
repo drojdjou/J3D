@@ -4,6 +4,8 @@
 "ambient": { "r":0.1492537, "g":0.1492537, "b":0.1492537, "a":1 },
 "background": { "r":0.1916647, "g":0.3019664, "b":0.4745098, "a":1 },
 
+"quaternions": true,
+
 "textures": {
 	
 	"beamed_planks": { 
@@ -68,7 +70,7 @@
 		"type": "Lightmap",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
 		"specularIntensity": 0,
-                "shininess": 0,
+        "shininess": 0,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "brownwood"
@@ -78,7 +80,7 @@
 		"type": "Lightmap",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
 		"specularIntensity": 0,
-                "shininess": 0,
+        "shininess": 0,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0.5 ],
 		"colorTexture": "floor_panel"
@@ -88,7 +90,7 @@
 		"type": "Lightmap",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
 		"specularIntensity": 0,
-                "shininess": 0,
+        "shininess": 0,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "floor"
@@ -98,7 +100,7 @@
 		"type": "Lightmap",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
 		"specularIntensity": 0,
-                "shininess": 0,
+        "shininess": 0,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "concrete_wall_bicol"
@@ -108,7 +110,7 @@
 		"type": "Selflit",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
 		"specularIntensity": 0,
-                "shininess": 0,
+        "shininess": 0,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "white"
@@ -118,7 +120,7 @@
 		"type": "Lightmap",
 		"color": { "r":0.6567164, "g":0, "b":0, "a":1 },
 		"specularIntensity": 0.999,
-                "shininess": 0.7227132,
+        "shininess": 0.7227132,
 		"textureTile": [  ],
 		"textureOffset": [  ]
 	},
@@ -127,7 +129,7 @@
 		"type": "Lightmap",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
 		"specularIntensity": 0.999,
-                "shininess": 1,
+        "shininess": 1,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "base"
@@ -137,7 +139,7 @@
 		"type": "Lightmap",
 		"color": { "r":0, "g":0, "b":0, "a":1 },
 		"specularIntensity": 0,
-                "shininess": 0,
+        "shininess": 0,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "white"
@@ -147,7 +149,7 @@
 		"type": "Lightmap",
 		"color": { "r":0.5671642, "g":0.5671642, "b":0.5671642, "a":1 },
 		"specularIntensity": 0,
-                "shininess": 0,
+        "shininess": 0,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "white"
@@ -157,7 +159,7 @@
 		"type": "Lightmap",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
 		"specularIntensity": 0,
-                "shininess": 0,
+        "shininess": 0,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "bareplankslight"
@@ -167,7 +169,7 @@
 		"type": "Lightmap",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
 		"specularIntensity": 0,
-                "shininess": 0,
+        "shininess": 0,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "roughwood"
@@ -177,7 +179,7 @@
 		"type": "Lightmap",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
 		"specularIntensity": 0,
-                "shininess": 0,
+        "shininess": 0,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "files"
@@ -187,7 +189,7 @@
 		"type": "Lightmap",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
 		"specularIntensity": 0,
-                "shininess": 0,
+        "shininess": 0,
 		"textureTile": [ 2,2 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "beamed_planks"
@@ -197,7 +199,7 @@
 		"type": "Lightmap",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
 		"specularIntensity": 0,
-                "shininess": 0,
+        "shininess": 0,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "rust"
@@ -207,7 +209,7 @@
 		"type": "Lightmap",
 		"color": { "r":1, "g":1, "b":1, "a":1 },
 		"specularIntensity": 0.6933358,
-                "shininess": 0.5807685,
+        "shininess": 0.5807685,
 		"textureTile": [ 1,1 ],
 		"textureOffset": [ 0,0 ],
 		"colorTexture": "cabinetfront"
@@ -243,7 +245,7 @@
 		"uid": 1,
         "name": "fps",
 		"position": [ 0,0.3121786,0 ],
-		"rotation": [ 0,0,0 ]
+		"rotation": [ 0,0,0,1 ]
 	},
 	
 	{
@@ -251,7 +253,7 @@
         "name": "eye",
 		"parent": 1,
 		"position": [ 0,1.00296,0 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"light": "eye",
 		"camera": "eye"
 	},
@@ -260,7 +262,8 @@
 		"uid": 3,
         "name": "bunker",
 		"position": [ 0,-1.076647,0 ],
-		"rotation": [ 0,0,0 ]
+		"rotation": [ 0,0,0,1 ],
+		"animation": ""
 	},
 	
 	{
@@ -268,7 +271,7 @@
         "name": "beams",
 		"parent": 3,
 		"position": [ 0.0377121,-2.400239,0 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "roughwood",
 		"mesh": "beams",
 		"lightmapIndex": 0,
@@ -280,7 +283,7 @@
         "name": "cabinetscol",
 		"parent": 3,
 		"position": [ 3.773383,2.382045,1.175504 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"collider": {
 		    "type": "box",
 		    "center": [ 0,0,0 ],
@@ -293,7 +296,7 @@
         "name": "ceiling",
 		"parent": 3,
 		"position": [ 0.07015259,3.880836,-0.0000000763 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "planks",
 		"mesh": "ceiling",
 		"lightmapIndex": 0,
@@ -305,7 +308,7 @@
         "name": "chair2",
 		"parent": 3,
 		"position": [ -2.41186,1.080836,1.659862 ],
-		"rotation": [ 0,-0.1675269,0 ],
+		"rotation": [ 0,0.08366554,0,0.9964939 ],
 		"collider": {
 		    "type": "box",
 		    "center": [ 0.0004411787,0.5522448,-0.02168265 ],
@@ -322,7 +325,7 @@
         "name": "chair",
 		"parent": 3,
 		"position": [ 2.22396,1.080836,1.002911 ],
-		"rotation": [ 0,1.371702,0 ],
+		"rotation": [ 0,-0.633332,0,0.7738802 ],
 		"collider": {
 		    "type": "box",
 		    "center": [ 0.0004411787,0.5522448,-0.02168265 ],
@@ -338,8 +341,9 @@
 		"uid": 9,
         "name": "crate",
 		"parent": 3,
-		"position": [ 3.226325,1.101177,-2.389863 ],
-		"rotation": [ 0,3.135777,0 ]
+		"position": [ -1.394453,1.101177,-2.389863 ],
+		"rotation": [ 0,0.9999958,0,-0.002907999 ],
+		"animation": ""
 	},
 	
 	{
@@ -347,11 +351,11 @@
         "name": "cratewood",
 		"parent": 9,
 		"position": [ 0,0,0 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"collider": {
 		    "type": "box",
-		    "center": [ 0,0.2000001,-0.0004974752 ],
-		    "size": [ 0.9999999,1,0.6409951 ]
+		    "center": [ 0.09,0.2000001,-0.0004974752 ],
+		    "size": [ 1.2,1,0.6409951 ]
 		},
 		"renderer": "planks_light",
 		"mesh": "crate",
@@ -364,19 +368,20 @@
         "name": "wickets",
 		"parent": 9,
 		"position": [ -0.2499574,0.4273163,0.2176546 ],
-		"rotation": [ 0,3.141593,0 ],
+		"rotation": [ 0,1,0,0 ],
 		"renderer": "base",
 		"mesh": "wickets",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.040039,0.040039,0.943691,0.883144 ]
+		"lightmapTileOffset": [ 0.0400391,0.0400391,0.943691,0.857754 ]
 	},
 	
 	{
 		"uid": 12,
         "name": "crate",
 		"parent": 3,
-		"position": [ -1.394453,1.101177,-2.389863 ],
-		"rotation": [ 0,3.135777,0 ]
+		"position": [ 3.226325,1.101177,-2.389863 ],
+		"rotation": [ 0,0.9999958,0,-0.002907999 ],
+		"animation": ""
 	},
 	
 	{
@@ -384,11 +389,11 @@
         "name": "cratewood",
 		"parent": 12,
 		"position": [ 0,0,0 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"collider": {
 		    "type": "box",
-		    "center": [ 0.09,0.2000001,-0.0004974752 ],
-		    "size": [ 1.2,1,0.6409951 ]
+		    "center": [ 0,0.2000001,-0.0004974752 ],
+		    "size": [ 0.9999999,1,0.6409951 ]
 		},
 		"renderer": "planks_light",
 		"mesh": "crate",
@@ -401,11 +406,11 @@
         "name": "wickets",
 		"parent": 12,
 		"position": [ -0.2499574,0.4273163,0.2176546 ],
-		"rotation": [ 0,3.141593,0 ],
+		"rotation": [ 0,1,0,0 ],
 		"renderer": "base",
 		"mesh": "wickets",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.040039,0.040039,0.943691,0.842129 ]
+		"lightmapTileOffset": [ 0.0400391,0.0400391,0.901699,0.813808 ]
 	},
 	
 	{
@@ -413,7 +418,8 @@
         "name": "crate2",
 		"parent": 3,
 		"position": [ -2.57758,1.101177,-2.072275 ],
-		"rotation": [ 0,-2.520497,0 ]
+		"rotation": [ 0,0.9521664,0,0.3055801 ],
+		"animation": ""
 	},
 	
 	{
@@ -421,7 +427,7 @@
         "name": "cratewood2",
 		"parent": 15,
 		"position": [ 0,0,0 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"collider": {
 		    "type": "box",
 		    "center": [ -0.09,0.2000001,-0.0004974753 ],
@@ -438,11 +444,11 @@
         "name": "wickets2",
 		"parent": 15,
 		"position": [ -0.2499574,0.4273163,0.2176546 ],
-		"rotation": [ 0,3.141593,0 ],
+		"rotation": [ 0,1,0,0 ],
 		"renderer": "base",
 		"mesh": "wickets",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.040039,0.040039,0.943691,0.801113 ]
+		"lightmapTileOffset": [ 0.0400391,0.0400391,0.943691,0.816738 ]
 	},
 	
 	{
@@ -450,7 +456,8 @@
         "name": "crate3",
 		"parent": 3,
 		"position": [ -2.012595,1.550762,-2.302448 ],
-		"rotation": [ 0,-2.810817,0 ]
+		"rotation": [ 0,0.9863545,0,0.1646349 ],
+		"animation": ""
 	},
 	
 	{
@@ -458,11 +465,11 @@
         "name": "cratewood3",
 		"parent": 18,
 		"position": [ 0,0,0 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "planks_light",
 		"mesh": "crate",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.15918,0.15918,0.756702,0.679554 ]
+		"lightmapTileOffset": [ 0.15918,0.15918,0.28307,0.278187 ]
 	},
 	
 	{
@@ -470,11 +477,11 @@
         "name": "wickets3",
 		"parent": 18,
 		"position": [ -0.2499574,0.4273163,0.2176546 ],
-		"rotation": [ 0,3.141593,0 ],
+		"rotation": [ 0,1,0,0 ],
 		"renderer": "base",
 		"mesh": "wickets",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.040039,0.040039,0.943691,0.760098 ]
+		"lightmapTileOffset": [ 0.0400391,0.0400391,0.943691,0.775723 ]
 	},
 	
 	{
@@ -482,7 +489,8 @@
         "name": "filecabinet1",
 		"parent": 3,
 		"position": [ 3.766136,1.164872,0.851461 ],
-		"rotation": [ 0,1.570796,0 ]
+		"rotation": [ 0,-0.7071068,0,0.7071068 ],
+		"animation": ""
 	},
 	
 	{
@@ -490,11 +498,11 @@
         "name": "bottom",
 		"parent": 21,
 		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "base",
 		"mesh": "bottom",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.023438,0.023438,0.982819,0.029694 ]
+		"lightmapTileOffset": [ 0.0234375,0.0234375,0.982819,0.0296936 ]
 	},
 	
 	{
@@ -502,11 +510,11 @@
         "name": "drawer",
 		"parent": 21,
 		"position": [ 0.2360419,2.009173,-0.5699123 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "base",
 		"mesh": "drawer",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.025391,0.025391,0.808006,0.103905 ]
+		"lightmapTileOffset": [ 0.0253906,0.0253906,0.954491,0.898827 ]
 	},
 	
 	{
@@ -514,11 +522,11 @@
         "name": "drawerbottom",
 		"parent": 23,
 		"position": [ 0,0.007493896,0 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "base",
 		"mesh": "drawerbottom",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.02832,0.02832,0.9828,0.000378 ]
+		"lightmapTileOffset": [ 0.0283203,0.0283203,0.9828,0.000377655 ]
 	},
 	
 	{
@@ -526,11 +534,11 @@
         "name": "files",
 		"parent": 23,
 		"position": [ -0.01546959,0.005193481,0 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "files",
 		"mesh": "files",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.02832,0.02832,0.965221,0.966198 ]
+		"lightmapTileOffset": [ 0.0283203,0.0283203,0.965221,0.966198 ]
 	},
 	
 	{
@@ -538,11 +546,11 @@
         "name": "front",
 		"parent": 23,
 		"position": [ 0,0,-0.01002502 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "cabinet_front",
 		"mesh": "front",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.041016,0.041016,0.901695,0.889 ]
+		"lightmapTileOffset": [ 0.0410156,0.0410156,0.901695,0.889 ]
 	},
 	
 	{
@@ -550,11 +558,11 @@
         "name": "handle",
 		"parent": 23,
 		"position": [ -0.2348501,0.1112711,-0.04534904 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "darkgrey",
 		"mesh": "handle",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.005859,0.005859,0.983864,0.962379 ]
+		"lightmapTileOffset": [ 0.00585938,0.00585938,0.983864,0.973122 ]
 	},
 	
 	{
@@ -562,11 +570,11 @@
         "name": "labelholder",
 		"parent": 23,
 		"position": [ -0.2360419,0.2542819,-0.01157303 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "darkgrey",
 		"mesh": "labelholder",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.004883,0.004883,0.99461,0.987774 ]
+		"lightmapTileOffset": [ 0.00488281,0.00488281,0.888165,0.93504 ]
 	},
 	
 	{
@@ -574,11 +582,11 @@
         "name": "front1",
 		"parent": 21,
 		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "black",
 		"mesh": "front1",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.020508,0.020508,0.959393,0.924236 ]
+		"lightmapTileOffset": [ 0.0205078,0.0205078,0.959393,0.924236 ]
 	},
 	
 	{
@@ -586,11 +594,11 @@
         "name": "fronts",
 		"parent": 21,
 		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "cabinet_front",
 		"mesh": "fronts",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.202148,0.202148,0.763371,-0.000301 ]
+		"lightmapTileOffset": [ 0.202148,0.202148,0.763371,-0.000301361 ]
 	},
 	
 	{
@@ -598,11 +606,11 @@
         "name": "handles",
 		"parent": 21,
 		"position": [ 0.06619179,0.1408208,-0.312975 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "darkgrey",
 		"mesh": "handles",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.014648,0.014648,0.984806,0.94672 ]
+		"lightmapTileOffset": [ 0.0146484,0.0146484,0.984806,0.957462 ]
 	},
 	
 	{
@@ -610,11 +618,11 @@
         "name": "labelholders",
 		"parent": 21,
 		"position": [ 0,2.263455,-0.2949442 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "darkgrey",
 		"mesh": "labelholders",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.011719,0.011719,0.982864,0.078567 ]
+		"lightmapTileOffset": [ 0.0117188,0.0117188,0.984818,0.913528 ]
 	},
 	
 	{
@@ -622,11 +630,11 @@
         "name": "sides",
 		"parent": 21,
 		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "base",
 		"mesh": "sides",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.086914,0.086914,0.081203,0.23843 ]
+		"lightmapTileOffset": [ 0.0869141,0.0869141,0.0812035,0.23843 ]
 	},
 	
 	{
@@ -634,7 +642,8 @@
         "name": "filecabinet2",
 		"parent": 3,
 		"position": [ 3.772444,1.172331,2.047704 ],
-		"rotation": [ 0,1.570796,0 ]
+		"rotation": [ 0,-0.7071068,0,0.7071068 ],
+		"animation": ""
 	},
 	
 	{
@@ -642,11 +651,11 @@
         "name": "bottom",
 		"parent": 34,
 		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "base",
 		"mesh": "bottom",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.023438,0.023438,0.96524,0.941803 ]
+		"lightmapTileOffset": [ 0.0234375,0.0234375,0.96524,0.941803 ]
 	},
 	
 	{
@@ -654,11 +663,11 @@
         "name": "front1",
 		"parent": 34,
 		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "cabinet_front",
 		"mesh": "front1",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.041016,0.041016,0.901695,0.85482 ]
+		"lightmapTileOffset": [ 0.0410156,0.0410156,0.901695,0.85482 ]
 	},
 	
 	{
@@ -666,11 +675,11 @@
         "name": "fronts",
 		"parent": 34,
 		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "cabinet_front",
 		"mesh": "fronts",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.202148,0.202148,-0.000301,0.076847 ]
+		"lightmapTileOffset": [ 0.202148,0.202148,-0.000301361,0.0768471 ]
 	},
 	
 	{
@@ -678,11 +687,11 @@
         "name": "handles",
 		"parent": 34,
 		"position": [ 0.06619179,0.1408208,-0.312975 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "darkgrey",
 		"mesh": "handles",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.014648,0.014648,0.984806,0.931095 ]
+		"lightmapTileOffset": [ 0.0146484,0.0146484,0.984806,0.941837 ]
 	},
 	
 	{
@@ -690,11 +699,11 @@
         "name": "labelholders",
 		"parent": 34,
 		"position": [ 0,2.263455,-0.2949442 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "darkgrey",
 		"mesh": "labelholders",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.011719,0.011719,0.442825,0.11763 ]
+		"lightmapTileOffset": [ 0.0117188,0.0117188,0.982864,0.0785675 ]
 	},
 	
 	{
@@ -702,11 +711,11 @@
         "name": "sides",
 		"parent": 34,
 		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "base",
 		"mesh": "sides",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.086914,0.086914,0.543118,0.264797 ]
+		"lightmapTileOffset": [ 0.0869141,0.0869141,0.844875,0.242336 ]
 	},
 	
 	{
@@ -714,7 +723,8 @@
         "name": "filecabinet3",
 		"parent": 3,
 		"position": [ 3.76823,1.172331,1.519595 ],
-		"rotation": [ 0,1.570796,0 ]
+		"rotation": [ 0,-0.7071068,0,0.7071068 ],
+		"animation": ""
 	},
 	
 	{
@@ -722,11 +732,11 @@
         "name": "bottom",
 		"parent": 41,
 		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "base",
 		"mesh": "bottom",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.023438,0.023438,0.44278,0.077545 ]
+		"lightmapTileOffset": [ 0.0234375,0.0234375,0.44278,0.0775452 ]
 	},
 	
 	{
@@ -734,11 +744,11 @@
         "name": "front1",
 		"parent": 41,
 		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "cabinet_front",
 		"mesh": "front1",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.041016,0.041016,0.937828,0.185875 ]
+		"lightmapTileOffset": [ 0.0410156,0.0410156,0.937828,0.185875 ]
 	},
 	
 	{
@@ -746,11 +756,11 @@
         "name": "fronts",
 		"parent": 41,
 		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "cabinet_front",
 		"mesh": "fronts",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.202148,0.202148,0.201847,0.076847 ]
+		"lightmapTileOffset": [ 0.202148,0.202148,0.201847,0.0768471 ]
 	},
 	
 	{
@@ -758,11 +768,11 @@
         "name": "handles",
 		"parent": 41,
 		"position": [ 0.06619179,0.1408208,-0.312975 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "darkgrey",
 		"mesh": "handles",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.014648,0.014648,0.442814,0.101994 ]
+		"lightmapTileOffset": [ 0.0146484,0.0146484,0.984806,0.926212 ]
 	},
 	
 	{
@@ -770,11 +780,11 @@
         "name": "labelholders",
 		"parent": 41,
 		"position": [ 0,2.263455,-0.2949442 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "darkgrey",
 		"mesh": "labelholders",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.011719,0.011719,0.984818,0.902786 ]
+		"lightmapTileOffset": [ 0.0117188,0.0117188,0.442825,0.11763 ]
 	},
 	
 	{
@@ -782,11 +792,11 @@
         "name": "sides",
 		"parent": 41,
 		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "base",
 		"mesh": "sides",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.086914,0.086914,0.283352,0.278469 ]
+		"lightmapTileOffset": [ 0.0869141,0.0869141,0.89761,0.730618 ]
 	},
 	
 	{
@@ -794,7 +804,8 @@
         "name": "filecabinet4",
 		"parent": 3,
 		"position": [ 3.764724,1.172331,0.32679 ],
-		"rotation": [ 0,1.570796,0 ]
+		"rotation": [ 0,-0.7071068,0,0.7071068 ],
+		"animation": ""
 	},
 	
 	{
@@ -802,11 +813,11 @@
         "name": "bottom",
 		"parent": 48,
 		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "base",
 		"mesh": "bottom",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.023438,0.023438,0.982819,0.054108 ]
+		"lightmapTileOffset": [ 0.0234375,0.0234375,0.982819,0.0541077 ]
 	},
 	
 	{
@@ -814,11 +825,11 @@
         "name": "front1",
 		"parent": 48,
 		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "cabinet_front",
 		"mesh": "front1",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.041016,0.041016,0.937828,0.220055 ]
+		"lightmapTileOffset": [ 0.0410156,0.0410156,0.937828,0.220055 ]
 	},
 	
 	{
@@ -826,7 +837,7 @@
         "name": "fronts",
 		"parent": 48,
 		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "cabinet_front",
 		"mesh": "fronts",
 		"lightmapIndex": 0,
@@ -838,11 +849,11 @@
         "name": "handles",
 		"parent": 48,
 		"position": [ 0.06619179,0.1408208,-0.312975 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "darkgrey",
 		"mesh": "handles",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.014648,0.014648,0.984806,0.91547 ]
+		"lightmapTileOffset": [ 0.0146484,0.0146484,0.442814,0.101994 ]
 	},
 	
 	{
@@ -850,11 +861,11 @@
         "name": "labelholders",
 		"parent": 48,
 		"position": [ 0,2.263455,-0.2949442 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "darkgrey",
 		"mesh": "labelholders",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.011719,0.011719,0.981888,0.091263 ]
+		"lightmapTileOffset": [ 0.0117188,0.0117188,0.984818,0.900833 ]
 	},
 	
 	{
@@ -862,11 +873,11 @@
         "name": "sides",
 		"parent": 48,
 		"position": [ 0.25,0,-0.3 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "base",
 		"mesh": "sides",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.086914,0.086914,0.844875,0.242336 ]
+		"lightmapTileOffset": [ 0.0869141,0.0869141,0.784328,0.670071 ]
 	},
 	
 	{
@@ -874,7 +885,7 @@
         "name": "floor",
 		"parent": 3,
 		"position": [ 0.07015259,-5.26833,0 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"collider": {
 		    "type": "mesh",
 		    "mesh": "floor"
@@ -890,11 +901,11 @@
         "name": "floorhole",
 		"parent": 3,
 		"position": [ 0.07015259,0.7796224,0 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "planks",
 		"mesh": "floorhole",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.196289,0.196289,0.541714,0.334682 ]
+		"lightmapTileOffset": [ 0.196289,0.196289,0.54269,0.26437 ]
 	},
 	
 	{
@@ -902,7 +913,7 @@
         "name": "floorpanel",
 		"parent": 3,
 		"position": [ 0.07015259,1.080836,0 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"collider": {
 		    "type": "mesh",
 		    "mesh": "floorpanel"
@@ -918,7 +929,8 @@
         "name": "fluorlight",
 		"parent": 3,
 		"position": [ 1.560203,3.458267,-0.9507746 ],
-		"rotation": [ 0,0,0 ]
+		"rotation": [ 0,0,0,1 ],
+		"animation": ""
 	},
 	
 	{
@@ -926,11 +938,10 @@
         "name": "fluor",
 		"parent": 58,
 		"position": [ -0.02336147,-0.0416385,0.03023542 ],
-		"rotation": [ 0.0000000596,0,0 ],
+		"rotation": [ -0.0000000298,0,0,1 ],
+		"scale": [ 1,1,1 ],
 		"renderer": "white",
-		"mesh": "fluor",
-		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0185547,0.0185547,0.805103,0.0756111 ]
+		"mesh": "fluor"
 	},
 	
 	{
@@ -938,11 +949,12 @@
         "name": "fluor2",
 		"parent": 58,
 		"position": [ -0.02336147,-0.0416385,-0.0301246 ],
-		"rotation": [ 0.0000000596,0,0 ],
+		"rotation": [ -0.0000000298,0,0,1 ],
+		"scale": [ 1,1,1 ],
 		"renderer": "white",
 		"mesh": "fluor_2",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0185547,0.0185547,0.824635,0.0756111 ]
+		"lightmapTileOffset": [ 0.0185547,0.0185547,0.805103,0.0756111 ]
 	},
 	
 	{
@@ -950,11 +962,11 @@
         "name": "holder",
 		"parent": 58,
 		"position": [ 0,0,0 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "base",
 		"mesh": "holder",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0947266,0.0947266,0.0811729,0.299923 ]
+		"lightmapTileOffset": [ 0.0947266,0.0947266,0.0811729,0.3009 ]
 	},
 	
 	{
@@ -962,7 +974,7 @@
         "name": "top",
 		"parent": 58,
 		"position": [ 0.45,1.027377,0 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "base",
 		"mesh": "toppart",
 		"lightmapIndex": 0,
@@ -974,7 +986,7 @@
         "name": "largepipes",
 		"parent": 3,
 		"position": [ 0.02321442,3.420157,-1.935869 ],
-		"rotation": [ 0,-1.570796,1.570796 ],
+		"rotation": [ -0.5,0.5,-0.5,0.5 ],
 		"renderer": "base",
 		"mesh": "largepipes",
 		"lightmapIndex": 0,
@@ -986,7 +998,7 @@
         "name": "pipe",
 		"parent": 3,
 		"position": [ -3.801011,2.482518,1.891272 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"collider": {
 		    "type": "box",
 		    "center": [ 0,0,0 ],
@@ -995,7 +1007,7 @@
 		"renderer": "base",
 		"mesh": "pipe",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0654297,0.0654297,0.103748,0.283436 ]
+		"lightmapTileOffset": [ 0.0654297,0.0654297,0.897694,0.71117 ]
 	},
 	
 	{
@@ -1003,11 +1015,11 @@
         "name": "pipeending",
 		"parent": 3,
 		"position": [ -0.005020904,3.419328,-1.936106 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "rust",
 		"mesh": "pipeending",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0576172,0.0576172,0.379169,0.277607 ]
+		"lightmapTileOffset": [ 0.0576172,0.0576172,0.738544,0.221943 ]
 	},
 	
 	{
@@ -1015,11 +1027,11 @@
         "name": "pipeholder",
 		"parent": 3,
 		"position": [ 0.05540344,3.580057,-1.936754 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "base",
 		"mesh": "pipeholder",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0263672,0.0263672,0.805073,0.0804634 ]
+		"lightmapTileOffset": [ 0.0263672,0.0263672,0.807026,0.0794868 ]
 	},
 	
 	{
@@ -1027,7 +1039,8 @@
         "name": "desk",
 		"parent": 3,
 		"position": [ -2.262847,1.080836,1.185786 ],
-		"rotation": [ 0,-0.3045448,0 ]
+		"rotation": [ 0,0.1516846,0,0.988429 ],
+		"animation": ""
 	},
 	
 	{
@@ -1035,7 +1048,7 @@
         "name": "lamp",
 		"parent": 67,
 		"position": [ -0.4605259,0.8137751,0.2702942 ],
-		"rotation": [ 0,0.9535775,0 ]
+		"rotation": [ 0,-0.4589284,0,0.8884733 ]
 	},
 	
 	{
@@ -1043,7 +1056,7 @@
         "name": "base",
 		"parent": 68,
 		"position": [ 0,-0.0002431488,0 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "red",
 		"mesh": "base",
 		"lightmapIndex": 0,
@@ -1055,7 +1068,7 @@
         "name": "stem",
 		"parent": 68,
 		"position": [ -0.009898948,0.01331375,-0.0006131363 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"renderer": "darkgrey",
 		"mesh": "stem",
 		"lightmapIndex": 0,
@@ -1067,11 +1080,9 @@
         "name": "topinterior",
 		"parent": 68,
 		"position": [ -0.0006007031,0.399937,0.1621105 ],
-		"rotation": [ -0.2734099,-0.3037378,0.1247429 ],
+		"rotation": [ 0.1251072,0.1579796,-0.08161581,0.9760787 ],
 		"renderer": "white",
-		"mesh": "top",
-		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.00976562,0.00976562,0.983849,0.968224 ]
+		"mesh": "top"
 	},
 	
 	{
@@ -1079,11 +1090,11 @@
         "name": "topexterior",
 		"parent": 68,
 		"position": [ -0.0006007031,0.399937,0.1621105 ],
-		"rotation": [ -0.2734099,-0.3037376,0.1247429 ],
+		"rotation": [ 0.1251072,0.1579795,-0.08161582,0.9760787 ],
 		"renderer": "red",
 		"mesh": "topint",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.0107422,0.0107422,0.0678291,0.15279 ]
+		"lightmapTileOffset": [ 0.0107422,0.0107422,0.833454,0.0932198 ]
 	},
 	
 	{
@@ -1091,7 +1102,7 @@
         "name": "table",
 		"parent": 67,
 		"position": [ 0,0,0 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"collider": {
 		    "type": "box",
 		    "center": [ -0.0000100732,0.75,-0.0002706051 ],
@@ -1100,7 +1111,7 @@
 		"renderer": "wood",
 		"mesh": "table",
 		"lightmapIndex": 0,
-		"lightmapTileOffset": [ 0.114258,0.114258,0.664104,0.221722 ]
+		"lightmapTileOffset": [ 0.114258,0.114258,0.756878,0.723675 ]
 	},
 	
 	{
@@ -1108,7 +1119,7 @@
         "name": "walls",
 		"parent": 3,
 		"position": [ 0.4991992,-4.217419,0.09999999 ],
-		"rotation": [ 0,0,0 ],
+		"rotation": [ 0,0,0,1 ],
 		"collider": {
 		    "type": "mesh",
 		    "mesh": "walls"

@@ -25,6 +25,9 @@
 
             if (!J3D.Capabilities.webgl) return;
 
+            J3D.Performance.domElement.setAttribute('class', 'perf');
+            document.body.appendChild(J3D.Performance.domElement);
+
             interactor = new J3D.Interactor();
             engine = new J3D.Engine();
 
@@ -36,7 +39,9 @@
 
         function render() {
             requestAnimationFrame(render);
+            J3D.Performance.clear();
             demo.render(interactor);
+            J3D.Performance.printInfo();
         }
 
     </script>

@@ -36,11 +36,20 @@ J3D.Transform = function(n, u) {
     this.position = v3.ZERO();
 
     /**
-     * Rotation of the transform relative to parents coordinate system.
+     * Rotation of the transform in euler angles relative to parents coordinate system.
      * This value is in RADIANS
      * It's ok to manipulate this value directly.
      */
     this.rotation = v3.ZERO();
+
+    /**
+     * Quaternion representing the local rotation of the transform, relative to parents coordinate system.
+     *
+     * If useQuaternion is set to true (default: false) the engine will use the quaternion
+     * rotation rather than euler values to calculate the local rotation matrix.
+     */
+    this.rotationq = quat4.create();
+    this.useQuaternion = false;
 
     /**
      * Scale of the transform relative to parents coordinate system.
@@ -101,6 +110,11 @@ J3D.Transform = function(n, u) {
     this.camera;
 
     /**
+     *
+     */
+    this.animation = null;
+
+    /**
      * A light attached to the transform, instance of J3D.Light.
      */
     this.light;
@@ -117,7 +131,7 @@ J3D.Transform = function(n, u) {
     this.textureOffset = v2.ZERO();
 
     /**
-     * 
+     *
      */
     this.disableDepthTest = false;
 
@@ -288,13 +302,21 @@ J3D.Transform.prototype.updateWorld = function(parent) {
     if (!this.matrixMode) {
         mat4.identity(this.matrix);
 
-        mat4.translate(this.matrix, [this.position.x, this.position.y, this.position.z]);
+        var p = this.position;
+        var r = this.rotation;
+        var q = this.rotationq;
+        var s = this.scale;
 
-        mat4.rotateZ(this.matrix, this.rotation.z);
-        mat4.rotateX(this.matrix, this.rotation.x);
-        mat4.rotateY(this.matrix, this.rotation.y);
-
-        mat4.scale(this.matrix, [this.scale.x, this.scale.y, this.scale.z]);
+        if (!this.useQuaternion) {
+//            mat4.translate(this.matrix, [this.position.x, this.position.y, this.position.z]);
+//            mat4.rotateZ(this.matrix, this.rotation.z);
+//            mat4.rotateX(this.matrix, this.rotation.x);
+//            mat4.rotateY(this.matrix, this.rotation.y);
+//            mat4.scale(this.matrix, [this.scale.x, this.scale.y, this.scale.z]);
+            quat4.fromEuler(r.x, r.y, r.z, q);
+        } //else {
+            mat4.fromRotationQTranslation(this.matrix, p.x, p.y, p.z, q[3], q[0], q[1], q[2], s.x, s.y, s.z);
+//        }
 
         J3D.Performance.localMatrixUpdate++;
     }
@@ -312,6 +334,11 @@ J3D.Transform.prototype.updateWorld = function(parent) {
     mat3.multiplyVec3(this.normalMatrix, this.worldLeft);
 
     mat4.extractTranslation(this.globalMatrix, this.worldPosition);
+
+
+//    console.log(this.matrix);
+//    console.log(this.globalMatrix);
+//    console.log(this.worldPosition[0], this.worldPosition[1], this.worldPosition[2]);
 
     if (this.isStatic) this._lockedMatrix = true;
 }

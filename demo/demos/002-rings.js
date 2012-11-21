@@ -14,7 +14,7 @@ registerDemo(function(engine) {
         J3D.Loader.loadJSON("models/text.json", function(jsmeshes) {
             J3D.Loader.loadJSON("models/textScene.json", function(jsscene) {
 
-                J3D.Loader.parseJSONScene(jsscene, jsmeshes, engine);
+                J3D.Loader.parseJSONScene(engine, jsscene, jsmeshes);
 
                 root = engine.scene.find("root");
                 camera = engine.scene.find("camera");

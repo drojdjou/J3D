@@ -78,10 +78,10 @@
 		
 		elephant.renderer = new J3D.BuiltinShaders.fetch("Phong");
 		
-		sun = new J3D.Transform();
-		sun.light = new J3D.Light(J3D.DIRECT);
-		sun.light.color = new J3D.Color(.9, .8, .7, 1);
-		sun.light.direction = new v3(-1, 0, -1).norm();
+		light2 = new J3D.Transform();
+		light2.light = new J3D.Light(J3D.DIRECT);
+		light2.light.color = new J3D.Color(.9, .8, .7, 1);
+		light2.light.direction = new v3(-1, 0, -1).norm();
 		
 
 		var camera = new J3D.Transform(); 
@@ -103,7 +103,7 @@
 		post.geometry = new J3D.Geometry();
 		post.geometry.addArray("aParticle", new Float32Array(cd), 4);
 
-		engine.scene.add(camera, elephant, sun);
+		engine.scene.add(camera, elephant, light2);
 		
 		document.onmousemove = onMouseMove;
 		

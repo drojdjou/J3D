@@ -97,10 +97,10 @@
 
 		engine.setClearColor(J3D.Color.black);
 		
-		sun = new J3D.Transform();
-		sun.light = new J3D.Light(J3D.DIRECT);
-		sun.light.color = new J3D.Color(.9, .8, .7, 1);
-		sun.light.direction = new v3(-1, 0, -1).norm();
+		light2 = new J3D.Transform();
+		light2.light = new J3D.Light(J3D.DIRECT);
+		light2.light.color = new J3D.Color(.9, .8, .7, 1);
+		light2.light.direction = new v3(-1, 0, -1).norm();
 		
 		engine.scene.ambient = new J3D.Color(.1, .12, .14, 1);
 		
@@ -116,7 +116,7 @@
 		camera.position.z = 3;
 		engine.scene.setCamera(camera);
 		
-		engine.scene.add(cube, camera, sun);
+		engine.scene.add(cube, camera, light2);
 
 		post = new J3D.Postprocess(engine);
 		post.filter = new J3D.ShaderUtil.parseGLSL(document.getElementById("filter").firstChild.nodeValue);

@@ -73,7 +73,11 @@ public class MeshExportData
 			foreach (Vector4 v in m.tangents) {
 				vs.Add (v.x.ToString (ExporterProps.SN));
 				vs.Add (v.y.ToString (ExporterProps.SN));
-				vs.Add (v.z.ToString (ExporterProps.SN));
+				
+				// WARNING! Changed this to -v.z without testing)
+				// vs.Add (v.z.ToString (ExporterProps.SN));
+				vs.Add ((-v.z).ToString (ExporterProps.SN));
+				
 				vs.Add (v.w.ToString (ExporterProps.SN));
 			}
 			return vs.ToArray ();

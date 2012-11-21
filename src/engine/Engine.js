@@ -268,6 +268,10 @@ J3D.Engine.prototype.updateTransform = function(t, p) {
 
     J3D.Performance.numTransforms++;
 
+    if(t.animation) {
+        t.animation.animateTransform(t);
+    }
+
     t.updateWorld(p);
 
     for (var j = 0; j < t.numChildren; j++) {

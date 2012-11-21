@@ -28,7 +28,7 @@
 	//#fragment
 
     #ifndef ITE
-    #define ITE 8.0
+    #define ITE 4.0
     #endif
 
 	uniform sampler2D uTexture;
@@ -50,6 +50,7 @@
 
 		for(float t = -ITE; t <= ITE; t++) {
             float p = (t + offset - 0.5) / 16.0;
+            p *= smoothstep(0.4, 1.0, vTextureCoord.y);
             float w = 1.0 - abs(p);
             c += texture2D(uTexture, vTextureCoord + delta * p) * w;
             ws += w;
@@ -88,10 +89,10 @@
 
 		engine.setClearColor(J3D.Color.black);
 		
-		sun = new J3D.Transform();
-		sun.light = new J3D.Light(J3D.DIRECT);
-		sun.light.color = new J3D.Color(.9, .8, .7, 1);
-		sun.light.direction = new v3(-1, 0, -1).norm();
+		light2 = new J3D.Transform();
+		light2.light = new J3D.Light(J3D.DIRECT);
+		light2.light.color = new J3D.Color(.9, .8, .7, 1);
+		light2.light.direction = new v3(-1, 0, -1).norm();
 		
 		engine.scene.ambient = new J3D.Color(.1, .12, .14, 1);
 		
@@ -109,7 +110,7 @@
 		camera.position.z = 4;
 		engine.scene.setCamera(camera);
 		
-		engine.scene.add(camera, cube, sun);
+		engine.scene.add(camera, cube, light2);
 
 		post = new J3D.BoxBlur(engine);
 		post.filter = new J3D.ShaderUtil.parseGLSL(document.getElementById("filter").firstChild.nodeValue);

@@ -24,7 +24,7 @@ public class MaterialExportData
 	
 	public bool HasEmissiveColor {
 		get { 
-			Debug.Log("Checking for emmisive color: " + m.HasProperty ("_Emission"));
+			// Debug.Log("Checking for emmisive color: " + m.HasProperty ("_Emission"));
 			return m.HasProperty ("_Emission");
 		}
 	}

@@ -22,7 +22,10 @@
 
         window.onload = function() {
 
-            if (!J3D.Capabilities.webgl) return;
+            if (!J3D.Capabilities.webgl) {
+                console.log("Your browser does not support WebGL");
+                return;
+            }
 
             J3D.Performance.domElement.setAttribute('class', 'perf');
             document.body.appendChild(J3D.Performance.domElement);
@@ -51,7 +54,7 @@
     setLabels("000. Hello cube", "Check <a href='https://github.com/drojdjou/J3D/wiki/How-to-create-a-cube'>here for a quick tutorial</a><br>on how to build this with J3D.");
 </script>
 
-<script type="text/javascript">
+<!--script type="text/javascript">
 
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-24294554-1']);
@@ -66,7 +69,7 @@
         s.parentNode.insertBefore(ga, s);
     })();
 
-</script>
+</script-->
 
 </body>
 </html> 

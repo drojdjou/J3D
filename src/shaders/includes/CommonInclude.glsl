@@ -10,6 +10,8 @@ uniform mat3 nMatrix;
 uniform mat4 pMatrix;
 uniform vec3 uEyePosition;
 uniform vec4 uTileOffset;
+
+const float PI = 3.14285714286;
 	
 mat4 mvpMatrix() {
 	return pMatrix * vMatrix * mMatrix;
@@ -30,3 +32,9 @@ float brightness(vec3 c) {
 vec2 getTextureCoord(vec2 uv) {
 	return uv * uTileOffset.xy + uTileOffset.zw;
 }
+
+vec4 texture2DNormal(sampler2D texture, vec3 normal) {
+    vec2 tc = vec2( asin(normal.x) / PI + 0.5, asin(normal.y) / PI + 0.5);
+    return texture2D(texture, tc * uTileOffset.xy + uTileOffset.zw);
+}
+
