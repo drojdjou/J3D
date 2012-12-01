@@ -31,7 +31,7 @@ m44.prototype.identity = function(){
 }
 
 /**
- * Based on https://github.com/mrdoob/three.js/blob/master/src/core/Matrix4.js
+ * Based on https://github.com/mrdoob/three.lib/blob/master/src/core/Matrix4.lib
  *
  * @param left
  * @param right

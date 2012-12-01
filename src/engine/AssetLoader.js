@@ -3,8 +3,8 @@
 
  @class AssetLoader can load several files in a batch. It loads JSON, Shaders, Textures and Cubemaps
  */
-J3D.AssetLoader = function() {
-
+J3D.AssetLoader = function(cb) {
+    
     var that = this;
 
     var assetList = [];

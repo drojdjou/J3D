@@ -14,8 +14,12 @@ J3D.Capabilities = {
             var cn = document.createElement('canvas');
             ct = cn.getContext('webgl') || cn.getContext('experimental-webgl');
         } catch(e) {
+            console.log(e);
         }
-        if (ct == null) return false;
+        if (ct == null) {
+            console.log("Context is null");
+            return false;
+        }
         else return true;
     })(),
 

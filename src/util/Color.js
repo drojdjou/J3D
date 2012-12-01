@@ -111,6 +111,28 @@ J3D.Color.fromHSL = function(h, s, l) {
     return new J3D.Color(r, g, b);
 }
 
+/**
+ * Creates a J3D.Color instance from a hex code used in CSS.
+ *
+ * Accepts the string with # format - #a31b23 or integer hex format - 0xa31b23. It also works with no prefix - a31b23.
+ *
+ * @param hex
+ */
+J3D.Color.fromHEX = function(hex) {
+    var c;
+
+    c = (hex.indexOf('#') == 0) ? hex.substring(1) : hex;
+    c = (hex.indexOf('0x') == -1) ? '0x' + hex : hex;
+
+    c = parseInt(c);
+
+    var r = (c >> 16 & 255 ) / 255;
+    var g = (c >> 8 & 255) / 255;
+    var b = (c & 255) / 255;
+
+    return new J3D.Color(r, g, b);
+}
+
 J3D.Color.createWhite = function() {
     return new J3D.Color(1, 1, 1, 1);
 }

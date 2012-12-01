@@ -6,13 +6,13 @@
 
 "quaternions":$if(quaternions)$ true$else$ false$endif$,
 
-"textures": {
+$if(exportTextures)$"textures": {
 $textures:{	
 	"$it.Name$": { 
 		"file": "$it.FileName$"
 	},
 }$
-},
+},$endif$
 
 "lightmaps": [
 $lightmaps:{
@@ -31,7 +31,7 @@ $materials:{
 		"textureOffset": [ $it.TextureOffset; separator=","$ ],
 		$if(it.HasEmissiveColor)$
 		"emissive": { "r":$it.EmissiveColor.r$, "g":$it.EmissiveColor.g$, "b":$it.EmissiveColor.b$, "a":$it.EmissiveColor.a$ },$endif$
-		$it.Textures; separator=",\n"$
+		$if(exportTextures)$$it.Textures; separator=",\n"$$endif$
 	},
 }$
 },

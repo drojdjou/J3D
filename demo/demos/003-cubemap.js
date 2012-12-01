@@ -16,7 +16,7 @@ registerDemo(function(engine) {
             front: "models/textures/skybox/front.jpg"
         });
 
-        assetsLoader.addJSON("monkey", "models/monkeyhi.js");
+        assetsLoader.addJSON("monkey", "models/monkeyhi.lib");
         assetsLoader.addShader("reflective", "shaders/Reflective.glsl");
 
         assetsLoader.load(function(a) {

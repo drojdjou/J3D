@@ -54,28 +54,42 @@ J3D.Scene = function() {
         this.numChildren = 0;
         this.camera = null;
         this.skybox = null;
+        this.background = null;
     }
 
     this.addSkybox = function(cubemap, shader) {
-        this.skybox = new J3D.Transform();
-        this.skybox.renderer = shader || J3D.BuiltinShaders.fetch("Skybox");
-        this.skybox.renderer.uCubemap = cubemap;
-        this.skybox.geometry = J3D.Primitive.Cube(1, 1, 1).flip();
+        if (!cubemap) throw "Scene.addSkybox: missing cubemap argument";
+
+        if (!this.skybox) {
+            this.skybox = new J3D.Transform();
+            this.skybox.geometry = J3D.Primitive.Cube(1, 1, 1).flip();
+            if (!shader) this.skybox.renderer = J3D.BuiltinShaders.fetch("Background");
+        }
+
+        if (shader) this.skybox.renderer = shader;
+        this.skybox.renderer.uTexture = cubemap;
     }
 
     this.addBackground = function(texture, shader) {
-        this.background = new J3D.Transform();
-        this.background.renderer = shader || J3D.BuiltinShaders.fetch("Background");
-        this.background.renderer.uTexture = texture;
-        this.background.geometry = J3D.Primitive.FullScreenQuad();
-    }
 
+        if (!texture) throw "Scene.addBackground: missing texture argument";
+
+        if (!this.background) {
+            this.background = new J3D.Transform();
+            this.background.geometry = J3D.Primitive.FullScreenQuad();
+            if (!shader) this.background.renderer = J3D.BuiltinShaders.fetch("Background");
+        }
+
+        if (shader) this.background.renderer = shader;
+        this.background.renderer.uTexture = texture;
+
+    }
     /**
      * Set a camera for the scene.
      *
      * A camera is just another J3D.Transform like anything else, but is has the camera attribute set to a valid J3D.Camera object.
      * Even thought it is part of the hierarchy, you need to specify it here so that J3D knows which camera is the POV (there can be multiple cameras in the scene).
-     * The camera transform doesn't have to be part of the hierarchy but it is recommended that it is. 
+     * The camera transform doesn't have to be added to the hierarchy but it makes more sense that it is - the camera can then be moved/rotated like any other object.
      *
      * @param camera a J3D.Transform cotaining the camera.
      */
@@ -84,7 +98,7 @@ J3D.Scene = function() {
     }
 
     /**
-     * Return a child at a given path or null.
+     * Returns a child at a given path or null.
      * @param path Use slash ('/') separated paths to describe the position of the child in hierarchy ex: room/table/leg
      */
     this.find = function(path) {
@@ -98,5 +112,11 @@ J3D.Scene = function() {
         }
 
         return null;
+    }
+
+    this.listChildren = function() {
+        for (var i = 0; i < this.numChildren; i++) {
+            console.log(children[i].name);
+        }
     }
 }

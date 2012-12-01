@@ -55,7 +55,7 @@ public class AnimationExportData
 				Quaternion r = new Quaternion();
 				r.x = ( (AnimationProperty) properties["rx"] ).Samples[i];	
 				r.y = ( (AnimationProperty) properties["ry"] ).Samples[i];	
-				r.z = ( (AnimationProperty) properties["rz"] ).Samples[i];
+				r.z = -( (AnimationProperty) properties["rz"] ).Samples[i];
 				r.w = ( (AnimationProperty) properties["rw"] ).Samples[i];
 				
 				r = Conversions.NormalizeQuaternion(r);

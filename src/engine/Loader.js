@@ -147,12 +147,12 @@ J3D.Loader.parseJSONScene = function(engine, jscene, jmeshes, jsanim) {
         if(jscene.quaternions) {
             t.useQuaternion = true;
             t.rotationq = J3D.Loader.quatFromArray(t.rotation);
-            var l = quat4.length(t.rotationq);
-            console.log("- Quaternion |" + l + "|", t.rotationq[0], t.rotationq[1], t.rotationq[2], t.rotationq[3]);
+            t.rotation = new v3();
+//            console.log("- Quaternion |" + quat4.length(t.rotationq) + "|", t.rotationq[0], t.rotationq[1], t.rotationq[2], t.rotationq[3]);
         } else {
             t.useQuaternion = false;
             t.rotation = J3D.Loader.v3FromArray(t.rotation);
-            console.log("- Euler", t.rotationq.x, t.rotationq.y, t.rotationq.z);
+//            console.log("- Euler", t.rotationq.x, t.rotationq.y, t.rotationq.z);
         }
 
         if (t.scale instanceof Array) t.scale = J3D.Loader.v3FromArray(t.scale);
@@ -226,7 +226,7 @@ J3D.Loader.quatFromArray = function(arr) {
  */
 J3D.Loader.loadGLSL = function(path, onLoadedFunc) {
     var request = new XMLHttpRequest();
-    request.open("GET", path);
+    request.open("GET", path + '?' + Math.random());
 
     request.onreadystatechange = function() {
         if (request.readyState == 4) {

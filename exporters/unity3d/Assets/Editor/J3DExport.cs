@@ -23,6 +23,7 @@ public class J3DExport : ScriptableWizard
 	
 	public bool useQuaternions = true;
 	public bool exportAnimation = false;
+	public bool exportTextures = true;
 	public float samplesPerSec = 30.0f;
 	
 	public bool useConsole = false;
@@ -104,6 +105,7 @@ public class J3DExport : ScriptableWizard
 		StringTemplate st = FileExport.LoadTemplate ("scene");
 		st.SetAttribute ("ambient", RenderSettings.ambientLight);
 		st.SetAttribute ("quaternions", useQuaternions);
+		st.SetAttribute ("exportTextures", exportTextures);
 		
 		if (Camera.mainCamera != null)
 			st.SetAttribute ("background", Camera.mainCamera.backgroundColor);
@@ -122,9 +124,11 @@ public class J3DExport : ScriptableWizard
 		st.SetAttribute ("lightmaps", led);
 		FileExport.SaveContentsAsFile (FileExport.CleanJSON (st), scenePath);
 		
-		foreach (TextureExportData t in txx.Values) {
-			Debug.Log("Saving texture: " + t.Name);
-			t.Save(texturePath, jpegQuality);
+		if(exportTextures) {
+			foreach (TextureExportData t in txx.Values) {
+				Debug.Log("Saving texture: " + t.Name);
+				t.Save(texturePath, jpegQuality);
+			}
 		}
 		
 		foreach (LightmapExportData d in led) {

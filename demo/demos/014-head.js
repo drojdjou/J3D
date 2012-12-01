@@ -51,8 +51,8 @@ registerDemo(function(engine) {
         assetsLoader.addTexture("particleTex", path + "particle01.png", { wrapMode: gl.CLAMP_TO_EDGE });
         assetsLoader.addTexture("ramp", path + "goldramp.png");
 
-        assetsLoader.addJSON("jsmeshes", path + "leeperry.js");
-        assetsLoader.addJSON("jsscene", path + "leeperryScene.js");
+        assetsLoader.addJSON("jsmeshes", path + "leeperry.lib");
+        assetsLoader.addJSON("jsscene", path + "leeperryScene.lib");
 
         assetsLoader.load(function(a) {
             setup(a, callback)

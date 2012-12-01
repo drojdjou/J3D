@@ -49,6 +49,10 @@ J3D.Transform = function(n, u) {
      * rotation rather than euler values to calculate the local rotation matrix.
      */
     this.rotationq = quat4.create();
+
+    /**
+     * If set to true the rotation property will be ignored and rotationq is used instead.
+     */
     this.useQuaternion = false;
 
     /**
@@ -58,9 +62,15 @@ J3D.Transform = function(n, u) {
     this.scale = v3.ONE();
 
     /**
-     * This gets only updated for lights. Do not manipulate directly, it will be overwritten by the rendering function.
+     * The position of the transform in world space.
+     * Do not manipulate directly, it will be overwritten by the rendering function.
      */
     this.worldPosition = vec3.create();
+
+    /**
+     * The position of the transform in world space.
+     * Do not manipulate directly, it will be overwritten by the rendering function.
+     */
     this.worldForward = vec3.create();
     this.worldLeft = vec3.create();
 
@@ -264,10 +274,9 @@ J3D.Transform.prototype.clone = function() {
 J3D.Transform.prototype.transformDirection = function(d) {
     J3D.Performance.dirVecCalls++;
     // TODO: optimize
-    var tm = mat4.create();
-    var tv = vec3.create();
-    tv = mat4.multiplyVec3(mat3.toMat4(this.normalMatrix, tm), d.xyz(), tv);
-    return new v3(tv[0], tv[1], tv[2]).norm();
+    var da = d.xyz();
+    mat3.multiplyVec3(this.normalMatrix, da);
+    return d.set(da[0], da[1],da[2]);
 }
 
 /**

@@ -137,7 +137,7 @@ J3D.Engine.prototype.render = function(dontClear) {
 
     if (!this.scene.camera) throw J3D.Error.NO_CAMERA;
 
-    if (this.scene.numChildren > 0) this.renderScene();
+    if (this.scene.numChildren > 0 || this.scene.background) this.renderScene();
 }
 
 J3D.Engine.prototype.renderScene = function() {

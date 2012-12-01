@@ -148,7 +148,7 @@ J3D.Primitive.Plane = function(w, h, wd, hd, wo, ho, uv) {
 }
 
 /**
- * Creates a sphere. Code adapted from Three.js (https://github.com/mrdoob/three.js/blob/master/src/extras/geometries/SphereGeometry.js) & Papervision3d.
+ * Creates a sphere. Code adapted from Three.lib (https://github.com/mrdoob/three.lib/blob/master/src/extras/geometries/SphereGeometry.lib) & Papervision3d.
  *
  * @param radius the radius of the sphere
  *

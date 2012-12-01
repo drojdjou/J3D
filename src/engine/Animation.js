@@ -59,19 +59,33 @@ J3D.Animation = function(data) {
         }
 
         var a = (currentTime / data.samplingRate) | 0;
-        var b = (a == data.numSamples-1) ? 0 : a + 1;
+        var b = (a == data.numSamples - 1) ? 0 : a + 1;
         var t = (currentTime % data.samplingRate) / data.samplingRate;
 
 //        if(a >= data.numSamples-1 || a == 0) console.log(a, b, t);
 
-        if (data.properties.px) transform.position.x = interpolate('px', a, b, t);
-        if (data.properties.py) transform.position.y = interpolate('py', a, b, t);
-        if (data.properties.pz) transform.position.z = interpolate('pz', a, b, t);
+        var dp = data.properties;
 
-        // Do not interpolate euler angles!
-        if (data.properties.rx) transform.rotation.x = interpolate('rx', a, b, 0);
-        if (data.properties.ry) transform.rotation.y = interpolate('ry', a, b, 0);
-        if (data.properties.rz) transform.rotation.z = interpolate('rz', a, b, 0);
+        var tp = transform.position;
+        if (dp.px) tp.x = interpolate('px', a, b, t);
+        if (dp.py) tp.y = interpolate('py', a, b, t);
+        if (dp.pz) tp.z = interpolate('pz', a, b, t);
+
+        
+        if (data.quaternions) {
+            var tq = transform.rotationq;
+            if (dp.rx) tq[0] = interpolate('rx', a, b, t);
+            if (dp.ry) tq[1] = interpolate('ry', a, b, t);
+            if (dp.rz) tq[2] = interpolate('rz', a, b, t);
+            if (dp.rw) tq[3] = interpolate('rw', a, b, t);
+        } else {
+            // Do not interpolate euler angles!
+            var tr = transform.rotation;
+            if (dp.rx) tr.x = interpolate('rx', a, b, 0);
+            if (dp.ry) tr.y = interpolate('ry', a, b, 0);
+            if (dp.rz) tr.z = interpolate('rz', a, b, 0);
+        }
+
     }
 
     var interpolate = function(p, a, b, t) {
