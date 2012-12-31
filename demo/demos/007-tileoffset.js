@@ -84,7 +84,7 @@ registerDemo(function(engine) {
         camera.camera = new J3D.Camera({ fov:30, near:1 });
 
         camera.position = new v3(2 * cs, 2 * cs, 8 * cs);
-        camera.rotation = new v3(Math.PI * -0.075, Math.PI * 0.075, 0);
+        camera.rotation = new v3(Math.PI * 0.075, Math.PI * -0.075, 0);
 
         engine.scene.setCamera(camera);
 

@@ -20,10 +20,14 @@ J3D.Texture = function(source, params) { // <- use this to pass parameters of th
     this.mipmap = (params.mipmap != null) ? params.mipmap : true;
     this.flip = (params.flip != null) ? params.flip : true;
     this.magFilter = params.magFilter || gl.LINEAR;
-    this.minFilter = params.minFilter || gl.LINEAR_MIPMAP_NEAREST;
+    this.minFilter = params.minFilter || (params.mipmap) ? gl.LINEAR_MIPMAP_NEAREST : gl.LINEAR;
 
     var isPOT = function(x, y) {
         return x > 0 && y > 0 && (x & (x - 1)) == 0 && (y & (y - 1)) == 0;
+    }
+
+    this.isPowerOfTwo = function() {
+        return that.src && isPOT(that.src.width, that.src.height);
     }
 
     var setupTexture = function() {
@@ -34,9 +38,14 @@ J3D.Texture = function(source, params) { // <- use this to pass parameters of th
         if (!that.wrapMode) that.wrapMode = params.wrapMode || (p) ? gl.REPEAT : gl.CLAMP_TO_EDGE;
 
         gl.bindTexture(gl.TEXTURE_2D, that.tex);
+
         gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, that.flip);
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, that.src);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, that.magFilter);
+
+        if (that.mipmap && p) {
+            gl.generateMipmap(gl.TEXTURE_2D);
+        }
 
         if (p) gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, that.minFilter);
         else gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
@@ -52,7 +61,7 @@ J3D.Texture = function(source, params) { // <- use this to pass parameters of th
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
         }
 
-        if (that.mipmap && p) gl.generateMipmap(gl.TEXTURE_2D);
+
         gl.bindTexture(gl.TEXTURE_2D, null);
 
         if (params.onLoad) params.onLoad();
@@ -82,7 +91,7 @@ J3D.Texture = function(source, params) { // <- use this to pass parameters of th
 
         var onCanPlayThrough = function() {
             that.src.removeEventListener('canplaythrough', onCanPlayThrough);
-            if(params.autoPlay) that.src.play();
+            if (params.autoPlay) that.src.play();
             setupTexture();
         };
 
@@ -94,7 +103,7 @@ J3D.Texture = function(source, params) { // <- use this to pass parameters of th
                 that.src.currentTime = 0;
                 that.src.play();
             }
-            
+
         };
 
         // restart the video if it is looped and call a callback on the way
@@ -154,7 +163,7 @@ J3D.Texture.prototype.update = function(force) {
             gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, this.src);
             gl.bindTexture(gl.TEXTURE_2D, null);
         } catch(e) {
-            console.log(e);
+            // console.log(e);
             // Firefox will throw an error when the video is looped at the moment it loops.
             // If you don't catch this error here, it will result in a nasty 1-frame blink of the video.
         }

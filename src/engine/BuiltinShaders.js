@@ -34,6 +34,10 @@ J3D.BuiltinShaders = function() {
 		}
 	}
 
+    var replace = function(n, s) {
+        shaders[n] = s;
+    }
+
 	var p = J3D.ShaderUtil.parseGLSL(J3D.ShaderSource.Phong);
 	p.color = J3D.Color.white;
     p.emissive = J3D.Color.black;
@@ -73,5 +77,5 @@ J3D.BuiltinShaders = function() {
     s.color = J3D.Color.white;
     shaders.Selflit = s;
 
-	return { shaders:shaders, fetch:fetch };
+	return { shaders:shaders, fetch:fetch, replace:replace };
 };

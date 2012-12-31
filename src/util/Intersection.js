@@ -1,5 +1,15 @@
 J3D.Intersection = {};
 
+/**
+ * Performs an intersection test of a ray against a transform that has a collider. J3D supports three types of colliders: sphere, box and mesh. This method will check what type of collider the transform has and call the apropriate method to make the intersection tests.
+ *
+ * WARNING. For meshes that have lots of polys, the ray/mesh intersection test can be very slow! It's better to wrap it into a box or sphere collider or have a simpler version of the mesh to make intersection tests against.
+ *
+ * @param r an instance of J3D.Ray
+ * @param t a transform to test against.
+ *
+ * @returns True if ray intersects with the collider, false otherwise. If the transform doesn't have a collider the method returns false.
+ */
 J3D.Intersection.rayTest = function(r, t) {
     if (!t.collider) {
         console.log("Intersection test failed. " + t.name + " has no collider.");
@@ -27,6 +37,16 @@ J3D.Intersection.rayTest = function(r, t) {
     }
 }
 
+/**
+ * Performs an intersection test of a ray against a transform that has a mesh collider.
+ *
+ * WARNING. For meshes that have lots of polys, the ray/mesh intersection test can be very slow! It's better to wrap it into a box or sphere collider or have a simpler version of the mesh to make intersection tests against.
+ *
+ * @param r an instance of J3D.Ray
+ * @param t a transform to test against.
+ *
+ * @returns True if ray intersects with the collider, false otherwise. If the transform doesn't have a geometry the method returns false.
+ */
 J3D.Intersection.rayMesh = function(r, t) {
 
 
@@ -68,6 +88,10 @@ J3D.Intersection.rayMesh = function(r, t) {
     return c;
 }
 
+/**
+ * Performs an intersection test of a ray against a single triangle.
+ * You should not have to call this method directly, unless you have specific needs, like ex. doing intersection tests for particles.
+ */
 J3D.Intersection.rayTriangle = function(r, p0, p1, p2) {
 
     var p = J3D.Intersection.__tv4;
@@ -172,6 +196,14 @@ J3D.Intersection.rayTriangle = function(r, p0, p1, p2) {
 
 }
 
+/**
+ * Performs an intersection test of a ray against a transform that has a sphere collider.
+ *
+ * @param r an instance of J3D.Ray
+ * @param t a transform to test against.
+ *
+ * @returns True if ray intersects with the collider, false otherwise. If the transform doesn't have a sphere collider the method returns false.
+ */
 J3D.Intersection.raySphere = function(r, t) {
     if (!t.collider.radius) {
         console.log("Intersection test failed. " + t.name + " has no radius defined.");
@@ -197,6 +229,14 @@ J3D.Intersection.raySphere = function(r, t) {
 
 };
 
+/**
+ * Performs an intersection test of a ray against a transform that has a box collider.
+ *
+ * @param r an instance of J3D.Ray
+ * @param t a transform to test against.
+ *
+ * @returns True if ray intersects with the collider, false otherwise. If the transform doesn't have a box collider the method returns false.
+ */
 J3D.Intersection.rayBox = function(r, t) {
     if (!t.collider.box) {
         console.log("Intersection test failed. " + t.name + " has no box defined.");

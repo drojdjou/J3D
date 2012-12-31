@@ -6,12 +6,8 @@
 var J3D = {};
 
 J3D.VERSION = 1;
-// Built on Sun Nov 18 22:59:42 2012
-// Built on Mon Nov 26 18:07:44 2012
-// Built on Mon Nov 26 18:09:44 2012
-// Built on Mon Nov 26 18:17:58 2012
-// Built on Thu Nov 29 21:24:22 2012
-J3D.BUILD = 61;
+// Built on Mon Dec 31 08:57:49 2012
+J3D.BUILD = 68;
 
 J3D.getVersion = function() {
     return 'Version ' + J3D.VERSION + ' | Build ' + J3D.BUILD;

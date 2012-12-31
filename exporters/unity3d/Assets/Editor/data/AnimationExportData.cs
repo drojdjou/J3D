@@ -16,6 +16,7 @@ public class AnimationExportData
 	{
 		t = transform;
 		a = t.animation;
+
 		samplingRate = 1.0f / samplesPerSec;
 
 		AnimationClipCurveData[] data = AnimationUtility.GetAllCurves (a.clip, true);

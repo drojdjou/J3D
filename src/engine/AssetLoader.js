@@ -4,11 +4,12 @@
  @class AssetLoader can load several files in a batch. It loads JSON, Shaders, Textures and Cubemaps
  */
 J3D.AssetLoader = function(cb) {
-    
+
     var that = this;
 
     var assetList = [];
     var assetsToLoad;
+    var progressCallback = null;
 
     this.assets = {};
 
@@ -93,8 +94,24 @@ J3D.AssetLoader = function(cb) {
         });
     }
 
+    /**
+     * Add any image file to load.
+     *
+     * @param name the name used later to refer to the asset
+     *
+     * @param path path to the image file
+     */
+    this.addImage = function(name, path) {
+        assetList.push({
+            name:name,
+            type:"image",
+            path:path
+        });
+    }
+
     function onAssetLoaded(callback) {
         assetsToLoad--;
+        if (progressCallback) progressCallback(1 - assetsToLoad / assetList.length);
         if (assetsToLoad <= 0) callback(that.assets);
     }
 
@@ -116,7 +133,8 @@ J3D.AssetLoader = function(cb) {
      *
      * @param callback A function to invoke when all assets are loaded. An object containing all the assets by name is passed as argument to that function.
      */
-    this.load = function(callback) {
+    this.load = function(callback, progressCb) {
+        progressCallback = progressCb;
         assetsToLoad = assetList.length;
         var onAssetLoadedLC = onAssetLoaded;
 
@@ -149,6 +167,18 @@ J3D.AssetLoader = function(cb) {
                     })(asset.name);
 
                     J3D.Loader.loadJSON(asset.path, f);
+                    break;
+                case "image":
+                    var image = new Image();
+                    that.assets[asset.name] = image;
+
+                    var f = function() {
+                        onAssetLoadedLC(callback);
+                    };
+
+
+                    image.onload = f;
+                    image.src = asset.path;
                     break;
                 default:
                     var f = (function(n) {

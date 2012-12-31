@@ -184,7 +184,7 @@ public class J3DExport : ScriptableWizard
 			cmx.Add (cd);
 		}
 		
-		if (exportAnimation && t.animation != null) {
+		if (exportAnimation && t.animation != null && t.animation.clip != null) {
 			AnimationExportData ad = new AnimationExportData(t, useQuaternions, samplesPerSec);
 			anx.Add(ad);
 		}

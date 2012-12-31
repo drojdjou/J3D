@@ -72,8 +72,6 @@ J3D.Scene = function() {
 
     this.addBackground = function(texture, shader) {
 
-        if (!texture) throw "Scene.addBackground: missing texture argument";
-
         if (!this.background) {
             this.background = new J3D.Transform();
             this.background.geometry = J3D.Primitive.FullScreenQuad();
@@ -81,7 +79,7 @@ J3D.Scene = function() {
         }
 
         if (shader) this.background.renderer = shader;
-        this.background.renderer.uTexture = texture;
+        if (texture) this.background.renderer.uTexture = texture;
 
     }
     /**

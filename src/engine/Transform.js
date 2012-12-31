@@ -101,6 +101,7 @@ J3D.Transform = function(n, u) {
 
     /**
      *  If set to false, this transform will not be rendered. But it's children still will!
+     *  If you want to enable/disable transforms recursively use enable/disable methods.
      */
     this.enabled = true;
 
@@ -144,6 +145,30 @@ J3D.Transform = function(n, u) {
      *
      */
     this.disableDepthTest = false;
+
+    /**
+     * Recursively enables this transform and all it's ancestors
+     * @param t
+     */
+    this.enable = function() {
+        this.recurse(
+            function(t) {
+                t.enabled = true;
+            }
+        );
+    }
+
+    /**
+     * Recursively disables this transform and all it's ancestors
+     * @param t
+     */
+    this.disable = function() {
+        this.recurse(
+            function(t) {
+                t.enabled = false;
+            }
+        );
+    }
 
     /**
      * Add a child transform to this transform.

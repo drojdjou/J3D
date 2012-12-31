@@ -1,5 +1,5 @@
 /**
-    @class Utility for creating primitive geometries at runtime.
+ @class Utility for creating primitive geometries at runtime.
  */
 J3D.Primitive = {};
 
@@ -11,22 +11,22 @@ J3D.Primitive = {};
  * @param sixway A sizway texture is a texture where the faces are laid our in a 3x2 pattern in order from top-left to bottom-right. TODO: Add exact list of faces.
  */
 J3D.Primitive.Cube = function(w, h, d, sixway) {
-	var c = J3D.Primitive.getEmpty();
-	w = w * 0.5;
-	h = h * 0.5;
-	d = d * 0.5;
+    var c = J3D.Primitive.getEmpty();
+    w = w * 0.5;
+    h = h * 0.5;
+    d = d * 0.5;
 
     var buv = [0, 1, 0, 1];
 
     var uv = [];
-    uv[0] = (sixway) ? [0, 0.5, 0, 1/3] : buv;
-    uv[1] = (sixway) ? [0.5, 1, 0, 1/3] : buv;
-    uv[2] = (sixway) ? [0, 0.5, 1/3, 2/3] : buv;
-    uv[3] = (sixway) ? [0.5, 1, 1/3, 2/3] : buv;
-    uv[4] = (sixway) ? [0, 0.5, 2/3, 1] : buv;
-    uv[5] = (sixway) ? [0.5, 1, 2/3, 1] : buv;
+    uv[0] = (sixway) ? [0, 0.5, 0, 1 / 3] : buv;
+    uv[1] = (sixway) ? [0.5, 1, 0, 1 / 3] : buv;
+    uv[2] = (sixway) ? [0, 0.5, 1 / 3, 2 / 3] : buv;
+    uv[3] = (sixway) ? [0.5, 1, 1 / 3, 2 / 3] : buv;
+    uv[4] = (sixway) ? [0, 0.5, 2 / 3, 1] : buv;
+    uv[5] = (sixway) ? [0.5, 1, 2 / 3, 1] : buv;
 
-	J3D.Primitive.addQuad(c,
+    J3D.Primitive.addQuad(c,
         new v3(-w, h, d),
         new v3(w, h, d),
         new v3(w, -h, d),
@@ -34,15 +34,15 @@ J3D.Primitive.Cube = function(w, h, d, sixway) {
         uv[0]
     );
 
-	J3D.Primitive.addQuad(c,
+    J3D.Primitive.addQuad(c,
         new v3(w, h, -d),
         new v3(-w, h, -d),
         new v3(-w, -h, -d),
         new v3(w, -h, -d),
         uv[1]
     );
-	
-	J3D.Primitive.addQuad(c,
+
+    J3D.Primitive.addQuad(c,
         new v3(-w, h, -d),
         new v3(-w, h, d),
         new v3(-w, -h, d),
@@ -50,15 +50,15 @@ J3D.Primitive.Cube = function(w, h, d, sixway) {
         uv[2]
     );
 
-	J3D.Primitive.addQuad(c,
+    J3D.Primitive.addQuad(c,
         new v3(w, h, d),
         new v3(w, h, -d),
         new v3(w, -h, -d),
         new v3(w, -h, d),
         uv[3]
     );
-	
-	J3D.Primitive.addQuad(c,
+
+    J3D.Primitive.addQuad(c,
         new v3(w, h, d),
         new v3(-w, h, d),
         new v3(-w, h, -d),
@@ -66,7 +66,7 @@ J3D.Primitive.Cube = function(w, h, d, sixway) {
         uv[4]
     );
 
-	J3D.Primitive.addQuad(c,
+    J3D.Primitive.addQuad(c,
         new v3(w, -h, d),
         new v3(w, -h, -d),
         new v3(-w, -h, -d),
@@ -74,17 +74,17 @@ J3D.Primitive.Cube = function(w, h, d, sixway) {
         uv[5]
     );
 
-	return new J3D.Mesh(c);
+    return new J3D.Mesh(c);
 }
 
 /**
  * Create a full screen quad. Used mostly for post effects.
  */
 J3D.Primitive.FullScreenQuad = function() {
-	var c = new J3D.Geometry();
-	c.addArray("aVertexPosition", new Float32Array([-1, 1,     1, 1,     1, -1,     -1, 1,     1, -1,     -1, -1]), 2);
-	c.addArray("aTextureCoord", new Float32Array([0, 1,     1, 1,     1, 0,     0, 1,     1, 0,    0, 0]), 2);
-	return c;
+    var c = new J3D.Geometry();
+    c.addArray("aVertexPosition", new Float32Array([-1, 1,     1, 1,     1, -1,     -1, 1,     1, -1,     -1, -1]), 2);
+    c.addArray("aTextureCoord", new Float32Array([0, 1,     1, 1,     1, 0,     0, 1,     1, 0,    0, 0]), 2);
+    return c;
 }
 
 /**
@@ -98,53 +98,57 @@ J3D.Primitive.FullScreenQuad = function() {
  * @param uv object with uv coordinates us = u start, ue = u end, vs = v start, ve = v end
  */
 J3D.Primitive.Plane = function(w, h, wd, hd, wo, ho, uv) {
-	var c = J3D.Primitive.getEmpty();
-	
-	if(!wo) wo = 0;
-	if(!ho) ho = 0;
- 	
-	w = w * 0.5;
-	h = h * 0.5;
-	
-	if(!wd) wd = 1;
-	if(!hd) hd = 1;
-	
-	var wStart = -w + wo;
-	var wEnd = w + wo;
-	var hStart = h + ho;
-	var hEnd = -h + ho;
-    
-	var uStart = (uv && uv.us) ? uv.us : 0;
-	var uEnd =   (uv && uv.ue) ? uv.ue : 1;
-	var vStart = (uv && uv.vs) ? uv.vs : 0;
-	var vEnd =   (uv && uv.ve) ? uv.ve : 1;
-	
-	var wb = (w * 2) / wd;
-	var hb = (h * 2) / hd;
-	
-	for(var i = 0; i < wd; i++) {
-		for(var j = 0; j < hd; j++) {
-			
-			var bvStart = wStart + i * wb;
-			var bvEnd = bvStart + wb;
-			var bhStart = hStart - j * hb;
-			var bhEnd = bhStart - hb;
-			
-			var va = new v3(bvStart, bhStart, 0);
-			var vb = new v3(bvEnd, bhStart, 0);
-			var vc = new v3(bvEnd, bhEnd, 0);
-			var vd = new v3(bvStart, bhEnd, 0);
-			
-			var us = uStart + (1 / wd * i) * (uEnd - uStart);
-			var ue = uStart + (1 / wd * (i + 1)) * (uEnd - uStart);
-			var vs = 1 - (vStart + (1 / hd * (j + 1)) * (vEnd - vStart));
-			var ve = 1 - (vStart + (1 / hd * j) * (vEnd - vStart));
-			
-			J3D.Primitive.addQuad(c, va, vb, vc, vd, [us, ue, vs, ve]);
-		}
-	}
+    var c = J3D.Primitive.getEmpty();
 
-	return new J3D.Mesh(c);
+    if (!wo) wo = 0;
+    if (!ho) ho = 0;
+
+    w = w * 0.5;
+    h = h * 0.5;
+
+    if (!wd) wd = 1;
+    if (!hd) hd = 1;
+
+    var wStart = -w + wo;
+    var wEnd = w + wo;
+    var hStart = h + ho;
+    var hEnd = -h + ho;
+
+    var uStart = (uv && uv.us) ? uv.us : 0;
+    var uEnd = (uv && uv.ue) ? uv.ue : 1;
+    var vStart = (uv && uv.vs) ? uv.vs : 0;
+    var vEnd = (uv && uv.ve) ? uv.ve : 1;
+
+    var wb = (w * 2) / wd;
+    var hb = (h * 2) / hd;
+
+    for (var i = 0; i < wd; i++) {
+        for (var j = 0; j < hd; j++) {
+
+            var bvStart = wStart + i * wb;
+            var bvEnd = bvStart + wb;
+            var bhStart = hStart - j * hb;
+            var bhEnd = bhStart - hb;
+
+            var va, vb, vc, vd;
+            var us, ue, vs, ve;
+
+            va = new v3(0, bvStart, bhStart);
+            vb = new v3(0, bvEnd, bhStart);
+            vc = new v3(0, bvEnd, bhEnd);
+            vd = new v3(0, bvStart, bhEnd);
+
+
+            us = uStart + (1 / wd * i) * (uEnd - uStart);
+            ue = uStart + (1 / wd * (i + 1)) * (uEnd - uStart);
+            vs = 1 - (vStart + (1 / hd * (j + 1)) * (vEnd - vStart));
+            ve = 1 - (vStart + (1 / hd * j) * (vEnd - vStart));
+
+            J3D.Primitive.addQuad(c, va, vb, vc, vd, [us, ue, vs, ve]);
+        }
+    }
+
+    return new J3D.Mesh(c);
 }
 
 /**
@@ -181,9 +185,9 @@ J3D.Primitive.Sphere = function(radius, segmentsWidth, segmentsHeight) {
             var u = x / segmentsX;
             var v = y / segmentsY;
 
-            var xp = -radius * Math.cos(phiStart + u   * phiLength)  * Math.sin(thetaStart + v * thetaLength);
-            var yp =  radius * Math.cos(thetaStart + v * thetaLength);
-            var zp =  radius * Math.sin(phiStart + u   * phiLength)  * Math.sin(thetaStart + v * thetaLength);
+            var xp = -radius * Math.cos(phiStart + u * phiLength) * Math.sin(thetaStart + v * thetaLength);
+            var yp = radius * Math.cos(thetaStart + v * thetaLength);
+            var zp = radius * Math.sin(phiStart + u * phiLength) * Math.sin(thetaStart + v * thetaLength);
 
             vertices.push(new v3(xp, yp, zp));
             uvs.push([u, 1 - v]);
@@ -265,29 +269,29 @@ J3D.Primitive.SingleTextureSkybox = function(segmentsWidth, segmentsHeight) {
 
             var vx = new v3(xp, yp, zp);
 
-            var ad = Math.max( Math.max(vx.x, vx.y), vx.z );
-            var ad2 = Math.min( Math.min(vx.x, vx.y), vx.z );
+            var ad = Math.max(Math.max(vx.x, vx.y), vx.z);
+            var ad2 = Math.min(Math.min(vx.x, vx.y), vx.z);
 
             var r, t;
 
-            if(Math.abs(ad2) > ad) {
+            if (Math.abs(ad2) > ad) {
                 ad = ad2;
                 r = -radius;
             } else {
                 r = radius;
             }
 
-            if(ad == vx.x) {
+            if (ad == vx.x) {
                 t = r / vx.x;
                 vx.x = vx.x * r / vx.x;
                 vx.y *= t;
                 vx.z *= t;
-            } else if(ad == vx.y) {
+            } else if (ad == vx.y) {
                 t = r / vx.y;
                 vx.y = r;
                 vx.x *= t;
                 vx.z *= t;
-            } else if(ad == vx.z) {
+            } else if (ad == vx.z) {
                 t = r / vx.z;
                 vx.z = r;
                 vx.x *= t;
@@ -340,19 +344,19 @@ J3D.Primitive.SingleTextureSkybox = function(segmentsWidth, segmentsHeight) {
 /**
  * Utility function. Returns an empty object to populate with geometry. Contains empty arrays for vertices, normals, uv1 and indices (called tris).
  */
-J3D.Primitive.getEmpty = function(){
-	var g = {};
-	g.vertices = [];	 
-	g.normals = [];
-	g.uv1 = [];
+J3D.Primitive.getEmpty = function() {
+    var g = {};
+    g.vertices = [];
+    g.normals = [];
+    g.uv1 = [];
     g.tangents = [];
-	g.tris = [];
-	return g;
+    g.tris = [];
+    return g;
 }
 
 /**
  * Add a quad to an object containing graphics data.
- * 
+ *
  * @param g graphics object to add the quad to
  * @param p1 coordinates of first point
  * @param p2 coordinates of second point
@@ -360,20 +364,22 @@ J3D.Primitive.getEmpty = function(){
  * @param p4 coordinates of fourth point
  * @param uv an array with uv coordinates [minU, maxU, minV, maxV]
  */
-J3D.Primitive.addQuad = function(g, p1, p2, p3, p4, uv) {
-    if(!J3D.Primitive.__tv1) J3D.Primitive.__tv1 = new v3();
+J3D.Primitive.addQuad = function(g, p1, p2, p3, p4, uv, antiClockwiseUV) {
+    if (!J3D.Primitive.__tv1) J3D.Primitive.__tv1 = new v3();
 
     //
-	var n1 = J3D.Primitive.__tv1;
+    var n1 = J3D.Primitive.__tv1;
     v3.calculateNormal(p1, p2, p3, n1).norm();
-    
-	var p = g.vertices.length / 3;
 
-    if(!uv || !uv.length || uv.length != 4) uv = [0, 1, 0, 1];
-		
-	g.vertices.push(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z, p3.x, p3.y, p3.z, p4.x, p4.y, p4.z);
-	g.normals.push (n1.x, n1.y, n1.z, n1.x, n1.y, n1.z, n1.x, n1.y, n1.z, n1.x, n1.y, n1.z);
-	g.uv1.push(uv[0],uv[3], uv[1],uv[3], uv[1],uv[2], uv[0],uv[2]);
-	
-	g.tris.push(p, p + 1, p + 2, p, p + 2, p + 3);
+    var p = g.vertices.length / 3;
+
+    if (!uv || !uv.length || uv.length != 4) uv = [0, 1, 0, 1];
+
+    g.vertices.push(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z, p3.x, p3.y, p3.z, p4.x, p4.y, p4.z);
+    g.normals.push(n1.x, n1.y, n1.z, n1.x, n1.y, n1.z, n1.x, n1.y, n1.z, n1.x, n1.y, n1.z);
+
+    if (antiClockwiseUV) g.uv1.push(uv[0], uv[3], uv[0], uv[2], uv[1], uv[2], uv[1], uv[3]);
+    else g.uv1.push(uv[0], uv[3], uv[1], uv[3], uv[1], uv[2], uv[0], uv[2]);
+
+    g.tris.push(p, p + 1, p + 2, p, p + 2, p + 3);
 }
