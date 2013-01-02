@@ -121,7 +121,7 @@ J3D.Transform = function(n, u) {
     this.camera;
 
     /**
-     *
+     *  The animation attached to this transform
      */
     this.animation = null;
 
@@ -142,7 +142,7 @@ J3D.Transform = function(n, u) {
     this.textureOffset = v2.ZERO();
 
     /**
-     *
+     *  Disable depth testing when rendering this transform
      */
     this.disableDepthTest = false;
 

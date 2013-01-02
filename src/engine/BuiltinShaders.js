@@ -18,11 +18,11 @@ J3D.BuiltinShaders = function() {
 	var shaders = {};
 
     /**
-     * @public Gets a copy of a build-in shader.
+     * Gets a copy of a build-in shader.
      *
-     * @param n The name of the shader as String (ex. "Phong", "Gouraud").
+     * @param {String} n The name of the shader as String (ex. "Phong", "Gouraud").
      *
-     * @return An instance of J3D.Shader
+     * @return {J3D.Shader} An instance of J3D.Shader
      *
      * @throws J3D.Error.NO_BUILTIN_SHADER if the shader does not exist.
      */

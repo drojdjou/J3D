@@ -22,7 +22,10 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
 
     if (!canvas) {
         isExternalCanvas = false;
-        document.body.appendChild(cv);
+        if(j3dSettings.container)
+            j3dSettings.container.appendChild(cv);
+        else
+            document.body.appendChild(cv);
     }
 
     try {

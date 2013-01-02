@@ -132,7 +132,8 @@ v3.add = function(a, b) {
 }
 
 /**
- *
+ * Add components of a to this vector
+ * (after the operation this = this + a)
  */
 v3.prototype.add = function(a) {
 	this.x += a.x;

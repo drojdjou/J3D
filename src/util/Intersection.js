@@ -1,3 +1,6 @@
+/**
+    @class Utility to perform intersection tests of rays against colliders. It is a static singleton, no need to instantiate. Just use: J3D.Intersection.rayTest(...)
+ */
 J3D.Intersection = {};
 
 /**
@@ -5,8 +8,8 @@ J3D.Intersection = {};
  *
  * WARNING. For meshes that have lots of polys, the ray/mesh intersection test can be very slow! It's better to wrap it into a box or sphere collider or have a simpler version of the mesh to make intersection tests against.
  *
- * @param r an instance of J3D.Ray
- * @param t a transform to test against.
+ * @param {J3D.Ray} r an instance of J3D.Ray
+ * @param {J3D.Transform} t a transform to test against.
  *
  * @returns True if ray intersects with the collider, false otherwise. If the transform doesn't have a collider the method returns false.
  */
@@ -42,8 +45,8 @@ J3D.Intersection.rayTest = function(r, t) {
  *
  * WARNING. For meshes that have lots of polys, the ray/mesh intersection test can be very slow! It's better to wrap it into a box or sphere collider or have a simpler version of the mesh to make intersection tests against.
  *
- * @param r an instance of J3D.Ray
- * @param t a transform to test against.
+ * @param {J3D.Ray} r an instance of J3D.Ray
+ * @param {J3D.Transform} t a transform to test against.
  *
  * @returns True if ray intersects with the collider, false otherwise. If the transform doesn't have a geometry the method returns false.
  */
@@ -199,8 +202,8 @@ J3D.Intersection.rayTriangle = function(r, p0, p1, p2) {
 /**
  * Performs an intersection test of a ray against a transform that has a sphere collider.
  *
- * @param r an instance of J3D.Ray
- * @param t a transform to test against.
+ * @param {J3D.Ray} r an instance of J3D.Ray
+ * @param {J3D.Transform} t a transform to test against.
  *
  * @returns True if ray intersects with the collider, false otherwise. If the transform doesn't have a sphere collider the method returns false.
  */
@@ -232,8 +235,8 @@ J3D.Intersection.raySphere = function(r, t) {
 /**
  * Performs an intersection test of a ray against a transform that has a box collider.
  *
- * @param r an instance of J3D.Ray
- * @param t a transform to test against.
+ * @param {J3D.Ray} r an instance of J3D.Ray
+ * @param {J3D.Transform} t a transform to test against.
  *
  * @returns True if ray intersects with the collider, false otherwise. If the transform doesn't have a box collider the method returns false.
  */
@@ -332,7 +335,7 @@ J3D.Intersection.rayBox = function(r, t) {
             if (y < b.minY || y > b.maxY) return false;
             var z = r.localOrigin.z + r.localDirection.z * td;
             if (z < b.minZ || z > b.maxZ) return false;
-            //ab.normal = new THREE.Vector3(xn, 0, 0);
+            //ab.normal = v3(xn, 0, 0);
             break;
 
         case 1:
@@ -341,7 +344,7 @@ J3D.Intersection.rayBox = function(r, t) {
             if (x < b.minX || x > b.maxX) return false;
             var z = r.localOrigin.z + r.localDirection.z * td;
             if (z < b.minZ || z > b.maxZ) return false;
-            //ab.normal = new THREE.Vector3(0, yn, 0);
+            //ab.normal = v3(0, yn, 0);
             break;
 
         case 2:
@@ -350,7 +353,7 @@ J3D.Intersection.rayBox = function(r, t) {
             if (x < b.minX || x > b.maxX) return false;
             var y = r.localOrigin.y + r.localDirection.y * td;
             if (y < b.minY || y > b.maxY) return false;
-            //ab.normal = new THREE.Vector3(0, 0, zn);
+            //ab.normal = new v3(0, 0, zn);
             break;
 
     }
