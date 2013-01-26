@@ -15,6 +15,9 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
 
     var that = this;
 
+    j3dSettings = j3dSettings || {};
+    webglSettings = webglSettings || {};
+
     var cv = (canvas) ? canvas : document.createElement("canvas");
     var isExternalCanvas = true;
 

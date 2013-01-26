@@ -16,7 +16,7 @@ registerDemo(function(engine) {
             front: "models/textures/skybox/front.jpg"
         });
 
-        assetsLoader.addJSON("monkey", "models/monkeyhi.lib");
+        assetsLoader.addJSON("monkey", "models/monkeyhi.js");
         assetsLoader.addShader("reflective", "shaders/Reflective.glsl");
 
         assetsLoader.load(function(a) {
@@ -40,11 +40,9 @@ registerDemo(function(engine) {
 
         var monkey = new J3D.Transform();
         monkey.renderer = assets.reflective;
-        monkey.renderer.uTexture = assets.rustTexture;
         monkey.renderer.uCubemap = assets.cubemap;
         monkey.geometry = new J3D.Mesh(assets.monkey);
-vTextureCoord
-        engine.scene.add(monkey);
+//        engine.scene.add(monkey);
 
         callback();
     }

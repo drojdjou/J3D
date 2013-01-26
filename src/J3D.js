@@ -12,7 +12,9 @@ var J3D = {};
 J3D.VERSION = 1;
 // Built on Mon Dec 31 08:57:49 2012
 // Built on Wed Jan  2 10:28:11 2013
-J3D.BUILD = 69;
+// Built on Wed Jan  2 10:38:01 2013
+// Built on Wed Jan 16 15:02:32 2013
+J3D.BUILD = 71;
 
 J3D.getVersion = function() {
     return 'Version ' + J3D.VERSION + ' | Build ' + J3D.BUILD;

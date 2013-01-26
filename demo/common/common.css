@@ -87,7 +87,6 @@ p {
 #madewith {
     color: #ffffff;
     background-color: #000000;
-: left;
     font-size: 13px;
     line-height: 26px;
     position: absolute;
@@ -118,19 +117,19 @@ p {
 
 @-webkit-keyframes thumbOn {
   0% {
-    -webkit-filter: grayscale(0.5) brightness(0.1);
+    -webkit-filter: grayscale(0) brightness(0);
   }
   100% {
-    -webkit-filter: grayscale(0) brightness(0);
+    -webkit-filter: grayscale(0) brightness(0.1);
   }
 }
 
 @-webkit-keyframes thumbOff {
   0% {
-    -webkit-filter: grayscale(0.5) brightness(0.1);
+    -webkit-filter: grayscale(0) brightness(0.1);
   }
   100% {
-    -webkit-filter: grayscale(1) brightness(0.2);
+    -webkit-filter: grayscale(0) brightness(0);
   }
 }
 
@@ -148,7 +147,7 @@ p {
 
 .thumb:hover {
     -webkit-animation-name: thumbOn;
-    -webkit-animation-duration: 0.5s;
+    -webkit-animation-duration: 0.1s;
     -webkit-animation-iteration-count: 1;
     -webkit-animation-direction: alternate;
     -webkit-animation-timing-function: ease-out;

@@ -164,7 +164,7 @@ J3D.Texture.prototype.update = function(force) {
             gl.bindTexture(gl.TEXTURE_2D, null);
         } catch(e) {
             // console.log(e);
-            // Firefox will throw an error when the video is looped at the moment it loops.
+            // Firefox will throw an error when a video is looped, at the moment it loops.
             // If you don't catch this error here, it will result in a nasty 1-frame blink of the video.
         }
     }

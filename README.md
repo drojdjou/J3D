@@ -21,6 +21,13 @@ J3D was created by [Bartek Drozdz](http://www.everyday3d.com/). You can contact 
 
 [Shaders tutorial in .net magazine](http://www.netmagazine.com/tutorials/create-amazing-webgl-effects-shaders)
 
+## Projects
+
+[![Tool Christmas Card](http://www.everyday3d.com/j3d/thumbs/proj_toolxmas.jpg)]
+(http://demo.toolprototype.com/toolxmas/)
+[![Sundance Rectify](http://www.everyday3d.com/j3d/thumbs/proj_rectify.jpg)]
+(http://demo.toolprototype.com/toolxmas/)
+
 ## Demos & experiments
 
 [![Hello Cube](http://www.everyday3d.com/j3d/thumbs/001_hellocube.jpg)]
