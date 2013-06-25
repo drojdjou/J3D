@@ -13,7 +13,7 @@ J3D.Error.NO_WEBGL_CONTEXT = "No webgl context. Looks like your browser does not
  * Thrown when engine.render() is called but no camera was defined.
  * @constant
  */
-J3D.Error.NO_CAMERA = "Missing camera. Please assign a transform with a camera attached to engine.camera";
+J3D.Error.NO_CAMERA = "Missing camera. Please assign a transform with a camera attached to engine.scene.camera";
 
 /**
  * Thrown when a non-existing shader is requested from J3D.BuiltinShaders.fetch
