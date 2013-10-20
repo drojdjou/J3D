@@ -65,7 +65,7 @@ J3D.Scene = function() {
             this.skybox.geometry = J3D.Primitive.Cube(1, 1, 1).flip()
         }
 
-        this.skybox.renderer = shader || J3D.BuiltinShaders.fetch("Background");
+        this.skybox.renderer = shader || J3D.BuiltinShaders.fetch("Skybox");
         this.skybox.renderer.uTexture = cubemap;
     }
 

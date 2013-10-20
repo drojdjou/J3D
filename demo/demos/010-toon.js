@@ -16,7 +16,7 @@ registerDemo(function(engine) {
         assetsLoader.addTexture("ramp1", "models/textures/toonramp1.png");
         assetsLoader.addTexture("ramp3", "models/textures/toonramp3.png");
 
-        assetsLoader.addJSON("elephant", "models/elephant.lib");
+        assetsLoader.addJSON("elephant", "models/elephant.js");
 
         assetsLoader.load(function(assets) {
             onAssets(assets, callback)

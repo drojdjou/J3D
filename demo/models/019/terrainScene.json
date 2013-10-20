@@ -107,7 +107,7 @@
         "name": "camera",
 		"parent": 5,
 		"position": [ 0,3.857413,3.674011 ],
-		"rotation": [ -0.9224564,0,0 ],
+		"rotation": [ 0.9224564,0,0 ],
 		"camera": "camera"
 	}
 

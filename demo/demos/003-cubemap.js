@@ -35,6 +35,7 @@ registerDemo(function(engine) {
         root.add(camera);
         engine.scene.add(root);
 
+        console.log(assets.cubemap);
 
         engine.scene.addSkybox(assets.cubemap);
 
@@ -42,7 +43,7 @@ registerDemo(function(engine) {
         monkey.renderer = assets.reflective;
         monkey.renderer.uCubemap = assets.cubemap;
         monkey.geometry = new J3D.Mesh(assets.monkey);
-//        engine.scene.add(monkey);
+        engine.scene.add(monkey);
 
         callback();
     }

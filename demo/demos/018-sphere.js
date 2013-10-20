@@ -9,8 +9,6 @@ registerDemo(function(engine) {
 
     var pin;
 
-    document.title = "Sphere | J3D v0.24";
-
     this.setup = function(callback) {
         var assetsLoader = new J3D.AssetLoader();
 
@@ -33,7 +31,7 @@ registerDemo(function(engine) {
 
         camera = new J3D.Transform();
         camera.camera = new J3D.Camera();
-        camera.position.z = 100;
+        camera.position.z = 80;
         engine.scene.setCamera(camera);
         root.add(camera);
 
@@ -115,17 +113,17 @@ registerDemo(function(engine) {
         document.onmousemove = onMouseMove;
         document.onmousedown = onMouseDown;
         document.onmouseup = onMouseUp;
-        window.onscroll = onScroll;
+        // window.onscroll = onScroll;
 
         callback();
     }
 
-    function onScroll(e) {
-        var z = camera.position.z + window.pageYOffset * 0.25;
-        z = Math.min(500, z);
-        z = Math.max(70, z);
-        camera.position.z = z;
-    }
+    // function onScroll(e) {
+    //     var z = camera.position.z + window.pageYOffset * 0.25;
+    //     z = Math.min(500, z);
+    //     z = Math.max(70, z);
+    //     camera.position.z = z;
+    // }
 
     function onMouseMove(e) {
         mx = e.clientX;

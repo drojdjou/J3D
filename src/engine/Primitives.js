@@ -133,10 +133,10 @@ J3D.Primitive.Plane = function(w, h, wd, hd, wo, ho, uv) {
             var va, vb, vc, vd;
             var us, ue, vs, ve;
 
-            va = new v3(0, bvStart, bhStart);
-            vb = new v3(0, bvEnd, bhStart);
-            vc = new v3(0, bvEnd, bhEnd);
-            vd = new v3(0, bvStart, bhEnd);
+            va = new v3(bvStart, bhStart, 0);
+            vb = new v3(bvEnd, bhStart, 0);
+            vc = new v3(bvEnd, bhEnd, 0);
+            vd = new v3(bvStart, bhEnd, 0);
 
 
             us = uStart + (1 / wd * i) * (uEnd - uStart);
