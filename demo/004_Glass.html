@@ -92,6 +92,7 @@
 		gui.add(properties, 'power').min(0).max(20);
 		
 		engine = new J3D.Engine();
+		engine.setClearColor(new J3D.Color(0, 0, 0, 1));
 		
 		J3D.Loader.loadGLSL("shaders/Glass.glsl", function(s) {
 			shader = s;
