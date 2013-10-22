@@ -1,0 +1,131 @@
+body {
+	font-family: Helvetica, Arial, sans-serif;
+    font-size: 1.2em;
+	background-color: #222222;
+    color: #ffffff;
+	margin: 0px;
+    padding:  0px;
+    border: 0px;
+    user-select: none;
+    overflow: hidden;
+}
+
+#container {
+    text-align: center;
+}
+
+#controlsLeft {
+    bottom: 0px;
+    left: 0px;
+    position: absolute;
+    padding: 0px;
+}
+
+#controlsRight {
+    bottom: 0px;
+    right: 0px;
+    position: absolute;
+    padding: 0px;
+}
+
+#time {
+    width: 120px;
+}
+
+#energy {
+    width: 80px;
+}
+
+#score {
+    width: 80px;
+}
+
+.control {
+    float: left;
+    padding: 14px;
+    user-select: none;
+    font-size: 0.75em;
+    color: #808080;
+    text-decoration: none;
+}
+
+.control a, .control a:visited {
+    color: white;
+    text-decoration: none;
+}
+
+.control a:hover {
+    text-decoration: underline;
+}
+
+#levelName {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    font-size: 0.7em;
+    padding: 10px;
+    display: none;
+}
+
+
+.control span {
+    color: #ffffff
+}
+
+#instruction {
+    text-align: left;
+    padding: 10px;
+}
+
+#welcomeScreen, #resumeDialog {
+    position: relative;
+    left: -50%;
+    top: -50%;
+    padding: 10px 20px 10px 20px;
+    text-align: center;
+    background-color: #222222;
+    font-weight: bold;
+    font-size: 1.6em;
+    letter-spacing: 0.02em;
+}
+
+#instruction div {
+    font-size: 0.7em;
+    margin-right: 10px;
+    line-height: 3em;
+}
+
+img {
+    vertical-align: middle;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+#pause:hover, #restart:hover, #welcomeScreen:hover, #resumeDialog:hover {
+    background-color: #ffffff;
+    color: #222222;
+    cursor: pointer;
+}
+
+#dialogs {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+#resumeDialog, #gameOverDialog {
+    position: relative;
+    left: -50%;
+    top: -50%;
+    text-align: center;
+    padding: 20px;
+    background-color: #222222;
+}
+
+#resumeDialog, #gameOverDialog {
+    display: none;
+}
+
+#startDialog:hover {
+    cursor:pointer;
+}

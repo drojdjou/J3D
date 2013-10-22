@@ -1,0 +1,92 @@
+
+<html>
+
+<head>
+    <title>Music video game | J3D</title>
+
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+    <link href='spacerun/css/style.css' rel='stylesheet' type='text/css'>
+
+    <script type="text/javascript" src="../build/j3d.js"></script>
+    
+    <script type="text/javascript" src="spacerun/lib/Tween.js"></script>
+    <!-- script type="text/javascript" src="lib/socket.io.js"></script -->
+
+    <script type="text/javascript" src="spacerun/js/Settings.js"></script>
+    <script type="text/javascript" src="spacerun/js/Loader.js"></script>
+
+    <script type="text/javascript" src="spacerun/js/Game.js"></script>
+
+    <script type="text/javascript" src="spacerun/js/Ship.js"></script>
+    <script type="text/javascript" src="spacerun/js/Rocks.js"></script>
+    <script type="text/javascript" src="spacerun/js/Fuels.js"></script>
+    <script type="text/javascript" src="spacerun/js/Cargos.js"></script>
+
+    <script type="text/javascript" src="spacerun/js/Stardust.js"></script>
+
+    <script type="text/javascript" src="spacerun/js/Main.js"></script>
+
+    <script>
+
+        var main, kill;
+
+        window.onload = function() {
+            main = new Main();
+            kill = main.kill;
+        }
+
+    </script>
+
+
+</head>
+
+<body>
+
+<audio id="song">
+    <source src="spacerun/assets/atari.mp3" />
+    <source src="spacerun/assets/atari.ogg" />
+</audio>
+
+<canvas id="gameCanvas"></canvas>
+
+<div id="dialogs">
+    <div id="welcomeScreen">
+        <div id="startDialog" onmousedown="main.initiate()">Start</div>
+    </div>
+
+    <div id="resumeDialog" onmousedown="main.resume()">Resume</div>
+
+    <div id="gameOverDialog">Game Over | Your score: 000</div>
+</div>
+
+<div id="levelName"></div>
+
+<div id="controlsLeft">
+    <div class="control" id="time">Time left: <span id="timeValue">00:00</span></div>
+    <!-- div class="control" id="energy">Energy: <span id="energyValue">10</span></div -->
+    <div class="control" id="score">Score: <span id="scoreValue">0</span></div>
+    <div class="control" id="bestScore">Best score: <span id="bestScoreValue">0</span></div>
+    <div class="control"><a href="https://soundcloud.com/warpmonkeys/atari-dream">Track: Warp Monkeys - Atari Dream</a></div>
+</div>
+<div id="controlsRight">
+    <div class="control" id="pause" onmousedown="main.pause()">Pause</div>
+</div>
+
+<!--script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-24294554-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script-->
+
+</body>
+
+</html> 

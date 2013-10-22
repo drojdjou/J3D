@@ -1,0 +1,16 @@
+{
+    "levelSettings":[
+
+        {
+            "name":             "L0",
+            "initSpeed":        0.04,
+            "maxSpeed":         0.14,
+            "acceleration":     1.001,
+            "fuelFrequency":    10000,
+            "cargoFrequency":   2000,
+            "cargoScore":       10,
+            "rockPenalty":      4
+        }
+
+    ]
+}

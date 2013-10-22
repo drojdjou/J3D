@@ -1,0 +1,211 @@
+{
+	
+"path" : "",
+"ambient": { "r":0.05223882, "g":0.05223882, "b":0.05223882, "a":1 },
+"background": { "r":0, "g":0, "b":0, "a":1 },
+
+"textures": {
+},
+
+"lightmaps": [
+],
+	
+"materials": {
+	
+	"rock": { 
+		"type": "Gouraud",
+		"color": { "r":0.7238806, "g":0.6513489, "b":0.5942304, "a":1 },
+		"specularIntensity": 0,
+        "shininess": 1,
+		"textureTile": [  ],
+		"textureOffset": [  ],
+		"emissive": { "r":0.003921569, "g":0.003921569, "b":0.003921569, "a":1 }
+	},
+	
+	"cargo": { 
+		"type": "Gouraud",
+		"color": { "r":0.6940298, "g":0.3057614, "b":0, "a":1 },
+		"specularIntensity": 0.4025821,
+        "shininess": 0.4444853,
+		"textureTile": [  ],
+		"textureOffset": [  ],
+		"emissive": { "r":0.2462686, "g":0.1188289, "b":0, "a":1 }
+	},
+	
+	"ship": { 
+		"type": "Gouraud",
+		"color": { "r":0.07100692, "g":0.3270622, "b":0.6343284, "a":1 },
+		"specularIntensity": 0.999,
+        "shininess": 0.4139908,
+		"textureTile": [  ],
+		"textureOffset": [  ],
+		"emissive": { "r":0.01176471, "g":0.01176471, "b":0.01176471, "a":1 }
+	},
+	
+	"fuel": { 
+		"type": "Gouraud",
+		"color": { "r":0, "g":0.5671642, "b":0.1388164, "a":1 },
+		"specularIntensity": 0.999,
+        "shininess": 0.4934723,
+		"textureTile": [  ],
+		"textureOffset": [  ],
+		"emissive": { "r":0.01492536, "g":0.01492536, "b":0.01492536, "a":1 }
+	}
+
+},
+
+"lights": {
+	
+	"spot": { 
+		"type": 3,
+		"color": { "r":1, "g":0.986014, "b":0, "a":1 },
+		"intensity": 1,
+		"angle": 0.2508911,
+		"angleFalloff": 0.09817477
+	},
+	
+	"sun1": { 
+		"type": 1,
+		"color": { "r":1, "g":1, "b":1, "a":1 },
+		"intensity": 0.2
+	},
+	
+	"sun2": { 
+		"type": 1,
+		"color": { "r":1, "g":1, "b":1, "a":1 },
+		"intensity": 0.3
+	}
+
+},
+
+"cameras": {
+	
+	"camera": { 
+		"fov": 16.2,
+		"near": 0.3,
+		"far": 1000
+	}
+
+},
+
+"transforms": [
+	
+	{
+		"uid": 1,
+        "name": "camera",
+		"position": [ 0,50,0 ],
+		"rotation": [ -1.570451,3.141593,-3.141593 ],
+		"camera": "camera"
+	},
+	
+	{
+		"uid": 2,
+        "name": "rocks",
+		"position": [ 0,0,0 ],
+		"rotation": [ 0,0,0 ]
+	},
+	
+	{
+		"uid": 3,
+        "name": "rock",
+		"parent": 2,
+		"position": [ 0,0,-3.498928 ],
+		"rotation": [ 0,0,0 ],
+		"collider": {
+		    "type": "sphere",
+		    "center": [ 0,0,0 ],
+		    "radius": 0.83
+		},
+		"renderer": "rock",
+		"mesh": "rock"
+	},
+	
+	{
+		"uid": 4,
+        "name": "cargos",
+		"position": [ 0,0,0 ],
+		"rotation": [ 0,0,0 ]
+	},
+	
+	{
+		"uid": 5,
+        "name": "cargo",
+		"parent": 4,
+		"position": [ 3.042022,0,-3.491411 ],
+		"rotation": [ 0,0,0 ],
+		"collider": {
+		    "type": "sphere",
+		    "center": [ 0,0,0 ],
+		    "radius": 0.47
+		},
+		"renderer": "cargo",
+		"mesh": "cargo"
+	},
+	
+	{
+		"uid": 6,
+        "name": "ship",
+		"position": [ 0,0,0 ],
+		"rotation": [ 0,3.141592,0 ],
+		"collider": {
+		    "type": "sphere",
+		    "center": [ 0,-0.07,-0.04 ],
+		    "radius": 0.5
+		},
+		"renderer": "ship",
+		"mesh": "spaceship"
+	},
+	
+	{
+		"uid": 7,
+        "name": "spot",
+		"parent": 6,
+		"position": [ 0.0000000379,0,0.04947424 ],
+		"rotation": [ 0,3.141592,0 ],
+		"light": "spot"
+	},
+	
+	{
+		"uid": 8,
+        "name": "fuels",
+		"position": [ 0,0,0 ],
+		"rotation": [ 0,0,0 ]
+	},
+	
+	{
+		"uid": 9,
+        "name": "fuel",
+		"parent": 8,
+		"position": [ -2.669767,0,-3.485838 ],
+		"rotation": [ -1.570451,3.141593,-3.141593 ],
+		"collider": {
+		    "type": "sphere",
+		    "center": [ 0,0,0.0000000298 ],
+		    "radius": 0.55
+		},
+		"renderer": "fuel",
+		"mesh": "fuel"
+	},
+	
+	{
+		"uid": 10,
+        "name": "sun1",
+		"position": [ -6.493075,0,2 ],
+		"rotation": [ 0,-1.144317,0 ],
+		"light": "sun1"
+	},
+	
+	{
+		"uid": 11,
+        "name": "sun2",
+		"position": [ 3.680593,0,2 ],
+		"rotation": [ 0,2.352881,0 ],
+		"light": "sun2"
+	}
+
+]
+}
+
+
+
+

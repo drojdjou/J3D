@@ -1,0 +1,73 @@
+<html>
+
+<head>
+    <title>Music video game | Particle effects | J3D</title>
+
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+    <link href='css/style.css' rel='stylesheet' type='text/css'>
+
+    <script type="text/javascript" src="../build/j3d.js"></script>
+
+    <script type="text/javascript" src="lib/Tween.js"></script>
+
+    <script type="text/javascript" src="js/effects/MagnetRing.js"></script>
+
+    <script>
+        var engine;
+        var cube;
+        var magnetRing;
+
+        var a = 0;
+
+        window.onload = function() {
+            engine = new J3D.Engine();
+
+            J3D.Loader.loadJSON("assets/assets.json", function(jsmeshes) {
+                J3D.Loader.loadJSON("assets/assetsScene.json", function(jsscene) {
+                    jsonScene = jsscene;
+                    J3D.Loader.parseJSONScene(jsscene, jsmeshes, engine);
+                    build();
+                    draw();
+                })
+            });
+
+            document.onmousedown = onMouseDown;
+
+        }
+
+        function onMouseDown() {
+            
+        }
+
+        function build() {
+            J3D.Loader.loadGLSL("assets/MagnetRing.glsl", function(s) {
+                magnetRing = new MagnetRing(s);
+                engine.scene.add(magnetRing.transform);
+            });
+        }
+
+        function draw() {
+
+            var e = 1 - (a % 1);
+            e = e * e;
+            e = 1 - e;
+
+            if(magnetRing) magnetRing.transform.renderer.radius = e * 3;
+            a += 0.015;
+
+            engine.render();
+            requestAnimationFrame(draw);
+        }
+
+
+    </script>
+
+
+</head>
+
+<body>
+
+</body>
+
+</html> 
