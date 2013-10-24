@@ -31,14 +31,14 @@ registerDemo(function(engine) {
 
         camera = new J3D.Transform();
         camera.camera = new J3D.Camera();
-        camera.position.z = 80;
+        camera.position.z = 110;
         engine.scene.setCamera(camera);
         root.add(camera);
 
         light2 = new J3D.Transform();
         light2.light = new J3D.Light(J3D.HEMISPHERE);
         light2.light.color = new J3D.Color(1, 1, 1, 1);
-        light2.position = new v3(-1000, 0, 0);
+        light2.position = new v3(-1000, 0, 750);
         light2.light.direction = new v3(1, 0, 0);
         light2.light.angleFalloff = 0.15;
 
