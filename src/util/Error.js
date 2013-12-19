@@ -32,6 +32,7 @@ J3D.Error.UNKNOWN_COLLIDER_TYPE = "Unrecognized collider type: ";
  * @constant
  */
 J3D.Error.SHADER_COMPILE_ERROR = "Shader compile error: ";
+J3D.Error.SHADER_LINK_ERROR = "Shader linking error: ";
 
 /**
  * Thrown when user stream is not supported.

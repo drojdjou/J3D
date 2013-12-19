@@ -37,6 +37,9 @@ J3D.ShaderAtlas.prototype.compileShaderSource = function(name, src, type, meta) 
         isrc = ci + fi + src;
     }
 
+    console.log("#### #### #### #### #### " + name);
+    console.log(isrc);
+
     var shader = gl.createShader(type);
     gl.shaderSource(shader, isrc);
     gl.compileShader(shader);
@@ -63,7 +66,7 @@ J3D.ShaderAtlas.prototype.linkShader = function(renderer) {
     gl.linkProgram(program);
 
     if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-        console.log("Error linking program " + name);
+        throw J3D.Error.SHADER_LINK_ERROR + gl.getProgramInfoLog(program);
     }
 
     gl.useProgram(program);

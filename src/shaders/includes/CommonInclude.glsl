@@ -1,7 +1,7 @@
 //#name CommonInclude
 //#description Collection of common uniforms, functions and structs to include in shaders (both fragment and vertex)
-
 precision mediump float;
+precision highp int;
 
 uniform float uTime;
 uniform mat4 mMatrix;
