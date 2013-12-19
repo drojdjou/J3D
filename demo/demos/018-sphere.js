@@ -31,7 +31,7 @@ registerDemo(function(engine) {
 
         camera = new J3D.Transform();
         camera.camera = new J3D.Camera();
-        camera.position.z = 110;
+        camera.position.z = 90;
         engine.scene.setCamera(camera);
         root.add(camera);
 
