@@ -37,9 +37,6 @@ J3D.ShaderAtlas.prototype.compileShaderSource = function(name, src, type, meta) 
         isrc = ci + fi + src;
     }
 
-    console.log("#### #### #### #### #### " + name);
-    console.log(isrc);
-
     var shader = gl.createShader(type);
     gl.shaderSource(shader, isrc);
     gl.compileShader(shader);
