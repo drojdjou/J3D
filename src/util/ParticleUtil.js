@@ -1,12 +1,13 @@
 J3D.ParticleUtil = {};
 
 J3D.ParticleUtil.insideCube = function(amount, size, origin) {
-	var vertices = new Float32Array(amount * 3);
+	var s = 3;
+	var vertices = new Float32Array(amount * s);
 	
 	origin = origin || v3.ZERO();	
 	size = size / 2;
 	
-	for (var i = 0; i < amount * 3; i += 3) {
+	for (var i = 0; i < amount * s; i += s) {
 		vertices[i] = origin.x + Math.random() * size * 2.0 - size + Math.random();
 		vertices[i + 1] = origin.y + Math.random() * size * 2.0 - size + Math.random();
 		vertices[i + 2] = origin.z + Math.random() * size * 2.0 - size + Math.random();
