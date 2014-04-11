@@ -1,23 +1,15 @@
-registerDemoregisterDemo(function(engine) {
+registerDemo(function(engine) {
 
     document.title = "Reflection | J3D";
 
-    var root;
+    var root, monkey;
 
     this.setup = function(callback) {
         var assetsLoader = new J3D.AssetLoader();
 
-        assetsLoader.addCubemap("cubemap", {
-            left: "models/textures/skybox/left.jpg",
-            right: "models/textures/skybox/right.jpg",
-            up: "models/textures/skybox/up.jpg",
-            down: "models/textures/skybox/down.jpg",
-            back: "models/textures/skybox/back.jpg",
-            front: "models/textures/skybox/front.jpg"
-        });
-
+        assetsLoader.addTexture("texture", "models/textures/reg-photo.jpg");
         assetsLoader.addJSON("monkey", "models/monkeyhi.js");
-        assetsLoader.addShader("reflective", "shaders/Reflective.glsl");
+        assetsLoader.addShader("reflective", "shaders/ReflectiveSphere.glsl");
 
         assetsLoader.load(function(a) {
             setup(a, callback);
@@ -35,13 +27,9 @@ registerDemoregisterDemo(function(engine) {
         root.add(camera);
         engine.scene.add(root);
 
-        console.log(assets.cubemap);
-
-        engine.scene.addSkybox(assets.cubemap);
-
-        var monkey = new J3D.Transform();
+        monkey = new J3D.Transform();
         monkey.renderer = assets.reflective;
-        monkey.renderer.uCubemap = assets.cubemap;
+        monkey.renderer.uTexture = assets.texture;
         monkey.geometry = new J3D.Mesh(assets.monkey);
         engine.scene.add(monkey);
 
@@ -50,8 +38,8 @@ registerDemoregisterDemo(function(engine) {
 
     this.render = function(interactor) {
 
-        root.rotation.x += interactor.centerX * J3D.Time.deltaTime / 1000;
-        root.rotation.y += interactor.centerY * J3D.Time.deltaTime / 2000;
+        monkey.rotation.x += interactor.centerX * J3D.Time.deltaTime / 1000;
+        monkey.rotation.y += interactor.centerY * J3D.Time.deltaTime / 2000;
 
         engine.render();
     }

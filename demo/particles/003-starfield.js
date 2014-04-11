@@ -1,6 +1,6 @@
 registerDemo(function(engine) {
 
-    var stars, camera, tcz = 0, tcx = 0;
+    var stars, camera, tcz = 0, tcx = 0, flightDirection = new v3();
 
     document.title = "Starfield | J3D | v0.12";
 
@@ -35,8 +35,7 @@ registerDemo(function(engine) {
         stars = new J3D.Transform();
         stars.renderer = s;
         stars.renderer.uSize = 50;
-        stars.renderer.speedX = 0;
-        stars.renderer.speedY = 0
+        stars.renderer.uSpeed = new v3();
         stars.renderer.drawMode = gl.POINTS;
 
         stars.geometry = new J3D.Geometry();
@@ -49,12 +48,17 @@ registerDemo(function(engine) {
         // stars.rotation.y += interactor.centerX * J3D.Time.deltaTime / 1000;
         // stars.rotation.x += interactor.centerY * J3D.Time.deltaTime / 2000;
 
-        stars.renderer.speedX += interactor.centerX * -0.002;
-        stars.renderer.speedY += interactor.centerY * 0.002;
+        flightDirection.x = -interactor.centerX;
+        flightDirection.y = -interactor.centerY;
+        flightDirection.z = 0.01;
+
+        flightDirection.norm();
+        flightDirection.mult(0.001);
+
+        stars.renderer.uSpeed.add(flightDirection);
 
         tcz = interactor.centerX * Math.PI * 1;
         tcx = interactor.centerY * Math.PI * 1;
-
         camera.rotation.y += (tcz - camera.rotation.y) * 0.1;
         camera.rotation.x += (tcx - camera.rotation.x) * 0.1;
 

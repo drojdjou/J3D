@@ -6,15 +6,12 @@ varying vec3 vp;
 //#vertex
 //#include VertexInclude
 uniform float uSize;
-uniform float speedX;
-uniform float speedY;
+uniform vec3 uSpeed;
 
 void main(void) {
 	vec3 p = aVertexPosition;
 
-	p.x = mod(p.x + speedX, 1.0);
-	p.y = mod(p.y + speedY, 1.0);
-	p.z = mod(p.z + uTime * 0.02, 1.0);
+	p = mod(p + uSpeed, 1.0);
 
     vec4 worldPos = mMatrix * vec4(p * uSize * 2.0 - uSize, 1.0);
 
