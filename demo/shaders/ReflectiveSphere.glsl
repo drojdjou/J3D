@@ -20,15 +20,26 @@ void main(void) {
 //#fragment
 uniform sampler2D uTexture;
 
-void main(void) {
-
-	vec3 xy = vec3(refVec.x, refVec.y, 0);
-	vec3 xz = vec3(refVec.x, 0, refVec.z);
+vec2 normalToUv(vec3 n) {
+	vec3 xy = vec3(n.x, n.y, 0);
+	vec3 xz = vec3(n.x, 0, n.z);
 
 	vec3 up = vec3(0, 1, 0);
 	vec3 left = vec3(1, 0, 0);
 
-	vec2 uvRef = vec2(dot(xy, up) * 0.5 + 0.5, dot(xz, left) * 0.5 + 0.5);
+	float tx = dot(xy, up) * 0.5 + 0.5;
+	float ty = dot(xz, left) * 0.5 + 0.5;
 
-	gl_FragColor = texture2D(uTexture, uvRef);
+	return vec2(ty, tx);
+}
+
+void main(void) {
+
+	vec2 uvRef = normalToUv(refVec);
+
+	vec3 reflCol = texture2D(uTexture, uvRef).rgb;
+	float lum = luminance(reflCol);
+	vec3 color = vec3(0.7, 0.0, 0.0);
+
+	gl_FragColor = vec4(mix(color, reflCol / lum, lum), 1.0);
 }

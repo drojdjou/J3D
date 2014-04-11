@@ -7,9 +7,9 @@ registerDemo(function(engine) {
     this.setup = function(callback) {
         var assetsLoader = new J3D.AssetLoader();
 
-        assetsLoader.addTexture("texture", "models/textures/reg-photo.jpg");
+        assetsLoader.addTexture("texture", "models/textures/reg-photo-2.jpg");
         assetsLoader.addJSON("monkey", "models/monkeyhi.js");
-        assetsLoader.addShader("reflective", "shaders/ReflectiveSphere.glsl");
+        assetsLoader.addShader("reflective", "shaders/GlassSphere.glsl");
 
         assetsLoader.load(function(a) {
             setup(a, callback);
@@ -29,7 +29,13 @@ registerDemo(function(engine) {
 
         monkey = new J3D.Transform();
         monkey.renderer = assets.reflective;
+
         monkey.renderer.uTexture = assets.texture;
+        monkey.renderer.chromaticDispertion = [0.98, 1.00, 1.02];
+        monkey.renderer.bias = 0.1;
+        monkey.renderer.scale = 1.0;
+        monkey.renderer.power = 3.0;
+
         monkey.geometry = new J3D.Mesh(assets.monkey);
         engine.scene.add(monkey);
 
@@ -38,8 +44,10 @@ registerDemo(function(engine) {
 
     this.render = function(interactor) {
 
-        monkey.rotation.x += interactor.centerX * J3D.Time.deltaTime / 1000;
-        monkey.rotation.y += interactor.centerY * J3D.Time.deltaTime / 2000;
+        monkey.rotation.y += J3D.Time.deltaTime / 5000;
+
+        // monkey.rotation.x += interactor.centerX * J3D.Time.deltaTime / 1000;
+        // monkey.rotation.y += interactor.centerY * J3D.Time.deltaTime / 2000;
 
         engine.render();
     }
