@@ -7,9 +7,9 @@ registerDemo(function(engine) {
     this.setup = function(callback) {
         var assetsLoader = new J3D.AssetLoader();
 
-        assetsLoader.addTexture("texture", "models/textures/reg-photo-2.jpg");
+        assetsLoader.addTexture("texture", "models/textures/reg-photo-alt2-2.jpg");
         assetsLoader.addJSON("monkey", "models/monkeyhi.js");
-        assetsLoader.addShader("reflective", "shaders/GlassSphere.glsl");
+        assetsLoader.addShader("reflective", "shaders/ReflectiveSphere.glsl");
 
         assetsLoader.load(function(a) {
             setup(a, callback);
@@ -44,7 +44,7 @@ registerDemo(function(engine) {
 
     this.render = function(interactor) {
 
-        monkey.rotation.y += J3D.Time.deltaTime / 5000;
+        monkey.rotation.y += J3D.Time.deltaTime / 3000;
 
         // monkey.rotation.x += interactor.centerX * J3D.Time.deltaTime / 1000;
         // monkey.rotation.y += interactor.centerY * J3D.Time.deltaTime / 2000;

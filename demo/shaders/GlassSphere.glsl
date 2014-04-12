@@ -63,6 +63,12 @@ void main(void) {
 	ret.r = texture2D(uTexture, normalToUv(tr)).r;
 	ret.g = texture2D(uTexture, normalToUv(tg)).g;
 	ret.b = texture2D(uTexture, normalToUv(tb)).b;
+
+	lum = luminance(ret.rgb);
+	// lum = pow(lum, 4.0);
+	ret = mix(col, ret, lum);
 	
-	gl_FragColor = ret * rfac + ref;// * (1.0 - rfac);
+	// gl_FragColor = ret * rfac + ref * (1.0 - rfac);
+	gl_FragColor = ret * rfac + ref;
+	// gl_FragColor = ref;
 }
