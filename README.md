@@ -37,8 +37,8 @@ Currently the exporter makes all names lowercase (ex. `RedCube` becomes `redcube
 
 ### What version of Unity and Three has this been tested on?
 
-Unity 4.5.3f3 (it works with the free version)
-Three.js r68
+- Unity 4.5.3f3 (it works with the free version)
+- Three.js r68
 
 ### What it does export now?
 
