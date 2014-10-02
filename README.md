@@ -33,7 +33,7 @@ var cube = scene.getObjectByName('cube', true);
 var camera = scene.getObjectByName('camera', true);
 ```
 
-Currently the exporter makes all names lowercase (ex. 'RedCube' becomes 'redcube') and replaces all spaces with underscore ('red cube' becomes 'red_cube').
+Currently the exporter makes all names lowercase (ex. `RedCube` becomes `redcube`) and replaces all spaces with underscore (`red cube` becomes `red_cube`).
 
 ### What it does export now?
 
@@ -73,8 +73,8 @@ The `J3DLoader.js` class takes care of loading and parsing the scene, so the for
 
 ### Materials mapping
 
-VertexLit > THREE.MeshLambertMaterial
-Diffuse/Specular > THREE.MeshPhongMaterial
+- `VertexLit` > `THREE.MeshLambertMaterial`
+- `Diffuse/Specular` > `THREE.MeshPhongMaterial`
 
 ### Known issues
 
