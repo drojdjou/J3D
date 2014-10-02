@@ -26,7 +26,7 @@ J3D.Loader.loadJSON("model/filename.json", function(jsmeshes) {
 });
 ```
 
-If you had objects in your scene that were named `camera` or `cube`, you can find them from in Three.js like this:
+If you had objects in your Unity3d scene that are named `camera` or `cube`, you can find them in Three.js like this:
 
 ```
 var cube = scene.getObjectByName('cube');
