@@ -26,6 +26,15 @@ J3D.Loader.loadJSON("model/filename.json", function(jsmeshes) {
 });
 ```
 
+If you had objects in your scene that were named `camera` or `cube`, you can find them from in Three.js like this:
+
+```
+var cube = scene.getObjectByName('cube');
+var camera = scene.getObjectByName('camera');
+```
+
+Currently the exporter makes all names lowercase (ex. 'RedCube' becomes 'redcube') and replaces all spaces with underscore ('red cube' becomes 'red_cube').
+
 ### What it does export now?
 
 - transforms hierarchy
