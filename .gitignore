@@ -1,2 +1,7 @@
-apidocs/
-/tools/deploy.py
+node_modules
+.DS_Store
+*.DS_Store
+unity/Library
+unity/ProjectSettings
+unity/Temp
+unity/Assets/Test

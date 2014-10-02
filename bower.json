@@ -1,0 +1,10 @@
+{
+  "name": "J3D",
+  "version": "0.0.1",
+  "main": "html/J3DLoader.js",
+  "ignore": [
+    "unity",
+    "html/demo"
+    "package.json"
+  ]
+}

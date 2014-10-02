@@ -1,0 +1,7 @@
+{
+   "name": "J3D",
+   "description": "A Unity3d to Three.js exporter",
+   "version": "0.0.1",
+   "dependencies": {
+   }
+}
