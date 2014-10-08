@@ -6,15 +6,15 @@ public class TransformExportData
 	private Transform t;
 	private TransformExportData p;
 	private ColliderExportData c;
-	private int uid;
+	//private int uid;
 	private bool useQuaternion;
 	
-	public static int uidc;
+	//public static int uidc;
 
 
 	public TransformExportData (Transform t, TransformExportData p, bool useQuaternion)
 	{
-		uid = uidc++;
+		//uid = uidc++;
 		this.t = t;
 		this.p = p;
 		this.useQuaternion = useQuaternion;
@@ -22,7 +22,7 @@ public class TransformExportData
 	}
 	
 	public int UID {
-		get { return uid; }
+		get { return t.GetInstanceID(); }
 	}
 
 	public string Name {
@@ -38,7 +38,11 @@ public class TransformExportData
 	}
 
 	public string MeshName {
-		get { return NamesUtil.CleanLc (t.gameObject.GetComponent<MeshFilter> ().sharedMesh.name); }
+		get { return NamesUtil.CleanLc (t.gameObject.GetComponent<MeshFilter>().sharedMesh.name); }
+	}
+
+	public string MeshId {
+		get { return "" + t.gameObject.GetComponent<MeshFilter>().sharedMesh.GetInstanceID(); }
 	}
 
 	public string MaterialName {
@@ -138,7 +142,6 @@ public class TransformExportData
      			Debug.Log(axis);
      			axis.x *= -1;
      			axis.y *= -1;
-     			Debug.Log(axis);
      			r = Quaternion.AngleAxis(angle, axis);
      			
 

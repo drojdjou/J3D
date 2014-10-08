@@ -14,6 +14,10 @@ public class MeshExportData
 		get { return NamesUtil.CleanLc (m.name); }
 	}
 
+	public string Id {
+		get { return "" + m.GetInstanceID(); }
+	}
+
 	public string[] Vertices {
 		get {
 			List<string> vs = new List<string> ();

@@ -55,7 +55,7 @@ public class J3DExport : ScriptableWizard
 		
 		Report.level = ReportLevel.All;
 		Report.useConsole = useConsole;
-		TransformExportData.uidc = 1;
+		// TransformExportData.uidc = 1;
 		
 		Report.log ("Exporting scene: " + EditorApplication.currentScene);
 		Report.log ("Platform: " + SystemInfo.operatingSystem);
@@ -107,8 +107,8 @@ public class J3DExport : ScriptableWizard
 		st.SetAttribute ("quaternions", useQuaternions);
 		st.SetAttribute ("exportTextures", exportTextures);
 		
-		if (Camera.mainCamera != null)
-			st.SetAttribute ("background", Camera.mainCamera.backgroundColor);
+		if (Camera.main != null)
+			st.SetAttribute ("background", Camera.main.backgroundColor);
 		else
 			st.SetAttribute ("background", Color.black);
 		
@@ -157,7 +157,7 @@ public class J3DExport : ScriptableWizard
 		if (t.renderer != null) {
 			MeshExportData me = new MeshExportData (t);
 			if (!mex.ContainsKey (me.Name))
-				mex.Add (me.Name, me);
+				mex.Add (me.Id, me);
 			
 			List<string> textures = TextureUtil.ExtractTexturesNames (t.renderer.sharedMaterial);
 			

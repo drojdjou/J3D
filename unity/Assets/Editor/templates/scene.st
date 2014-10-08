@@ -90,7 +90,8 @@ $transforms:{
 		"camera": "$it.CameraName$",$endif$
 		$if(it.HasRenderer)$
 		"renderer": "$it.MaterialName$",
-		"mesh": "$it.MeshName$",$endif$
+		"mesh": "$it.MeshName$",
+		"meshId": "$it.MeshId$",$endif$
 		$if(it.HasLightmap)$
 		"lightmapIndex": $it.LightmapIndex$,
 		"lightmapTileOffset": [ $it.LightmapTileOffset; separator=","$ ],$endif$
