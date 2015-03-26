@@ -30,6 +30,8 @@ J3D.Loader.loadPlainText = function(path, onLoadedFunc) {
     request.send();
 }
 
+
+//render,scene,jscene,jmeshes,jsanim
 J3D.Loader.parseJSONScene = function(renderer, scene, jscene, jmeshes, jsanim) {
 
     var a = jscene.ambient;
