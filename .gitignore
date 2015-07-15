@@ -12,7 +12,6 @@ unity/Assets/SkinnedMeshes
 unity/Assets/StandardAssets
 unity/Assets/Vehicles
 unity/Assets/*.unity
-unity/Assets/*.unity.meta
 unity/Assets/AutoRotate.js
-unity/Assets/AutoRotate.js.meta
+unity/Assets/*.meta
 
