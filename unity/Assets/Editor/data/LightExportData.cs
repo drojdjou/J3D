@@ -8,7 +8,7 @@ public class LightExportData
 	public LightExportData (Transform t)
 	{
 		this.t = t;
-		this.lg = t.gameObject.light;
+		this.lg = t.gameObject.GetComponent<Light>();
 	}
 	
 	public string Name {

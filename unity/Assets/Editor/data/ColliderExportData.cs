@@ -8,8 +8,8 @@ public class ColliderExportData
 	
 	public ColliderExportData (Transform t) {
 		this.t = t;
-		if(t.collider != null) {
-			this.c = t.collider;
+		if(t.GetComponent<Collider>() != null) {
+			this.c = t.GetComponent<Collider>();
 		}
 	}
 	

@@ -10,7 +10,7 @@ public class MaterialExportData
 	public MaterialExportData (Transform t, List<string> textures)
 	{
 		this.t = t;
-		m = t.gameObject.renderer.sharedMaterial;
+		m = t.gameObject.GetComponent<Renderer>().sharedMaterial;
 		this.textures = textures;
 	}
 

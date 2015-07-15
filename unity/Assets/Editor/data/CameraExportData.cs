@@ -6,7 +6,7 @@ public class CameraExportData
 	
 	public CameraExportData (Transform t)
 	{
-		c = t.camera;
+		c = t.GetComponent<Camera>();
 	}
 	
 	public string Name {
@@ -18,11 +18,11 @@ public class CameraExportData
 	}
 	
 	public float Near {
-		get { return c.near; }
+		get { return c.nearClipPlane; }
 	}
 		
 	public float Far {
-		get { return c.far; }
+		get { return c.farClipPlane; }
 	}
 }
 

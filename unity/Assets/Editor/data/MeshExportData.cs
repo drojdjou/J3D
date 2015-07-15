@@ -7,7 +7,12 @@ public class MeshExportData
 
 	public MeshExportData (Transform t)
 	{
-		this.m = t.gameObject.GetComponent<MeshFilter> ().sharedMesh;
+		if(t.GetComponent<Renderer>() is MeshRenderer) {
+			MeshFilter mesh = t.gameObject.GetComponent<MeshFilter> ();
+			this.m = mesh.sharedMesh;
+		} else {
+			this.m = t.gameObject.GetComponent<SkinnedMeshRenderer> ().sharedMesh;
+		}
 	}
 
 	public string Name {
@@ -15,7 +20,7 @@ public class MeshExportData
 	}
 
 	public string Id {
-		get { return "" + m.GetInstanceID(); }
+		get { return "m-" + m.GetInstanceID(); }
 	}
 
 	public string[] Vertices {
@@ -84,6 +89,42 @@ public class MeshExportData
 				
 				vs.Add (v.w.ToString (ExporterProps.SN));
 			}
+			return vs.ToArray ();
+		}
+	}
+
+	public bool IsSkinned {
+		get {
+			return m.boneWeights.Length > 0;
+		}
+	}
+
+	public string[] BoneWeights {
+		get {
+			List<string> vs = new List<string> ();
+
+			foreach (BoneWeight v in m.boneWeights) {
+				vs.Add (v.weight0.ToString (ExporterProps.SN));
+				vs.Add (v.weight1.ToString (ExporterProps.SN));
+				vs.Add (v.weight2.ToString (ExporterProps.SN));
+				vs.Add (v.weight3.ToString (ExporterProps.SN));
+			}
+
+			return vs.ToArray ();
+		}
+	}
+
+	public string[] BoneIndices {
+		get {
+			List<string> vs = new List<string> ();
+
+			foreach (BoneWeight v in m.boneWeights) {
+				vs.Add (v.boneIndex0.ToString ());
+				vs.Add (v.boneIndex1.ToString ());
+				vs.Add (v.boneIndex2.ToString ());
+				vs.Add (v.boneIndex3.ToString ());
+			}
+
 			return vs.ToArray ();
 		}
 	}

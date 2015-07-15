@@ -7,7 +7,8 @@ using UnityEditor;
 public class AnimationExportData
 {
 	private Transform t;
-	private Animation a;
+	private RuntimeAnimatorController a;
+	private AnimationClip defaultAnimation;
 	private float samplingRate;
 	private int numSamples;
 	private Hashtable properties;
@@ -15,12 +16,21 @@ public class AnimationExportData
 	public AnimationExportData (Transform transform, bool useQuaternion, float samplesPerSec)
 	{
 		t = transform;
-		a = t.animation;
+
+		Animator ator = t.GetComponent<Animator>();
+
+		a = ator.runtimeAnimatorController;
 
 		samplingRate = 1.0f / samplesPerSec;
 
-		AnimationClipCurveData[] data = AnimationUtility.GetAllCurves (a.clip, true);
+		defaultAnimation = a.animationClips[0];
+
+		AnimationClipCurveData[] data = AnimationUtility.GetAllCurves (defaultAnimation, true);
 		properties = new Hashtable();
+
+		Debug.Log(data);
+
+		/*
 
 		foreach (AnimationClipCurveData d in data) {
 			string un = d.propertyName;
@@ -32,7 +42,7 @@ public class AnimationExportData
 			AnimationProperty p = new AnimationProperty (jn);
 			
 			numSamples = 0;
-			for (float i = 0; i <= a.clip.length; i += samplingRate) {
+			for (float i = 0; i <= defaultAnimation.length; i += samplingRate) {
 				p.Samples.Add(d.curve.Evaluate(i));
 				numSamples++;
 			}
@@ -72,6 +82,7 @@ public class AnimationExportData
 					( (AnimationProperty) properties["rz"] ).SamplesEx.Add ( r.z.ToString (ExporterProps.LN) );
 					( (AnimationProperty) properties["rw"] ).SamplesEx.Add ( r.w.ToString (ExporterProps.LN) );
 				}
+		*/
 				
 				/*
 				Vector3 r = new Vector3();
@@ -83,24 +94,20 @@ public class AnimationExportData
 				( (AnimationProperty) properties["ry"] ).SamplesEx.Add ( r.y.ToString (ExporterProps.LN) );
 				( (AnimationProperty) properties["rz"] ).SamplesEx.Add ( r.z.ToString (ExporterProps.LN) );
 				*/
-			}
+			// }
 		}
 	}
 	
 	public string Name {
-		get { return NamesUtil.CleanLc (a.clip.name); }
+		get { return NamesUtil.CleanLc (defaultAnimation.name); }
 	}
 	
 	public string Length {
-		get { return a.clip.length.ToString (ExporterProps.LN); }
+		get { return defaultAnimation.length.ToString (ExporterProps.LN); }
 	}
-	
-	public string AutoPlay {
-		get { return a.playAutomatically.ToString().ToLower(); }
-	}
-	
+		
 	public string Wrapmode {
-		get { return a.clip.wrapMode.ToString().ToLower(); }
+		get { return defaultAnimation.wrapMode.ToString().ToLower(); }
 	}
 	
 	public string SamplingRate {

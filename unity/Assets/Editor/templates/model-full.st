@@ -1,13 +1,13 @@
 {
 $meshes:{ 
-	"$it.Name$": { 
+	"$it.Id$": { 
+		"name": "$it.Name$",
 		"vertices": [$it.Vertices; separator=","$],	 
 		"normals": [$it.Normals; separator=","$],
-		"colors": [],
+		"tangents": [$it.Tangents; separator=","$],
 		"uv1": [$it.UV1; separator=","$],
 		"uv2": [$it.UV2; separator=","$],
-		"tris": [$it.Triangles; separator=","$],
-		"tangents": [$it.Tangents; separator=","$]
+		"indices": [$it.Triangles; separator=","$]
 	},
 }$
 }

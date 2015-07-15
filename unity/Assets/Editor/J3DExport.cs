@@ -24,6 +24,11 @@ public class J3DExport : ScriptableWizard
 	public bool useQuaternions = true;
 	public bool exportAnimation = false;
 	public bool exportTextures = true;
+
+	public bool exportNormals = true;
+	public bool exportTangents = false;
+	public bool exportUV2 = false;
+
 	public float samplesPerSec = 30.0f;
 	
 	public bool useConsole = false;
@@ -93,6 +98,9 @@ public class J3DExport : ScriptableWizard
 
 		StringTemplate mt = FileExport.LoadTemplate ("model");
 		mt.SetAttribute ("meshes", mex.Values);
+		mt.SetAttribute ("exportNormals", exportNormals);
+		mt.SetAttribute ("exportTangents", exportTangents);
+		mt.SetAttribute ("exportUV2", exportUV2);
 		FileExport.SaveContentsAsFile (FileExport.CleanJSON (mt), meshesPath);
 		
 		if(exportAnimation) {
@@ -147,26 +155,26 @@ public class J3DExport : ScriptableWizard
 	
 	void RecurseTransform (Transform t, TransformExportData p)
 	{
-		if (!t.gameObject.active)
+		if (!t.gameObject.activeInHierarchy)
 			return;
 		
 		TransformExportData ted = new TransformExportData (t, p, useQuaternions);
 		
 		tex.Add (ted);
 		
-		if (t.renderer != null) {
+		if (t.GetComponent<Renderer>() != null) {
 			MeshExportData me = new MeshExportData (t);
 			if (!mex.ContainsKey (me.Name))
 				mex.Add (me.Id, me);
 			
-			List<string> textures = TextureUtil.ExtractTexturesNames (t.renderer.sharedMaterial);
+			List<string> textures = TextureUtil.ExtractTexturesNames (t.GetComponent<Renderer>().sharedMaterial);
 			
 			MaterialExportData mt = new MaterialExportData (t, textures);
 			if (!mtx.ContainsKey (mt.Name))
 				mtx.Add (mt.Name, mt);
 			
 			foreach (string tn in textures) {
-				TextureExportData tx = new TextureExportData (t.renderer.sharedMaterial.GetTexture (tn));
+				TextureExportData tx = new TextureExportData (t.GetComponent<Renderer>().sharedMaterial.GetTexture (tn));
 				if (!txx.ContainsKey (tx.Name)) {
 					txx.Add (tx.Name, tx);
 				}
@@ -174,17 +182,17 @@ public class J3DExport : ScriptableWizard
 			
 		}
 		
-		if (t.light != null) {
+		if (t.GetComponent<Light>() != null) {
 			LightExportData ld = new LightExportData (t);
 			lgx.Add (ld);
 		}
 		
-		if (t.camera != null) {
+		if (t.GetComponent<Camera>() != null) {
 			CameraExportData cd = new CameraExportData (t);
 			cmx.Add (cd);
 		}
 		
-		if (exportAnimation && t.animation != null && t.animation.clip != null) {
+		if (exportAnimation && t.GetComponent<Animator>() != null) {
 			AnimationExportData ad = new AnimationExportData(t, useQuaternions, samplesPerSec);
 			anx.Add(ad);
 		}

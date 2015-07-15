@@ -21,15 +21,15 @@ public class TransformExportData
 		this.c = new ColliderExportData(t);
 	}
 	
-	public int UID {
-		get { return t.GetInstanceID(); }
+	public string UID {
+		get { return "t" + t.GetInstanceID(); }
 	}
 
 	public string Name {
 		get { return NamesUtil.CleanLc (t.name); }
 	}
 
-	public int Parent {
+	public string Parent {
 		get { return p.UID; }
 	}
 
@@ -38,28 +38,42 @@ public class TransformExportData
 	}
 
 	public string MeshName {
-		get { return NamesUtil.CleanLc (t.gameObject.GetComponent<MeshFilter>().sharedMesh.name); }
+		get { 
+			string m;
+
+			if(this.HasBones) m = t.gameObject.GetComponent<SkinnedMeshRenderer>().sharedMesh.name;
+			else m = t.gameObject.GetComponent<MeshFilter>().sharedMesh.name;
+
+			return NamesUtil.CleanLc (m); 
+		}
 	}
 
 	public string MeshId {
-		get { return "" + t.gameObject.GetComponent<MeshFilter>().sharedMesh.GetInstanceID(); }
+		get { 
+			int m;
+
+			if(this.HasBones) m = t.gameObject.GetComponent<SkinnedMeshRenderer>().sharedMesh.GetInstanceID();
+			else m = t.gameObject.GetComponent<MeshFilter>().sharedMesh.GetInstanceID();
+
+			return "m-" + m; 
+		}
 	}
 
 	public string MaterialName {
-		get { return NamesUtil.CleanMat (t.gameObject.renderer.sharedMaterial.name); }
+		get { return NamesUtil.CleanMat (t.gameObject.GetComponent<Renderer>().sharedMaterial.name); }
 	}
 	
 	public bool HasLightmap {
-		get { return t.gameObject.renderer.lightmapIndex != 255 && t.gameObject.renderer.lightmapIndex != -1; }
+		get { return t.gameObject.GetComponent<Renderer>().lightmapIndex != 255 && t.gameObject.GetComponent<Renderer>().lightmapIndex != -1; }
 	}
 	
 	public int LightmapIndex {
-		get { return t.gameObject.renderer.lightmapIndex; }
+		get { return t.gameObject.GetComponent<Renderer>().lightmapIndex; }
 	}
 	
 	public string[] LightmapTileOffset {
 		get {
-			Vector4 p = t.gameObject.renderer.lightmapTilingOffset;
+			Vector4 p = t.gameObject.GetComponent<Renderer>().lightmapScaleOffset;
 			return new string[] { 
 				p.x.ToString (ExporterProps.LN), 
 				p.y.ToString (ExporterProps.LN), 
@@ -71,31 +85,31 @@ public class TransformExportData
 	}
 
 	public string LightName {
-		get { return NamesUtil.CleanLc (t.gameObject.light.name); }
+		get { return NamesUtil.CleanLc (t.gameObject.GetComponent<Light>().name); }
 	}
 
 	public string CameraName {
-		get { return NamesUtil.CleanLc (t.gameObject.camera.name); }
+		get { return NamesUtil.CleanLc (t.gameObject.GetComponent<Camera>().name); }
 	}
 	
 	public string AnimationName {
-		get { return NamesUtil.CleanLc (t.animation.clip.name); }
+		get { return NamesUtil.CleanLc (t.GetComponent<Animation>().clip.name); }
 	}
 
 	public bool HasRenderer {
-		get { return t.gameObject.renderer != null; }
+		get { return t.gameObject.GetComponent<Renderer>() != null; }
 	}
 
 	public bool HasLight {
-		get { return t.gameObject.light != null; }
+		get { return t.gameObject.GetComponent<Light>() != null; }
 	}
 
 	public bool HasCamera {
-		get { return t.gameObject.camera != null; }
+		get { return t.gameObject.GetComponent<Camera>() != null; }
 	}
 	
 	public bool HasAnimation {
-		get { return t.animation != null; }
+		get { return t.GetComponent<Animation>() != null; }
 	}
 	
 	public bool HasCollider {
@@ -129,21 +143,19 @@ public class TransformExportData
 		}
 	}
 	
-		public string[] Rotation {
+	public string[] Rotation {
 		get {
 			if(useQuaternion) {
 
 				Quaternion r = t.localRotation;
 
-				
 				float angle = 0.0F;
      			Vector3 axis = Vector3.zero;
      			r.ToAngleAxis(out angle, out axis);
-     			Debug.Log(axis);
+     			//Debug.Log(axis);
      			axis.x *= -1;
      			axis.y *= -1;
      			r = Quaternion.AngleAxis(angle, axis);
-     			
 
 				return new string[] { (r.x).ToString (ExporterProps.LN), (r.y).ToString (ExporterProps.LN), (r.z).ToString (ExporterProps.LN), (r.w).ToString (ExporterProps.LN) };	
 			} else {
@@ -207,6 +219,67 @@ public class TransformExportData
 			return r;
 		}
 	}
+
+	
+	public bool HasBones {
+		get {
+			return t.gameObject.GetComponent<SkinnedMeshRenderer> () != null;
+		}
+	}
+
+	public string RootBone {
+		get {
+			SkinnedMeshRenderer r = t.gameObject.GetComponent<SkinnedMeshRenderer> ();
+			Transform b = r.bones[0];
+			return "t" + b.GetInstanceID();
+		}
+	}
+
+	public string[] Bones {
+		get {
+			List<string> vs = new List<string> ();
+
+			SkinnedMeshRenderer r = t.gameObject.GetComponent<SkinnedMeshRenderer> ();
+
+			foreach (Transform tc in r.bones) {
+				vs.Add("t" + tc.GetInstanceID());
+			}
+
+			return vs.ToArray();
+		}
+	}
+
+	public string[] BindPoses {
+		get {
+			List<string> vs = new List<string>();
+			Mesh m = t.gameObject.GetComponent<SkinnedMeshRenderer>().sharedMesh;
+
+			foreach (Matrix4x4 mx in m.bindposes) {
+				Quaternion r = Quaternion.LookRotation(mx.GetColumn(2), mx.GetColumn(1));
+				string[] ra = new string[] { (r.x).ToString (ExporterProps.LN), (r.y).ToString (ExporterProps.LN), (r.z).ToString (ExporterProps.LN), (r.w).ToString (ExporterProps.LN) };
+				vs.Add("[" + string.Join(",", ra) + "]");
+			}
+
+			return vs.ToArray();
+		}
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

@@ -62,14 +62,14 @@ $cameras:{
 "transforms": [
 $transforms:{	
 	{
-		"uid": $it.UID$,
+		"uid": "$it.UID$",
         "name": "$it.name$",
 		$if(it.HasParent)$
-		"parent": $it.Parent$,$endif$
+		"parent": "$it.Parent$",$endif$
 		"position": [ $it.Position; separator=","$ ],
 		"rotation": [ $it.Rotation; separator=","$ ],
 		$if(it.HasScale)$
-		"scale": [ $it.Scale; separator=","$ ],$endif$
+		"scale": [$it.Scale; separator=","$],$endif$
 		$if(it.HasAnimation)$
 		"animation": "$it.AnimationName$",$endif$
 		$if(it.HasCollider)$
@@ -84,6 +84,9 @@ $transforms:{
 		    $if(it.Collider.HasMesh)$
 		    "mesh": "$it.Collider.MeshName$",$endif$
 		},$endif$
+		$if(it.HasBones)$
+		"bones": ["$it.Bones; separator="\",\""$"],
+		"bindposes": [ $it.BindPoses; separator=","$ ],$endif$
 		$if(it.HasLight)$
 		"light": "$it.LightName$",$endif$
 		$if(it.HasCamera)$
