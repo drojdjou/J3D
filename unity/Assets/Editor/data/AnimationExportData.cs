@@ -95,7 +95,7 @@ public class AnimationExportData
 				( (AnimationProperty) properties["rz"] ).SamplesEx.Add ( r.z.ToString (ExporterProps.LN) );
 				*/
 			// }
-		}
+		//}
 	}
 	
 	public string Name {
