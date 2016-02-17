@@ -7,9 +7,9 @@ A utility to export static [Unity3d](http://unity3d.com/) scenes to [Three.js](h
 
 ### Usage
 
-Drop the contents of the `unity/Editor` folder in your Unity project `Assets` folder. A new option should appear in the top menu caled J3D. 
+Drop the contents of the `unity/Editor` folder in your Unity project `Assets` folder. A new option should appear in the top menu caled J3D.
 
-When you have your scene ready, select all objects (or those you want to export) and select J3D > Export. A dialog will appear with some settings (docs for this coming soon). 
+When you have your scene ready, select all objects (or those you want to export) and select J3D > Export. A dialog will appear with some settings (docs for this coming soon).
 
 When you hit Export, it will create two files:
 
@@ -37,7 +37,7 @@ Currently the exporter makes all names lowercase (ex. `RedCube` becomes `redcube
 
 ### What version of Unity and Three has this been tested on?
 
-- Unity 4.5.3f3 (it works with the free version)
+- Unity 5.3.2f1 (it works with the free version)
 - Three.js r68
 
 ### What it does export now?

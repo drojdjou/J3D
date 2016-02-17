@@ -165,7 +165,7 @@ public class J3DExport : ScriptableWizard
 		if (t.GetComponent<Renderer>() != null) {
 			MeshExportData me = new MeshExportData (t);
 			if (!mex.ContainsKey (me.Name))
-				mex.Add (me.Id, me);
+				mex.Add (me.Name, me);
 			
 			List<string> textures = TextureUtil.ExtractTexturesNames (t.GetComponent<Renderer>().sharedMaterial);
 			
