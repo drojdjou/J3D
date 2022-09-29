@@ -29,11 +29,3 @@ void main(void) {
 	vec4 tc = texture2D(uColorSampler, vec2(vLight, 0.5) );
 	gl_FragColor = vec4(tc.rgb, 1.0);
 }
-
-
-
-
-
-
-
-

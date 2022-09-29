@@ -159,7 +159,7 @@ J3D.ShaderUtil.setUniform = function(name, dst, src) {
 }
 
 J3D.ShaderUtil.parseGLSL = function(source){
-	var ls = source.split("\n");
+	var ls = source.split(/(\r\n|\r|\n)/);
 	
 	var vs = "";
 	var fs = "";
