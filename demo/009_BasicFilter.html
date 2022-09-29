@@ -20,12 +20,12 @@
 	//#name Pixelate
 	//#author bartekd
 	
-	//#include CommonFilterInclude
 	
 	//#vertex
 	//#include BasicFilterVertex
 	
 	//#fragment
+	//#include CommonFilterInclude
 	uniform sampler2D uTexture;
     uniform vec2 wsize;
     uniform float cellsize;
@@ -111,7 +111,10 @@
 		cube.renderer = J3D.BuiltinShaders.fetch("Phong");
 		cube.renderer.specularIntensity = 10;
 		cube.renderer.shininess = 32;
-        J3D.Loader.loadJSON("models/monkeyhi.js", function(j) {  cube.geometry = new J3D.Mesh(j); } );
+        J3D.Loader.loadJSON("models/monkeyhi.js", function(j) {  
+			cube.geometry = new J3D.Mesh(j); 
+			draw();
+		} );
 		
 		var camera = new J3D.Transform();
 		camera.camera = new J3D.Camera();
@@ -123,9 +126,9 @@
 		post = new J3D.Postprocess(engine);
 		post.filter = new J3D.ShaderUtil.parseGLSL(document.getElementById("filter").firstChild.nodeValue);
 
-		draw();
+		// draw();
 	}
-	
+
 	function draw() {
 		requestAnimationFrame(draw);	
 		
@@ -137,8 +140,11 @@
         post.filter.roundness = props.roundness;
         post.filter.softness = props.softness;
 		
-		if(props.enabled) post.render();
-        else engine.render();
+		if(props.enabled) {
+			post.render();
+		} else {
+			engine.render();
+		}
 	}
 	
 </script>

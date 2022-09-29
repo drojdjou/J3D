@@ -137,6 +137,8 @@ J3D.Engine = function(canvas, j3dSettings, webglSettings) {
  * @param dontClear Boolean, if set to false the current contents of the screen won;t be removed before new frame is drawn.
  */
 J3D.Engine.prototype.render = function(dontClear) {
+    gl.bindTexture(gl.TEXTURE_2D, null);
+    
     J3D.Time.tick();
 
     if (!dontClear) gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
