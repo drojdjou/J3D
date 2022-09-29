@@ -147,7 +147,10 @@ function onMouseMove(e) {
 
 function readGamepadData() {
 
-    var glist = navigator.webkitGamepads || navigator.webkitGetGamepads();
+    var glist = navigator.webkitGamepads || (navigator.webkitGetGamepads && navigator.webkitGetGamepads());
+
+    if(!glist) return;
+
     gamepad = glist[0];
 
     if (!gamepad) return false;
