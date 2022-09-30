@@ -75,11 +75,10 @@
         engine.scene.add(camera, light0, light1, light2, light3);
 
         // Monkey material
-        var moMat = J3D.BuiltinShaders.fetch("Gouraud");
-        moMat.specularIntensity = 0.1;//0.001;
-        moMat.shininess = 1;//0.001;
+        var moMat = J3D.BuiltinShaders.fetch("Phong");
         moMat.color = J3D.Color.createWhite().multiplyRGB(0.5);
-        console.log(moMat.color);
+        moMat.specularIntensity = 1;//0.001;
+        moMat.shininess = 10;//0.001;
         moMat.hasColorTexture = false;
 
         // Container material
@@ -118,7 +117,8 @@
         J3D.Loader.loadJSON("models/monkeyhi.js", function(j) {
             mo.geometry = new J3D.Mesh(j);
         });
-        mo.scale = v3.ONE().mul(0.66);
+        mo.position.z = 2.0;
+        // mo.scale = v3.ONE().mul(0.66);
         mo.renderer = moMat;
 
         cr = new J3D.Transform();
