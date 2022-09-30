@@ -1,0 +1,3 @@
+cp -R * ~/sites/j3d/
+rm -Rf ~/sites/j3d/tools/
+rm -Rf ~/sites/j3d/README.md
