@@ -30,8 +30,8 @@ J3D was created by [Bartek Drozdz](http://www.everyday3d.com/). You can contact 
 
 ## Demos & experiments
 
-[![Hello Cube](/thumbs/001_hellocube.jpg)]
-(/demo/000_HelloCube.html)
+[![Hello Cube](/thumbs/001_hellocube.jpg)](/demo/000_HelloCube.html)
+
 [![Lights](/thumbs/002_lights.jpg)]
 (/demo/001_Lights.html)
 [![Scene exported from Unity3d](/thumbs/003_scene.jpg)]
