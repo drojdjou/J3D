@@ -23,54 +23,54 @@ J3D was created by [Bartek Drozdz](http://www.everyday3d.com/). You can contact 
 
 ## Projects
 
-[![Sundance Rectify](http://www.everyday3d.com/j3d/thumbs/proj_rectify.jpg)]
+[![Sundance Rectify](/thumbs/proj_rectify.jpg)]
 (http://www.mylifein20years.com/)
-[![Tool Christmas Card](http://www.everyday3d.com/j3d/thumbs/proj_toolxmas.jpg)]
+[![Tool Christmas Card](/thumbs/proj_toolxmas.jpg)]
 (http://demo.toolprototype.com/toolxmas/)
 
 ## Demos & experiments
 
-[![Hello Cube](http://www.everyday3d.com/j3d/thumbs/001_hellocube.jpg)]
-(http://www.everyday3d.com/j3d/demo/000_HelloCube.html)
-[![Lights](http://www.everyday3d.com/j3d/thumbs/002_lights.jpg)]
-(http://www.everyday3d.com/j3d/demo/001_Lights.html)
-[![Scene exported from Unity3d](http://www.everyday3d.com/j3d/thumbs/003_scene.jpg)]
-(http://www.everyday3d.com/j3d/demo/002_Scene.html)
-[![Cubemap / Reflective material / Skybox](http://www.everyday3d.com/j3d/thumbs/004_skybox.jpg)]
-(http://www.everyday3d.com/j3d/demo/003_Cubemap.html)
-[![Glass / Refraction, reflection, fresnel, chromatic dispersion](http://www.everyday3d.com/j3d/thumbs/005_glass.jpg)]
-(http://www.everyday3d.com/j3d/demo/004_Glass.html)
-[![1.000.000 static particles (or more :)](http://www.everyday3d.com/j3d/thumbs/006_particles.jpg)]
-(http://www.everyday3d.com/j3d/demo/005_Particles.html)
-[![Particle stream](http://www.everyday3d.com/j3d/thumbs/007_stream.jpg)]
-(http://www.everyday3d.com/j3d/demo/006_Particle_animation.html)
-[![Texture tile and offset](http://www.everyday3d.com/j3d/thumbs/008_tileoffset.jpg)]
-(http://www.everyday3d.com/j3d/demo/007_TileAndOffset.html)
-[![Lightmapped scene](http://www.everyday3d.com/j3d/thumbs/009_lightmap.jpg)]
-(http://www.everyday3d.com/j3d/demo/008_Lightmap.html)
-[![Basic filter](http://www.everyday3d.com/j3d/thumbs/010_basicfilter.jpg)]
-(http://www.everyday3d.com/j3d/demo/009_BasicFilter.html)
-[![Toon shading](http://www.everyday3d.com/j3d/thumbs/011_toon.jpg)]
-(http://www.everyday3d.com/j3d/demo/010_ToonShading.html)
-[![Plasma Effect](http://www.everyday3d.com/j3d/thumbs/012_plasma.jpg)]
-(http://www.everyday3d.com/j3d/demo/011_Plasma.html)
-[![Particle Rain](http://www.everyday3d.com/j3d/thumbs/013_rain.jpg)]
-(http://www.everyday3d.com/j3d/demo/012_ParticleRain.html)
-[![Paper](http://www.everyday3d.com/j3d/thumbs/014_paper.jpg)]
-(http://www.everyday3d.com/j3d/demo/013_Paper.html)
-[![Head](http://www.everyday3d.com/j3d/thumbs/015_head.jpg)]
-(http://www.everyday3d.com/j3d/demo/014_Head.html)
-[![Persistence](http://www.everyday3d.com/j3d/thumbs/016_persistence.jpg)]
-(http://www.everyday3d.com/j3d/demo/015_Persistence.html)
-[![Blur](http://www.everyday3d.com/j3d/thumbs/017_blur.jpg)]
-(http://www.everyday3d.com/j3d/demo/016_BlurFilter.html)
-[![Scene management](http://www.everyday3d.com/j3d/thumbs/018_sceneman.jpg)]
-(http://www.everyday3d.com/j3d/demo/017_SceneManagement.html)
-[![Globe](http://www.everyday3d.com/j3d/thumbs/019_sphere.png)]
-(http://www.everyday3d.com/j3d/demo/018_Sphere.html)
-[![Terrain shader](http://www.everyday3d.com/j3d/thumbs/020_terrain.jpg)]
-(http://www.everyday3d.com/j3d/demo/019_Terrain.html)
-[![Webcam texture (Canary, Opera Labs)](http://www.everyday3d.com/j3d/thumbs/023_webrtc.jpg)]
-(http://www.everyday3d.com/j3d/demo/022_Webcam.html)
-[![Webcam particles (Canary, Opera Labs)](http://www.everyday3d.com/j3d/thumbs/024_webcamParticles.jpg)]
-(http://www.everyday3d.com/j3d/demo/023_Webcam_Particles.html)
+[![Hello Cube](/thumbs/001_hellocube.jpg)]
+(/demo/000_HelloCube.html)
+[![Lights](/thumbs/002_lights.jpg)]
+(/demo/001_Lights.html)
+[![Scene exported from Unity3d](/thumbs/003_scene.jpg)]
+(/demo/002_Scene.html)
+[![Cubemap / Reflective material / Skybox](/thumbs/004_skybox.jpg)]
+(/demo/003_Cubemap.html)
+[![Glass / Refraction, reflection, fresnel, chromatic dispersion](/thumbs/005_glass.jpg)]
+(/demo/004_Glass.html)
+[![1.000.000 static particles (or more :)](/thumbs/006_particles.jpg)]
+(/demo/005_Particles.html)
+[![Particle stream](/thumbs/007_stream.jpg)]
+(/demo/006_Particle_animation.html)
+[![Texture tile and offset](/thumbs/008_tileoffset.jpg)]
+(/demo/007_TileAndOffset.html)
+[![Lightmapped scene](/thumbs/009_lightmap.jpg)]
+(/demo/008_Lightmap.html)
+[![Basic filter](/thumbs/010_basicfilter.jpg)]
+(/demo/009_BasicFilter.html)
+[![Toon shading](/thumbs/011_toon.jpg)]
+(/demo/010_ToonShading.html)
+[![Plasma Effect](/thumbs/012_plasma.jpg)]
+(/demo/011_Plasma.html)
+[![Particle Rain](/thumbs/013_rain.jpg)]
+(/demo/012_ParticleRain.html)
+[![Paper](/thumbs/014_paper.jpg)]
+(/demo/013_Paper.html)
+[![Head](/thumbs/015_head.jpg)]
+(/demo/014_Head.html)
+[![Persistence](/thumbs/016_persistence.jpg)]
+(/demo/015_Persistence.html)
+[![Blur](/thumbs/017_blur.jpg)]
+(/demo/016_BlurFilter.html)
+[![Scene management](/thumbs/018_sceneman.jpg)]
+(/demo/017_SceneManagement.html)
+[![Globe](/thumbs/019_sphere.png)]
+(/demo/018_Sphere.html)
+[![Terrain shader](/thumbs/020_terrain.jpg)]
+(/demo/019_Terrain.html)
+[![Webcam texture (Canary, Opera Labs)](/thumbs/023_webrtc.jpg)]
+(/demo/022_Webcam.html)
+[![Webcam particles (Canary, Opera Labs)](/thumbs/024_webcamParticles.jpg)]
+(/demo/023_Webcam_Particles.html)
