@@ -8,7 +8,7 @@
 
 //#fragment
 uniform sampler2D uTexture;
-uniform float samplingOffset;
+uniform vec2 samplingOffset;
 uniform vec2 lightPosition;
 varying vec2 vTextureCoord;
 
@@ -16,10 +16,10 @@ void main(void) {
     vec2 tx = vTextureCoord;
     vec4 c = texture2D(uTexture, vTextureCoord);
 
-    vec4 l = texture2D(uTexture, tx + vec2(-samplingOffset, 0));
-    vec4 r = texture2D(uTexture, tx + vec2( samplingOffset, 0));
-    vec4 t = texture2D(uTexture, tx + vec2(0,  samplingOffset));
-    vec4 b = texture2D(uTexture, tx + vec2(0, -samplingOffset));
+    vec4 l = texture2D(uTexture, tx + vec2(-samplingOffset.x, 0));
+    vec4 r = texture2D(uTexture, tx + vec2( samplingOffset.x, 0));
+    vec4 t = texture2D(uTexture, tx + vec2(0,  samplingOffset.y));
+    vec4 b = texture2D(uTexture, tx + vec2(0, -samplingOffset.y));
 
     vec3 ld = vec3(sin( (c.r - l.r) * 3.14 * 0.5 ), 0, cos( (c.r - l.r) * 3.14 * 0.5 ));
     vec3 rd = vec3(sin( (c.r - r.r) * 3.14 * 0.5 ), 0, cos( (c.r - r.r) * 3.14 * 0.5 ));

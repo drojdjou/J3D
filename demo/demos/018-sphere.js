@@ -31,7 +31,7 @@ registerDemo(function(engine) {
 
         camera = new J3D.Transform();
         camera.camera = new J3D.Camera();
-        camera.position.z = 90;
+        camera.position.z = window.innerWidth < 600 ? 150 : 90;
         engine.scene.setCamera(camera);
         root.add(camera);
 
@@ -130,8 +130,8 @@ registerDemo(function(engine) {
         my = e.clientY;
 
         if (isDown) {
-            csrX = -( ((mx / window.innerWidth) * 2 - 1) - dx );
-            csrY = -( ((my / window.innerHeight) * 2 - 1) - dy );
+            csrX = ( ((mx / window.innerWidth) * 2 - 1) - dx );
+            csrY = ( ((my / window.innerHeight) * 2 - 1) - dy );
         }
     }
 

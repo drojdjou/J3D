@@ -9,7 +9,7 @@ J3D.Water = function(engine) {
     this.waterHeightmapGenerator = null;
     this.waterShader = null;
 
-    this.samplingOffset = 0.02;
+    this.samplingOffset = [0.025, 0.025];
 
     this.render = function(mx, my) {
         var program;

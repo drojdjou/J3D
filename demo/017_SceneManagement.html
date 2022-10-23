@@ -3,6 +3,7 @@
 <head>
 <title>017 | Benchmark | J3D</title>
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable = no">
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 
 <link rel="stylesheet" href="common/common.css"/>
@@ -50,16 +51,14 @@
     var greenMat, orangeMat, simpleMat;
     var simpleMode = false;
 
-    var instruction = "<u>A</u> add cube | <u>M</u> add 100 cubes<br><u>R</u> remove cube | <u>Q</u> remove all cubes<br><u>F</u> toggle simple shader<br><u>P</u> toggle post effect | Cubes on screen: ";
-
     window.onload = function() {
         if (!J3D.Capabilities.webgl) return;
 
         J3D.Performance.domElement.setAttribute('class', 'perf');
         // document.body.appendChild(J3D.Performance.domElement);
 
-        stats = new Stats();
-        document.body.appendChild(stats.domElement);
+        // stats = new Stats();
+        // document.body.appendChild(stats.domElement);
 
         engine = new J3D.Engine();
         engine.setClearColor(J3D.Color.white);
@@ -198,8 +197,8 @@
     function draw() {
         requestAnimationFrame(draw);
 
-        J3D.Performance.clear();
-        stats.begin();
+        // J3D.Performance.clear();
+        // stats.begin();
 
         var dsec = J3D.Time.deltaTime / 1000;
 
@@ -215,13 +214,21 @@
 
         (usepost) ? post.render() : engine.render();
 
-        stats.end();
+        // stats.end();
         // J3D.Performance.printInfo();
     }
 
 </script>
 </head>
 <body>
+    <div id="details">
+        <u>A</u> add cube<br> 
+        <u>M</u> add 100 cubes<br> 
+        <u>R</u> remove cube<br> 
+        <u>Q</u> remove all cubes<br> 
+        <u>F</u> toggle simple shader<br> 
+        <u>P</u> toggle post effect
+    </div>
 </body>
 </html>
 

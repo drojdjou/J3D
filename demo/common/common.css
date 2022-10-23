@@ -98,13 +98,13 @@ p {
 
 #details {
     color: #ffffff;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 20px;
     background-color: #000000;
     text-align: left;
     position: absolute;
-    padding: 4 4 4 4;
-    top: 28px;
+    padding: 8px;
+    top: 0px;
     left: 0px;
     z-index: 1;
 }

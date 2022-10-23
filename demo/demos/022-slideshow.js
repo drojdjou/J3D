@@ -1,7 +1,5 @@
 registerDemo(function(engine) {
 
-    document.title = "Slideshow | J3D";
-
     var post, delta = 1;
     var textures = [];
     var textureIndex = 0;

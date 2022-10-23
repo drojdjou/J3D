@@ -35,8 +35,6 @@ registerDemo(function(engine) {
         root.add(camera);
         engine.scene.add(root);
 
-        console.log(assets.cubemap);
-
         engine.scene.addSkybox(assets.cubemap);
 
         var monkey = new J3D.Transform();

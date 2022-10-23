@@ -21,7 +21,7 @@
     var theta = 0;
     var redLightMax = 0.33;
 
-    var stats;
+    // var stats;
 
     var ambientColor, ambientChecbox;
     var redCheckbox, blueCheckbox, yellowCheckbox, animateCheckbox;
@@ -30,11 +30,10 @@
 
         if (!J3D.Capabilities.webgl) return;
 
-        J3D.Performance.domElement.setAttribute('class', 'perf');
-        document.body.appendChild(J3D.Performance.domElement);
-
-        stats = new Stats();
-        document.body.appendChild(stats.domElement);
+        // J3D.Performance.domElement.setAttribute('class', 'perf');
+        // document.body.appendChild(J3D.Performance.domElement);
+        // stats = new Stats();
+        // document.body.appendChild(stats.domElement);
 
         // Create engine
         engine = new J3D.Engine();
@@ -47,10 +46,12 @@
         yellowCheckbox = document.getElementById("yellow");
         animateCheckbox = document.getElementById("anim");
 
+        var mobileScreen = window.innerWidth < 600
+
         // Setup camera
         camera = new J3D.Transform();
         camera.camera = new J3D.Camera();
-        camera.position.z = -3;
+        camera.position.z = mobileScreen ? -6 : -4;
         camera.rotation.y = Math.PI;
         engine.scene.setCamera(camera);
 
@@ -90,7 +91,7 @@
         ctMat.colorTexture = new J3D.Texture("models/textures/containerbake512.jpg");
         ctMat.hasColorTexture = true;
 
-        // C
+        // Crate
         crMat = J3D.BuiltinShaders.fetch("Phong");
         crMat.color = J3D.Color.white;
         crMat.specularIntensity = 0.1;
@@ -108,7 +109,8 @@
         // Setup transforms and meshes
 
         ct = new J3D.Transform();
-        ct.position.x = -1.5;
+        ct.position.x = mobileScreen ? 0 : -1.5;
+        ct.position.y = mobileScreen ? -1.5 : 0;
         J3D.Loader.loadJSON("models/container.js", function(j) {
             ct.geometry = new J3D.Mesh(j);
         });
@@ -123,7 +125,8 @@
         mo.renderer = moMat;
 
         cr = new J3D.Transform();
-        cr.position.x = 1.5;
+        cr.position.x = mobileScreen ? 0 : 1.5;
+        cr.position.y = mobileScreen ? 1.5 : 0;
         cr.position.z = 0.5;
         J3D.Loader.loadJSON("models/crate.js", function(j) {
             cr.geometry = new J3D.Mesh(j);
@@ -148,8 +151,8 @@
 
     function draw() {
         requestAnimationFrame(draw);
-        J3D.Performance.clear();
-        stats.begin();
+        // J3D.Performance.clear();
+        // stats.begin();
 
         light1.enabled = yellowCheckbox.checked;
         light2.enabled = redCheckbox.checked;
@@ -179,8 +182,8 @@
 
         engine.render();
 
-        stats.end();
-        J3D.Performance.printInfo();
+        // stats.end();
+        // J3D.Performance.printInfo();
     }
 
 </script>
