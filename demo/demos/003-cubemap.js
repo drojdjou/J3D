@@ -1,4 +1,4 @@
-registerDemoregisterDemo(function(engine) {
+registerDemo(function(engine) {
 
     document.title = "Reflection | J3D";
 

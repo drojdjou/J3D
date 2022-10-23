@@ -3,6 +3,7 @@
 <head> 
 <title>004 | Glass / Refraction, reflection, fresnel, chromatic dispersion | J3D</title> 
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable = no">
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
 
 <link rel="stylesheet" href="common/common.css"/>
@@ -64,7 +65,7 @@
 	function setup(){
 		camera = new J3D.Transform();
 		camera.camera = new J3D.Camera({far: 100});
-		camera.position.z = 5;	
+		camera.position.z = window.innerWidth < 600 ? 8 : 5;	
 		engine.scene.setCamera(camera);
 		
 		root = new J3D.Transform();
@@ -86,12 +87,11 @@
 		shader.uCubemap = cubemap;
 		
 		model = new J3D.Transform();
-		model.rotation.x = 0.2;	
 		model.renderer = shader;
 		J3D.Loader.loadJSON("models/skull.js", function(j) { model.geometry = new J3D.Mesh(j); } );
 		engine.scene.add(model);
 
-		document.onmousemove = onMouseMove;
+		document.addEventListener("mousemove", onMouseMove);
 		
 		draw();
 	}

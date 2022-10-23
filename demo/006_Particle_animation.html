@@ -1,8 +1,9 @@
 <html>
 
 <head>
-    <title></title>
+    <title>006 | Particle Animation | J3D</title>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable = no">
     <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 
     <link rel="stylesheet" href="common/common.css"/>
@@ -27,7 +28,7 @@
             if (!J3D.Capabilities.webgl) return;
 
             J3D.Performance.domElement.setAttribute('class', 'perf');
-            //document.body.appendChild(J3D.Performance.domElement);
+            // document.body.appendChild(J3D.Performance.domElement);
 
             engine = new J3D.Engine();
 
@@ -41,7 +42,7 @@
             requestAnimationFrame(render);
             J3D.Performance.clear();
             demo.render();
-            J3D.Performance.printInfo();
+            // J3D.Performance.printInfo();
         }
 
     </script>

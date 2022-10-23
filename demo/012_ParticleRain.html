@@ -4,6 +4,7 @@
 <title>012 | Particle Rain | J3D</title> 
 <!-- Elephant model: http://www.3dmodelfree.com/models//27289-0.htm -->
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable = no">
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
 
 <link rel="stylesheet" href="common/common.css"/>
@@ -96,7 +97,7 @@
 		post.filter = new J3D.ShaderUtil.parseGLSL(document.getElementById("rain").firstChild.nodeValue);
 		
 		var cd = [];
-		for(var i = 0; i < 50000; i++) {
+		for(var i = 0; i < 25000; i++) {
 			cd.push(Math.random(), Math.random(), Math.random() * Math.PI, Math.random() * Math.PI);
 		}
 		
