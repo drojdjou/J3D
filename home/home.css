@@ -1,0 +1,57 @@
+body {
+    font-family: Georgia, Arial, sans-serif;
+    font-size: 1rem;
+    background-color: #222;
+    color: #fff;
+}
+
+a { 
+    color: #fff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #107ec7;
+}
+
+h1 {
+    font-weight: 400;
+    font-size: 3em;
+}
+
+h3 {
+    font-size: 1.6em;
+    font-weight: 400;
+    margin: 0 0 8px 0;
+}
+
+p {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.33;
+    color: #aaa;
+}
+
+ul {
+    position: relative;
+    left: 50%;
+    list-style-type: none;
+    padding: 0;
+    width: 680px;
+    margin-left: -340px;
+}
+
+li {
+    clear: both;
+    overflow: auto;
+    display: block;
+    margin: 16px 0;
+}
+
+li img {
+    display: block;
+    float: left;
+    margin: 0 16px 0 0;
+}
+
