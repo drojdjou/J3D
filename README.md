@@ -1,24 +1,22 @@
 ## J3D
 
-J3D is a WebGL based 3D engine. I use it for my personal experiments and demos. It's a playground rather than a production environment. It consists of a Javascript rendering engine and a C#/Unity3d scene exporter.
+J3D was a WebGL based 3D engine. I used it for my personal experiments and demos. It's a playground rather than a production environment. It consists of a Javascript rendering engine and a C#/Unity3d scene exporter.
 
-If you would like to use it in your projects and experiments or contribute you are more than welcome! ~~J3D currently does not have any kind of documentation~~ As far as documentation goes, there are API docs and a couple of tutorials listed below. Please report bugs in the issues section - I'll do my best to fix them.
+Most of the demos should work in all WebGL enabled browsers, including [Chrome](http://www.google.com/chrome/), [Firefox](http://www.mozilla.com/en-US/firefox/), [Opera 12 Alpha](http://www.opera.com/browser/next/) and Safari (with WebGL enabled) on desktop. Some demos only run in alpha/nightly builds of selected browsers. Some demos run in [Firefox on Android](http://www.mozilla.com/en-US/m/beta).
 
-Most of the demos should work work in all WebGL enabled browsers, including [Chrome](http://www.google.com/chrome/), [Firefox](http://www.mozilla.com/en-US/firefox/), [Opera 12 Alpha](http://www.opera.com/browser/next/) and Safari (with WebGL enabled) on desktop. Some demos only run in alpha/nightly builds of selected browsers. Some demos run in [Firefox on Android](http://www.mozilla.com/en-US/m/beta).
+UPDATE 2022: I reviewed the demos & experiments and updated them when necessary. WebGL is widely suported in 2022, so the experiments should work in any browser, including mobile. I also created an archive web page with [all the experiments](https://j3d.bartekdrozdz.com).
 
-
-J3D was created by [Bartek Drozdz](http://www.everyday3d.com/). You can contact me via email at bartek(a)everyday3d.com or on Twitter [@bartekd](http://twitter.com/bartekd)
-
-## API Docs
-
-[API documentation](http://everyday3d.com/j3d/apidocs/)
+J3D was created by [Bartek Drozdz](https://www.everyday3d.com/).
 
 ## Tutorials
-
 [How to create a cube](https://github.com/drojdjou/J3D/wiki/How-to-create-a-cube)
-
 [Unity exporter tutorial](https://github.com/drojdjou/J3D/wiki/Unity-exporter-tutorial)
 
+<!--
+## API Docs
+[API documentation](http://everyday3d.com/j3d/apidocs/)
+
+## Articles
 [Shaders tutorial in .net magazine](http://www.netmagazine.com/tutorials/create-amazing-webgl-effects-shaders)
 
 ## Projects
@@ -50,3 +48,4 @@ J3D was created by [Bartek Drozdz](http://www.everyday3d.com/). You can contact 
 [![Terrain shader](/thumbs/020_terrain.jpg)](https://j3d.bartekdrozdz.com/demo/019_Terrain.html)
 [![Webcam texture (Canary, Opera Labs)](/thumbs/023_webrtc.jpg)](https://j3d.bartekdrozdz.com/demo/022_Webcam.html)
 [![Webcam particles (Canary, Opera Labs)](/thumbs/024_webcamParticles.jpg)](https://j3d.bartekdrozdz.com/demo/023_Webcam_Particles.html)
+-->
