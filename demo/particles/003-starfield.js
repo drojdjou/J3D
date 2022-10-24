@@ -4,7 +4,7 @@ registerDemo(function(engine) {
 
     document.title = "Starfield | J3D | v0.12";
 
-    var numParticles = 500000;
+    var numParticles = 1000000;
 
     this.setup = function(callback) {
         J3D.Loader.loadGLSL("particles/003-starfield.glsl", function(s) {
