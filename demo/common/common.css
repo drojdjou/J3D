@@ -3,7 +3,7 @@ body {
     background-color: #000000;
     color: #ffffff;
     margin: 0px;
-    overflow: auto;
+    overflow: hidden;
 }
 
 h2 {

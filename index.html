@@ -12,12 +12,19 @@
     <ul>
 		<li>
 			<h1>J3D WebGL Engine</h1>
-			<h2></h2>
+			<h4>This is an archive featuring interactive experiments I created in 2011, at the time when I was learning <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API" rel="nooperner">WebGL</a>, <a href="https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_on_the_web/GLSL_Shaders" rel="nooperner">shader programming</a> and <a href="https://gamemath.com/" rel="nooperner">3D math</a>.</h4>
+			
+			<h6>The demos below and the 3d rendering engine code that runs them are inspired by various features of <a href="https://unity.com/" rel="nooperner">Unity</a>. I used Unity since <a href="https://everyday3d.com/flash-vs-unity3d">2009</a> and it was one of my favourite pieces of software at the time.</h6>
+
+			<h6>Ten years later, in 2022, I reviewed the demos, fixed a few little things that needed to be updated and added this home page. All the demos work pretty well after all these years, thanks to the stability of <a href="https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/The_web_and_web_standards">web standards</a>. I will revisit them in 2032 and see how it goes :)</h6>
+
+			<h6>For more information you can read <a href="https://www.everyday3d.com/j3d-taming-webgl/">this</a> and <a href="https://everyday3d.com/webgl-experiments-2">that</a> blog posts or look at the source code on <a href="https://github.com/drojdjou/J3D">Github</a>. Meanwhile, click on the thumbnails below and enjoy some old school WebGL!</h6>
+			<em>Bartek Drozdz</em>
 		</li>
 		<li><a href="demo/000_HelloCube.html">
 			<img src="thumbs/001_hellocube.jpg">
 			<h3>Hello Cube</h3>
-			<p>A basic animation featuring a scene with a camera and a cube.</p>
+			<p>A basic animation featuring a scene with a camera and a cube. Basically, the "Hello world!" of WebGL.</p>
 		</a></li>
 		<li><a href="demo/001_Lights.html">
 			<img src="thumbs/002_lights.jpg">
@@ -27,23 +34,23 @@
 		<li><a href="demo/002_Scene.html">
 			<img src="thumbs/003_scene.jpg">
 			<h3>Scene</h3>
-			<p>A simple scene exported from Unity3d and imported into WebGL using a JSON format. The demo also features detecting mouse pointer collision with 3d objects.</p>
+			<p>A simple scene exported from Unity3d and imported into WebGL using a custom JSON format I created. The demo also features detecting mouse pointer collision with 3d objects.</p>
 		</a></li>
 		<li><a href="demo/003_Cubemap.html">
 			<img src="thumbs/004_skybox.jpg">
 			<h3>Cubemap</h3>
-			<p>A 6-sided cubemap used to create a skybox and in a reflection shader.</p>
+			<p>A 6-sided cubemap used to create a skybox and a reflective shader.</p>
 		</a></li>
 		<li><a href="demo/003b_Spheremap.html">
 			<img src="thumbs/004b_spheremap.jpg">
 			<h3>Spheremap</h3>
-			<p>Similar to the cubemap demo, but it uses one picture to create the reflection effect. A simple image, if it is not an equirectangular panorama, can't generate a good looking skybox so this though.</p>
+			<p>Similar to the cubemap demo, but it uses a 2d texture instead of a cubemap to create the reflection effect. A simple image, if it is not an equirectangular panorama, can't generate a good looking skybox so there's no background.</p>
 		</a></li>
 		<li><a href="demo/004_Glass.html">
 			<img src="thumbs/005_glass.jpg">
-			<h3>Glass</h3>
-			<p>THe shader is somewhat siilar to the reflection effect above, but it features a translucent (glass) effect using refraction, reflection, fresnel & chromatic dispersion functions.</p>
-		</a></li>
+			<h3>Glass</h3></a>
+			<p>The shader is somewhat siilar to the reflection effect above, but it features a translucent (glass) effect using refraction, reflection, fresnel & chromatic dispersion functions.This demo was featured on <a href="https://experiments.withgoogle.com/glass-shader">Chrome Expriments</a>.</p>
+		</li>
 		<li><a href="demo/005_Particles.html">
 			<img src="thumbs/006_particles.jpg">
 			<h3>Particles</h3>
@@ -57,75 +64,92 @@
 		<li><a href="demo/007_TileAndOffset.html">
 			<img src="thumbs/007_tile-offset.jpg">
 			<h3>Tile and Offset</h3>
+			<p>Learning how to use shader uniforms to tile & offset a texture on an object.</p>
 		</a></li>
 		<li><a href="demo/008_Lightmap.html">
 			<img src="thumbs/009_lightmap.jpg">
-			<h3>Lightmap</h3>
-			<p>An entire room, with textured walls, furniture and lightmaps created in Cinema4D and imported from Unity3D into WebGL. Use the cursor to look around, WASD to move, click to turn a flashlight on.</p>
-		</a></li>
+			<h3>Lightmap</h3></a>
+			<p>An entire room, with textured walls, furniture and lightmaps created in Cinema4D and imported from Unity3D into WebGL. Move the mouse cursor to look around, WASD to move, click to turn a flashlight on. This demo was featured on <a href="https://experiments.withgoogle.com/lighmapped-scene">Chrome Expriments</a>.</p>
+		</li>
 		<li><a href="demo/009_BasicFilter.html">
 			<img src="thumbs/010_basicfilter.jpg">
 			<h3>Basic Filter</h3>
+			<p>A filter is a shader that runs on top of a rendered scene to apply an additional effect. It is also referred to as a "second pass". In this case the filter adds a pixelation effect that can be customized in realtime.</p>
 		</a></li>
 		<li><a href="demo/010_ToonShading.html">
 			<img src="thumbs/011_toon.jpg">
 			<h3>Toon Shading</h3>
+			<p>Using a color band texture to give a 3d object cartoon-ish look. Click to cycle between a few different color versions.</p>
 		</a></li>
 		<li><a href="demo/011_Plasma.html">
 			<img src="thumbs/012_plasma.jpg">
-			<h3>Plasma</h3>
-		</a></li>
+			<h3>Plasma</h3></a>
+			<p>This is an old school <a href="https://en.wikipedia.org/wiki/Plasma_effect">demo scene effect</a>. It uses a color band and a shader alogorithm to generate a "liquid" looking visual effect. Click to cycle between a few different color versions.</p>
+		</li>
 		<li><a href="demo/012_ParticleRain.html">
 			<img src="thumbs/013_rain.jpg">
 			<h3>Particle Rain</h3>
+			<p>Another version of a "second pass" filter effect. This time the filter is composed of falling particles creating an effect of a silhouette in heavy rain.</p>
 		</a></li>
 		<li><a href="demo/013_Paper.html">
 			<img src="thumbs/014_paper.jpg">
-			<h3>Paper</h3>
-		</a></li>
+			<h3>Paper</h3></a>
+			<p>Geometry modifier example. This is a WebGL adaptation of an <a href="https://everyday3d.com/paper-simulation-as3dmod">old Flash experiment</a> I did back in 2008. This demo was featured on <a href="https://experiments.withgoogle.com/paper-simulation">Chrome Expriments</a>.</p>
+		</li>
 		<li><a href="demo/014_Head.html">
 			<img src="thumbs/015_head.jpg">
-			<h3>3D Head</h3>
-		</a></li>
+			<h3>3D Head</h3></a>
+			<p>Using a classic <a href="http://ir-ltd.net/infinite-3d-head-scan-released/">3d head scan</a> I experiment with some shader effect. Click to cycle between several versions.</p>
+		</li>
 		<li><a href="demo/015_Persistence.html">
 			<img src="thumbs/016_persistence.jpg">
 			<h3>Persistence</h3>
+			<p>Another type of filter effect featuring slowly fading trace of the moving object.</p>
 		</a></li>
 		<li><a href="demo/016_BlurFilter.html">
 			<img src="thumbs/017_blur.jpg">
 			<h3>Blur Filter</h3>
+			<p>Blurring is achieve using a filter as well, but this one need 2 passes - one for blurring along the X axis and another one to blur along Y.</p>
 		</a></li>
 		<li><a href="demo/017_SceneManagement.html">
 			<img src="thumbs/018_sceneman.jpg">
 			<h3>Benchmark</h3>
+			<p>How many cubes can be rendered before the framerate drops to 0? Find out in this demo!</p>
 		</a></li>
 		<li><a href="demo/018_Sphere.html">
 			<img src="thumbs/019_sphere.png">
 			<h3>Planet</h3>
+			<p>A model of planet earth rendered with a bump map shader to create relief effect. The clouds that are probably too far from the surface, but make for a cool 3d effect. Also uses browser geolocation to put you on the globe (please allow the browser to read your location for that).</p>
 		</a></li>
 		<li><a href="demo/019_Terrain.html">
 			<img src="thumbs/020_terrain.jpg">
 			<h3>Terrain</h3>
+			<p>Experimenting with procedural terrain. This is inspired by a terrain engine that was available in Unity.</p>
 		</a></li>
 		<li><a href="demo/020_Webcam.html">
 			<img src="thumbs/023_webrtc.jpg">
-			<h3>Webcam Effect</h3>
+			<h3>Webcam 'TV-glitch' effect</h3>
+			<p>A TV-glitch filter applied to a webcam feed. One of my first experiments with webcam in WebGL right after the WebRTC API was introduced in Chrome. Today, all major browser should support it.</p>
 		</a></li>
 		<li><a href="demo/021_Webcam_Particles.html">
 			<img src="thumbs/024_webcamParticles.jpg">
 			<h3>Webcam 'Matrix' Effect</h3>
+			<p>Basically same thing as the webcam effect above, but with a different filter. This time it is a Matrix style "green letter rain" effect.</p>
 		</a></li>
 		<li><a href="demo/022_Slideshow.html">
 			<img src="thumbs/025_slideshow.jpg">
 			<h3>Slideshow</h3>
+			<p>Applying the glitch effect to move between photos in an image gallery.</p>
 		</a></li>
 		<li><a href="demo/023_Water.html">
 			<img src="thumbs/026_water.jpg">
-			<h3>Water</h3>
-		</a></li>
+			<h3>Water</h3></a>
+			<p>Using a <a href="https://en.wikipedia.org/wiki/Perlin_noise">perlin</a> noise generator and bump mapping to create a water effect. Definitely not the best realtime water you will see, but it was my first attempt.</p>
+		</li>
 		<li><a href="demo/024_Spacerun.html">
 			<img src="thumbs/027_spacerun.jpg">
 			<h3>Spacerun</h3>
+			<p>The final and most ambitious experiment with J3D, it uses a lot of the things I learned workijng on all the demos above. It is a mini game where you need to control a space ship to avoid asteroids - grey shapes - and capture gems - orange and green shapes.</p>
 		</a></li>
     </ul>
 </body>
