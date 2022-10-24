@@ -1,9 +1,7 @@
 registerDemo(function(engine) {
 
     var cube, q1, q2;
-
-    console.log("Hello Cube | J3D | v0.16");
-
+    
     this.setup = function(callback) {
         engine.setClearColor(J3D.Color.black);
 
